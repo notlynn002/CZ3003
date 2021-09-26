@@ -1,0 +1,187 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://sprites/buttons or icons/back button.png" type="Texture" id=1]
+[ext_resource path="res://sprites/buttons or icons/sound off icon.png" type="Texture" id=2]
+[ext_resource path="res://sprites/background/student register & login & character selection bg.png" type="Texture" id=3]
+[ext_resource path="res://sprites/buttons or icons/sound on icon.png" type="Texture" id=4]
+[ext_resource path="res://Registration Login/Registration/Student Registration/StudentCharacterSelectPage.gd" type="Script" id=5]
+[ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://sprites/buttons or icons/register button.png" type="Texture" id=7]
+[ext_resource path="res://sprites/character/archer/archer idle.png" type="Texture" id=8]
+[ext_resource path="res://sprites/character/samurai/samurai idle.png" type="Texture" id=9]
+[ext_resource path="res://sprites/character/huntress/huntress idle.png" type="Texture" id=10]
+[ext_resource path="res://sprites/character/king/king idle.png" type="Texture" id=11]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[node name="StudentCharacterSelectPage" type="CanvasLayer"]
+script = ExtResource( 5 )
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton" type="TextureButton" parent="."]
+margin_left = 48.0
+margin_top = 24.0
+margin_right = 144.0
+margin_bottom = 104.0
+texture_normal = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundButton" type="TextureButton" parent="."]
+margin_left = 1787.72
+margin_top = 13.8284
+margin_right = 1908.72
+margin_bottom = 107.828
+texture_normal = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MuteButton" type="TextureButton" parent="."]
+margin_left = 1779.0
+margin_top = 6.0
+margin_right = 1923.0
+margin_bottom = 114.0
+texture_normal = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SamuraiLabel" type="Label" parent="."]
+margin_left = 184.0
+margin_top = 568.0
+margin_right = 640.0
+margin_bottom = 672.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Samurai"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ArcherLabel" type="Label" parent="."]
+margin_left = 568.0
+margin_top = 568.0
+margin_right = 1024.0
+margin_bottom = 672.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Archer"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HuntressLabel" type="Label" parent="."]
+margin_left = 976.0
+margin_top = 568.0
+margin_right = 1432.0
+margin_bottom = 672.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Huntress"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KingLabel" type="Label" parent="."]
+margin_left = 1340.0
+margin_top = 568.0
+margin_right = 1796.0
+margin_bottom = 672.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "King"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RegisterButton" type="TextureButton" parent="."]
+margin_left = 696.0
+margin_top = 944.0
+margin_right = 1184.0
+margin_bottom = 1077.0
+texture_normal = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SamuraiButton" type="TextureButton" parent="."]
+margin_left = 192.0
+margin_top = 592.0
+margin_right = 608.0
+margin_bottom = 996.0
+texture_normal = ExtResource( 9 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ArcherButton" type="TextureButton" parent="."]
+margin_left = 632.0
+margin_top = 648.0
+margin_right = 992.0
+margin_bottom = 969.0
+texture_normal = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HuntressButton" type="TextureButton" parent="."]
+margin_left = 1006.0
+margin_top = 592.0
+margin_right = 1414.0
+margin_bottom = 972.0
+texture_normal = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KingButton" type="TextureButton" parent="."]
+margin_left = 1368.0
+margin_top = 631.0
+margin_right = 1728.0
+margin_bottom = 971.0
+texture_normal = ExtResource( 11 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="pressed" from="SoundButton" to="." method="_on_SoundButton_pressed"]
+[connection signal="pressed" from="MuteButton" to="." method="_on_MuteButton_pressed"]
+[connection signal="pressed" from="RegisterButton" to="." method="_on_RegisterButton_pressed"]
+[connection signal="pressed" from="SamuraiButton" to="." method="_on_SamuraiButton_pressed"]
+[connection signal="pressed" from="ArcherButton" to="." method="_on_ArcherButton_pressed"]
+[connection signal="pressed" from="HuntressButton" to="." method="_on_HuntressButton_pressed"]
+[connection signal="pressed" from="KingButton" to="." method="_on_KingButton_pressed"]
