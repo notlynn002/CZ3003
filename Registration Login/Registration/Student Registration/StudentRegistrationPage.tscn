@@ -12,8 +12,8 @@
 [ext_resource path="res://Registration Login/Registration/Student Registration/StudentRegistrationPage.gd" type="Script" id=10]
 [ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=11]
 
-[sub_resource type="DynamicFont" id=1]
-size = 48
+[sub_resource type="DynamicFont" id=6]
+size = 32
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 11 )
 
@@ -123,7 +123,7 @@ margin_top = 392.0
 margin_right = 968.0
 margin_bottom = 464.0
 rect_pivot_offset = Vector2( 256, 24 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 6 )
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -135,7 +135,7 @@ margin_top = 392.0
 margin_right = 1872.0
 margin_bottom = 480.0
 rect_pivot_offset = Vector2( 256, 24 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 6 )
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -147,7 +147,7 @@ margin_top = 680.0
 margin_right = 1872.0
 margin_bottom = 752.0
 rect_pivot_offset = Vector2( 256, 24 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 6 )
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -158,7 +158,7 @@ margin_left = 488.0
 margin_top = 688.0
 margin_right = 976.0
 margin_bottom = 772.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 6 )
 text = "4F"
 align = 1
 items = [ "4F", null, false, 0, null, "4G", null, false, 1, null ]

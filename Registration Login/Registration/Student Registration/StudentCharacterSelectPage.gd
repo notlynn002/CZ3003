@@ -34,8 +34,7 @@ func _on_MuteButton_pressed():
 
 
 func _on_RegisterButton_pressed():
-	pass # Replace with function body.
-	# navigate to student home screen
+	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
 
 
 func _on_SamuraiButton_pressed():
