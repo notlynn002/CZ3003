@@ -23,21 +23,21 @@
 [ext_resource path="res://Player/Samurai.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Player/Huntress.tscn" type="PackedScene" id=22]
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 960, 232 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=2]
 size = 20
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 7 )
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 224, 296 )
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 224, 272 )
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 209.28, 304 )
 
 [sub_resource type="DynamicFont" id=6]
@@ -65,7 +65,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Background/StaticBody2D"]
 position = Vector2( 960, 240 )
-shape = SubResource( 7 )
+shape = SubResource( 1 )
 
 [node name="ChallengeButton" type="TextureButton" parent="."]
 margin_left = 1499.41
@@ -127,7 +127,7 @@ margin_left = 1460.31
 margin_top = 122.762
 margin_right = 1626.31
 margin_bottom = 161.762
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "challenge"
 align = 1
@@ -140,7 +140,7 @@ margin_left = 1633.69
 margin_top = 123.254
 margin_right = 1696.69
 margin_bottom = 156.254
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "mail"
 __meta__ = {
@@ -152,7 +152,7 @@ margin_left = 1728.57
 margin_top = 120.779
 margin_right = 1809.57
 margin_bottom = 153.779
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "music"
 __meta__ = {
@@ -164,7 +164,7 @@ margin_left = 1840.11
 margin_top = 119.779
 margin_right = 1900.11
 margin_bottom = 152.779
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "quit"
 __meta__ = {
@@ -186,7 +186,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CreamCastleButton/StaticBody2D"]
 position = Vector2( 221, 344 )
-shape = SubResource( 9 )
+shape = SubResource( 3 )
 
 [node name="WoodCastleButton" type="TextureButton" parent="."]
 margin_left = 768.0
@@ -203,7 +203,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WoodCastleButton/StaticBody2D"]
 position = Vector2( 240, 304 )
-shape = SubResource( 10 )
+shape = SubResource( 4 )
 
 [node name="MetalCastleButton" type="TextureButton" parent="."]
 margin_left = 1472.0
@@ -220,7 +220,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MetalCastleButton/StaticBody2D"]
 position = Vector2( 230.72, 312 )
-shape = SubResource( 11 )
+shape = SubResource( 5 )
 
 [node name="RatioLabel" type="TextureRect" parent="."]
 margin_left = 144.0

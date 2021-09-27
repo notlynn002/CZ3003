@@ -93,13 +93,10 @@ func _on_MetalCastleButton_pressed():
 	$PopupMenu.show() # display popup
 	chosen_tower = "Numbers" # update chosen tower
 
-
-
-
 func _on_EnterTowerButton_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene("res://Game Play/NormalLevel.tscn")
+	 # Replace with function body.
 	# navigate to inside tower
-
 
 func _on_ViewLeaderboardButton_pressed():
 	pass # Replace with function body.
