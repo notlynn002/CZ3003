@@ -45,7 +45,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 98.4107, 75.8785 )
+extents = Vector2( 67.0595, 34.2092 )
 
 [node name="King" type="KinematicBody2D"]
 script = ExtResource( 13 )
@@ -54,10 +54,9 @@ script = ExtResource( 13 )
 scale = Vector2( 0.65, 0.65 )
 frames = SubResource( 1 )
 animation = "attack"
-frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 2.77929, -14.9551 )
+position = Vector2( 5.16039, 14.8086 )
 rotation = -1.5708
 shape = SubResource( 2 )

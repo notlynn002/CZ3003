@@ -1,13 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=1]
 [ext_resource path="res://Game Play/TowerBricks.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player/King.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Game Play/TowerDoor.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Game Play/TowerStaircase.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Game Play/CastleMain.gd" type="Script" id=6]
+[ext_resource path="res://sprites/tower/closed normal level door.png" type="Texture" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 892.215, 27.5385 )
 
 [node name="NormalLevel" type="CanvasLayer"]
+script = ExtResource( 6 )
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TowerBackground" type="TextureRect" parent="."]
 margin_right = 1916.0
 margin_bottom = 1078.0
 texture = ExtResource( 1 )
@@ -16,65 +22,116 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TowerBricks" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 142.708, 1034.16 )
 
-[node name="TowerBricks2" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks2" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 716.105, 1034.27 )
 
-[node name="TowerBricks3" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks3" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 1007.03, 1032.43 )
 
-[node name="TowerBricks4" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks4" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 1293.16, 1032.64 )
 
-[node name="TowerBricks5" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks5" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 1583.03, 1032.54 )
 
-[node name="TowerBricks6" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks6" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( -62.4602, 961.92 )
 
-[node name="TowerBricks7" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks7" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 1871.81, 1035.58 )
 
-[node name="TowerBricks8" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks8" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 430.559, 1035.22 )
 
-[node name="TowerBricks9" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks9" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 820, 958 )
 
-[node name="TowerBricks10" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks10" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 526, 960 )
 
-[node name="TowerBricks11" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks11" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 232.96, 959.807 )
 
-[node name="TowerBricks12" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks12" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 1113.57, 956.306 )
 
-[node name="TowerBricks13" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks13" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 1407.57, 956.306 )
 
-[node name="TowerBricks14" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks14" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 1705.57, 958.306 )
 
-[node name="TowerBricks15" parent="TextureRect" instance=ExtResource( 2 )]
+[node name="TowerBricks15" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 1987.57, 962.306 )
 
-[node name="StaticBody2D" parent="TextureRect" instance=ExtResource( 4 )]
-position = Vector2( 445.566, 600.306 )
-
-[node name="StaticBody2D" parent="TextureRect/StaticBody2D" instance=ExtResource( 4 )]
-position = Vector2( 322, -2 )
-
-[node name="StaticBody2D2" parent="TextureRect" instance=ExtResource( 4 )]
-position = Vector2( 1083.57, 598.306 )
-
-[node name="StaticBody2D" parent="TextureRect/StaticBody2D2" instance=ExtResource( 4 )]
-position = Vector2( 316, -2 )
-
 [node name="King" parent="." instance=ExtResource( 3 )]
-position = Vector2( 68, 844 )
+position = Vector2( 70, 834 )
 
-[node name="StaticBody2D" parent="." instance=ExtResource( 4 )]
-position = Vector2( 162, 604 )
+[node name="Qn1" type="TextureButton" parent="."]
+margin_left = -12.2729
+margin_top = 513.835
+margin_right = 287.727
+margin_bottom = 849.835
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Qn1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Qn1/StaticBody2D"]
+position = Vector2( 913.67, 324.693 )
+shape = SubResource( 1 )
+
+[node name="Qn2" type="TextureButton" parent="."]
+margin_left = 241.727
+margin_top = 511.836
+margin_right = 541.727
+margin_bottom = 847.836
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Qn3" type="TextureButton" parent="."]
+margin_left = 511.727
+margin_top = 511.836
+margin_right = 811.727
+margin_bottom = 847.836
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Qn4" type="TextureButton" parent="."]
+margin_left = 781.727
+margin_top = 513.835
+margin_right = 1081.73
+margin_bottom = 849.835
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Qn5" type="TextureButton" parent="."]
+margin_left = 1023.73
+margin_top = 511.836
+margin_right = 1323.73
+margin_bottom = 847.836
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Staircase" parent="." instance=ExtResource( 5 )]
+position = Vector2( 1698, 670 )
+
+[connection signal="pressed" from="Qn5" to="." method="_on_Qn5_pressed"]
