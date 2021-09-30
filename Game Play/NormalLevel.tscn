@@ -11,7 +11,7 @@
 [ext_resource path="res://sprites/buttons or icons/x button.png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 892.215, 27.5385 )
+extents = Vector2( 817.29, 27.5385 )
 
 [node name="NormalLevel" type="CanvasLayer"]
 script = ExtResource( 6 )
@@ -87,7 +87,7 @@ __meta__ = {
 [node name="StaticBody2D" type="StaticBody2D" parent="Qn1"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Qn1/StaticBody2D"]
-position = Vector2( 913.67, 324.693 )
+position = Vector2( 839.003, 328.693 )
 shape = SubResource( 1 )
 
 [node name="Qn2" type="TextureButton" parent="."]

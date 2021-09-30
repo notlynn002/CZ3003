@@ -11,7 +11,7 @@ func _ready():
 	$PopupMenu.hide() # dont showpopup until one of the castle is pressed
 
 func _on_Qn5_pressed():
-	get_tree().change_scene("res://Game Play/NormalLevelQn.tscn")
+	get_tree().change_scene("res://Game Play/BossLevel.tscn")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
