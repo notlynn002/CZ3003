@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=1]
 [ext_resource path="res://Game Play/TowerBricks.tscn" type="PackedScene" id=2]
@@ -9,9 +9,14 @@
 [ext_resource path="res://sprites/tower/closed normal level door.png" type="Texture" id=7]
 [ext_resource path="res://sprites/buttons or icons/rectangular popup.png" type="Texture" id=8]
 [ext_resource path="res://sprites/buttons or icons/x button.png" type="Texture" id=9]
+[ext_resource path="res://Game Play/TowerDoorOpen.tscn" type="PackedScene" id=10]
+[ext_resource path="res://sprites/tower/brick floor.png" type="Texture" id=11]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 71.7943, 182.01 )
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 817.29, 27.5385 )
+extents = Vector2( 817.29, 295.606 )
 
 [node name="NormalLevel" type="CanvasLayer"]
 script = ExtResource( 6 )
@@ -70,6 +75,70 @@ position = Vector2( 1705.57, 958.306 )
 [node name="TowerBricks15" parent="TowerBackground" instance=ExtResource( 2 )]
 position = Vector2( 1987.57, 962.306 )
 
+[node name="TowerBricks17" parent="TowerBackground" instance=ExtResource( 2 )]
+position = Vector2( 190.475, 268.421 )
+
+[node name="TowerBricks18" parent="TowerBackground" instance=ExtResource( 2 )]
+position = Vector2( 481.401, 266.581 )
+
+[node name="TowerBricks19" parent="TowerBackground" instance=ExtResource( 2 )]
+position = Vector2( 767.531, 266.791 )
+
+[node name="TowerBricks20" parent="TowerBackground" instance=ExtResource( 2 )]
+position = Vector2( 1057.4, 266.691 )
+
+[node name="TowerBricks22" parent="TowerBackground" instance=ExtResource( 2 )]
+position = Vector2( 1346.18, 269.731 )
+
+[node name="TowerBricks23" parent="TowerBackground" instance=ExtResource( 2 )]
+position = Vector2( -95.0705, 269.371 )
+
+[node name="TowerBricks24" parent="TowerBackground" instance=ExtResource( 2 )]
+position = Vector2( 294.371, 192.151 )
+
+[node name="TowerBricks25" parent="TowerBackground" instance=ExtResource( 2 )]
+position = Vector2( 0.370514, 194.151 )
+
+[node name="TowerBricks27" parent="TowerBackground" instance=ExtResource( 2 )]
+position = Vector2( 587.94, 190.457 )
+
+[node name="TowerBricks28" parent="TowerBackground" instance=ExtResource( 2 )]
+position = Vector2( 881.94, 190.457 )
+
+[node name="TowerBricks29" parent="TowerBackground" instance=ExtResource( 2 )]
+position = Vector2( 1179.94, 192.457 )
+
+[node name="TowerBricks30" parent="TowerBackground" instance=ExtResource( 2 )]
+position = Vector2( 1461.94, 196.457 )
+
+[node name="Lvl1Block1" type="TextureRect" parent="TowerBackground"]
+margin_left = 1584.02
+margin_top = 609.388
+margin_right = 1884.02
+margin_bottom = 699.388
+rect_rotation = -90.0
+texture = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lvl1Block2" type="TextureRect" parent="TowerBackground"]
+margin_left = 1581.65
+margin_top = 463.791
+margin_right = 1881.65
+margin_bottom = 553.791
+rect_rotation = -90.0
+texture = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Blocks" type="StaticBody2D" parent="TowerBackground"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground/Blocks"]
+position = Vector2( 1303.37, 518.494 )
+shape = SubResource( 2 )
+
 [node name="King" parent="." instance=ExtResource( 3 )]
 position = Vector2( 70, 834 )
 
@@ -87,7 +156,7 @@ __meta__ = {
 [node name="StaticBody2D" type="StaticBody2D" parent="Qn1"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Qn1/StaticBody2D"]
-position = Vector2( 839.003, 328.693 )
+position = Vector2( 832.661, 62.3106 )
 shape = SubResource( 1 )
 
 [node name="Qn2" type="TextureButton" parent="."]
@@ -137,11 +206,27 @@ __meta__ = {
 [node name="Staircase" parent="." instance=ExtResource( 5 )]
 position = Vector2( 1698, 670 )
 
+[node name="TowerDoor1Open" parent="." instance=ExtResource( 10 )]
+position = Vector2( 103.826, 632.396 )
+
+[node name="TowerDoor2Open" parent="." instance=ExtResource( 10 )]
+position = Vector2( 358.738, 631.077 )
+
+[node name="TowerDoor3Open" parent="." instance=ExtResource( 10 )]
+position = Vector2( 625.942, 628.882 )
+
+[node name="TowerDoor4Open" parent="." instance=ExtResource( 10 )]
+position = Vector2( 896.989, 630.477 )
+
+[node name="TowerDoor5Open" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1137.66, 628.801 )
+
 [node name="PopupMenu" type="TextureRect" parent="."]
-margin_left = 390.52
-margin_top = 69.449
-margin_right = 1502.52
-margin_bottom = 758.449
+visible = false
+margin_left = 422.617
+margin_top = -1.56441
+margin_right = 1534.62
+margin_bottom = 687.436
 texture = ExtResource( 8 )
 expand = true
 __meta__ = {
@@ -189,4 +274,11 @@ __meta__ = {
 }
 
 [connection signal="pressed" from="Qn1" to="." method="_on_Qn1_pressed"]
+[connection signal="pressed" from="Qn2" to="." method="_on_Qn2_pressed"]
+[connection signal="pressed" from="Qn3" to="." method="_on_Qn3_pressed"]
+[connection signal="pressed" from="Qn4" to="." method="_on_Qn4_pressed"]
 [connection signal="pressed" from="Qn5" to="." method="_on_Qn5_pressed"]
+[connection signal="pressed" from="PopupMenu/Correct" to="." method="_on_Correct_pressed"]
+[connection signal="pressed" from="PopupMenu/Wrong1" to="." method="_on_Wrong_pressed"]
+[connection signal="pressed" from="PopupMenu/Wrong2" to="." method="_on_Wrong_pressed"]
+[connection signal="pressed" from="PopupMenu/Wrong3" to="." method="_on_Wrong_pressed"]
