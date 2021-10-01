@@ -9,15 +9,45 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "DocItem",
+"class": "ArgumentDocItem",
+"language": "GDScript",
+"path": "res://addons/silicon.util.custom_docs/doc_item/argument_doc_item.gd"
+}, {
+"base": "DocItem",
+"class": "ClassDocItem",
+"language": "GDScript",
+"path": "res://addons/silicon.util.custom_docs/doc_item/class_doc_item.gd"
+}, {
+"base": "DocItem",
+"class": "ConstantDocItem",
+"language": "GDScript",
+"path": "res://addons/silicon.util.custom_docs/doc_item/constant_doc_item.gd"
+}, {
 "base": "HBoxContainer",
 "class": "ContributorClass",
 "language": "GDScript",
 "path": "res://addons/github-integration/scripts/ContributorClass.gd"
 }, {
+"base": "Reference",
+"class": "DocExporter",
+"language": "GDScript",
+"path": "res://addons/silicon.util.custom_docs/doc_exporter/doc_exporter.gd"
+}, {
+"base": "Reference",
+"class": "DocItem",
+"language": "GDScript",
+"path": "res://addons/silicon.util.custom_docs/doc_item/doc_item.gd"
+}, {
 "base": "HTTPRequest",
 "class": "FirebaseAuth",
 "language": "GDScript",
 "path": "res://addons/godot-firebase/auth/auth.gd"
+}, {
+"base": "Control",
+"class": "FirebaseContainer",
+"language": "GDScript",
+"path": "res://addons/godot-firebase/containers/container.gd"
 }, {
 "base": "Node",
 "class": "FirebaseDatabase",
@@ -35,9 +65,19 @@ _global_script_classes=[ {
 "path": "res://addons/godot-firebase/database/database_store.gd"
 }, {
 "base": "Node",
+"class": "FirebaseDynamicLinks",
+"language": "GDScript",
+"path": "res://addons/godot-firebase/dynamiclinks/dynamiclinks.gd"
+}, {
+"base": "Node",
 "class": "FirebaseFirestore",
 "language": "GDScript",
 "path": "res://addons/godot-firebase/firestore/firestore.gd"
+}, {
+"base": "Node",
+"class": "FirebaseFunctions",
+"language": "GDScript",
+"path": "res://addons/godot-firebase/functions/functions.gd"
 }, {
 "base": "Resource",
 "class": "FirebaseResource",
@@ -54,15 +94,30 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/godot-firebase/auth/user_data.gd"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "FirestoreCollection",
 "language": "GDScript",
 "path": "res://addons/godot-firebase/firestore/firestore_collection.gd"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "FirestoreDocument",
 "language": "GDScript",
 "path": "res://addons/godot-firebase/firestore/firestore_document.gd"
+}, {
+"base": "Reference",
+"class": "FirestoreQuery",
+"language": "GDScript",
+"path": "res://addons/godot-firebase/firestore/firestore_query.gd"
+}, {
+"base": "Reference",
+"class": "FirestoreTask",
+"language": "GDScript",
+"path": "res://addons/godot-firebase/firestore/firestore_task.gd"
+}, {
+"base": "Reference",
+"class": "FunctionTask",
+"language": "GDScript",
+"path": "res://addons/godot-firebase/functions/function_task.gd"
 }, {
 "base": "PanelContainer",
 "class": "GistItem",
@@ -74,10 +129,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/github-integration/scripts/InvitationItem.gd"
 }, {
+"base": "DocItem",
+"class": "MethodDocItem",
+"language": "GDScript",
+"path": "res://addons/silicon.util.custom_docs/doc_item/method_doc_item.gd"
+}, {
+"base": "DocItem",
+"class": "PropertyDocItem",
+"language": "GDScript",
+"path": "res://addons/silicon.util.custom_docs/doc_item/property_doc_item.gd"
+}, {
 "base": "PanelContainer",
 "class": "RepositoryItem",
 "language": "GDScript",
 "path": "res://addons/github-integration/scripts/RepositoryItem.gd"
+}, {
+"base": "DocItem",
+"class": "SignalDocItem",
+"language": "GDScript",
+"path": "res://addons/silicon.util.custom_docs/doc_item/signal_doc_item.gd"
 }, {
 "base": "Reference",
 "class": "StorageReference",
@@ -90,20 +160,34 @@ _global_script_classes=[ {
 "path": "res://addons/godot-firebase/storage/storage_task.gd"
 } ]
 _global_script_class_icons={
+"ArgumentDocItem": "",
+"ClassDocItem": "",
+"ConstantDocItem": "",
 "ContributorClass": "",
+"DocExporter": "",
+"DocItem": "",
 "FirebaseAuth": "",
+"FirebaseContainer": "",
 "FirebaseDatabase": "",
 "FirebaseDatabaseReference": "",
 "FirebaseDatabaseStore": "",
+"FirebaseDynamicLinks": "",
 "FirebaseFirestore": "",
+"FirebaseFunctions": "",
 "FirebaseResource": "",
 "FirebaseStorage": "",
 "FirebaseUserData": "",
 "FirestoreCollection": "",
 "FirestoreDocument": "",
+"FirestoreQuery": "",
+"FirestoreTask": "",
+"FunctionTask": "",
 "GistItem": "",
 "InvitationItem": "",
+"MethodDocItem": "",
+"PropertyDocItem": "",
 "RepositoryItem": "",
+"SignalDocItem": "",
 "StorageReference": "",
 "StorageTask": ""
 }
@@ -130,7 +214,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/github-integration/plugin.cfg", "res://addons/godot-firebase/plugin.cfg", "res://addons/http-sse-client/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/github-integration/plugin.cfg", "res://addons/godot-firebase/plugin.cfg", "res://addons/http-sse-client/plugin.cfg", "res://addons/silicon.util.custom_docs/plugin.cfg" )
 
 [firebase]
 

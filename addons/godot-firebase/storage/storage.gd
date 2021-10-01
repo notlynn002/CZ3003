@@ -1,23 +1,34 @@
-# ---------------------------------------------------- #
-#                 SCRIPT VERSION = 2.1                 #
-#                 ====================                 #
-# please, remember to increment the version to +0.1    #
-# if you are going to make changes that will commited  #
-# ---------------------------------------------------- #
-
+## @meta-authors SIsilicon
+## @meta-version 2.2
+## The Storage API for Firebase.
+## This object handles all firebase storage tasks, variables and references. To use this API, you must first create a [StorageReference] with [method ref]. With the reference, you can then query and manipulate the file or folder in the cloud storage.
+## 
+## [i]Note: In HTML builds, you must configure [url=https://firebase.google.com/docs/storage/web/download-files#cors_configuration]CORS[/url] in your storage bucket.[i] 
+tool
 class_name FirebaseStorage
 extends Node
 
+## @arg-types int, int, PoolStringArray
+## @arg-enums HTTPRequest.Result, HTTPClient.ResponseCode
+## Emitted when a [StorageTask] has finished successful.
 signal task_successful(result, response_code, data)
+
+## @arg-types int, int, PoolStringArray
+## @arg-enums HTTPRequest.Result, HTTPClient.ResponseCode
+## Emitted when a [StorageTask] has finished with an error.
 signal task_failed(result, response_code, data)
 
-var auth : Dictionary
-var config : Dictionary
+## The current storage bucket the Storage API is referencing.
 var bucket : String
 
-var references : Dictionary = {}
-
+## @default false
+## Whether a task is currently being processed.
 var requesting : bool = false
+
+var _auth : Dictionary
+var _config : Dictionary
+
+var _references : Dictionary = {}
 
 var _base_url : String = "https://firebasestorage.googleapis.com"
 var _extended_url : String = "/v0/b/[APP_ID]/o/[FILE_PATH]"
@@ -56,7 +67,7 @@ func _internal_process(_delta : float) -> void:
         HTTPClient.STATUS_CONNECTED:
             var err := _http_client.request_raw(task._method, task._url, task._headers, task.data)
             if err:
-                call_deferred("_finish_request", HTTPRequest.RESULT_CONNECTION_ERROR)
+                _finish_request(HTTPRequest.RESULT_CONNECTION_ERROR)
         
         HTTPClient.STATUS_BODY:
             if _http_client.has_response() or _reading_body:
@@ -83,28 +94,26 @@ func _internal_process(_delta : float) -> void:
                 
                 if _http_client.get_status() != HTTPClient.STATUS_BODY:
                     task.progress = 1.0
-                    call_deferred("_finish_request", HTTPRequest.RESULT_SUCCESS)
+                    _finish_request(HTTPRequest.RESULT_SUCCESS)
             else:
                 task.progress = 1.0
-                call_deferred("_finish_request", HTTPRequest.RESULT_SUCCESS)
+                _finish_request(HTTPRequest.RESULT_SUCCESS)
         
         HTTPClient.STATUS_CANT_CONNECT:
-            call_deferred("_finish_request", HTTPRequest.RESULT_CANT_CONNECT)
+            _finish_request(HTTPRequest.RESULT_CANT_CONNECT)
         HTTPClient.STATUS_CANT_RESOLVE:
-            call_deferred("_finish_request", HTTPRequest.RESULT_CANT_RESOLVE)
+            _finish_request(HTTPRequest.RESULT_CANT_RESOLVE)
         HTTPClient.STATUS_CONNECTION_ERROR:
-            call_deferred("_finish_request", HTTPRequest.RESULT_CONNECTION_ERROR)
+            _finish_request(HTTPRequest.RESULT_CONNECTION_ERROR)
         HTTPClient.STATUS_SSL_HANDSHAKE_ERROR:
-            call_deferred("_finish_request", HTTPRequest.RESULT_SSL_HANDSHAKE_ERROR)
+            _finish_request(HTTPRequest.RESULT_SSL_HANDSHAKE_ERROR)
 
-func set_config(config_json : Dictionary) -> void:
-    config = config_json
-    if bucket != config.storageBucket:
-        bucket = config.storageBucket
-        _http_client.close()
-
+## @args path
+## @arg-defaults ""
+## @return StorageReference
+## Returns a reference to a file or folder in the storage bucket. It's this reference that should be used to control the file/folder on the server end.
 func ref(path := "") -> StorageReference:
-    if not config:
+    if not _config:
         return null
     
     # Create a root storage reference if there's none
@@ -113,9 +122,9 @@ func ref(path := "") -> StorageReference:
         _root_ref = ref()
     
     path = _simplify_path(path)
-    if not references.has(path):
+    if not _references.has(path):
         var ref := StorageReference.new()
-        references[path] = ref
+        _references[path] = ref
         ref.valid = true
         ref.bucket = bucket
         ref.full_path = path
@@ -125,87 +134,92 @@ func ref(path := "") -> StorageReference:
         ref.storage = self
         return ref
     else:
-        return references[path]
+        return _references[path]
+
+func _set_config(config_json : Dictionary) -> void:
+    _config = config_json
+    if bucket != _config.storageBucket:
+        bucket = _config.storageBucket
+        _http_client.close()
 
 func _upload(data : PoolByteArray, headers : PoolStringArray, ref : StorageReference, meta_only : bool) -> StorageTask:
-    if not (config and auth):
+    if not (_config and _auth):
         return null
     
     var task := StorageTask.new()
     task.ref = ref
     task._url = _get_file_url(ref)
-    task.action = StorageTask.TASK_UPLOAD_META if meta_only else StorageTask.TASK_UPLOAD
+    task.action = StorageTask.Task.TASK_UPLOAD_META if meta_only else StorageTask.Task.TASK_UPLOAD
     task._headers = headers
     task.data = data
     _process_request(task)
     return task
 
 func _download(ref : StorageReference, meta_only : bool, url_only : bool) -> StorageTask:
-    if not (config and auth):
+    if not (_config and _auth):
         return null
     
     var info_task := StorageTask.new()
     info_task.ref = ref
     info_task._url = _get_file_url(ref)
-    info_task.action = StorageTask.TASK_DOWNLOAD_URL if url_only else StorageTask.TASK_DOWNLOAD_META
+    info_task.action = StorageTask.Task.TASK_DOWNLOAD_URL if url_only else StorageTask.Task.TASK_DOWNLOAD_META
     _process_request(info_task)
     
     if url_only or meta_only:
         return info_task
     
     var task := StorageTask.new()
-    _pending_tasks.append(task)
-    yield(info_task, "task_finished")
-    
     task.ref = ref
     task._url = _get_file_url(ref) + "?alt=media&token="
-    task.action = StorageTask.TASK_DOWNLOAD
+    task.action = StorageTask.Task.TASK_DOWNLOAD
+    _pending_tasks.append(task)
     
+    yield(info_task, "task_finished")
     if info_task.data and not info_task.data.has("error"):
         task._url += info_task.data.downloadTokens
-        _process_request(task)
     else:
         task.data = info_task.data
         task.response_headers = info_task.response_headers
         task.response_code = info_task.response_code
-        task.finished = true
         task.result = info_task.result
-        emit_signal("task_failed", task.result, task.response_code, task.data)
+        task.finished = true
         task.emit_signal("task_finished")
+        emit_signal("task_failed", task.result, task.response_code, task.data)
+        _pending_tasks.erase(task)
     
     return task
 
 func _list(ref : StorageReference, list_all : bool) -> StorageTask:
-    if not (config and auth):
+    if not (_config and _auth):
         return null
     
     var task := StorageTask.new()
     task.ref = ref
     task._url = _get_file_url(_root_ref).trim_suffix("/")
-    task.action = StorageTask.TASK_LIST_ALL if list_all else StorageTask.TASK_LIST
+    task.action = StorageTask.Task.TASK_LIST_ALL if list_all else StorageTask.Task.TASK_LIST
     _process_request(task)
     return task
 
 func _delete(ref : StorageReference) -> StorageTask:
-    if not (config and auth):
+    if not (_config and _auth):
         return null
     
     var task := StorageTask.new()
     task.ref = ref
     task._url = _get_file_url(ref)
-    task.action = StorageTask.TASK_DELETE
+    task.action = StorageTask.Task.TASK_DELETE
     _process_request(task)
     return task
 
 func _process_request(task : StorageTask) -> void:
-    var headers = Array(task._headers)
-    headers.append("Authorization: Bearer " + auth.idtoken)
-    task._headers = PoolStringArray(headers)
-    
     if requesting:
         _pending_tasks.append(task)
         return
     requesting = true
+    
+    var headers = Array(task._headers)
+    headers.append("Authorization: Bearer " + _auth.idtoken)
+    task._headers = PoolStringArray(headers)
     
     _current_task = task
     _response_code = 0
@@ -227,23 +241,23 @@ func _finish_request(result : int) -> void:
     task.response_headers = _response_headers
     
     match task.action:
-        StorageTask.TASK_DOWNLOAD:
+        StorageTask.Task.TASK_DOWNLOAD:
             task.data = _response_data
         
-        StorageTask.TASK_DELETE:
-            references.erase(task.ref.full_path)
+        StorageTask.Task.TASK_DELETE:
+            _references.erase(task.ref.full_path)
             task.ref.valid = false
             if typeof(task.data) == TYPE_RAW_ARRAY:
                 task.data = null
         
-        StorageTask.TASK_DOWNLOAD_URL:
+        StorageTask.Task.TASK_DOWNLOAD_URL:
             var json : Dictionary = JSON.parse(_response_data.get_string_from_utf8()).result
             if json and json.has("downloadTokens"):
-                task.data = _base_url + _get_file_url(task.ref.full_path) + "?alt=media&token=" + json.downloadTokens
+                task.data = _base_url + _get_file_url(task.ref) + "?alt=media&token=" + json.downloadTokens
             else:
                 task.data = ""
         
-        StorageTask.TASK_LIST, StorageTask.TASK_LIST_ALL:
+        StorageTask.Task.TASK_LIST, StorageTask.Task.TASK_LIST_ALL:
             var json : Dictionary = JSON.parse(_response_data.get_string_from_utf8()).result
             var items := []
             if json and json.has("items"):
@@ -253,7 +267,7 @@ func _finish_request(result : int) -> void:
                         continue
                     if not item_name.begins_with(task.ref.full_path):
                         continue
-                    if task.action == StorageTask.TASK_LIST:
+                    if task.action == StorageTask.Task.TASK_LIST:
                         var dir_path : Array = item_name.split("/")
                         var slash_count : int = task.ref.full_path.count("/")
                         item_name = ""
@@ -270,17 +284,26 @@ func _finish_request(result : int) -> void:
         _:
             task.data = JSON.parse(_response_data.get_string_from_utf8()).result
     
+    var next_task : StorageTask
+    if not _pending_tasks.empty():
+        next_task = _pending_tasks.pop_front()
+    
     task.finished = true
     task.emit_signal("task_finished")
-    
     if typeof(task.data) == TYPE_DICTIONARY and task.data.has("error"):
         emit_signal("task_failed", task.result, task.response_code, task.data)
     else:
         emit_signal("task_successful", task.result, task.response_code, task.data)
     
-    if not _pending_tasks.empty():
-        var next_task : StorageTask = _pending_tasks.pop_front()
-        _process_request(next_task)
+    while true:
+        if next_task and not next_task.finished:
+            _process_request(next_task)
+            break
+        elif not _pending_tasks.empty():
+            next_task = _pending_tasks.pop_front()
+        else:
+            break
+
 
 func _get_file_url(ref : StorageReference) -> String:
     var url := _extended_url.replace("[APP_ID]", ref.bucket)
@@ -304,7 +327,10 @@ func _simplify_path(path : String) -> String:
     return new_path
 
 func _on_FirebaseAuth_login_succeeded(auth_token : Dictionary) -> void:
-    auth = auth_token
+    _auth = auth_token
 
 func _on_FirebaseAuth_token_refresh_succeeded(auth_result : Dictionary) -> void:
-    auth = auth_result
+    _auth = auth_result
+
+func _on_FirebaseAuth_logout() -> void:
+    _auth = {}

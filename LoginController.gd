@@ -25,7 +25,7 @@ func _on_Button_button_up():
 	
 
 
-func on_FirebaseAuth_login_succeeded():
+func on_FirebaseAuth_login_succeeded(arg):
 	print("success hello there")
 	
 func on_FirebaseAuth_login_failed(error_code, message):

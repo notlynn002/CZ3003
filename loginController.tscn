@@ -5,10 +5,10 @@
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -1.0
-margin_top = -2.0
-margin_right = -1.0
-margin_bottom = -2.0
+margin_left = 2.0
+margin_top = -1.0
+margin_right = 2.0
+margin_bottom = -1.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -19,6 +19,9 @@ margin_left = 78.0
 margin_top = 190.0
 margin_right = 189.0
 margin_bottom = 214.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="password" type="LineEdit" parent="."]
 margin_left = 206.0

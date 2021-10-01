@@ -1,10 +1,8 @@
-# ---------------------------------------------------- #
-#                 SCRIPT VERSION = 2.1                 #
-#                 ====================                 #
-# please, remember to increment the version to +0.1    #
-# if you are going to make changes that will commited  #
-# ---------------------------------------------------- #
-
+## @meta-authors TODO
+## @meta-version 2.3
+## A reference to a location in the Realtime Database.
+## Documentation TODO.
+tool
 class_name FirebaseDatabaseReference
 extends Node
 
@@ -13,6 +11,13 @@ signal patch_data_update(data)
 
 signal push_successful()
 signal push_failed()
+
+const ORDER_BY : String = "orderBy"
+const LIMIT_TO_FIRST : String = "limitToFirst"
+const LIMIT_TO_LAST : String = "limitToLast"
+const START_AT : String = "startAt"
+const END_AT : String = "endAt"
+const EQUAL_TO : String = "equalTo"
 
 var _pusher : HTTPRequest
 var _listener : Node
@@ -30,7 +35,7 @@ const _patch_tag : String = "patch"
 const _separator : String = "/"
 const _json_list_tag : String = ".json"
 const _query_tag : String = "?"
-const _auth_tag : String = "_auth="
+const _auth_tag : String = "auth="
 const _accept_header : String = "accept: text/event-stream"
 const _auth_variable_begin : String = "["
 const _auth_variable_end : String = "]"
@@ -38,6 +43,8 @@ const _filter_tag : String = "&"
 const _escaped_quote : String = "\""
 const _equal_tag : String = "="
 const _key_filter_tag : String = "$key"
+
+var _headers : PoolStringArray = []
 
 func set_db_path(path : String, filter_query_dict : Dictionary) -> void:
     _db_path = path
@@ -92,14 +99,14 @@ func update(path : String, data : Dictionary) -> void:
     if _pusher.get_http_client_status() != HTTPClient.STATUS_REQUESTING:
         var resolved_path = (_get_list_url() + _db_path + "/" + path + _get_remaining_path())
         
-        _pusher.request(resolved_path, PoolStringArray(), true, HTTPClient.METHOD_PATCH, to_update)
+        _pusher.request(resolved_path, _headers, true, HTTPClient.METHOD_PATCH, to_update)
     else:
         _push_queue.append(data)
 
 func push(data : Dictionary) -> void:
     var to_push = JSON.print(data)
     if _pusher.get_http_client_status() == HTTPClient.STATUS_DISCONNECTED:
-        _pusher.request(_get_list_url() + _db_path + _get_remaining_path(), PoolStringArray(), true, HTTPClient.METHOD_POST, to_push)
+        _pusher.request(_get_list_url() + _db_path + _get_remaining_path(), _headers, true, HTTPClient.METHOD_POST, to_push)
     else:
         _push_queue.append(data)
 
@@ -128,12 +135,11 @@ func _get_filter():
     # At the moment, this means you can't dynamically change your filter; I think it's okay to specify that in the rules.
     if !_cached_filter:
         _cached_filter = ""
-        if _filter_query.has(Firebase.Database.ORDER_BY):
-            _cached_filter += Firebase.Database.ORDER_BY + _equal_tag + _escaped_quote + _filter_query[Firebase.Database.ORDER_BY] + _escaped_quote
-            _filter_query.erase(Firebase.Database.ORDER_BY)
+        if _filter_query.has(ORDER_BY):
+            _cached_filter += ORDER_BY + _equal_tag + _escaped_quote + _filter_query[ORDER_BY] + _escaped_quote
+            _filter_query.erase(ORDER_BY)
         else:
-            _cached_filter += Firebase.Database.ORDER_BY + _equal_tag + _escaped_quote + _key_filter_tag + _escaped_quote # Presumptuous, but to get it to work at all...
-
+            _cached_filter += ORDER_BY + _equal_tag + _escaped_quote + _key_filter_tag + _escaped_quote # Presumptuous, but to get it to work at all...
         for key in _filter_query.keys():
             _cached_filter += _filter_tag + key + _equal_tag + _filter_query[key]
 

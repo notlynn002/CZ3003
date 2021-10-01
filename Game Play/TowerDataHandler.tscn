@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Game Play/TowerDataHandler.gd" type="Script" id=1]
+
+[node name="TowerDataHandler" type="Node"]
+script = ExtResource( 1 )
+
+[node name="TestButton" type="Button" parent="."]
+margin_left = 670.0
+margin_top = 186.0
+margin_right = 911.0
+margin_bottom = 312.0
+text = "Test Button"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="button_up" from="TestButton" to="." method="_test_functions"]
