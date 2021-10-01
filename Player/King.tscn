@@ -33,14 +33,19 @@ animations = [ {
 "name": "attack",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "die",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 12 ), ExtResource( 11 ) ],
 "loop": true,
 "name": "take hit",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
+"frames": [  ],
 "loop": true,
-"name": "die",
+"name": "fall",
 "speed": 5.0
 } ]
 
@@ -53,7 +58,7 @@ script = ExtResource( 13 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.65, 0.65 )
 frames = SubResource( 1 )
-animation = "attack"
+animation = "die"
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

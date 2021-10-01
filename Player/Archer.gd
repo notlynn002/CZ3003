@@ -2,44 +2,49 @@ extends KinematicBody2D
 
 
 # Declare member variables here. Examples:
-var speed = 400
+const SPEED = 400
+const GRAVITY = 10
+const JUMP_POWER = -350
+const FLOOR = Vector2(0, -1)
+
 var velocity = Vector2()
 
+var on_ground = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-func get_input():
-	# Detect up/down/left/right keystate and only move when pressed.
-	velocity = Vector2()
-	if Input.is_action_pressed('ui_right'):
-		velocity.x += 1
-	if Input.is_action_pressed('ui_left'):
-		velocity.x -= 1
-	if Input.is_action_pressed('ui_down'):
-		velocity.y += 1
-	if Input.is_action_pressed('ui_up'):
-		velocity.y -= 1
-	velocity = velocity.normalized() * speed
 	
 	
-	if velocity.x != 0:
-		$AnimatedSprite.animation = "run"
-		$AnimatedSprite.flip_v = false
-		# See the note below about boolean assignment
-		$AnimatedSprite.flip_h = velocity.x < 0
-	elif velocity.y != 0:
-		$AnimatedSprite.animation = "run"
-	else:
-		$AnimatedSprite.animation = "idle"
-	   
-
 func _physics_process(delta):
-	get_input()
-	move_and_slide(velocity)
+	# Detect up/down/left/right keystate and only move when pressed.
+	if Input.is_action_pressed('ui_right'):
+		velocity.x = SPEED
+		$AnimatedSprite.play("run")
+		$AnimatedSprite.flip_h = false
+	elif Input.is_action_pressed('ui_left'):
+		velocity.x = -SPEED
+		$AnimatedSprite.play("run")
+		$AnimatedSprite.flip_h = true
+	else:
+		velocity.x = 0
+		if on_ground == true:
+			$AnimatedSprite.play("idle")
+		
+	if Input.is_action_pressed('ui_up'):
+		if on_ground == true:
+			velocity.y = JUMP_POWER
+			on_ground = false
+			
+	velocity.y += GRAVITY
+	
+	if is_on_floor():
+		on_ground = true
+	else:
+		on_ground = false
+		if velocity.y < 0:
+			$AnimatedSprite.play("jump")
+		else:
+			$AnimatedSprite.play("idle")	#change to fall once fall animation is added in
+	
+	velocity = move_and_slide(velocity, FLOOR)
