@@ -10,6 +10,7 @@ func init(topic):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$MuteButton.hide()
+	$NoticePopup/TopicLabel.text = "Topic: " + selectedTopic
 	
 	# loop through class to get students
 	for i in 41:

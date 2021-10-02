@@ -99,8 +99,10 @@ func _on_EnterTowerButton_pressed():
 	# navigate to inside tower
 
 func _on_ViewLeaderboardButton_pressed():
-	pass # Replace with function body.
-	# navigate to leaderboard page for the chosen tower
+	var leaderboard = preload("res://Game Play/Leaderboard/LeaderboardPage.tscn").instance()
+	leaderboard.init(chosen_tower)
+	var Root = get_tree().root
+	Root.add_child(leaderboard)
 
 
 func _on_CloseButton_pressed():
