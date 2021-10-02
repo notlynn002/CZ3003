@@ -9,13 +9,13 @@
 [ext_resource path="res://Game Play/TowerDoorOpen.tscn" type="PackedScene" id=10]
 [ext_resource path="res://sprites/tower/brick floor.png" type="Texture" id=11]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31.4409, 144.539 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 71.7943, 182.01 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 817.29, 295.606 )
 
 [node name="NormalLevel" type="CanvasLayer"]
@@ -121,16 +121,31 @@ texture = ExtResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground/BlockBrick"]
 position = Vector2( 175.104, 112.246 )
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="Blocks" type="StaticBody2D" parent="TowerBackground"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground/Blocks"]
 position = Vector2( 1303.37, 518.494 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="King" parent="." instance=ExtResource( 3 )]
 position = Vector2( 70, 834 )
+
+[node name="TowerDoor1Open" parent="." instance=ExtResource( 10 )]
+position = Vector2( 103.826, 632.396 )
+
+[node name="TowerDoor2Open" parent="." instance=ExtResource( 10 )]
+position = Vector2( 358.738, 631.077 )
+
+[node name="TowerDoor3Open" parent="." instance=ExtResource( 10 )]
+position = Vector2( 625.942, 628.882 )
+
+[node name="TowerDoor4Open" parent="." instance=ExtResource( 10 )]
+position = Vector2( 896.989, 630.477 )
+
+[node name="TowerDoor5Open" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1137.66, 628.801 )
 
 [node name="Door1" type="TextureButton" parent="."]
 margin_left = -12.2729
@@ -147,7 +162,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door1/StaticBody2D"]
 position = Vector2( 832.661, 62.3106 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Door2" type="TextureButton" parent="."]
 margin_left = 241.727
@@ -195,21 +210,6 @@ __meta__ = {
 
 [node name="Staircase" parent="." instance=ExtResource( 5 )]
 position = Vector2( 1698, 670 )
-
-[node name="TowerDoor1Open" parent="." instance=ExtResource( 10 )]
-position = Vector2( 103.826, 632.396 )
-
-[node name="TowerDoor2Open" parent="." instance=ExtResource( 10 )]
-position = Vector2( 358.738, 631.077 )
-
-[node name="TowerDoor3Open" parent="." instance=ExtResource( 10 )]
-position = Vector2( 625.942, 628.882 )
-
-[node name="TowerDoor4Open" parent="." instance=ExtResource( 10 )]
-position = Vector2( 896.989, 630.477 )
-
-[node name="TowerDoor5Open" parent="." instance=ExtResource( 10 )]
-position = Vector2( 1137.66, 628.801 )
 
 [connection signal="pressed" from="Door1" to="." method="_on_Door1_pressed"]
 [connection signal="pressed" from="Door2" to="." method="_on_Qn2_pressed"]

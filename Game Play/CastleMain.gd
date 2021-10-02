@@ -6,6 +6,8 @@ extends CanvasLayer
 # var b = "text"
 var lvlCounter = 0
 var prevscene
+var clearlvl
+var clearedLvl
 
 var door1Opened = false
 var door2Opened = false
@@ -20,31 +22,30 @@ var Qn5Answered = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$TowerDoor1Open.hide()
-	$TowerDoor2Open.hide()
-	$TowerDoor3Open.hide()
-	$TowerDoor4Open.hide()
-	$TowerDoor5Open.hide()
-
-func _ConfigUnit():
-	#Called to change to new Sceen
 	pass
-
+	
+func init(clearedLvl):
+	clearlvl = clearedLvl
+	if clearlvl == 1:
+		$Door1.hide()
+		
+		
 func _on_Door1_pressed():
 	lvlCounter += 1
-	$TowerDoor1Open.show()
 	#get_tree().change_scene("res://Game Play/NormalLevelQn1.tscn")
-	var TheRoot = get_node("/root")  #need this as get_node will stop work once you remove your self from the Tree
-	var ThisScene = get_node("/root/NormalLevelGlobal")
-	#var player_vars = get_node("/root/PlayerVariables")
-	NormalLevelGlobal.prevscene = ThisScene  #variable in Autoload script
-	#print(ThisScene)
-	#ThisScene.print_tree()
-	TheRoot.remove_child(ThisScene)
+#	var TheRoot = get_node("/root")  #need this as get_node will stop work once you remove your self from the Tree
+#	var ThisScene = get_node("/root/NormalLevelGlobal")
+#	#var player_vars = get_node("/root/PlayerVariables")
+#	CastleMainGlobal.prevscene = ThisScene  #variable in Autoload script
+#	#print(ThisScene)
+#	#ThisScene.print_tree()
+#	TheRoot.remove_child(ThisScene)
 
-	var NextScene = load("res://Game Play/NormalLevelQn1.tscn")
-	NextScene = NextScene.instance()
-	TheRoot.add_child(NextScene)
+#	var NextScene = preload("res://Game Play/NormalLevelQn1.tscn")
+#	NextScene = NextScene.instance()
+#	self.add_child(NextScene)
+	
+	get_tree().change_scene("res://Game Play/NormalLevelQn1.tscn")
 	
 func _on_Door2_pressed():
 	if door1Opened:

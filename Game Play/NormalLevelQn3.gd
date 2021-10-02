@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+
 func _ready():
 	$NormalLvlDoorOpen.hide()
 	$Qn3/AnsCorrectMsg.hide()
@@ -41,14 +42,14 @@ func _on_Wrong_pressed():
 	$NormalLvlDoorOpen.show()
 	
 func _on_Open_Door_pressed():
-	var TheRoot = get_node("/root")  #need this as get_node will stop work once you remove your self from the Tree
-	var ThisScene = get_node("/root/NormalLevelQn3")
-
-	TheRoot.remove_child(ThisScene)
-	ThisScene.call_deferred("free")
-
-	var NextScene = NormalLevelGlobal.prevscene
+	var TheRoot = get_node("/root")
+	var NextScene = preload("res://Game Play/NormalLevel.tscn")
+	NextScene = NextScene.instance()
+	var clearedLvl = GlobalArray.clearedLevel[0]
+	
+	NextScene.init(clearedLvl)
 	TheRoot.add_child(NextScene)
+	
 
 const CHAR_READ_RATE = 0.05
 
