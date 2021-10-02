@@ -30,3 +30,21 @@ func get_level_for_tower(towerID):
 func _on_Get_levels_for_1_tower_button_up():
 	get_level_for_tower('fraction-tower')
 	pass
+
+func get_questions_by_level(levelID):
+	var query : FirestoreQuery = FirestoreQuery.new()
+	query.from('Question')
+	query.where('levelID', FirestoreQuery.OPERATOR.EQUAL, levelID)
+	
+	var query_task : FirestoreTask = Firebase.Firestore.query(query)
+	var result: Array = yield(query_task, 'task_finished')
+	var res:Array = []
+	for i in result:
+		res.append(i.doc_fields)
+	var sm : Array = [1,2,3]
+	print(typeof(res))
+	
+	print(res)
+func _on_Get_questions_by_level_button_up():
+	get_questions_by_level('dummylevel1')
+	pass # Replace with function body.

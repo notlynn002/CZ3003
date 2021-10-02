@@ -31,5 +31,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Get questions by level" type="Button" parent="."]
+margin_left = 86.0
+margin_top = 203.0
+margin_right = 255.0
+margin_bottom = 246.0
+text = "Get questions for a level"
+
 [connection signal="button_up" from="Get all towers" to="." method="_on_Get_all_towers_button_up"]
 [connection signal="button_up" from="Get levels for 1 tower" to="." method="_on_Get_levels_for_1_tower_button_up"]
+[connection signal="button_up" from="Get questions by level" to="." method="_on_Get_questions_by_level_button_up"]
