@@ -195,6 +195,7 @@ _global_script_class_icons={
 [application]
 
 config/name="SSAD game"
+run/main_scene="res://Registration Login/StartPage.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -204,7 +205,6 @@ PluginSettings="*res://addons/github-integration/scripts/PluginSettings.gd"
 IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
 UserData="*res://addons/github-integration/scripts/user_data.gd"
 RestHandler="*res://addons/github-integration/scenes/RestHandler.tscn"
-NormalLevelGlobal="*res://Game Play/NormalLevel.tscn"
 
 [display]
 
