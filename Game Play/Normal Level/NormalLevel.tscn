@@ -15,12 +15,13 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31.4409, 144.539 )
 
-[node name="NormalLevel" type="CanvasLayer"]
+[node name="NormalLevel" type="Node2D"]
 script = ExtResource( 5 )
 
 [node name="TowerBackground" type="TextureRect" parent="."]
 margin_right = 1916.0
 margin_bottom = 1078.0
+rect_clip_content = true
 texture = ExtResource( 8 )
 expand = true
 __meta__ = {
@@ -623,6 +624,9 @@ position = Vector2( 192.914, -1167.54 )
 
 [node name="King" parent="." instance=ExtResource( 2 )]
 position = Vector2( 47.877, 851.707 )
+
+[node name="Camera2D" type="Camera2D" parent="King"]
+current = true
 
 [connection signal="pressed" from="Layer1Door1" to="." method="_on_Door1_pressed"]
 [connection signal="pressed" from="Layer1Door2" to="." method="_on_Door2_pressed"]
