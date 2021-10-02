@@ -52,7 +52,7 @@ func _on_Wrong_pressed():
 	$Qn1/NextButton.show()
 	
 func _on_NextButton_pressed():
-	get_tree().change_scene("res://Game Play/NormalLevelQn2.tscn")
+	get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn2.tscn")
 
 const CHAR_READ_RATE = 0.05
 
