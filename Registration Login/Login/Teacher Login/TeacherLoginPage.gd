@@ -42,6 +42,4 @@ func _on_PasswordInput_text_entered(pw):
 
 
 func _on_LoginButton_pressed():
-	pass # Replace with function body.
-	# check if name and pw match then
-	# navigate to teacher's home page
+	get_tree().change_scene("res://Teacher/TeacherHomePage.tscn")

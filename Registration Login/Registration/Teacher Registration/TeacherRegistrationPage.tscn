@@ -8,7 +8,7 @@
 [ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://sprites/buttons or icons/password label.png" type="Texture" id=7]
 [ext_resource path="res://sprites/buttons or icons/confirm password label.png" type="Texture" id=8]
-[ext_resource path="res://sprites/buttons or icons/name label.png" type="Texture" id=9]
+[ext_resource path="res://sprites/buttons or icons/email label.png" type="Texture" id=9]
 [ext_resource path="res://sprites/buttons or icons/register button.png" type="Texture" id=10]
 
 [sub_resource type="DynamicFont" id=1]
