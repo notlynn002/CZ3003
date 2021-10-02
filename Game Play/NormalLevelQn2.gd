@@ -1,23 +1,11 @@
 extends CanvasLayer
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-var questionCounter = 0
-var Qn1Answered = false
-var Qn2Answered = false
-var Qn3Answered = false
-var Qn4Answered = false
-var Qn5Answered = false
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	$NormalLvlDoorOpen.hide()
-	$Qn1/AnsCorrectMsg.hide()
-	$Qn1/AnsWrongMsg.hide()
-	$Qn1/NextButton.hide()
-	$Qn1/AnsButton.hide()
+	$Qn2/AnsCorrectMsg.hide()
+	$Qn2/AnsWrongMsg.hide()
+	$Qn2/NextButton.hide()
+	$Qn2/AnsButton.hide()
 
 #func _on_Qn1_pressed():
 #	$PopupMenu.show() # display popup
@@ -42,17 +30,17 @@ func _ready():
 
 #Checking Qn1
 func _on_Correct_pressed():
-	$Qn1/AnsCorrectMsg.show()
-	$Qn1/AnsButton.show()
-	$Qn1/NextButton.show()
+	$Qn2/AnsCorrectMsg.show()
+	$Qn2/AnsButton.show()
+	$Qn2/NextButton.show()
 	
 func _on_Wrong_pressed():
-	$Qn1/AnsWrongMsg.show()
-	$Qn1/AnsButton.show()
-	$Qn1/NextButton.show()
+	$Qn2/AnsWrongMsg.show()
+	$Qn2/AnsButton.show()
+	$Qn2/NextButton.show()
 	
 func _on_NextButton_pressed():
-	get_tree().change_scene("res://Game Play/NormalLevelQn2.tscn")
+	get_tree().change_scene("res://Game Play/NormalLevelQn3.tscn")
 
 const CHAR_READ_RATE = 0.05
 

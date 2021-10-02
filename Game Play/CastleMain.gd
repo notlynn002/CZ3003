@@ -5,6 +5,8 @@ extends CanvasLayer
 # var a = 2
 # var b = "text"
 var lvlCounter = 0
+var prevscene
+
 var door1Opened = false
 var door2Opened = false
 var door3Opened = false
@@ -24,9 +26,25 @@ func _ready():
 	$TowerDoor4Open.hide()
 	$TowerDoor5Open.hide()
 
+func _ConfigUnit():
+	#Called to change to new Sceen
+	pass
+
 func _on_Door1_pressed():
 	lvlCounter += 1
-	get_tree().change_scene("res://Game Play/NormalLevelQn1.tscn")
+	$TowerDoor1Open.show()
+	#get_tree().change_scene("res://Game Play/NormalLevelQn1.tscn")
+	var TheRoot = get_node("/root")  #need this as get_node will stop work once you remove your self from the Tree
+	var ThisScene = get_node("/root/NormalLevelGlobal")
+	#var player_vars = get_node("/root/PlayerVariables")
+	NormalLevelGlobal.prevscene = ThisScene  #variable in Autoload script
+	#print(ThisScene)
+	#ThisScene.print_tree()
+	TheRoot.remove_child(ThisScene)
+
+	var NextScene = load("res://Game Play/NormalLevelQn1.tscn")
+	NextScene = NextScene.instance()
+	TheRoot.add_child(NextScene)
 	
 func _on_Door2_pressed():
 	if door1Opened:
@@ -59,8 +77,7 @@ func _on_Lvl_cleared():
 		door4Opened = true
 	else:
 		$TowerDoor5Open.show()
-		$TowerBackground/Lvl1Block1.hide()
-		$TowerBackground/Lvl1Block2.hide()
-
+		$TowerBackground/BlockBrick.hide()
+		$TowerBackground/BlockBrick/CollisionShape2D.remove_and_skip()
 
 

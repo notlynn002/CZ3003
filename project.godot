@@ -204,6 +204,7 @@ PluginSettings="*res://addons/github-integration/scripts/PluginSettings.gd"
 IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
 UserData="*res://addons/github-integration/scripts/user_data.gd"
 RestHandler="*res://addons/github-integration/scenes/RestHandler.tscn"
+NormalLevelGlobal="*res://Game Play/NormalLevel.tscn"
 
 [display]
 
@@ -228,6 +229,10 @@ environment_variables/appId="1:490263875506:web:c7ab2813222ee2aff51eab"
 environment_variables/measurementId=""
 environment_variables/clientId=""
 environment_variables/clientSecret=""
+
+[global]
+
+auto=false
 
 [physics]
 

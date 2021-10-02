@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=1]
 [ext_resource path="res://Game Play/TowerBricks.tscn" type="PackedScene" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://sprites/tower/closed normal level door.png" type="Texture" id=7]
 [ext_resource path="res://Game Play/TowerDoorOpen.tscn" type="PackedScene" id=10]
 [ext_resource path="res://sprites/tower/brick floor.png" type="Texture" id=11]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 31.4409, 144.539 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 71.7943, 182.01 )
@@ -73,62 +76,52 @@ position = Vector2( 1705.57, 958.306 )
 position = Vector2( 1987.57, 962.306 )
 
 [node name="TowerBricks17" parent="TowerBackground" instance=ExtResource( 2 )]
-position = Vector2( 190.475, 268.421 )
+position = Vector2( 179.25, 409.851 )
 
 [node name="TowerBricks18" parent="TowerBackground" instance=ExtResource( 2 )]
-position = Vector2( 481.401, 266.581 )
+position = Vector2( 470.176, 408.011 )
 
 [node name="TowerBricks19" parent="TowerBackground" instance=ExtResource( 2 )]
-position = Vector2( 767.531, 266.791 )
+position = Vector2( 756.306, 408.221 )
 
 [node name="TowerBricks20" parent="TowerBackground" instance=ExtResource( 2 )]
-position = Vector2( 1057.4, 266.691 )
+position = Vector2( 1046.18, 408.121 )
 
 [node name="TowerBricks22" parent="TowerBackground" instance=ExtResource( 2 )]
-position = Vector2( 1346.18, 269.731 )
+position = Vector2( 1334.96, 411.161 )
 
 [node name="TowerBricks23" parent="TowerBackground" instance=ExtResource( 2 )]
-position = Vector2( -95.0705, 269.371 )
+position = Vector2( -106.295, 410.801 )
 
 [node name="TowerBricks24" parent="TowerBackground" instance=ExtResource( 2 )]
-position = Vector2( 294.371, 192.151 )
+position = Vector2( 283.146, 333.581 )
 
 [node name="TowerBricks25" parent="TowerBackground" instance=ExtResource( 2 )]
-position = Vector2( 0.370514, 194.151 )
+position = Vector2( -10.8542, 335.581 )
 
 [node name="TowerBricks27" parent="TowerBackground" instance=ExtResource( 2 )]
-position = Vector2( 587.94, 190.457 )
+position = Vector2( 576.715, 331.887 )
 
 [node name="TowerBricks28" parent="TowerBackground" instance=ExtResource( 2 )]
-position = Vector2( 881.94, 190.457 )
+position = Vector2( 870.715, 331.887 )
 
 [node name="TowerBricks29" parent="TowerBackground" instance=ExtResource( 2 )]
-position = Vector2( 1179.94, 192.457 )
+position = Vector2( 1168.72, 333.887 )
 
 [node name="TowerBricks30" parent="TowerBackground" instance=ExtResource( 2 )]
-position = Vector2( 1461.94, 196.457 )
+position = Vector2( 1450.72, 337.887 )
 
-[node name="Lvl1Block1" type="TextureRect" parent="TowerBackground"]
-margin_left = 1584.02
-margin_top = 609.388
-margin_right = 1884.02
-margin_bottom = 699.388
-rect_rotation = -90.0
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="BlockBrick" type="StaticBody2D" parent="TowerBackground"]
+position = Vector2( 1450.72, 337.887 )
 
-[node name="Lvl1Block2" type="TextureRect" parent="TowerBackground"]
-margin_left = 1581.65
-margin_top = 463.791
-margin_right = 1881.65
-margin_bottom = 553.791
-rect_rotation = -90.0
+[node name="Sprite" type="Sprite" parent="TowerBackground/BlockBrick"]
+position = Vector2( 172.859, 121.226 )
+rotation = -1.5708
 texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground/BlockBrick"]
+position = Vector2( 175.104, 112.246 )
+shape = SubResource( 3 )
 
 [node name="Blocks" type="StaticBody2D" parent="TowerBackground"]
 

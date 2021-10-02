@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Game Play/NormalLevelQn.gd" type="Script" id=1]
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Player/King.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Game Play/TowerBricks.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Game Play/NormalLvlDoorClosed.tscn" type="PackedScene" id=10]
+[ext_resource path="res://sprites/tower/star.png" type="Texture" id=11]
 
 [node name="NormalLevelQn1" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -153,8 +154,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="AnsButton" type="TextureButton" parent="Qn1"]
+margin_left = 569.696
+margin_top = 602.652
+margin_right = 653.696
+margin_bottom = 687.652
+texture_normal = ExtResource( 11 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="NormalLvlDoorClosed" parent="." instance=ExtResource( 10 )]
 position = Vector2( 1726.86, 837.163 )
 
 [node name="NormalLvlDoorOpen" parent="." instance=ExtResource( 7 )]
 position = Vector2( 1730.84, 824.846 )
+
+[connection signal="pressed" from="Qn1/Correct" to="." method="_on_Correct_pressed"]
+[connection signal="pressed" from="Qn1/Wrong1" to="." method="_on_Wrong_pressed"]
+[connection signal="pressed" from="Qn1/Wrong2" to="." method="_on_Wrong_pressed"]
+[connection signal="pressed" from="Qn1/Wrong3" to="." method="_on_Wrong_pressed"]
+[connection signal="pressed" from="Qn1/NextButton" to="." method="_on_NextButton_pressed"]

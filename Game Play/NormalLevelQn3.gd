@@ -1,23 +1,10 @@
 extends CanvasLayer
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-var questionCounter = 0
-var Qn1Answered = false
-var Qn2Answered = false
-var Qn3Answered = false
-var Qn4Answered = false
-var Qn5Answered = false
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	$NormalLvlDoorOpen.hide()
-	$Qn1/AnsCorrectMsg.hide()
-	$Qn1/AnsWrongMsg.hide()
-	$Qn1/NextButton.hide()
-	$Qn1/AnsButton.hide()
+	$Qn3/AnsCorrectMsg.hide()
+	$Qn3/AnsWrongMsg.hide()
+	$Qn3/AnsButton.hide()
 
 #func _on_Qn1_pressed():
 #	$PopupMenu.show() # display popup
@@ -42,17 +29,26 @@ func _ready():
 
 #Checking Qn1
 func _on_Correct_pressed():
-	$Qn1/AnsCorrectMsg.show()
-	$Qn1/AnsButton.show()
-	$Qn1/NextButton.show()
+	$Qn3/AnsCorrectMsg.show()
+	$Qn3/AnsButton.show()
+	$NormalLvlDoorClosed/CollisionShape2D.remove_and_skip()
+	$NormalLvlDoorOpen.show()
 	
 func _on_Wrong_pressed():
-	$Qn1/AnsWrongMsg.show()
-	$Qn1/AnsButton.show()
-	$Qn1/NextButton.show()
+	$Qn3/AnsWrongMsg.show()
+	$Qn3/AnsButton.show()
+	$NormalLvlDoorClosed/CollisionShape2D.remove_and_skip()
+	$NormalLvlDoorOpen.show()
 	
-func _on_NextButton_pressed():
-	get_tree().change_scene("res://Game Play/NormalLevelQn2.tscn")
+func _on_Open_Door_pressed():
+	var TheRoot = get_node("/root")  #need this as get_node will stop work once you remove your self from the Tree
+	var ThisScene = get_node("/root/NormalLevelQn3")
+
+	TheRoot.remove_child(ThisScene)
+	ThisScene.call_deferred("free")
+
+	var NextScene = NormalLevelGlobal.prevscene
+	TheRoot.add_child(NextScene)
 
 const CHAR_READ_RATE = 0.05
 
