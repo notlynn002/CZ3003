@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Backend/BackendFunctions.gd" type="Script" id=1]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.5636
+margin_top = -1.42542
+margin_right = 3.5636
+margin_bottom = -1.42542
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Get all towers" type="Button" parent="."]
+margin_left = 72.2654
+margin_top = 61.6294
+margin_right = 270.265
+margin_bottom = 98.6294
+text = "Get all towers"
+
+[node name="Get levels for 1 tower" type="Button" parent="."]
+margin_left = 74.0
+margin_top = 135.0
+margin_right = 271.0
+margin_bottom = 170.0
+text = "Get levels for 1 tower"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="button_up" from="Get all towers" to="." method="_on_Get_all_towers_button_up"]
+[connection signal="button_up" from="Get levels for 1 tower" to="." method="_on_Get_levels_for_1_tower_button_up"]
