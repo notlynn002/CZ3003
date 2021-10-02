@@ -61,8 +61,8 @@ func _on_MuteButton_pressed():
 
 
 func _on_ChallengeButton_pressed():
-	pass # Replace with function body.
 	# navigate to challenge page
+	get_tree().change_scene("res://Game Play/Challenge/ChallengeNotifPage.tscn")
 
 
 func _on_MailButton_pressed():

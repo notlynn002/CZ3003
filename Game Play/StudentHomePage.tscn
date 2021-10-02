@@ -27,7 +27,8 @@
 extents = Vector2( 960, 232 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 20
+resource_local_to_scene = true
+size = 24
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 7 )
 
@@ -123,9 +124,9 @@ __meta__ = {
 }
 
 [node name="ChallengeLabel" type="Label" parent="."]
-margin_left = 1460.31
+margin_left = 1441.81
 margin_top = 122.762
-margin_right = 1626.31
+margin_right = 1612.81
 margin_bottom = 161.762
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )

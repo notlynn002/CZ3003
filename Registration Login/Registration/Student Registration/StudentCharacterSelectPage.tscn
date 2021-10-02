@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://sprites/buttons or icons/back button.png" type="Texture" id=1]
 [ext_resource path="res://sprites/buttons or icons/sound off icon.png" type="Texture" id=2]
@@ -15,6 +15,14 @@
 [sub_resource type="DynamicFont" id=1]
 size = 48
 outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 50
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
 font_data = ExtResource( 6 )
 
 [node name="StudentCharacterSelectPage" type="CanvasLayer"]
@@ -173,6 +181,30 @@ margin_right = 1728.0
 margin_bottom = 971.0
 texture_normal = ExtResource( 11 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InstructionLabel" type="Label" parent="."]
+margin_left = 104.0
+margin_top = 360.0
+margin_right = 1081.0
+margin_bottom = 442.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Please select a character:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectedCharacterLabel" type="Label" parent="."]
+margin_left = 1176.0
+margin_top = 360.0
+margin_right = 1344.0
+margin_bottom = 432.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

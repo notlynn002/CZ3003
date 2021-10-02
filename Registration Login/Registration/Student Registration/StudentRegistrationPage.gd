@@ -21,7 +21,8 @@ func _ready():
 
 func _on_ContinueButton_pressed():
 	# navigate to character selectiom page
-	get_tree().change_scene("res://Registration Login/Registration/Student Registration/StudentCharacterSelectPage.tscn")
+	var characterPage = preload("res://Registration Login/Registration/Student Registration/StudentCharacterSelectPage.tscn").instance()
+	add_child(characterPage)
 
 
 func _on_BackButton_pressed():
