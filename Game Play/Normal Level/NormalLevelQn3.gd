@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Node2D
 
 
 func _ready():
@@ -6,6 +6,7 @@ func _ready():
 	$Qn3/AnsCorrectMsg.hide()
 	$Qn3/AnsWrongMsg.hide()
 	$Qn3/AnsButton.hide()
+	GlobalArray.nowAtLvl += 1
 
 #func _on_Qn1_pressed():
 #	$PopupMenu.show() # display popup
@@ -42,13 +43,47 @@ func _on_Wrong_pressed():
 	$NormalLvlDoorOpen.show()
 	
 func _on_Open_Door_pressed():
-	var TheRoot = get_node("/root")
-	var NextScene = preload("res://Game Play/Normal Level/NormalLevel.tscn")
-	NextScene = NextScene.instance()
+	#var TheRoot = get_node("/root")
+	var NextScene = preload("res://Game Play/Normal Level/NormalLevel.tscn").instance()
+	var clearedLvl
+	GlobalArray.levelCount += 1
+	print(GlobalArray.levelCount)
 	
-	var clearedLvl = GlobalArray.clearedLevel[0]
-	NextScene.init(clearedLvl)
-	TheRoot.add_child(NextScene)
+	
+	if GlobalArray.nowAtLvl == 1:
+		clearedLvl = GlobalArray.clearedLevel[0]
+		NextScene.init(clearedLvl)
+		add_child(NextScene)
+	elif GlobalArray.nowAtLvl == 2:
+		clearedLvl = GlobalArray.clearedLevel[1]
+		NextScene.init(clearedLvl)
+		add_child(NextScene)
+	elif GlobalArray.nowAtLvl == 3:
+		clearedLvl = GlobalArray.clearedLevel[2]
+		NextScene.init(clearedLvl)
+		add_child(NextScene)
+	elif GlobalArray.nowAtLvl == 4:
+		clearedLvl = GlobalArray.clearedLevel[3]
+		NextScene.init(clearedLvl)
+		add_child(NextScene)
+	else:
+		clearedLvl = GlobalArray.clearedLevel[4]
+		NextScene.init(clearedLvl)
+		add_child(NextScene)
+		GlobalArray.nowAtLvl = 0
+	print(GlobalArray.layerCount)
+	
+	if GlobalArray.levelCount == 5:
+		GlobalArray.layerCount += 1
+	elif GlobalArray.levelCount == 10:
+		GlobalArray.layerCount += 1
+	elif GlobalArray.levelCount == 15:
+		GlobalArray.layerCount += 1
+	elif GlobalArray.levelCount == 20:
+		GlobalArray.layerCount += 1
+	elif GlobalArray.levelCount == 25:
+		GlobalArray.layerCount += 1
+	
 	
 
 const CHAR_READ_RATE = 0.05

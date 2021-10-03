@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Game Play/Normal Level/TowerStaircase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/King.tscn" type="PackedScene" id=2]
@@ -15,12 +15,15 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31.4409, 144.539 )
 
+[sub_resource type="RectangleShape2D" id=2]
+
 [node name="NormalLevel" type="Node2D"]
 script = ExtResource( 5 )
 
 [node name="TowerBackground" type="TextureRect" parent="."]
+margin_left = -116.0
 margin_right = 1916.0
-margin_bottom = 1078.0
+margin_bottom = 1083.0
 rect_clip_content = true
 texture = ExtResource( 8 )
 expand = true
@@ -622,11 +625,22 @@ position = Vector2( 1705.13, -566.567 )
 [node name="Staircase4" parent="." instance=ExtResource( 11 )]
 position = Vector2( 192.914, -1167.54 )
 
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 192.914, -1167.54 )
+scale = Vector2( 0.76, 0.76 )
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D"]
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="StaticBody2D"]
+scale = Vector2( 5, 5 )
+shape = SubResource( 2 )
+
 [node name="King" parent="." instance=ExtResource( 2 )]
 position = Vector2( 47.877, 851.707 )
 
 [node name="Camera2D" type="Camera2D" parent="King"]
 current = true
+smoothing_enabled = true
 
 [connection signal="pressed" from="Layer1Door1" to="." method="_on_Door1_pressed"]
 [connection signal="pressed" from="Layer1Door2" to="." method="_on_Door2_pressed"]
