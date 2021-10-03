@@ -4,7 +4,7 @@ extends CanvasLayer
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var timer = 10.0
+var timer = 10.0	# To be changed to 600.0 once testing has been completed
 var current_health = 3 setget update_bars
 var question_num = 1
 var correct_ans = 0
@@ -15,6 +15,7 @@ var toggle_solution = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	get_tree().paused = false
 	self.current_health = 3
 	$Question/QnNum.text = "Question %s" % question_num
 	$Question/AnsMsg.hide()
@@ -23,6 +24,11 @@ func _ready():
 	$Question/AnsButton.hide()
 	$BossLvlDoorOpen.hide()
 	$BossLvlSolution.hide()
+	$GameOver.hide()
+	$GameOver/QuitButton.hide()
+	$GameOver/QuitButton/QuitLabel.hide()
+	$GameOver/RetryButton.hide()
+	$GameOver/RetryButton/RetryLabel.hide()
 	
 	
 func update_bars(value):
@@ -63,14 +69,17 @@ func _on_Wrong_pressed():
 		$Question/AnsMsg.show()
 		$Question/AnsMsg/AnsMsgLabel.text = "That's wrong!"
 		$Question/NextButton.show()
+		question_num += 1
 	elif current_health == 0:
 		get_tree().paused = true
 		pause_timer = true
 		game_over = true
-		$Question/EndBossMsg.show()
-		$Question/EndBossMsg/EndBossLabel.text = "You have failed the boss level!\nReason: Run out of lifes"
-		$Question/NextButton.show()
-	question_num += 1
+		$GameOver.show()
+		$GameOver/GameOverLabel.text = "YOU FAILED...\nYou have run out of lives"
+		$GameOver/QuitButton.show()
+		$GameOver/QuitButton/QuitLabel.show()
+		$GameOver/RetryButton.show()
+		$GameOver/RetryButton/RetryLabel.show()
 
 
 func _process(delta):
@@ -82,24 +91,21 @@ func _process(delta):
 		get_tree().paused = true
 		pause_timer = true
 		game_over = true
-		$Question/EndBossMsg.show()
-		$Question/EndBossMsg/EndBossLabel.text = "You have failed the boss level!\nReason: Run out of time"
-		$Question/NextButton.show()
+		$GameOver.show()
+		$GameOver/GameOverLabel.text = "YOU FAILED...\nYou have run out of time"
+		$GameOver/QuitButton.show()
+		$GameOver/QuitButton/QuitLabel.show()
+		$GameOver/RetryButton.show()
+		$GameOver/RetryButton/RetryLabel.show()
 
 
 func _on_NextButton_pressed():
-	print(correct_ans)
-	if game_over == false:
-		get_tree().paused = false
-		print("button pressed")
-		$Question/AnsMsg.hide()
-		$Question/NextButton.hide()# Replace with function body.
-		$Question/QnNum.text = "Question %s" % question_num
-		pause_timer = false
-	else:
-		if correct_ans < 3:
-			get_tree().reload_current_scene()
-			get_tree().paused = false
+	get_tree().paused = false
+	$Question/AnsMsg.hide()
+	$Question/NextButton.hide()# Replace with function body.
+	$Question/QnNum.text = "Question %s" % question_num
+	pause_timer = false
+			
 
 func _on_AnsButton_pressed():
 	if toggle_solution == false:
@@ -152,3 +158,13 @@ func _on_BossLvlDoorOpen_pressed():
 		GlobalArray.layerCount += 1
 	elif GlobalArray.levelCount == 25:
 		GlobalArray.layerCount += 1
+
+
+func _on_QuitButton_pressed():
+	get_tree().paused = false
+	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
+
+
+func _on_RetryButton_pressed():
+	get_tree().paused = false
+	get_tree().reload_current_scene()
