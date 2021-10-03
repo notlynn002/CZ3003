@@ -9,7 +9,7 @@
 [ext_resource path="res://sprites/tower/closed normal level door.png" type="Texture" id=7]
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=8]
 [ext_resource path="res://sprites/tower/closed  boss level door.png" type="Texture" id=9]
-[ext_resource path="res://Game Play/BossLevelDoorOpen.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Game Play/Boss Level/BossLevelDoorOpen.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Game Play/Normal Level/TowerStaircaseRev.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]

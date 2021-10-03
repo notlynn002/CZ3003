@@ -119,4 +119,4 @@ func _on_Door5_pressed():
 	currentLoc = get_node("King").get_position()
 	GlobalArray.playerPosition = currentLoc
 	if GlobalArray.L1Door4:
-		get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
+		get_tree().change_scene("res://Game Play/Boss Level/BossLevel.tscn")

@@ -1,0 +1,335 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=1]
+[ext_resource path="res://Game Play/Boss Level/BossLevel.gd" type="Script" id=2]
+[ext_resource path="res://sprites/tower/transparent wall.png" type="Texture" id=3]
+[ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://sprites/buttons or icons/rectangular popup.png" type="Texture" id=5]
+[ext_resource path="res://Game Play/Normal Level/TowerBricks.tscn" type="PackedScene" id=6]
+[ext_resource path="res://sprites/buttons or icons/rectangular button.png" type="Texture" id=7]
+[ext_resource path="res://sprites/tower/star.png" type="Texture" id=8]
+[ext_resource path="res://sprites/buttons or icons/x button.png" type="Texture" id=9]
+[ext_resource path="res://sprites/buttons or icons/back button.png" type="Texture" id=10]
+[ext_resource path="res://Player/King.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Game Play/Boss Level/HeartBar.tscn" type="PackedScene" id=12]
+[ext_resource path="res://sprites/tower/closed  boss level door.png" type="Texture" id=13]
+[ext_resource path="res://sprites/tower/open boss level door.png" type="Texture" id=14]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 31.4409, 144.539 )
+
+[sub_resource type="DynamicFont" id=2]
+resource_local_to_scene = true
+size = 24
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 111.389, 127.707 )
+
+[node name="BossLevel" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="TowerBackground" type="TextureRect" parent="."]
+margin_right = 1919.0
+margin_bottom = 1080.0
+rect_pivot_offset = Vector2( -575.656, 335.255 )
+texture = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TowerBricks3" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 736.877, 1030.94 )
+
+[node name="TowerBricks4" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 1034.18, 1030.94 )
+
+[node name="TowerBricks5" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 1612.13, 1030.94 )
+
+[node name="TowerBricks6" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 1902.3, 1028.56 )
+
+[node name="TowerBricks7" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 1321.97, 1033.31 )
+
+[node name="TowerBricks2" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 439.575, 1028.56 )
+
+[node name="TowerBricks" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 149.408, 1030.94 )
+
+[node name="TowerBricks8" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 80.4344, 957.204 )
+
+[node name="TowerBricks9" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 375.358, 954.826 )
+
+[node name="TowerBricks10" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 660.767, 954.826 )
+
+[node name="TowerBricks11" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 955.691, 954.826 )
+
+[node name="TowerBricks12" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 1248.24, 957.204 )
+
+[node name="TowerBricks13" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 1545.54, 954.826 )
+
+[node name="TowerBricks14" parent="TowerBackground" instance=ExtResource( 6 )]
+position = Vector2( 1838.09, 954.826 )
+
+[node name="Barrier1" type="StaticBody2D" parent="TowerBackground"]
+pause_mode = 2
+position = Vector2( 1450.72, 337.887 )
+
+[node name="Sprite" type="Sprite" parent="TowerBackground/Barrier1"]
+pause_mode = 2
+position = Vector2( -824.171, 447.085 )
+rotation = -1.5708
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground/Barrier1"]
+pause_mode = 2
+position = Vector2( -823.608, 434.741 )
+shape = SubResource( 1 )
+
+[node name="Barrier2" type="StaticBody2D" parent="TowerBackground"]
+pause_mode = 2
+position = Vector2( 1450.72, 337.887 )
+
+[node name="Sprite" type="Sprite" parent="TowerBackground/Barrier2"]
+pause_mode = 2
+position = Vector2( -969.077, 447.493 )
+rotation = -1.5708
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground/Barrier2"]
+pause_mode = 2
+position = Vector2( -958.424, 438.513 )
+shape = SubResource( 1 )
+
+[node name="King" parent="." instance=ExtResource( 11 )]
+pause_mode = 2
+position = Vector2( 545.232, 841.167 )
+
+[node name="Timer" type="Label" parent="."]
+margin_left = 1674.0
+margin_top = 32.0
+margin_right = 1782.0
+margin_bottom = 71.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" parent="." instance=ExtResource( 12 )]
+margin_left = 485.728
+margin_top = 679.182
+margin_right = 650.728
+margin_bottom = 734.182
+
+[node name="Question" type="TextureRect" parent="."]
+margin_left = 132.591
+margin_top = 26.591
+margin_right = 1704.59
+margin_bottom = 300.591
+texture = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QnNum" type="Label" parent="Question"]
+margin_left = 116.454
+margin_top = 48.6818
+margin_right = 461.454
+margin_bottom = 114.682
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Options" type="Control" parent="Question"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Correct" type="TextureButton" parent="Question/Options"]
+margin_left = 923.495
+margin_top = 291.04
+margin_right = 1087.49
+margin_bottom = 378.04
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Wrong1" type="TextureButton" parent="Question/Options"]
+margin_left = 289.288
+margin_top = 307.592
+margin_right = 368.288
+margin_bottom = 379.592
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Wrong2" type="TextureButton" parent="Question/Options"]
+margin_left = 639.838
+margin_top = 304.084
+margin_right = 718.838
+margin_bottom = 376.084
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Wrong3" type="TextureButton" parent="Question/Options"]
+margin_left = 1285.47
+margin_top = 308.664
+margin_right = 1364.47
+margin_bottom = 380.664
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnsMsg" type="TextureButton" parent="Question"]
+visible = false
+margin_left = 592.184
+margin_top = 442.409
+margin_right = 1059.18
+margin_bottom = 581.409
+texture_normal = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnsMsgLabel" type="Label" parent="Question/AnsMsg"]
+margin_left = 64.3181
+margin_top = 33.5457
+margin_right = 409.318
+margin_bottom = 99.5457
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EndBossMsg" type="TextureButton" parent="Question"]
+margin_left = 482.273
+margin_top = 421.0
+margin_right = 1156.27
+margin_bottom = 598.0
+texture_normal = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EndBossLabel" type="Label" parent="Question/EndBossMsg"]
+margin_left = 69.3635
+margin_top = 55.4089
+margin_right = 414.363
+margin_bottom = 121.409
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NextButton" type="TextureButton" parent="Question"]
+pause_mode = 2
+margin_left = 863.361
+margin_top = 701.238
+margin_right = 954.361
+margin_bottom = 774.238
+rect_rotation = -180.0
+texture_normal = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnsButton" type="TextureButton" parent="Question"]
+pause_mode = 2
+margin_left = 774.587
+margin_top = 621.299
+margin_right = 858.587
+margin_bottom = 706.299
+texture_normal = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BossLvlDoorClosed" type="StaticBody2D" parent="."]
+pause_mode = 2
+position = Vector2( 1726.86, 826.163 )
+scale = Vector2( 0.7, 0.7 )
+
+[node name="Sprite" type="Sprite" parent="BossLvlDoorClosed"]
+pause_mode = 2
+position = Vector2( -26.9391, -20.8457 )
+texture = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossLvlDoorClosed"]
+pause_mode = 2
+position = Vector2( -18.9211, -30.4668 )
+shape = SubResource( 3 )
+
+[node name="BossLvlDoorOpen" type="TextureButton" parent="."]
+pause_mode = 2
+margin_left = 1602.0
+margin_top = 698.0
+margin_right = 1810.0
+margin_bottom = 936.0
+texture_normal = ExtResource( 14 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BossLvlSolution" type="TextureButton" parent="."]
+margin_left = 614.615
+margin_top = 447.748
+margin_right = 1288.61
+margin_bottom = 624.748
+texture_normal = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BossSolutionLabel" type="Label" parent="BossLvlSolution"]
+margin_left = 74.1257
+margin_top = 44.2971
+margin_right = 419.125
+margin_bottom = 110.297
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Question/Options/Correct" to="." method="_on_Correct_pressed"]
+[connection signal="pressed" from="Question/Options/Wrong1" to="." method="_on_Wrong_pressed"]
+[connection signal="pressed" from="Question/Options/Wrong2" to="." method="_on_Wrong_pressed"]
+[connection signal="pressed" from="Question/Options/Wrong3" to="." method="_on_Wrong_pressed"]
+[connection signal="pressed" from="Question/NextButton" to="." method="_on_NextButton_pressed"]
+[connection signal="pressed" from="Question/AnsButton" to="." method="_on_AnsButton_pressed"]
+[connection signal="pressed" from="BossLvlDoorOpen" to="." method="_on_BossLvlDoorOpen_pressed"]

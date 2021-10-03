@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Game Play/Boss Level/HeartBar.gd" type="Script" id=1]
+[ext_resource path="res://sprites/tower/full heart.png" type="Texture" id=2]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_constants/separation = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1" type="TextureRect" parent="."]
+margin_right = 53.0
+margin_bottom = 45.0
+texture = ExtResource( 2 )
+stretch_mode = 3
+
+[node name="2" type="TextureRect" parent="."]
+margin_left = 56.0
+margin_right = 109.0
+margin_bottom = 45.0
+texture = ExtResource( 2 )
+stretch_mode = 3
+
+[node name="3" type="TextureRect" parent="."]
+margin_left = 112.0
+margin_right = 165.0
+margin_bottom = 45.0
+texture = ExtResource( 2 )
+stretch_mode = 3
