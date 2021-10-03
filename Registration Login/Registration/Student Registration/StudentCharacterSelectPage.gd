@@ -3,6 +3,16 @@ extends CanvasLayer
 
 # Declare member variables here. Examples:
 var character
+var student_name
+var email
+var password
+var classIndex
+
+func init(sName, emailAddr, pw, idx):
+	student_name = sName
+	email = emailAddr
+	password = pw
+	classIndex = idx
 
 
 # Called when the node enters the scene tree for the first time.
@@ -34,7 +44,10 @@ func _on_MuteButton_pressed():
 
 
 func _on_RegisterButton_pressed():
-	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
+	# save everything to db
+	var homepage = preload("res://Game Play/StudentHomePage.tscn").instance()
+	get_tree().get_root().add_child(homepage)
+	get_tree().get_root().remove_child(self)
 
 
 func _on_SamuraiButton_pressed():

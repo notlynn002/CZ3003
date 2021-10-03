@@ -2,14 +2,16 @@ extends CanvasLayer
 
 
 # Declare member variables here. Examples:
-var student_name
+var email
 var password
 var cfm_password
+var classIndex
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$MuteButton.hide() # dont show sound off icon until it is pressed
+	$NoMatchLabel.hide()
 	# add class list from db into option button (ClassDropdownButton)
 	pass # Replace with function body.
 
@@ -21,9 +23,9 @@ func _ready():
 
 func _on_ContinueButton_pressed():
 	# navigate to character selectiom page
-	var characterPage = preload("res://Registration Login/Registration/Student Registration/StudentCharacterSelectPage.tscn").instance()
-	add_child(characterPage)
-
+	var namePage = preload("res://Registration Login/Registration/Student Registration/GetNamePage.tscn").instance()
+	namePage.init(email, password, classIndex)
+	get_tree().root.add_child(namePage)
 
 func _on_BackButton_pressed():
 	# navigate back to previous page
@@ -43,13 +45,7 @@ func _on_MuteButton_pressed():
 
 
 func _on_ClassDropdownButton_item_selected(index):
-	pass # Replace with function body.
-	# save class to db
-
-
-func _on_NameInput_text_entered(name):
-	student_name = name
-	# save name to db
+	classIndex = index
 
 func _on_PasswordInput_text_entered(pw):
 	password = pw
@@ -59,5 +55,10 @@ func _on_ConfirmPasswordInput_text_entered(cfm_pw):
 	cfm_password = cfm_pw
 	
 	if password == cfm_password:
-		# save to db
-		pass
+		$NoMatchLabel.hide()
+	else:
+		$NoMatchLabel.show()
+
+
+func _on_EmailInput_text_entered(emailAddr):
+	email = emailAddr

@@ -5,11 +5,13 @@ extends CanvasLayer
 var teacher_name
 var password
 var cfm_password
+var email
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$MuteButton.hide() # dont show sound off icon until it is pressed
+	$NoMatchLabel.hide()
 	pass # Replace with function body.
 
 
@@ -36,7 +38,6 @@ func _on_SoundButton_pressed():
 
 func _on_NameInput_text_entered(name):
 	teacher_name = name
-	# save name to db
 
 
 func _on_PasswordInput_text_entered(pw):
@@ -47,9 +48,15 @@ func _on_ConfirmPasswordInput_text_entered(cfm_pw):
 	cfm_password = cfm_pw
 	
 	if password == cfm_password:
-		# save to db
-		pass
+		$NoMatchLabel.hide()
+	else:
+		$NoMatchLabel.show()
 
 
 func _on_RegisterButton_pressed():
+	# save to db
 	get_tree().change_scene("res://Teacher/TeacherHomePage.tscn")
+
+
+func _on_EmailInput_text_entered(emailAddr):
+	email = emailAddr
