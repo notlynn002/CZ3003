@@ -38,6 +38,36 @@ margin_right = 255.0
 margin_bottom = 246.0
 text = "Get questions for a level"
 
+[node name="test button" type="Button" parent="."]
+margin_left = 101.0
+margin_top = 1.0
+margin_right = 231.0
+margin_bottom = 48.0
+text = "test button"
+
+[node name="Get level attempt" type="Button" parent="."]
+margin_left = 86.0
+margin_top = 203.0
+margin_right = 255.0
+margin_bottom = 246.0
+text = "get level attempt"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sumbit attempt" type="Button" parent="."]
+margin_left = 88.0
+margin_top = 275.0
+margin_right = 257.0
+margin_bottom = 318.0
+text = "sumbit attempt"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="button_up" from="Get all towers" to="." method="_on_Get_all_towers_button_up"]
 [connection signal="button_up" from="Get levels for 1 tower" to="." method="_on_Get_levels_for_1_tower_button_up"]
 [connection signal="button_up" from="Get questions by level" to="." method="_on_Get_questions_by_level_button_up"]
+[connection signal="button_up" from="test button" to="." method="_on_test_button_button_up"]
+[connection signal="button_up" from="Get level attempt" to="." method="_on_Get_level_attempt_button_up"]
+[connection signal="button_up" from="sumbit attempt" to="." method="_on_sumbit_attempt_button_up"]
