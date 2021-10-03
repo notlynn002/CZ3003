@@ -29,7 +29,7 @@ func _ready():
 #		#queue_text("what is 1 + 1 = ?")
 #		questionCounter += 1
 
-#Checking Qn1
+#Checking Qn3
 func _on_Correct_pressed():
 	$Qn3/AnsCorrectMsg.show()
 	$Qn3/AnsButton.show()
@@ -44,35 +44,36 @@ func _on_Wrong_pressed():
 	
 func _on_Open_Door_pressed():
 	#var TheRoot = get_node("/root")
+	$King.remove_and_skip()
 	var NextScene = preload("res://Game Play/Normal Level/NormalLevel.tscn").instance()
 	var clearedLvl
 	GlobalArray.levelCount += 1
 	print(GlobalArray.levelCount)
 	
-	
 	if GlobalArray.nowAtLvl == 1:
-		clearedLvl = GlobalArray.clearedLevel[0]
+		clearedLvl = GlobalArray.levelCount
+		GlobalArray.L1Door1 = true
 		NextScene.init(clearedLvl)
 		add_child(NextScene)
 	elif GlobalArray.nowAtLvl == 2:
-		clearedLvl = GlobalArray.clearedLevel[1]
+		clearedLvl = GlobalArray.levelCount
 		NextScene.init(clearedLvl)
 		add_child(NextScene)
 	elif GlobalArray.nowAtLvl == 3:
-		clearedLvl = GlobalArray.clearedLevel[2]
+		clearedLvl = GlobalArray.levelCount
 		NextScene.init(clearedLvl)
 		add_child(NextScene)
 	elif GlobalArray.nowAtLvl == 4:
-		clearedLvl = GlobalArray.clearedLevel[3]
+		clearedLvl = GlobalArray.levelCount
 		NextScene.init(clearedLvl)
 		add_child(NextScene)
 	else:
-		clearedLvl = GlobalArray.clearedLevel[4]
+		clearedLvl = GlobalArray.levelCount
 		NextScene.init(clearedLvl)
 		add_child(NextScene)
 		GlobalArray.nowAtLvl = 0
+		
 	print(GlobalArray.layerCount)
-	
 	if GlobalArray.levelCount == 5:
 		GlobalArray.layerCount += 1
 	elif GlobalArray.levelCount == 10:

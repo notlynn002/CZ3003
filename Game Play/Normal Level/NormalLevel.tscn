@@ -77,22 +77,22 @@ position = Vector2( 1705.57, 958.306 )
 position = Vector2( 1987.57, 962.306 )
 
 [node name="TowerBricks17" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( 179.25, 409.851 )
+position = Vector2( 380.837, 407.331 )
 
 [node name="TowerBricks18" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( 470.176, 408.011 )
+position = Vector2( 671.763, 405.491 )
 
 [node name="TowerBricks19" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( 756.306, 408.221 )
+position = Vector2( 957.893, 405.701 )
 
 [node name="TowerBricks20" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( 1046.18, 408.121 )
+position = Vector2( 1247.77, 405.601 )
 
 [node name="TowerBricks22" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( 1334.96, 411.161 )
+position = Vector2( 1536.55, 408.641 )
 
 [node name="TowerBricks23" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( -106.295, 410.801 )
+position = Vector2( 95.2924, 408.281 )
 
 [node name="TowerBricks24" parent="TowerBackground" instance=ExtResource( 4 )]
 position = Vector2( 283.146, 333.581 )
@@ -113,15 +113,15 @@ position = Vector2( 1168.72, 333.887 )
 position = Vector2( 1450.72, 337.887 )
 
 [node name="BlockBrick" type="StaticBody2D" parent="TowerBackground"]
-position = Vector2( 1450.72, 337.887 )
+position = Vector2( 1811.13, 116.304 )
 
 [node name="Sprite" type="Sprite" parent="TowerBackground/BlockBrick"]
-position = Vector2( 172.859, 121.226 )
+position = Vector2( -124.482, 426.127 )
 rotation = -1.5708
 texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground/BlockBrick"]
-position = Vector2( 175.104, 112.246 )
+position = Vector2( -122.237, 417.147 )
 shape = SubResource( 1 )
 
 [node name="TowerBackground2" type="TextureRect" parent="."]
@@ -187,10 +187,10 @@ position = Vector2( 884.693, 197.578 )
 position = Vector2( 1182.7, 199.578 )
 
 [node name="TowerBricks35" parent="TowerBackground2" instance=ExtResource( 4 )]
-position = Vector2( 1464.7, 203.578 )
+position = Vector2( 1479.53, 201.459 )
 
 [node name="BlockBrick" type="StaticBody2D" parent="TowerBackground2"]
-position = Vector2( 138.922, 793.609 )
+position = Vector2( 132.347, 785.111 )
 
 [node name="Sprite" type="Sprite" parent="TowerBackground2/BlockBrick"]
 position = Vector2( 17.2937, 121.226 )
@@ -202,15 +202,15 @@ position = Vector2( 19.5387, 112.246 )
 shape = SubResource( 1 )
 
 [node name="BlockBrick2" type="StaticBody2D" parent="TowerBackground2"]
-position = Vector2( 1464.95, 192.043 )
+position = Vector2( 1689.11, 0.101837 )
 
 [node name="Sprite" type="Sprite" parent="TowerBackground2/BlockBrick2"]
-position = Vector2( 172.859, 121.226 )
+position = Vector2( 22.1831, 377.479 )
 rotation = -1.5708
 texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground2/BlockBrick2"]
-position = Vector2( 175.104, 112.246 )
+position = Vector2( 24.4281, 368.499 )
 shape = SubResource( 1 )
 
 [node name="TowerBackground3" type="TextureRect" parent="."]
@@ -252,7 +252,7 @@ position = Vector2( 1319.13, 640.988 )
 position = Vector2( 1601.13, 644.988 )
 
 [node name="BlockBrick" type="StaticBody2D" parent="TowerBackground3"]
-position = Vector2( 138.922, 793.609 )
+position = Vector2( 135.454, 787.309 )
 
 [node name="Sprite" type="Sprite" parent="TowerBackground3/BlockBrick"]
 position = Vector2( 118.087, -32.4845 )
@@ -279,49 +279,49 @@ position = Vector2( 896.989, 630.477 )
 position = Vector2( 1195.03, 632.109 )
 
 [node name="TowerDoor1Open2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 400.476, -1799.04 )
+position = Vector2( 1182.13, -1800.37 )
 
 [node name="TowerDoor2Open2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 655.388, -1800.36 )
+position = Vector2( 885.693, -1811.69 )
 
 [node name="TowerDoor3Open2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 922.592, -1802.56 )
+position = Vector2( 592.354, -1805.05 )
 
 [node name="TowerDoor4Open2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1193.64, -1800.96 )
+position = Vector2( 299.065, -1806.55 )
 
 [node name="TowerDoor5Open2" parent="." instance=ExtResource( 10 )]
 position = Vector2( 1476.68, -1799.33 )
 
 [node name="TowerDoor1Open3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 573.078, -1170.7 )
+position = Vector2( 653.987, -1170.7 )
 
 [node name="TowerDoor2Open3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 827.99, -1172.02 )
+position = Vector2( 908.899, -1172.02 )
 
 [node name="TowerDoor3Open3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1095.19, -1174.22 )
+position = Vector2( 1176.1, -1174.22 )
 
 [node name="TowerDoor4Open3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1366.24, -1172.62 )
+position = Vector2( 1447.15, -1172.62 )
 
 [node name="TowerDoor5Open3" parent="." instance=ExtResource( 10 )]
-position = Vector2( 1645.28, -1174.99 )
+position = Vector2( 1726.19, -1174.99 )
 
 [node name="TowerDoor1Open4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 261.337, -547.449 )
+position = Vector2( 1319.73, -597.396 )
 
 [node name="TowerDoor2Open4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 516.249, -548.768 )
+position = Vector2( 1036.52, -597.705 )
 
 [node name="TowerDoor3Open4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 783.453, -550.963 )
+position = Vector2( 776.318, -600.91 )
 
 [node name="TowerDoor4Open4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1054.5, -549.368 )
+position = Vector2( 491.998, -600.304 )
 
 [node name="TowerDoor5Open4" parent="." instance=ExtResource( 10 )]
-position = Vector2( 1331.54, -547.736 )
+position = Vector2( 226.821, -592.926 )
 
 [node name="TowerDoor1Open5" parent="." instance=ExtResource( 3 )]
 position = Vector2( 518.12, -0.264954 )
@@ -449,10 +449,10 @@ __meta__ = {
 }
 
 [node name="Layer3Door1" type="TextureButton" parent="."]
-margin_left = 1216.23
-margin_top = -668.504
-margin_right = 1516.23
-margin_bottom = -332.504
+margin_left = 111.511
+margin_top = -713.694
+margin_right = 411.511
+margin_bottom = -377.694
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
@@ -460,10 +460,10 @@ __meta__ = {
 }
 
 [node name="Layer3Door2" type="TextureButton" parent="."]
-margin_left = 939.335
-margin_top = -671.769
-margin_right = 1239.34
-margin_bottom = -335.769
+margin_left = 376.833
+margin_top = -722.706
+margin_right = 676.838
+margin_bottom = -386.706
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
@@ -471,10 +471,10 @@ __meta__ = {
 }
 
 [node name="Layer3Door3" type="TextureButton" parent="."]
-margin_left = 670.322
-margin_top = -670.797
-margin_right = 970.322
-margin_bottom = -334.797
+margin_left = 660.19
+margin_top = -717.747
+margin_right = 960.19
+margin_bottom = -381.747
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
@@ -482,10 +482,10 @@ __meta__ = {
 }
 
 [node name="Layer3Door4" type="TextureButton" parent="."]
-margin_left = 401.673
-margin_top = -670.272
-margin_right = 701.673
-margin_bottom = -334.272
+margin_left = 921.942
+margin_top = -719.208
+margin_right = 1221.94
+margin_bottom = -383.208
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
@@ -493,10 +493,10 @@ __meta__ = {
 }
 
 [node name="Layer3Door5" type="TextureButton" parent="."]
-margin_left = 160.755
-margin_top = -661.658
-margin_right = 460.755
-margin_bottom = -325.658
+margin_left = 1219.15
+margin_top = -711.605
+margin_right = 1519.15
+margin_bottom = -375.605
 rect_scale = Vector2( 0.67, 0.67 )
 texture_normal = ExtResource( 9 )
 __meta__ = {
@@ -504,9 +504,9 @@ __meta__ = {
 }
 
 [node name="Layer4Door1" type="TextureButton" parent="."]
-margin_left = 1525.77
+margin_left = 1606.68
 margin_top = -1296.87
-margin_right = 1825.77
+margin_right = 1906.68
 margin_bottom = -960.865
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
@@ -515,9 +515,9 @@ __meta__ = {
 }
 
 [node name="Layer4Door2" type="TextureButton" parent="."]
-margin_left = 1251.8
+margin_left = 1332.71
 margin_top = -1296.69
-margin_right = 1551.8
+margin_right = 1632.71
 margin_bottom = -960.69
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
@@ -526,9 +526,9 @@ __meta__ = {
 }
 
 [node name="Layer4Door3" type="TextureButton" parent="."]
-margin_left = 980.782
+margin_left = 1061.69
 margin_top = -1296.72
-margin_right = 1280.78
+margin_right = 1361.69
 margin_bottom = -960.718
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
@@ -537,10 +537,10 @@ __meta__ = {
 }
 
 [node name="Layer4Door4" type="TextureButton" parent="."]
-margin_left = 713.134
+margin_left = 794.043
 margin_top = -1297.19
-margin_right = 1013.13
-margin_bottom = -961.193
+margin_right = 1094.04
+margin_bottom = -961.19
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
@@ -548,9 +548,9 @@ __meta__ = {
 }
 
 [node name="Layer4Door5" type="TextureButton" parent="."]
-margin_left = 471.215
+margin_left = 552.124
 margin_top = -1286.58
-margin_right = 771.215
+margin_right = 852.124
 margin_bottom = -950.579
 rect_scale = Vector2( 0.67, 0.67 )
 texture_normal = ExtResource( 9 )
@@ -559,10 +559,10 @@ __meta__ = {
 }
 
 [node name="Layer5Door1" type="TextureButton" parent="."]
-margin_left = 1078.23
-margin_top = -1914.59
-margin_right = 1378.23
-margin_bottom = -1578.59
+margin_left = 183.654
+margin_top = -1920.18
+margin_right = 483.654
+margin_bottom = -1584.18
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
@@ -570,10 +570,10 @@ __meta__ = {
 }
 
 [node name="Layer5Door2" type="TextureButton" parent="."]
-margin_left = 806.264
-margin_top = -1916.49
-margin_right = 1106.26
-margin_bottom = -1580.49
+margin_left = 476.026
+margin_top = -1918.98
+margin_right = 776.026
+margin_bottom = -1582.98
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
@@ -581,10 +581,10 @@ __meta__ = {
 }
 
 [node name="Layer5Door3" type="TextureButton" parent="."]
-margin_left = 541.25
-margin_top = -1912.52
-margin_right = 841.25
-margin_bottom = -1576.52
+margin_left = 771.555
+margin_top = -1923.85
+margin_right = 1071.56
+margin_bottom = -1587.85
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
@@ -592,10 +592,10 @@ __meta__ = {
 }
 
 [node name="Layer5Door4" type="TextureButton" parent="."]
-margin_left = 284.937
-margin_top = -1918.22
-margin_right = 584.937
-margin_bottom = -1582.22
+margin_left = 1066.59
+margin_top = -1919.55
+margin_right = 1366.59
+margin_bottom = -1583.55
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
@@ -617,13 +617,13 @@ __meta__ = {
 position = Vector2( 1698, 670 )
 
 [node name="Staircase2" parent="." instance=ExtResource( 11 )]
-position = Vector2( 97.1602, 36.9451 )
+position = Vector2( 84.3105, 36.5468 )
 
 [node name="Staircase3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1705.13, -566.567 )
+position = Vector2( 1852.21, -566.567 )
 
 [node name="Staircase4" parent="." instance=ExtResource( 11 )]
-position = Vector2( 192.914, -1167.54 )
+position = Vector2( 199.741, -1177.65 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 192.914, -1167.54 )
@@ -632,11 +632,12 @@ scale = Vector2( 0.76, 0.76 )
 [node name="Sprite" type="Sprite" parent="StaticBody2D"]
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( -195.646, 243.075 )
 scale = Vector2( 5, 5 )
 shape = SubResource( 2 )
 
 [node name="King" parent="." instance=ExtResource( 2 )]
-position = Vector2( 47.877, 851.707 )
+position = Vector2( 28.5485, 843.214 )
 
 [node name="Camera2D" type="Camera2D" parent="King"]
 current = true
@@ -647,3 +648,23 @@ smoothing_enabled = true
 [connection signal="pressed" from="Layer1Door3" to="." method="_on_Door3_pressed"]
 [connection signal="pressed" from="Layer1Door4" to="." method="_on_Door4_pressed"]
 [connection signal="pressed" from="Layer1Door5" to="." method="_on_Door5_pressed"]
+[connection signal="pressed" from="Layer2Door1" to="." method="_on_Door1_pressed"]
+[connection signal="pressed" from="Layer2Door2" to="." method="_on_Door2_pressed"]
+[connection signal="pressed" from="Layer2Door3" to="." method="_on_Door3_pressed"]
+[connection signal="pressed" from="Layer2Door4" to="." method="_on_Door4_pressed"]
+[connection signal="pressed" from="Layer2Door5" to="." method="_on_Door5_pressed"]
+[connection signal="pressed" from="Layer3Door1" to="." method="_on_Door1_pressed"]
+[connection signal="pressed" from="Layer3Door2" to="." method="_on_Door2_pressed"]
+[connection signal="pressed" from="Layer3Door3" to="." method="_on_Door3_pressed"]
+[connection signal="pressed" from="Layer3Door4" to="." method="_on_Door4_pressed"]
+[connection signal="pressed" from="Layer3Door5" to="." method="_on_Door5_pressed"]
+[connection signal="pressed" from="Layer4Door1" to="." method="_on_Door1_pressed"]
+[connection signal="pressed" from="Layer4Door2" to="." method="_on_Door2_pressed"]
+[connection signal="pressed" from="Layer4Door3" to="." method="_on_Door3_pressed"]
+[connection signal="pressed" from="Layer4Door4" to="." method="_on_Door4_pressed"]
+[connection signal="pressed" from="Layer4Door5" to="." method="_on_Door5_pressed"]
+[connection signal="pressed" from="Layer5Door1" to="." method="_on_Door1_pressed"]
+[connection signal="pressed" from="Layer5Door2" to="." method="_on_Door2_pressed"]
+[connection signal="pressed" from="Layer5Door3" to="." method="_on_Door3_pressed"]
+[connection signal="pressed" from="Layer5Door4" to="." method="_on_Door4_pressed"]
+[connection signal="pressed" from="Layer5Door5" to="." method="_on_Door5_pressed"]

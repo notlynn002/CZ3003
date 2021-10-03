@@ -15,3 +15,7 @@ var L1Door2 = false
 var L1Door3 = false
 var L1Door4 = false
 var L1Door5 = false
+
+var L1Door1Open = false
+
+var playerPosition
