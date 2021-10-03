@@ -1,0 +1,635 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Game Play/Normal Level/TowerStaircase.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player/King.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Game Play/Normal Level/TowerDoorOpen.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Game Play/Normal Level/TowerBricks.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Game Play/CastleMain.gd" type="Script" id=5]
+[ext_resource path="res://sprites/tower/brick floor.png" type="Texture" id=6]
+[ext_resource path="res://sprites/tower/closed normal level door.png" type="Texture" id=7]
+[ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=8]
+[ext_resource path="res://sprites/tower/closed  boss level door.png" type="Texture" id=9]
+[ext_resource path="res://Game Play/BossLevelDoorOpen.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Game Play/Normal Level/TowerStaircaseRev.tscn" type="PackedScene" id=11]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 31.4409, 144.539 )
+
+[node name="NormalLevel" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="TowerBackground" type="TextureRect" parent="."]
+margin_right = 1916.0
+margin_bottom = 1078.0
+rect_clip_content = true
+texture = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TowerBricks" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 142.708, 1034.16 )
+
+[node name="TowerBricks2" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 716.105, 1034.27 )
+
+[node name="TowerBricks3" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 1007.03, 1032.43 )
+
+[node name="TowerBricks4" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 1293.16, 1032.64 )
+
+[node name="TowerBricks5" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 1583.03, 1032.54 )
+
+[node name="TowerBricks6" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( -62.4602, 961.92 )
+
+[node name="TowerBricks7" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 1871.81, 1035.58 )
+
+[node name="TowerBricks8" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 430.559, 1035.22 )
+
+[node name="TowerBricks9" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 820, 958 )
+
+[node name="TowerBricks10" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 526, 960 )
+
+[node name="TowerBricks11" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 232.96, 959.807 )
+
+[node name="TowerBricks12" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 1113.57, 956.306 )
+
+[node name="TowerBricks13" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 1407.57, 956.306 )
+
+[node name="TowerBricks14" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 1705.57, 958.306 )
+
+[node name="TowerBricks15" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 1987.57, 962.306 )
+
+[node name="TowerBricks17" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 179.25, 409.851 )
+
+[node name="TowerBricks18" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 470.176, 408.011 )
+
+[node name="TowerBricks19" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 756.306, 408.221 )
+
+[node name="TowerBricks20" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 1046.18, 408.121 )
+
+[node name="TowerBricks22" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 1334.96, 411.161 )
+
+[node name="TowerBricks23" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( -106.295, 410.801 )
+
+[node name="TowerBricks24" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 283.146, 333.581 )
+
+[node name="TowerBricks25" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( -10.8542, 335.581 )
+
+[node name="TowerBricks27" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 576.715, 331.887 )
+
+[node name="TowerBricks28" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 870.715, 331.887 )
+
+[node name="TowerBricks29" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 1168.72, 333.887 )
+
+[node name="TowerBricks30" parent="TowerBackground" instance=ExtResource( 4 )]
+position = Vector2( 1450.72, 337.887 )
+
+[node name="BlockBrick" type="StaticBody2D" parent="TowerBackground"]
+position = Vector2( 1450.72, 337.887 )
+
+[node name="Sprite" type="Sprite" parent="TowerBackground/BlockBrick"]
+position = Vector2( 172.859, 121.226 )
+rotation = -1.5708
+texture = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground/BlockBrick"]
+position = Vector2( 175.104, 112.246 )
+shape = SubResource( 1 )
+
+[node name="TowerBackground2" type="TextureRect" parent="."]
+margin_left = 3.5835
+margin_top = -1080.03
+margin_right = 1919.58
+margin_bottom = -2.03235
+texture = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TowerBricks18" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 519.789, 868.822 )
+
+[node name="TowerBricks19" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 805.919, 869.032 )
+
+[node name="TowerBricks20" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 1095.79, 868.932 )
+
+[node name="TowerBricks22" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 1384.57, 871.972 )
+
+[node name="TowerBricks24" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 332.759, 794.392 )
+
+[node name="TowerBricks27" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 626.328, 792.698 )
+
+[node name="TowerBricks28" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 920.329, 792.698 )
+
+[node name="TowerBricks29" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 1218.33, 794.698 )
+
+[node name="TowerBricks30" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 1500.33, 798.698 )
+
+[node name="TowerBricks21" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 484.153, 273.702 )
+
+[node name="TowerBricks23" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 770.283, 273.912 )
+
+[node name="TowerBricks25" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 1060.16, 273.812 )
+
+[node name="TowerBricks26" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 1348.94, 276.852 )
+
+[node name="TowerBricks31" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 297.123, 199.272 )
+
+[node name="TowerBricks32" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 590.693, 197.578 )
+
+[node name="TowerBricks33" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 884.693, 197.578 )
+
+[node name="TowerBricks34" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 1182.7, 199.578 )
+
+[node name="TowerBricks35" parent="TowerBackground2" instance=ExtResource( 4 )]
+position = Vector2( 1464.7, 203.578 )
+
+[node name="BlockBrick" type="StaticBody2D" parent="TowerBackground2"]
+position = Vector2( 138.922, 793.609 )
+
+[node name="Sprite" type="Sprite" parent="TowerBackground2/BlockBrick"]
+position = Vector2( 17.2937, 121.226 )
+rotation = -1.5708
+texture = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground2/BlockBrick"]
+position = Vector2( 19.5387, 112.246 )
+shape = SubResource( 1 )
+
+[node name="BlockBrick2" type="StaticBody2D" parent="TowerBackground2"]
+position = Vector2( 1464.95, 192.043 )
+
+[node name="Sprite" type="Sprite" parent="TowerBackground2/BlockBrick2"]
+position = Vector2( 172.859, 121.226 )
+rotation = -1.5708
+texture = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground2/BlockBrick2"]
+position = Vector2( 175.104, 112.246 )
+shape = SubResource( 1 )
+
+[node name="TowerBackground3" type="TextureRect" parent="."]
+margin_left = -2.40967
+margin_top = -2140.83
+margin_right = 1913.59
+margin_bottom = -1062.83
+texture = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TowerBricks18" parent="TowerBackground3" instance=ExtResource( 4 )]
+position = Vector2( 620.583, 715.112 )
+
+[node name="TowerBricks19" parent="TowerBackground3" instance=ExtResource( 4 )]
+position = Vector2( 906.713, 715.322 )
+
+[node name="TowerBricks20" parent="TowerBackground3" instance=ExtResource( 4 )]
+position = Vector2( 1196.59, 715.222 )
+
+[node name="TowerBricks22" parent="TowerBackground3" instance=ExtResource( 4 )]
+position = Vector2( 1485.37, 718.262 )
+
+[node name="TowerBricks24" parent="TowerBackground3" instance=ExtResource( 4 )]
+position = Vector2( 433.553, 640.682 )
+
+[node name="TowerBricks27" parent="TowerBackground3" instance=ExtResource( 4 )]
+position = Vector2( 727.122, 638.988 )
+
+[node name="TowerBricks28" parent="TowerBackground3" instance=ExtResource( 4 )]
+position = Vector2( 1021.12, 638.988 )
+
+[node name="TowerBricks29" parent="TowerBackground3" instance=ExtResource( 4 )]
+position = Vector2( 1319.13, 640.988 )
+
+[node name="TowerBricks30" parent="TowerBackground3" instance=ExtResource( 4 )]
+position = Vector2( 1601.13, 644.988 )
+
+[node name="BlockBrick" type="StaticBody2D" parent="TowerBackground3"]
+position = Vector2( 138.922, 793.609 )
+
+[node name="Sprite" type="Sprite" parent="TowerBackground3/BlockBrick"]
+position = Vector2( 118.087, -32.4845 )
+rotation = -1.5708
+texture = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground3/BlockBrick"]
+position = Vector2( 121.813, -26.3455 )
+shape = SubResource( 1 )
+
+[node name="TowerDoor1Open" parent="." instance=ExtResource( 3 )]
+position = Vector2( 103.826, 632.396 )
+
+[node name="TowerDoor2Open" parent="." instance=ExtResource( 3 )]
+position = Vector2( 358.738, 631.077 )
+
+[node name="TowerDoor3Open" parent="." instance=ExtResource( 3 )]
+position = Vector2( 625.942, 628.882 )
+
+[node name="TowerDoor4Open" parent="." instance=ExtResource( 3 )]
+position = Vector2( 896.989, 630.477 )
+
+[node name="TowerDoor5Open" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1195.03, 632.109 )
+
+[node name="TowerDoor1Open2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 400.476, -1799.04 )
+
+[node name="TowerDoor2Open2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 655.388, -1800.36 )
+
+[node name="TowerDoor3Open2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 922.592, -1802.56 )
+
+[node name="TowerDoor4Open2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1193.64, -1800.96 )
+
+[node name="TowerDoor5Open2" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1476.68, -1799.33 )
+
+[node name="TowerDoor1Open3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 573.078, -1170.7 )
+
+[node name="TowerDoor2Open3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 827.99, -1172.02 )
+
+[node name="TowerDoor3Open3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1095.19, -1174.22 )
+
+[node name="TowerDoor4Open3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1366.24, -1172.62 )
+
+[node name="TowerDoor5Open3" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1645.28, -1174.99 )
+
+[node name="TowerDoor1Open4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 261.337, -547.449 )
+
+[node name="TowerDoor2Open4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 516.249, -548.768 )
+
+[node name="TowerDoor3Open4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 783.453, -550.963 )
+
+[node name="TowerDoor4Open4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1054.5, -549.368 )
+
+[node name="TowerDoor5Open4" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1331.54, -547.736 )
+
+[node name="TowerDoor1Open5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 518.12, -0.264954 )
+
+[node name="TowerDoor2Open5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 773.032, -1.58405 )
+
+[node name="TowerDoor3Open5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1040.24, -3.77899 )
+
+[node name="TowerDoor4Open5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1311.28, -2.18402 )
+
+[node name="TowerDoor5Open5" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1579.32, 2.44794 )
+
+[node name="Layer1Door1" type="TextureButton" parent="."]
+margin_left = -12.2729
+margin_top = 513.835
+margin_right = 287.727
+margin_bottom = 849.835
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer1Door2" type="TextureButton" parent="."]
+margin_left = 241.727
+margin_top = 511.836
+margin_right = 541.727
+margin_bottom = 847.836
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer1Door3" type="TextureButton" parent="."]
+margin_left = 511.727
+margin_top = 511.836
+margin_right = 811.727
+margin_bottom = 847.836
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer1Door4" type="TextureButton" parent="."]
+margin_left = 784.105
+margin_top = 514.835
+margin_right = 1084.11
+margin_bottom = 850.835
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer1Door5" type="TextureButton" parent="."]
+margin_left = 1094.6
+margin_top = 521.836
+margin_right = 1394.6
+margin_bottom = 857.836
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer2Door1" type="TextureButton" parent="."]
+margin_left = 1465.37
+margin_top = -111.46
+margin_right = 1765.37
+margin_bottom = 224.54
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer2Door2" type="TextureButton" parent="."]
+margin_left = 1197.44
+margin_top = -115.364
+margin_right = 1497.44
+margin_bottom = 220.636
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer2Door3" type="TextureButton" parent="."]
+margin_left = 927.425
+margin_top = -116.392
+margin_right = 1227.43
+margin_bottom = 219.608
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer2Door4" type="TextureButton" parent="."]
+margin_left = 656.777
+margin_top = -113.867
+margin_right = 956.777
+margin_bottom = 222.133
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer2Door5" type="TextureButton" parent="."]
+margin_left = 417.183
+margin_top = -106.523
+margin_right = 717.183
+margin_bottom = 229.477
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer3Door1" type="TextureButton" parent="."]
+margin_left = 1216.23
+margin_top = -668.504
+margin_right = 1516.23
+margin_bottom = -332.504
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer3Door2" type="TextureButton" parent="."]
+margin_left = 939.335
+margin_top = -671.769
+margin_right = 1239.34
+margin_bottom = -335.769
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer3Door3" type="TextureButton" parent="."]
+margin_left = 670.322
+margin_top = -670.797
+margin_right = 970.322
+margin_bottom = -334.797
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer3Door4" type="TextureButton" parent="."]
+margin_left = 401.673
+margin_top = -670.272
+margin_right = 701.673
+margin_bottom = -334.272
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer3Door5" type="TextureButton" parent="."]
+margin_left = 160.755
+margin_top = -661.658
+margin_right = 460.755
+margin_bottom = -325.658
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer4Door1" type="TextureButton" parent="."]
+margin_left = 1525.77
+margin_top = -1296.87
+margin_right = 1825.77
+margin_bottom = -960.865
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer4Door2" type="TextureButton" parent="."]
+margin_left = 1251.8
+margin_top = -1296.69
+margin_right = 1551.8
+margin_bottom = -960.69
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer4Door3" type="TextureButton" parent="."]
+margin_left = 980.782
+margin_top = -1296.72
+margin_right = 1280.78
+margin_bottom = -960.718
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer4Door4" type="TextureButton" parent="."]
+margin_left = 713.134
+margin_top = -1297.19
+margin_right = 1013.13
+margin_bottom = -961.193
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer4Door5" type="TextureButton" parent="."]
+margin_left = 471.215
+margin_top = -1286.58
+margin_right = 771.215
+margin_bottom = -950.579
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer5Door1" type="TextureButton" parent="."]
+margin_left = 1078.23
+margin_top = -1914.59
+margin_right = 1378.23
+margin_bottom = -1578.59
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer5Door2" type="TextureButton" parent="."]
+margin_left = 806.264
+margin_top = -1916.49
+margin_right = 1106.26
+margin_bottom = -1580.49
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer5Door3" type="TextureButton" parent="."]
+margin_left = 541.25
+margin_top = -1912.52
+margin_right = 841.25
+margin_bottom = -1576.52
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer5Door4" type="TextureButton" parent="."]
+margin_left = 284.937
+margin_top = -1918.22
+margin_right = 584.937
+margin_bottom = -1582.22
+rect_scale = Vector2( 0.75, 0.75 )
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layer5Door5" type="TextureButton" parent="."]
+margin_left = 1375.07
+margin_top = -1910.47
+margin_right = 1675.07
+margin_bottom = -1574.47
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Staircase1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1698, 670 )
+
+[node name="Staircase2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 97.1602, 36.9451 )
+
+[node name="Staircase3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1705.13, -566.567 )
+
+[node name="Staircase4" parent="." instance=ExtResource( 11 )]
+position = Vector2( 192.914, -1167.54 )
+
+[node name="King" parent="." instance=ExtResource( 2 )]
+position = Vector2( 47.877, 851.707 )
+
+[node name="Camera2D" type="Camera2D" parent="King"]
+current = true
+
+[connection signal="pressed" from="Layer1Door1" to="." method="_on_Door1_pressed"]
+[connection signal="pressed" from="Layer1Door2" to="." method="_on_Door2_pressed"]
+[connection signal="pressed" from="Layer1Door3" to="." method="_on_Door3_pressed"]
+[connection signal="pressed" from="Layer1Door4" to="." method="_on_Door4_pressed"]
+[connection signal="pressed" from="Layer1Door5" to="." method="_on_Door5_pressed"]

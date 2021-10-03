@@ -1,11 +1,11 @@
 extends CanvasLayer
 
+
 func _ready():
 	$NormalLvlDoorOpen.hide()
-	$Qn2/AnsCorrectMsg.hide()
-	$Qn2/AnsWrongMsg.hide()
-	$Qn2/NextButton.hide()
-	$Qn2/AnsButton.hide()
+	$Qn3/AnsCorrectMsg.hide()
+	$Qn3/AnsWrongMsg.hide()
+	$Qn3/AnsButton.hide()
 
 #func _on_Qn1_pressed():
 #	$PopupMenu.show() # display popup
@@ -30,17 +30,26 @@ func _ready():
 
 #Checking Qn1
 func _on_Correct_pressed():
-	$Qn2/AnsCorrectMsg.show()
-	$Qn2/AnsButton.show()
-	$Qn2/NextButton.show()
+	$Qn3/AnsCorrectMsg.show()
+	$Qn3/AnsButton.show()
+	$NormalLvlDoorClosed/CollisionShape2D.remove_and_skip()
+	$NormalLvlDoorOpen.show()
 	
 func _on_Wrong_pressed():
-	$Qn2/AnsWrongMsg.show()
-	$Qn2/AnsButton.show()
-	$Qn2/NextButton.show()
+	$Qn3/AnsWrongMsg.show()
+	$Qn3/AnsButton.show()
+	$NormalLvlDoorClosed/CollisionShape2D.remove_and_skip()
+	$NormalLvlDoorOpen.show()
 	
-func _on_NextButton_pressed():
-	get_tree().change_scene("res://Game Play/NormalLevelQn3.tscn")
+func _on_Open_Door_pressed():
+	var TheRoot = get_node("/root")
+	var NextScene = preload("res://Game Play/Normal Level/NormalLevel.tscn")
+	NextScene = NextScene.instance()
+	
+	var clearedLvl = GlobalArray.clearedLevel[0]
+	NextScene.init(clearedLvl)
+	TheRoot.add_child(NextScene)
+	
 
 const CHAR_READ_RATE = 0.05
 

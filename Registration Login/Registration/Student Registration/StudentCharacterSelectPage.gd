@@ -18,7 +18,7 @@ func _ready():
 
 func _on_BackButton_pressed():
 	# navigate back to previous page
-	get_tree().change_scene("res://Registration Login/Registration/Student Registration/StudentRegistrationPage.tscn")
+	self.queue_free()
 
 
 func _on_SoundButton_pressed():
@@ -39,15 +39,17 @@ func _on_RegisterButton_pressed():
 
 func _on_SamuraiButton_pressed():
 	character = "samurai" # or however the backend stores character
+	$SelectedCharacterLabel.text = character
 
 
 func _on_ArcherButton_pressed():
 	character = "archer" # or however the backend stores character
-
+	$SelectedCharacterLabel.text = character
 
 func _on_HuntressButton_pressed():
 	character = "huntress" # or however the backend stores character
-
+	$SelectedCharacterLabel.text = character
 
 func _on_KingButton_pressed():
 	character = "king" # or however the backend stores character
+	$SelectedCharacterLabel.text = character

@@ -1,0 +1,105 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://sprites/buttons or icons/biscuit popup.png" type="Texture" id=1]
+[ext_resource path="res://sprites/buttons or icons/x button.png" type="Texture" id=2]
+[ext_resource path="res://sprites/buttons or icons/fb icon.png" type="Texture" id=3]
+[ext_resource path="res://sprites/buttons or icons/twitter icon.png" type="Texture" id=4]
+[ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Game Play/Challenge/ShareAchievement.gd" type="Script" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 36
+font_data = ExtResource( 5 )
+
+[node name="ShareAchievement" type="CanvasLayer"]
+script = ExtResource( 6 )
+
+[node name="SharePopup" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -456.0
+margin_top = -308.0
+margin_right = 432.0
+margin_bottom = 332.0
+texture = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="SharePopup"]
+margin_left = 140.0
+margin_top = 148.0
+margin_right = 766.0
+margin_bottom = 207.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Share achievement via:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TwitterLabel" type="Label" parent="SharePopup"]
+margin_left = 543.0
+margin_top = 428.0
+margin_right = 751.0
+margin_bottom = 487.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Twitter"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FacebookLabel" type="Label" parent="SharePopup"]
+margin_left = 140.0
+margin_top = 428.0
+margin_right = 404.0
+margin_bottom = 487.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Facebook"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FacebookButton" type="TextureButton" parent="SharePopup"]
+margin_left = 179.0
+margin_top = 252.0
+margin_right = 355.0
+margin_bottom = 412.0
+texture_normal = ExtResource( 3 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TwitterButton" type="TextureButton" parent="SharePopup"]
+margin_left = 548.0
+margin_top = 252.0
+margin_right = 732.0
+margin_bottom = 412.0
+texture_normal = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CloseButton" type="TextureButton" parent="SharePopup"]
+margin_left = 740.0
+margin_top = 84.0
+margin_right = 804.0
+margin_bottom = 140.0
+texture_normal = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="SharePopup/FacebookButton" to="." method="_on_FacebookButton_pressed"]
+[connection signal="pressed" from="SharePopup/TwitterButton" to="." method="_on_TwitterButton_pressed"]
+[connection signal="pressed" from="SharePopup/CloseButton" to="." method="_on_CloseButton_pressed"]

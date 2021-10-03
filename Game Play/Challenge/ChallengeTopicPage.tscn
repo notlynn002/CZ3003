@@ -1,0 +1,178 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://sprites/buttons or icons/sound on icon.png" type="Texture" id=1]
+[ext_resource path="res://sprites/buttons or icons/sound off icon.png" type="Texture" id=2]
+[ext_resource path="res://sprites/buttons or icons/back button.png" type="Texture" id=3]
+[ext_resource path="res://sprites/buttons or icons/challenge button.png" type="Texture" id=4]
+[ext_resource path="res://sprites/background/sky bg.png" type="Texture" id=5]
+[ext_resource path="res://sprites/buttons or icons/rounded rectangular popup.png" type="Texture" id=6]
+[ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://sprites/buttons or icons/ratio ribbon.png" type="Texture" id=8]
+[ext_resource path="res://sprites/buttons or icons/fraction ribbon.png" type="Texture" id=9]
+[ext_resource path="res://sprites/buttons or icons/numbers ribbon.png" type="Texture" id=10]
+[ext_resource path="res://Game Play/Challenge/ChallengeTopicPage.gd" type="Script" id=11]
+[ext_resource path="res://sprites/buttons or icons/black ratio ribbon.png" type="Texture" id=12]
+[ext_resource path="res://sprites/buttons or icons/black numbers ribbon.png" type="Texture" id=13]
+[ext_resource path="res://sprites/buttons or icons/black fraction ribbon.png" type="Texture" id=14]
+
+[sub_resource type="DynamicFont" id=1]
+size = 64
+font_data = ExtResource( 7 )
+
+[node name="ChallengeTopicPage" type="CanvasLayer"]
+script = ExtResource( 11 )
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton" type="TextureButton" parent="."]
+margin_left = 48.0
+margin_top = 24.0
+margin_right = 144.0
+margin_bottom = 104.0
+texture_normal = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundButton" type="TextureButton" parent="."]
+margin_left = 1787.72
+margin_top = 13.8284
+margin_right = 1908.72
+margin_bottom = 107.828
+texture_normal = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MuteButton" type="TextureButton" parent="."]
+margin_left = 1779.0
+margin_top = 6.0
+margin_right = 1923.0
+margin_bottom = 114.0
+texture_normal = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NoticePopup" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -768.0
+margin_top = -468.0
+margin_right = 767.0
+margin_bottom = 470.0
+texture = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChallengeTopicLabel" type="Label" parent="NoticePopup"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -351.5
+margin_top = 96.0
+margin_right = 464.5
+margin_bottom = 200.0
+custom_fonts/font = SubResource( 1 )
+text = "Challenge Topic"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChallengeButton" type="TextureButton" parent="NoticePopup"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -231.5
+margin_top = -218.0
+margin_right = 288.5
+margin_bottom = -90.0
+texture_normal = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RatioRibbon" type="TextureButton" parent="NoticePopup"]
+margin_left = 392.0
+margin_top = 171.0
+margin_right = 1160.0
+margin_bottom = 427.0
+action_mode = 0
+texture_normal = ExtResource( 8 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FractionRibbon" type="TextureButton" parent="NoticePopup"]
+margin_left = 392.0
+margin_top = 384.0
+margin_right = 1160.0
+margin_bottom = 539.0
+action_mode = 0
+texture_normal = ExtResource( 9 )
+expand = true
+
+[node name="NumbersRibbon" type="TextureButton" parent="NoticePopup"]
+margin_left = 392.0
+margin_top = 536.0
+margin_right = 1176.0
+margin_bottom = 696.0
+focus_mode = 0
+shortcut_in_tooltip = false
+action_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 10 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BlackRatioRibbon" type="TextureButton" parent="NoticePopup"]
+margin_left = 392.0
+margin_top = 224.0
+margin_right = 1160.0
+margin_bottom = 376.0
+texture_normal = ExtResource( 12 )
+expand = true
+
+[node name="BlackFractionRibbon" type="TextureButton" parent="NoticePopup"]
+margin_left = 400.0
+margin_top = 392.0
+margin_right = 1152.0
+margin_bottom = 528.0
+texture_normal = ExtResource( 14 )
+expand = true
+
+[node name="BlackNumbersRibbon" type="TextureButton" parent="NoticePopup"]
+margin_left = 408.0
+margin_top = 544.0
+margin_right = 1168.0
+margin_bottom = 688.0
+texture_normal = ExtResource( 13 )
+expand = true
+
+[connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="pressed" from="SoundButton" to="." method="_on_SoundButton_pressed"]
+[connection signal="pressed" from="MuteButton" to="." method="_on_MuteButton_pressed"]
+[connection signal="pressed" from="NoticePopup/ChallengeButton" to="." method="_on_ChallengeButton_pressed"]
+[connection signal="pressed" from="NoticePopup/RatioRibbon" to="." method="_on_RatioRibbon_pressed"]
+[connection signal="pressed" from="NoticePopup/FractionRibbon" to="." method="_on_FractionRibbon_pressed"]
+[connection signal="pressed" from="NoticePopup/NumbersRibbon" to="." method="_on_NumbersRibbon_pressed"]

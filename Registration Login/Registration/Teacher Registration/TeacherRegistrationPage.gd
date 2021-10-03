@@ -52,5 +52,4 @@ func _on_ConfirmPasswordInput_text_entered(cfm_pw):
 
 
 func _on_RegisterButton_pressed():
-	pass # Replace with function body.
-	# navigate to teacher's home page
+	get_tree().change_scene("res://Teacher/TeacherHomePage.tscn")
