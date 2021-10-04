@@ -22,10 +22,17 @@ func _ready():
 
 
 func _on_ContinueButton_pressed():
-	# navigate to character selectiom page
-	var namePage = preload("res://Registration Login/Registration/Student Registration/GetNamePage.tscn").instance()
-	namePage.init(email, password, classIndex)
-	get_tree().root.add_child(namePage)
+	password = $PasswordInput.text
+	cfm_password = $ConfirmPasswordInput.text
+	email = $EmailInput.text
+	
+	if password == cfm_password:
+		# navigate to character selectiom page
+		var namePage = preload("res://Registration Login/Registration/Student Registration/GetNamePage.tscn").instance()
+		namePage.init(email, password, classIndex)
+		get_tree().root.add_child(namePage)
+	else:
+		$NoMatchLabel.show()
 
 func _on_BackButton_pressed():
 	# navigate back to previous page
@@ -46,19 +53,3 @@ func _on_MuteButton_pressed():
 
 func _on_ClassDropdownButton_item_selected(index):
 	classIndex = index
-
-func _on_PasswordInput_text_entered(pw):
-	password = pw
-	
-
-func _on_ConfirmPasswordInput_text_entered(cfm_pw):
-	cfm_password = cfm_pw
-	
-	if password == cfm_password:
-		$NoMatchLabel.hide()
-	else:
-		$NoMatchLabel.show()
-
-
-func _on_EmailInput_text_entered(emailAddr):
-	email = emailAddr

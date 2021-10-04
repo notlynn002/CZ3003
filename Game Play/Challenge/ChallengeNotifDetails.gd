@@ -58,12 +58,12 @@ func _on_DeclineButton_pressed():
 func _on_DetailsButton_pressed():
 	var scene = preload("res://Game Play/Challenge/ChallengeResultsPage.tscn").instance()
 	scene.init(winner, loser, winnerScore, loserScore, winnerTime, loserTime) # init root node
-	add_child(scene)
+	get_tree().get_root().add_child(scene)
 
 
 func _on_ShareButton_pressed():
 	var scene = preload("res://Game Play/Challenge/ShareAchievement.tscn").instance()
-	add_child(scene)
+	get_tree().get_root().add_child(scene)
 
 
 
