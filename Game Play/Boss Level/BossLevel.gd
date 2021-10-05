@@ -4,7 +4,7 @@ extends CanvasLayer
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var timer = 10.0	# To be changed to 600.0 once testing has been completed
+var timer = 600.0	# To be changed to 600.0 once testing has been completed
 var current_health = 3 setget update_bars
 var question_num = 1
 var correct_ans = 0
@@ -29,7 +29,9 @@ func _ready():
 	$GameOver/QuitButton/QuitLabel.hide()
 	$GameOver/RetryButton.hide()
 	$GameOver/RetryButton/RetryLabel.hide()
-	
+	$monster_alive.show()
+	$monster_dead.hide()
+
 	
 func update_bars(value):
 	current_health = value
@@ -56,6 +58,8 @@ func _on_Correct_pressed():
 		$TowerBackground/Barrier2/CollisionShape2D.remove_and_skip()
 		$BossLvlDoorClosed/CollisionShape2D.remove_and_skip()
 		$BossLvlDoorOpen.show()
+		$monster_alive.hide()
+		$monster_dead.show()
 		$Question/AnsButton.show()
 	question_num += 1
 
