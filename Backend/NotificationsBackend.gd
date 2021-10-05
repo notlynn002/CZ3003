@@ -24,21 +24,21 @@ func _on_Get_Notifications_for_User_button_up():
 	get_notification_for_user('HjgDICIEdI4btnow8RP6')
 	pass
 
-
+# Need find a way to convert time to datetimestamp
 func send_quiz_notification_to_students(studentIdList):
+	var notification = {
+		'message' : 'You have a new quiz to do!',
+		'notificationType' : 'new quiz',
+		'creationDateTime' : OS.get_unix_time()
+	}
+	var task: FirestoreTask
 	var collection : FirestoreCollection = Firebase.Firestore.collection('Notification')
-	var message = 'You have a new quiz to do!'
-	var notificationType = 'new quiz'
-	var time = OS.get_unix_time()
-	#for studentId in studentIdList:
-		
-		#var task: FirestoreTask
-		#var collection: FirestoreCollection = Firebase.Firestore.collection("Question_Attempt")
-		#for question_attempt in question_attempts:
-		#question_attempt["studentID"] = student_id
-		#task = collection.add("", question_attempt)
-		#yield(task, "task_finished")
-		#print(studentId)
+	
+	for studentId in studentIdList:
+		notification['receiverID'] = studentId
+		task = collection.add("", notification)
+		yield(task, "task_finished")
+	print('Notifications added')
 
 # For sending notifications to students when new quiz is created
 func _on_New_Quiz_Notification_button_up():

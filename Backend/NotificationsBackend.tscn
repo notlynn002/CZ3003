@@ -20,7 +20,7 @@ margin_left = 99.8492
 margin_top = 151.317
 margin_right = 409.849
 margin_bottom = 188.317
-text = "Get Notifications for User"
+text = "New Quiz Notification"
 __meta__ = {
 "_edit_use_anchors_": false
 }
