@@ -70,6 +70,7 @@ func get_level_attempt(student_id: String, level_id: String, best: bool) -> Arra
 	var query = FirestoreQuery.new()
 	query.from("Question", false)
 	query.where("levelID", FirestoreQuery.OPERATOR.EQUAL, level_id)
+	query.select([])
 	var task: FirestoreTask = Firebase.Firestore.query(query)
 	var question_docs: Array = yield(task, "task_finished") # Array<FirestoreDocument>
 	if not question_docs:
@@ -187,7 +188,7 @@ func submit_attempts(student_id: String, question_attempts: Array):
 
 
 func _on_Get_level_attempt_button_up():
-	var output = get_level_attempt("dummystudent", "dummylevel1", false)
+	var output = get_level_attempt("dummystudent1", "dummylevel1", false)
 	output = yield(output, "completed")
 	print(output)
 
