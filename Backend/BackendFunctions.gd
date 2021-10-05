@@ -3,7 +3,7 @@ extends Control
 
 
 func _ready():
-	pass # Replace with function body.
+	Firebase.Auth.login_with_email_and_password("test@maildrop.cc", "password")
 
 
 # Get all towers available in database. doc_name = towerID
@@ -50,74 +50,144 @@ func _on_Get_questions_by_level_button_up():
 	get_questions_by_level('dummylevel1')
 	pass # Replace with function body.
 	
-
-func _generate_id(collection_name: String) -> String:
-	var task: FirestoreTask
 	
-	# get the current id
-	var collection: FirestoreCollection = Firebase.Firestore.collection(collection_name)
-	task = collection.get("id")
-	var id_doc: FirestoreDocument = yield(task, "task_finished")
-	var id: int = id_doc.doc_fields["id"]
-	
-	# increment the id and write it back to the collection
-	task = collection.update("id", {"id": id+1})
-	yield(task, "task_finished")
-	
-	return str(id)
-	
-	
-# Returns Array<FirestoreDocument>
 func get_level_attempt(student_id: String, level_id: String, best: bool) -> Array:
-	var query
-	var task: FirestoreTask
+	""" Gets the level question attempts for a student.
 	
+	Args:
+		student_id (String): Student ID.
+		level_id (String): Level ID.
+		best (bool): True for best attempts, false for first attempt.
+	
+	Returns:
+		Array[Dictionary]: The question attempts as Dictionary objects.
+	
+	Raises:
+		ERR_INVALID_PARAMETER: If there are no attempts for the specific student_id, level_id and best values.
+	
+	"""
 	# Get question ids of question in level
-	query = FirestoreQuery.new()
-	query.from("Question")
+	var query = FirestoreQuery.new()
+	query.from("Question", false)
 	query.where("levelID", FirestoreQuery.OPERATOR.EQUAL, level_id)
-	task = Firebase.Firestore.query(query)
+	var task: FirestoreTask = Firebase.Firestore.query(query)
 	var question_docs: Array = yield(task, "task_finished") # Array<FirestoreDocument>
+	if not question_docs:
+		return $error.raise_invalid_parameter_error("'%s' is not a valid level ID" % level_id)
 	
 	# Query question attempts
-	var question_attempt: Dictionary
+	var question_attempt
 	var question_attempts: Array = []
 	for question_doc in question_docs:
 		var question_id: String = question_doc.doc_name
 		query = _get_question_attempt(student_id, question_id, best)
 		question_attempt = yield(query, "completed")
+		if (question_attempt is int):
+			return $error.raise_invalid_parameter_error("Either 'student_id' or 'best' has an invalid value")
 		question_attempts.append(question_attempt)
 	
 	return question_attempts
 	
 	
 func _get_question_attempt(student_id: String, question_id: String,  best: bool) -> Dictionary:
+	""" Gets a question attempt for a student.
+	
+	Args:
+		student_id (String): Student ID.
+		level_id (String): Question ID.
+		best (bool): True for best attempts, false for first attempt.
+	
+	Returns:
+		Dictionary: The question attempt as a Dictionary.
+	
+	Raises:
+		ERR_INVALID_PARAMETER: If there is no attempt for the specific student_id, question_id and best values.
+	
+	"""
 	var query: FirestoreQuery = FirestoreQuery.new()
-	query.from("Question_Attempt")
-	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id)
+	query.from("Question_Attempt", false)
+	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id, FirestoreQuery.OPERATOR.AND)
+	query.where("questionID", FirestoreQuery.OPERATOR.EQUAL, question_id, FirestoreQuery.OPERATOR.AND)
 	query.where("best", FirestoreQuery.OPERATOR.EQUAL, best)
-	query.where("questionID", FirestoreQuery.OPERATOR.EQUAL, question_id)
+	
 	var task: FirestoreTask = Firebase.Firestore.query(query)
-	var data: Array =  yield(task, "task_finished") # Array<FirestoreDocument>
-	return data[0].doc_fields
+	var data: Array =  yield(task, "task_finished")
+	if not data:
+		return $error.raise_invalid_parameter_error("Either 'student_id', 'question_id' or 'best' has an invalid value")
+	var attempt: Dictionary
+	for doc in data:
+		attempt = doc.doc_fields
+		if (attempt["studentID"]==student_id) and (attempt["questionID"]==question_id) and (attempt["best"]==best):
+			return attempt
+	return $error.raise_invalid_parameter_error("Either 'student_id', 'question_id' or 'best' has an invalid value")
 	
 
-# question_attempts: Array<Dictionary>
+func _check_question_attempt(question_attempt: Dictionary) -> int:
+	"""Checks whether a question attempt Dictionary has the correct fields and field values.
+	
+	Args:
+		question_attempt (Dictionary): A question attempt.
+	
+	Returns:
+		int: OK if all fields are valid
+	
+	Raises:
+		ERR_INVALID_PARAMETER: If there is a missing field, or if a field has an invalid value.
+	
+	"""
+	# Check questionID
+	var value = question_attempt.get("questionID")
+	if not value:
+		return $error.raise_invalid_parameter_error("Question attempt is missing the 'questionID' field")
+	elif not value is String:
+		return $error.raise_invalid_parameter_error("Question attempt does not have a String value for the 'questionID' field")
+	
+	# Check best and stuAttemptStatus
+	for field in ["best", "stuAttemptStatus"]:
+		value = question_attempt.get(field)
+		if value == null:
+			return $error.raise_invalid_parameter_error("Question attempt is missing the '%s' field" % field)
+		elif not value is bool:
+			return $error.raise_invalid_parameter_error("Question attempt does not have a bool value for the '%s' field" % field)
+		
+	# Check stuAttemptDuration
+	value = question_attempt.get("stuAttemptDuration")
+	if not value:
+		return $error.raise_invalid_parameter_error("Question attempt is missing the 'stuAttemptDuration' field")
+	elif not value is int:
+		return $error.raise_invalid_parameter_error("Question attempt does not have an int value for the 'stuAttemptDuration' field")
+	
+	return OK
+
+
 func submit_attempts(student_id: String, question_attempts: Array):
-	var temp
-	var id: String
+	"""Write a student's question attempts to the database.
+	
+	Args:
+		student_id (String): Student ID.
+		question_attempts (Array[Dictionary]): The question attempts as Dictionary objects.
+		
+	Raises:
+		ERR_INVALID_PARAMETER: If a question attempt Dictionary has a missing or invalid field.
+	
+	"""
+	# Check if question attempts have the correct fields
+	var error: int
+	for i in range(question_attempts.size()):
+		error = _check_question_attempt(question_attempts[i])
+		if error != OK:
+			return $error.raise_invalid_parameter_error("Question attempt at index %d has a missing or invalid field" % i)
+		
 	var task: FirestoreTask
 	var collection: FirestoreCollection = Firebase.Firestore.collection("Question_Attempt")
 	for question_attempt in question_attempts:
-		temp = _generate_id("Question_Attempt")
-		id = yield(temp, "completed")
 		question_attempt["studentID"] = student_id
-		task = collection.add(id, question_attempt)
+		task = collection.add("", question_attempt)
 		yield(task, "task_finished")
 
 
 func _on_Get_level_attempt_button_up():
-	var output = get_level_attempt("dummystudent1", "dummylevel1", false)
+	var output = get_level_attempt("dummystudent", "dummylevel1", false)
 	output = yield(output, "completed")
 	print(output)
 
@@ -127,6 +197,18 @@ func _on_sumbit_attempt_button_up():
 	var attempt2: Dictionary = {"best": true, "questionID": "dummyqn2", "stuAttemptDuration": 102, "stuAttemptStatus": true}
 	var attempt3: Dictionary = {"best": true, "questionID": "dummyqn3", "stuAttemptDuration": 100, "stuAttemptStatus": true}
 	var output = submit_attempts("dummystudent1", [attempt1, attempt2, attempt3])
-	output = yield(output, "completed")
-	print("submit_attempts() successful")
+	if not output is int:
+		output = yield(output, "completed")
+	print("submit_attempts() completed")
 
+
+
+func _on_test_button_button_up():
+	var output = _get_question_attempt("dummystudent1", "dummyqn1",  false)
+	output = yield(output, "completed")
+	print(output)
+	#print(output == ERR_INVALID_PARAMETER)
+
+
+func _on_login_button_up():
+	Firebase.Auth.login_with_email_and_password("test@maildrop.cc", "password")
