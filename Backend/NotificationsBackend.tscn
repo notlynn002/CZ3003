@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Backend/NotificationsBackend.gd" type="Script" id=1]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="Get Notifications for User" type="Button" parent="."]
+margin_left = 104.889
+margin_top = 74.7143
+margin_right = 414.889
+margin_bottom = 111.714
+text = "Get Notifications for User"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="New Quiz Notification" type="Button" parent="."]
+margin_left = 99.8492
+margin_top = 151.317
+margin_right = 409.849
+margin_bottom = 188.317
+text = "Get Notifications for User"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="button_up" from="Get Notifications for User" to="." method="_on_Get_Notifications_for_User_button_up"]
+[connection signal="button_up" from="New Quiz Notification" to="." method="_on_New_Quiz_Notification_button_up"]
