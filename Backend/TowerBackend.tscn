@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Backend/BackendFunctions.gd" type="Script" id=1]
-[ext_resource path="res://Backend/Errors.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Backend/Errors.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Backend/TowerBackend.gd" type="Script" id=2]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -10,7 +10,7 @@ margin_left = 3.5636
 margin_top = -1.42542
 margin_right = 3.5636
 margin_bottom = -1.42542
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -76,7 +76,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="error" parent="." instance=ExtResource( 2 )]
+[node name="error" parent="." instance=ExtResource( 1 )]
 margin_left = -2.5636
 margin_top = 5.42542
 margin_right = 37.4364
