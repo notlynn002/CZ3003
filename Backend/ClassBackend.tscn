@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Backend/ClassBackend.gd" type="Script" id=1]
+[ext_resource path="res://Backend/Errors.tscn" type="PackedScene" id=2]
+
+[node name="Control" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="error" parent="." instance=ExtResource( 2 )]
+margin_left = 80.0
+margin_top = 97.0
+margin_right = 120.0
+margin_bottom = 137.0
+
+[node name="test" type="Button" parent="."]
+margin_left = 250.0
+margin_top = 78.0
+margin_right = 494.0
+margin_bottom = 193.0
+text = "test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="button_up" from="test" to="." method="_on_test_button_up"]
