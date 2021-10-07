@@ -1,0 +1,81 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Backend/QuizBackend.gd" type="Script" id=1]
+[ext_resource path="res://Backend/Errors.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Backend/Sorters.tscn" type="PackedScene" id=3]
+
+[node name="Control" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="test" type="Button" parent="."]
+margin_left = 156.0
+margin_top = 59.0
+margin_right = 368.0
+margin_bottom = 167.0
+text = "test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="create quiz" type="Button" parent="."]
+margin_left = 669.43
+margin_top = 52.9574
+margin_right = 881.43
+margin_bottom = 160.957
+text = "create quiz"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="delete quiz" type="Button" parent="."]
+margin_left = 669.43
+margin_top = 210.447
+margin_right = 881.43
+margin_bottom = 318.448
+text = "delete quiz"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="get quizzes by class" type="Button" parent="."]
+margin_left = 414.925
+margin_top = 55.8834
+margin_right = 626.925
+margin_bottom = 163.883
+text = "get quizzes by class"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="update quiz" type="Button" parent="."]
+margin_left = 672.426
+margin_top = 357.282
+margin_right = 884.426
+margin_bottom = 465.282
+text = "update quiz"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="error" parent="." instance=ExtResource( 2 )]
+margin_left = 27.0
+margin_top = 22.0
+margin_right = 67.0
+margin_bottom = 62.0
+
+[node name="sorter" parent="." instance=ExtResource( 3 )]
+margin_left = 52.0
+margin_top = 107.0
+margin_right = 92.0
+margin_bottom = 147.0
+
+[connection signal="button_up" from="test" to="." method="_on_test_button_up"]
+[connection signal="button_up" from="create quiz" to="." method="_on_create_quiz_button_up"]
+[connection signal="button_up" from="delete quiz" to="." method="_on_delete_quiz_button_up"]
+[connection signal="button_up" from="get quizzes by class" to="." method="_on_get_quizzes_by_class_button_up"]
+[connection signal="button_up" from="update quiz" to="." method="_on_update_quiz_button_up"]
