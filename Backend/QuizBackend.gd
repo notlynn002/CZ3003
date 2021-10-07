@@ -61,21 +61,24 @@ func create_quiz(quiz_tower_id: String, class_id: String, quiz_name: String, max
 	if not class_doc is FirestoreDocument:
 		return $error.raise_invalid_parameter_error("'class_id' argument is invalid")
 	
+
 	# Write quiz level to Level collection
 	# Create quiz id
-	var quiz_level_id: String = quiz["quizName"].replace(",", " ") + "-quiz"
+	var quiz_level_id: String = "quiz-" + quiz["quizName"].replace(" ", "-")
 	# remove questions from quiz dict
 	quiz.erase("questions")
 	# write data to level collection
 	collection = Firebase.Firestore.collection("Level")
 	task = collection.add(quiz_level_id, quiz)
-	var doc: FirestoreDocument = yield(task, "task_finished")
+	var doc = yield(task, "task_finished")
+	if not doc is FirestoreDocument:
+		return $error.raise_invalid_parameter_error("'%s' is already the name of an existing quiz" % quiz["quizName"])
 	
 	# Add questions
 	collection = Firebase.Firestore.collection("Question")
 	var quiz_question_id: String
 	for question in questions:
-		quiz_question_id = quiz_level_id + question["questionNo"]
+		quiz_question_id = quiz_level_id + "-" + str(question["questionNo"])
 		question["levelID"] = quiz_level_id
 		task = collection.add(quiz_question_id, question)
 		yield(task, "task_finished")
@@ -313,9 +316,10 @@ func update_quiz(quiz_level_id: String, quiz: Dictionary):
 
 func _on_test_button_up():
 	var collection = Firebase.Firestore.collection("Level")
-	var task = collection.add("test", {"test1": "test1"})
+	var task = collection.get("test")
 	var output = yield(task, "task_finished")
 	print(output)
+	print("dones")
 	"""
 	var temp1 = Firebase.Firestore.collection("Level")
 	var temp2 = temp1.get("a8tIZLze9Jp8h8kmEfuJ")
@@ -335,41 +339,38 @@ func _on_create_quiz_button_up():
 	var publishing_date2 = {"year": 2021, "month": 11, "day": 11, "hour": 2, "minute": 30, "second": 0}
 	var publishing_date3 = {"year": 2021, "month": 10, "day": 11, "hour": 2, "minute": 30, "second": 0}
 	var output = yield(
-		create_quiz("quiz-tower", class_id, "quiz 1", 600, 3, publishing_date1, [qn1, qn2, qn3]), 
+		create_quiz("quiz-tower", class_id, "quiz 1", 600, 3, publishing_date1, [qn1.duplicate(true), qn2.duplicate(true), qn3.duplicate(true)]), 
 		"completed"
 		)
 	print(output)
 	print("create quiz 1 done")
-	create_quiz("quiz-tower", class_id, "quiz 2", 600, 3, publishing_date2, [qn1, qn2, qn3])
-	"""
 	output = yield(
-		create_quiz("quiz-tower", class_id, "quiz 2", 600, 3, publishing_date2, [qn1, qn2, qn3]), 
+		create_quiz("quiz-tower", class_id, "quiz 2", 600, 3, publishing_date2, [qn1.duplicate(true), qn2.duplicate(true), qn3.duplicate(true)]), 
 		"completed"
 		)
 	print(output)
 	print("create quiz 2 done")
 	output = yield(
-		create_quiz("quiz-tower", class_id, "quiz 3", 600, 3, publishing_date1, [qn1, qn2, qn3]), 
+		create_quiz("quiz-tower", class_id, "quiz 3", 600, 3, publishing_date1, [qn1.duplicate(true), qn2.duplicate(true), qn3.duplicate(true)]), 
 		"completed"
 		)
 	print(output)
 	print("create quiz 3 done")
 	output = yield(
-		create_quiz("quiz-tower", class_id, "quiz 4", 600, 3, publishing_date3, [qn1, qn2, qn3]), 
+		create_quiz("quiz-tower", class_id, "quiz 4", 600, 3, publishing_date3, [qn1.duplicate(true), qn2.duplicate(true), qn3.duplicate(true)]), 
 		"completed"
 		)
 	print(output)
 	print("create quiz 4 done")
-	"""
 	print("create quiz done")
 
 
 func _on_delete_quiz_button_up():
-	var quiz_level_id = "HfQ3oQ9icuBemxNeVz0V"
 	var class_id = "7UqkzOmQq0LeNJVbgN6r"
-	var output = delete_quiz(quiz_level_id, class_id)
-	output = yield(output, "completed")
-	print(output)
+	for quiz_level_id in ["quiz-quiz-3", "quiz-quiz-4"]:
+		var output = delete_quiz(quiz_level_id, class_id)
+		output = yield(output, "completed")
+		print("deleted %s" % quiz_level_id)
 	print("delete quiz done")
 
 

@@ -8,7 +8,6 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Firebase.Auth.logout()
 	Firebase.Auth.login_with_email_and_password("test@maildrop.cc", "password")
 	#pass # Replace with function body.
 
@@ -25,15 +24,21 @@ func create_class(teacher_id: String, class_name_: String):
 		teacher_id (String): Teacher ID.
 		class_name_ (String): Class name.
 	
+	Raises:
+		ERR_INVALID_PARAMETER: If class_name_ is the name of an existing class.
+	
 	"""
+	var class_id: String = class_name_.replace(" ", "-")
 	var class_fields: Dictionary = {
 		"teacherID": teacher_id,
 		"className": class_name_,
 		"quizList": []
 	}
 	var collection: FirestoreCollection = Firebase.Firestore.collection("Class")
-	var task: FirestoreTask = collection.add("", class_fields)
-	yield(task, "task_finished")
+	var task: FirestoreTask = collection.add(class_id, class_fields)
+	var doc = yield(task, "task_finished")
+	if not doc is FirestoreDocument:
+		$error.raise_invalid_parameter_error("'%s' is already the name of an existing class." % class_name_)
 
 
 func _query_classes(teacher_id: String) -> Array:
@@ -125,6 +130,18 @@ func get_classes(teacher_id: String) -> Array:
 	return classes
 	
 
+func delete_class(class_id: String):
+	""" Delete a class from the database.
+	
+	Args:
+		class_id (String): Class ID.
+	
+	"""
+	var collection: FirestoreCollection = Firebase.Firestore.collection("Class")
+	var task: FirestoreTask = collection.delete(class_id)
+	var doc = yield(task, "task_finished")
+	
+	
 func _on_test_button_up():
 	"""
 	var output = create_class("dummyteacher2", "class D")
@@ -136,8 +153,26 @@ func _on_test_button_up():
 	output = yield(output, "completed")
 	print(output)
 	"""
-	#var collection = Firebase.Firestore.collection("Level")
-	var task = Firebase.Firestore.list()
+	var collection = Firebase.Firestore.collection("Level")
+	var task = collection.get("test")
 	var output = yield(task, "task_finished")
 	print(output)
 	print("dones")
+
+
+func _on_get_classes_button_up():
+	var teacher_id: String = "dummyteacher1"
+	var output = yield(get_classes(teacher_id), "completed")
+	print(output)
+
+
+func _on_add_class_button_up():
+	var teacher_id: String = "dummyteacher1"
+	for class_name_ in ["Class A", "Class C", "Class D"]:
+		yield(create_class(teacher_id, class_name_), "completed")
+	yield(create_class("dummyteacher2", "Class B"), "completed")
+
+
+func _on_delete_class_button_up():
+	for class_id in ["GoMgztUAVdjMLzdOZqDK", "GuZdfFqnzz0RBiw6jAkA", "uIiaQ6tIXWY4XXr3EjpG", "wRMIZo7Tdmxnl2eANSJh"]:
+		yield(delete_class(class_id), "completed")

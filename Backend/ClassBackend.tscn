@@ -18,13 +18,46 @@ margin_right = 120.0
 margin_bottom = 137.0
 
 [node name="test" type="Button" parent="."]
-margin_left = 250.0
-margin_top = 78.0
-margin_right = 494.0
-margin_bottom = 193.0
+margin_left = 79.0
+margin_top = 67.0
+margin_right = 323.0
+margin_bottom = 182.0
 text = "test"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="get classes" type="Button" parent="."]
+margin_left = 371.0
+margin_top = 62.0
+margin_right = 615.0
+margin_bottom = 177.0
+text = "get classes"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="add class" type="Button" parent="."]
+margin_left = 672.0
+margin_top = 58.0
+margin_right = 916.0
+margin_bottom = 173.0
+text = "add class"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="delete class" type="Button" parent="."]
+margin_left = 669.0
+margin_top = 223.0
+margin_right = 913.0
+margin_bottom = 338.0
+text = "delete class"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="button_up" from="test" to="." method="_on_test_button_up"]
+[connection signal="button_up" from="get classes" to="." method="_on_get_classes_button_up"]
+[connection signal="button_up" from="add class" to="." method="_on_add_class_button_up"]
+[connection signal="button_up" from="delete class" to="." method="_on_delete_class_button_up"]
