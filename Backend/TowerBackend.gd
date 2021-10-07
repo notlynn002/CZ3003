@@ -61,6 +61,12 @@ func get_level_attempt(student_id: String, level_id: String, best: bool) -> Arra
 	
 	Returns:
 		Array[Dictionary]: The question attempts as Dictionary objects.
+			Each Dictionary contains following keys-value pairs (all keys are Strings):
+				studentID (String): Student ID of the student who made the attempt.
+				questionID (String): Question ID of the question attempted.
+				best (bool): True if the attempt is the student's best attempt, false if it is the student's first attempt
+				stuAttemptDuration (int): Amount of time the student took to complete the question, formatted as total seconds.
+				stuAttemptStatus (bool): True if the student got the question correct, false otherwise
 	
 	Raises:
 		ERR_INVALID_PARAMETER: If there are no attempts for the specific student_id, level_id and best values.
@@ -121,44 +127,6 @@ func _get_question_attempt(student_id: String, question_id: String,  best: bool)
 		if (attempt["studentID"]==student_id) and (attempt["questionID"]==question_id) and (attempt["best"]==best):
 			return attempt
 	return $error.raise_invalid_parameter_error("Either 'student_id', 'question_id' or 'best' has an invalid value")
-	
-
-func _check_question_attempt(question_attempt: Dictionary) -> int:
-	"""Checks whether a question attempt Dictionary has the correct fields and field values.
-	
-	Args:
-		question_attempt (Dictionary): A question attempt.
-	
-	Returns:
-		int: OK if all fields are valid
-	
-	Raises:
-		ERR_INVALID_PARAMETER: If there is a missing field, or if a field has an invalid value.
-	
-	"""
-	# Check questionID
-	var value = question_attempt.get("questionID")
-	if not value:
-		return $error.raise_invalid_parameter_error("Question attempt is missing the 'questionID' field")
-	elif not value is String:
-		return $error.raise_invalid_parameter_error("Question attempt does not have a String value for the 'questionID' field")
-	
-	# Check best and stuAttemptStatus
-	for field in ["best", "stuAttemptStatus"]:
-		value = question_attempt.get(field)
-		if value == null:
-			return $error.raise_invalid_parameter_error("Question attempt is missing the '%s' field" % field)
-		elif not value is bool:
-			return $error.raise_invalid_parameter_error("Question attempt does not have a bool value for the '%s' field" % field)
-		
-	# Check stuAttemptDuration
-	value = question_attempt.get("stuAttemptDuration")
-	if not value:
-		return $error.raise_invalid_parameter_error("Question attempt is missing the 'stuAttemptDuration' field")
-	elif not value is int:
-		return $error.raise_invalid_parameter_error("Question attempt does not have an int value for the 'stuAttemptDuration' field")
-	
-	return OK
 
 
 func submit_attempts(student_id: String, question_attempts: Array):
@@ -173,10 +141,8 @@ func submit_attempts(student_id: String, question_attempts: Array):
 	
 	"""
 	# Check if question attempts have the correct fields
-	var error: int
 	for i in range(question_attempts.size()):
-		error = _check_question_attempt(question_attempts[i])
-		if error != OK:
+		if $error.check_question_attempt(question_attempts[i]) != OK:
 			return $error.raise_invalid_parameter_error("Question attempt at index %d has a missing or invalid field" % i)
 		
 	var task: FirestoreTask
