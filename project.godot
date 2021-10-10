@@ -241,7 +241,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/calendar_button/plugin.cfg", "res://addons/github-integration/plugin.cfg", "res://addons/godot-firebase/plugin.cfg", "res://addons/http-sse-client/plugin.cfg", "res://addons/silicon.util.custom_docs/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/github-integration/plugin.cfg", "res://addons/godot-firebase/plugin.cfg", "res://addons/http-sse-client/plugin.cfg", "res://addons/silicon.util.custom_docs/plugin.cfg" )
 
 [firebase]
 
