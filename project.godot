@@ -219,7 +219,7 @@ _global_script_class_icons={
 [application]
 
 config/name="SSAD game"
-run/main_scene="res://Registration Login/StartPage.tscn"
+run/main_scene="res://Backend/TowerBackend.tscn"
 config/icon="res://icon.png"
 
 [autoload]
