@@ -95,9 +95,8 @@ func check_quiz_question(question: Dictionary, complete: bool = true) -> int:
 	"""
 	var value
 	var string_fields: Array = ["questionID", "levelID", "questionBody", "questionSoln", "questionExplanation"]
-	var int_fields: Array = ["questionNo"]
 	var optional_fields: Array = ["questionID", "levelID"]
-	var all_fields: Array = string_fields + int_fields + ["questionOptions"]
+	var all_fields: Array = string_fields + ["questionOptions"]
 	if not complete:
 		for field in optional_fields:
 			all_fields.erase(field)
@@ -111,9 +110,6 @@ func check_quiz_question(question: Dictionary, complete: bool = true) -> int:
 			if field in string_fields:
 				if not value is String:
 					return raise_invalid_parameter_error("'%s' field of question must be a String" % field)
-			elif field in int_fields:
-				if not value is int:
-					return raise_invalid_parameter_error("'%s'' field of question must be an int" % field)
 			
 			# Unique checks	
 			if field == "questionOptions":
@@ -136,7 +132,7 @@ func check_quiz_question(question: Dictionary, complete: bool = true) -> int:
 	
 	# Check for missing fields
 	if all_fields:
-		return .raise_invalid_parameter_error("'%s' field is missing from question", all_fields[0])
+		return raise_invalid_parameter_error("'%s' field is missing from question", all_fields[0])
 	
 	return OK
 
@@ -255,5 +251,5 @@ func raise_invalid_parameter_error(message: String, backtrack: int = 1) -> int:
 		if caller["source"] != file_name:
 			function = caller["function"] + "()"
 			break
-	print ("[Invalid Parameter Error] >> %s: %s" % [function, message])
+	printerr("[Invalid Parameter Error] >> %s: %s" % [function, message])
 	return ERR_INVALID_PARAMETER

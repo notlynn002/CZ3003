@@ -30,7 +30,6 @@ func create_quiz(quiz_tower_id: String, class_id: String, quiz_name: String, max
 		questions (Array[Dictionary]): Quiz questions as Dictionary objects.
 			All Dictionary keys should be Strings.
 			Each Dictionary should contains following keys-value pairs:
-				questionNo (int): Question number.
 				questionBody (String): Question body.
 				questionOptions (Array[String]): Question options.
 				questionSoln (String): Question solution.
@@ -76,11 +75,9 @@ func create_quiz(quiz_tower_id: String, class_id: String, quiz_name: String, max
 	
 	# Add questions
 	collection = Firebase.Firestore.collection("Question")
-	var quiz_question_id: String
 	for question in questions:
-		quiz_question_id = quiz_level_id + "-" + str(question["questionNo"])
 		question["levelID"] = quiz_level_id
-		task = collection.add(quiz_question_id, question)
+		task = collection.add("", question)
 		yield(task, "task_finished")
 	
 	# Add quiz id to class
@@ -151,7 +148,6 @@ func _query_quiz_questions(quiz_level_id: String) -> Array:
 	var query: FirestoreQuery = FirestoreQuery.new()
 	query.from("Question")
 	query.where("levelID", FirestoreQuery.OPERATOR.EQUAL, quiz_level_id) 
-	query.order_by("questionNo")
 	var task: FirestoreTask = Firebase.Firestore.query(query)
 	var question_docs: Array = yield(task, "task_finished")
 	return question_docs
@@ -277,8 +273,8 @@ func get_quizzes_by_class(class_id: String) -> Array:
 	
 func update_quiz(quiz_level_id: String, quiz: Dictionary):
 	# Check quiz for invalid fields
-	if $error.check_quiz(quiz) != OK:
-		return $error.raise_invalid_parameter_error("'quiz' Dictionary has an invalid field")
+	#if $error.check_quiz(quiz, false) != OK:
+	#	return $error.raise_invalid_parameter_error("'quiz' Dictionary has an invalid field")
 	
 	# Update quiz settings
 	var new_questions: Array = quiz["questions"]
@@ -290,24 +286,24 @@ func update_quiz(quiz_level_id: String, quiz: Dictionary):
 		return $error.raise_invalid_parameter_error("'quiz_level_id' argument is not a valid quiz level ID")
 	
 	# Get old questions
+	var old_questions: Array = yield(_query_quiz_questions(quiz_level_id), "completed")
 	var old_question_ids: Array
-	for old_question in _query_quiz_questions(quiz_level_id):
+	for old_question in old_questions:
 		old_question_ids.append(old_question.doc_name)
 	# Update questions
-	var new_question_id: String
+	var new_question_id
 	collection = Firebase.Firestore.collection("Question")
 	for new_question in new_questions:
-		new_question_id = new_question["questionID"]
-		new_question.erase("questionID")
-		# Update existing questions
-		if new_question_id in old_question_ids:
+		# Update questions
+		new_question_id = new_question.get("questionID")
+		if new_question_id != null:
+			new_question.erase("questionID")
 			task = collection.update(new_question_id, new_question)
-			yield(task, "task_finished")
 			old_question_ids.erase(new_question_id)
-		# Add new questions
 		else:
-			task = collection.add(new_question_id, new_question)
-			yield(task, "task_finished")
+			new_question["levelID"] = quiz_level_id
+			task = collection.add("", new_question)
+		yield(task, "task_finished")
 	# Delete remaining old questions
 	for old_question_id in old_question_ids:
 		task = collection.delete(old_question_id)
@@ -330,10 +326,10 @@ func _on_test_button_up():
 
 
 func _on_create_quiz_button_up():
-	var qn1 = {"questionNo": 1, "questionBody": "4 + 2 = ?", "questionSoln": "6", "questionExplanation": "count", "questionOptions": ["1", "2", "3", "6"]}
-	var qn2 = {"questionNo": 2, "questionBody": "5 x 2 = ?", "questionSoln": "10", "questionExplanation": "count", "questionOptions": ["1", "2", "3", "10"]}
-	var qn3 = {"questionNo": 3, "questionBody": "4 - 2 = ?", "questionSoln": "2", "questionExplanation": "count", "questionOptions": ["1", "2", "3", "6"]}
-	var class_id = "7UqkzOmQq0LeNJVbgN6r"
+	var qn1 = {"questionBody": "4 + 2 = ?", "questionSoln": "6", "questionExplanation": "count", "questionOptions": ["1", "2", "3", "6"]}
+	var qn2 = {"questionBody": "5 x 2 = ?", "questionSoln": "10", "questionExplanation": "count", "questionOptions": ["1", "2", "3", "10"]}
+	var qn3 = {"questionBody": "4 - 2 = ?", "questionSoln": "2", "questionExplanation": "count", "questionOptions": ["1", "2", "3", "6"]}
+	var class_id = "Class-A"
 	# 10.30 am in sgt
 	var publishing_date1 = {"year": 2021, "month": 11, "day": 16, "hour": 2, "minute": 30, "second": 0}
 	var publishing_date2 = {"year": 2021, "month": 11, "day": 11, "hour": 2, "minute": 30, "second": 0}
@@ -366,8 +362,8 @@ func _on_create_quiz_button_up():
 
 
 func _on_delete_quiz_button_up():
-	var class_id = "7UqkzOmQq0LeNJVbgN6r"
-	for quiz_level_id in ["quiz-quiz-3", "quiz-quiz-4"]:
+	var class_id = "Class-A"
+	for quiz_level_id in ["quiz-quiz-4"]:
 		var output = delete_quiz(quiz_level_id, class_id)
 		output = yield(output, "completed")
 		print("deleted %s" % quiz_level_id)
@@ -375,7 +371,7 @@ func _on_delete_quiz_button_up():
 
 
 func _on_get_quizzes_by_class_button_up():
-	var class_id = "7UqkzOmQq0LeNJVbgN6r"
+	var class_id = "Class-A"
 	var output = get_quizzes_by_class(class_id)
 	output = yield(output, "completed")
 	for e in output:
@@ -386,4 +382,12 @@ func _on_get_quizzes_by_class_button_up():
 
 
 func _on_update_quiz_button_up():
-	pass # Replace with function body.
+	var quiz_id = "quiz-quiz-1"
+	var quiz = yield(get_quiz(quiz_id), "completed")
+	var questions = quiz["questions"]
+	questions[0]["questionExplanation"] = "use calculator"
+	var qn4 = {"questionBody": "4 + 1 = ?", "questionSoln": "5", "questionExplanation": "take this L", "questionOptions": ["1", "2", "3", "5"]}
+	questions.append(qn4)
+	quiz["questions"] = questions
+	yield(update_quiz(quiz_id, quiz), "completed")
+	print("update done")
