@@ -36,7 +36,6 @@ func send_quiz_notification_to_students(studentIdList):
 		notification['receiverID'] = studentId
 		task = collection.add("", notification)
 		yield(task, "task_finished")
-	print('Notifications added')
 
 func _on_New_Quiz_Notification_button_up():
 	var studentList = ['asd','wqe','zxc']

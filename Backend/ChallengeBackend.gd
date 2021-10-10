@@ -52,7 +52,7 @@ func getRandomQuestionId(topic):
 	rng.randomize()
 	var random = []
 	while(len(random)< 10):
-		var number = rng.randi_range(0, len(questionIds))
+		var number = rng.randi_range(0, len(questionIds)-1)
 		if (number in random):
 			pass
 		else:
@@ -62,9 +62,40 @@ func getRandomQuestionId(topic):
 		randomed_qn_ids.append(questionIds[i])
 	return randomed_qn_ids
 
-# Needs to take in topic name
-func _on_Create_Challenge_button_up():
+
+#Pass in topic name
+func _on_Get_10_Random_Qns_button_up():
 	var topic = 'Four Operations' # Example topic name
 	
 	var challenge_questions = yield(getRandomQuestionId(topic), 'completed')
 	print(challenge_questions)
+
+
+func createChallenge(challengeQns, challenger_time, challenger_score, challenger_id, challengee_id):
+	var challengeDetails = {
+		'questionList' : challengeQns,
+		'challengerTime' : challenger_time,
+		'challengerScore' : challenger_score,
+		'challengerID' : challenger_id,
+		'challengeeID' : challengee_id
+	}
+	
+	var task: FirestoreTask
+	var collection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
+	
+	task = collection.add("", challengeDetails)
+	yield(task, "task_finished")
+	print('Added Challenge')
+
+#
+func _on_Create_Challenge_button_up():
+	# Example inputs
+	var topic = 'Four Operations' # Example topic name
+	var challenge_questions = yield(getRandomQuestionId(topic), 'completed') # Example questions
+	var challenger_time = 5
+	var challenger_score = 5
+	var challenger_id = 'XKwVQ9EqJ7xjEhHoPr0A'
+	var challengee_id = ['P8zkYTNczGZcwLMnkbQBJsscBNp1']
+	
+	# Calling of function
+	yield(createChallenge(challenge_questions, challenger_time, challenger_score, challenger_id, challengee_id), 'completed')
