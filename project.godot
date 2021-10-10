@@ -14,6 +14,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/silicon.util.custom_docs/doc_item/argument_doc_item.gd"
 }, {
+"base": "Reference",
+"class": "Calendar",
+"language": "GDScript",
+"path": "res://addons/calendar_button/class/Calendar.gd"
+}, {
+"base": "Reference",
+"class": "CalendarButtons",
+"language": "GDScript",
+"path": "res://addons/calendar_button/scripts/calendar_buttons.gd"
+}, {
 "base": "DocItem",
 "class": "ClassDocItem",
 "language": "GDScript",
@@ -28,6 +38,11 @@ _global_script_classes=[ {
 "class": "ContributorClass",
 "language": "GDScript",
 "path": "res://addons/github-integration/scripts/ContributorClass.gd"
+}, {
+"base": "Reference",
+"class": "Date",
+"language": "GDScript",
+"path": "res://addons/calendar_button/class/Date.gd"
 }, {
 "base": "Reference",
 "class": "DocExporter",
@@ -158,12 +173,20 @@ _global_script_classes=[ {
 "class": "StorageTask",
 "language": "GDScript",
 "path": "res://addons/godot-firebase/storage/storage_task.gd"
+}, {
+"base": "Reference",
+"class": "WindowRestrictor",
+"language": "GDScript",
+"path": "res://addons/calendar_button/scripts/window_restrictor.gd"
 } ]
 _global_script_class_icons={
 "ArgumentDocItem": "",
+"Calendar": "",
+"CalendarButtons": "",
 "ClassDocItem": "",
 "ConstantDocItem": "",
 "ContributorClass": "",
+"Date": "",
 "DocExporter": "",
 "DocItem": "",
 "FirebaseAuth": "",
@@ -189,7 +212,8 @@ _global_script_class_icons={
 "RepositoryItem": "",
 "SignalDocItem": "",
 "StorageReference": "",
-"StorageTask": ""
+"StorageTask": "",
+"WindowRestrictor": ""
 }
 
 [application]
@@ -217,7 +241,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/github-integration/plugin.cfg", "res://addons/godot-firebase/plugin.cfg", "res://addons/http-sse-client/plugin.cfg", "res://addons/silicon.util.custom_docs/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/calendar_button/plugin.cfg", "res://addons/github-integration/plugin.cfg", "res://addons/godot-firebase/plugin.cfg", "res://addons/http-sse-client/plugin.cfg", "res://addons/silicon.util.custom_docs/plugin.cfg" )
 
 [firebase]
 
