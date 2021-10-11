@@ -7,7 +7,9 @@ func _ready():
 	pass
 	
 func _on_CreateQuizButton_pressed():
-	get_tree().change_scene("res://Teacher/Create Quiz/QuizCreationPage.tscn")
+	var root = get_tree().root
+	var createQuizPage = preload('res://Teacher/create quiz/QuizCreationPage.tscn').instance()
+	root.add_child(createQuizPage)
 
 func _on_ManageClassButton_pressed():
 	get_tree().change_scene("res://Teacher/Manage Class/ManageClass.tscn")
