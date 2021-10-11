@@ -1,5 +1,3 @@
-tool
-
 class_name Error
 
 const file_name: String = "res://Backend/Error.gd"
