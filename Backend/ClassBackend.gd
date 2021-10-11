@@ -8,7 +8,7 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Firebase.Auth.login_with_email_and_password("test@maildrop.cc", "password")
+	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
 	#pass # Replace with function body.
 
 
@@ -38,7 +38,7 @@ func create_class(teacher_id: String, class_name_: String):
 	var task: FirestoreTask = collection.add(class_id, class_fields)
 	var doc = yield(task, "task_finished")
 	if not doc is FirestoreDocument:
-		$error.raise_invalid_parameter_error("'%s' is already the name of an existing class." % class_name_)
+		return Error.raise_invalid_parameter_error("'%s' is already the name of an existing class." % class_name_)
 
 
 func _query_classes(teacher_id: String) -> Array:
@@ -64,9 +64,9 @@ func get_class_ids(teacher_id: String) -> Array:
 		
 	"""
 	# Query class documents
-	var docs = yield(_query_classes(teacher_id), "completed")
-	if not docs is Array:
-		return $error.raise_invalid_parameter_error("Either '%s' is not a valid teacher ID or this teacher has no classes" % teacher_id)
+	var docs: Array = yield(_query_classes(teacher_id), "completed")
+	if docs.empty():
+		return Error.raise_invalid_parameter_error("Either '%s' is not a valid teacher ID or this teacher has no classes" % teacher_id)
 	
 	# Extract class ids
 	var class_ids: Array = []
@@ -89,9 +89,9 @@ func get_class_names(teacher_id: String) -> Array:
 		
 	"""
 	# Query class documents
-	var docs = yield(_query_classes(teacher_id), "completed")
-	if not docs is Array:
-		return $error.raise_invalid_parameter_error("Either '%s' is not a valid teacher ID or this teacher has no classes" % teacher_id)
+	var docs: Array = yield(_query_classes(teacher_id), "completed")
+	if docs.empty():
+		return Error.raise_invalid_parameter_error("Either '%s' is not a valid teacher ID or this teacher has no classes" % teacher_id)
 	
 	# Extract class names
 	var class_names: Array = []
@@ -119,9 +119,9 @@ func get_classes(teacher_id: String) -> Array:
 		
 	"""
 	# Query class documents
-	var docs = yield(_query_classes(teacher_id), "completed")
-	if not docs is Array:
-		return $error.raise_invalid_parameter_error("Either '%s' is not a valid teacher ID or this teacher has no classes" % teacher_id)
+	var docs: Array = yield(_query_classes(teacher_id), "completed")
+	if docs.empty():
+		return Error.raise_invalid_parameter_error("Either '%s' is not a valid teacher ID or this teacher has no classes" % teacher_id)
 	
 	# Extract class fields
 	var classes: Array = []
@@ -139,29 +139,16 @@ func delete_class(class_id: String):
 	"""
 	var collection: FirestoreCollection = Firebase.Firestore.collection("Class")
 	var task: FirestoreTask = collection.delete(class_id)
-	var doc = yield(task, "task_finished")
+	yield(task, "task_finished")
 	
 	
 func _on_test_button_up():
-	"""
-	var output = create_class("dummyteacher2", "class D")
-	yield(output, "completed")
-	print("create_class() done")
-	"""
-	"""
-	var output = get_classes("dummyteacher1")
-	output = yield(output, "completed")
-	print(output)
-	"""
-	var collection = Firebase.Firestore.collection("Level")
-	var task = collection.get("test")
-	var output = yield(task, "task_finished")
-	print(output)
-	print("dones")
+	var error = Error.raise_invalid_parameter_error("test")
+	print(error)
 
 
 func _on_get_classes_button_up():
-	var teacher_id: String = "dummyteacher1"
+	var teacher_id: String = "dummyteacher"
 	var output = yield(get_classes(teacher_id), "completed")
 	print(output)
 

@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Backend/QuizBackend.gd" type="Script" id=1]
-[ext_resource path="res://Backend/Errors.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Backend/Sorters.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Backend/Sorters.tscn" type="PackedScene" id=2]
 
 [node name="Control" type="Control"]
 margin_right = 40.0
@@ -62,13 +61,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="error" parent="." instance=ExtResource( 2 )]
-margin_left = 27.0
-margin_top = 22.0
-margin_right = 67.0
-margin_bottom = 62.0
-
-[node name="sorter" parent="." instance=ExtResource( 3 )]
+[node name="sorter" parent="." instance=ExtResource( 2 )]
 margin_left = 52.0
 margin_top = 107.0
 margin_right = 92.0

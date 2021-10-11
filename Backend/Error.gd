@@ -1,28 +1,17 @@
-extends Control
+tool
+
+class_name Error
+
+const file_name: String = "res://Backend/Error.gd"
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-var file_name: String = "res://Backend/Errors.gd"
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-
-func check_duration(duration: int) -> int:
+static func check_duration(duration: int) -> int:
 	if duration < 0:
 		return raise_invalid_parameter_error("Time must be greater or equal to 0, not %d" % duration)
 	return OK
 
 	
-func check_datetime(datetime: Dictionary) -> int:
+static func check_datetime(datetime: Dictionary) -> int:
 	"""Checks whether a datetime Dictionary has the correct fields and field values.
 	
 	Args:
@@ -78,7 +67,7 @@ func check_datetime(datetime: Dictionary) -> int:
 	return OK
 
 
-func check_quiz_question(question: Dictionary, complete: bool = true) -> int:
+static func check_quiz_question(question: Dictionary, complete: bool = true) -> int:
 	"""Checks whether a question Dictionary has the correct fields and field values.
 	
 	Args:
@@ -132,12 +121,12 @@ func check_quiz_question(question: Dictionary, complete: bool = true) -> int:
 	
 	# Check for missing fields
 	if all_fields:
-		return raise_invalid_parameter_error("'%s' field is missing from question", all_fields[0])
+		return raise_invalid_parameter_error("'%s' field is missing from question" % all_fields[0])
 	
 	return OK
 
 
-func check_quiz(quiz: Dictionary, complete = true) -> int:
+static func check_quiz(quiz: Dictionary, complete = true) -> int:
 	"""Checks whether a quiz Dictionary has the correct fields and field values.
 	
 	Args:
@@ -191,21 +180,21 @@ func check_quiz(quiz: Dictionary, complete = true) -> int:
 			# Checks for attemptNo
 			elif field == "attemptNo":
 				if not (value > 0):
-					return raise_invalid_parameter_error("'%s' must be more than 0, not %d", value)
+					return raise_invalid_parameter_error("'%s' must be more than 0, not %d" % value)
 				
 			all_fields.erase(field)
 		
 		else:
-			return $error.raise_invalid_parameter_error("There should not be a '%s' field in question" % field)
+			return raise_invalid_parameter_error("There should not be a '%s' field in question" % field)
 	
 	# Check for missing fields
 	if all_fields:
-		return $error.raise_invalid_parameter_error("'%s' field is missing from question", all_fields[0])
+		return raise_invalid_parameter_error("'%s' field is missing from question" % all_fields[0])
 	
 	return OK
 
 
-func check_question_attempt(question_attempt: Dictionary) -> int:
+static func check_question_attempt(question_attempt: Dictionary) -> int:
 	"""Checks whether a question attempt Dictionary has the correct fields and field values.
 	
 	Args:
@@ -245,11 +234,12 @@ func check_question_attempt(question_attempt: Dictionary) -> int:
 	return OK
 
 
-func raise_invalid_parameter_error(message: String, backtrack: int = 1) -> int:
+static func raise_invalid_parameter_error(message: String) -> int:
 	var function: String = "unknown function"
 	for caller in get_stack():
 		if caller["source"] != file_name:
 			function = caller["function"] + "()"
 			break
 	printerr("[Invalid Parameter Error] >> %s: %s" % [function, message])
+	#printerr("[Invalid Parameter Error] >> %s" % message)
 	return ERR_INVALID_PARAMETER
