@@ -11,11 +11,11 @@
 [ext_resource path="res://sprites/buttons or icons/view stats button.png" type="Texture" id=10]
 [ext_resource path="res://sprites/buttons or icons/quit icon.png" type="Texture" id=11]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 108
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=2]
 size = 24
 font_data = ExtResource( 1 )
 
@@ -62,7 +62,7 @@ margin_left = 536.0
 margin_top = 136.0
 margin_right = 1324.0
 margin_bottom = 312.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "math4fun"
 __meta__ = {
@@ -85,7 +85,7 @@ margin_left = 1792.0
 margin_top = 88.0
 margin_right = 1906.0
 margin_bottom = 127.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "logout"
 __meta__ = {
@@ -125,6 +125,9 @@ margin_right = 744.0
 margin_bottom = 383.5
 texture_normal = ExtResource( 9 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ViewStatsButton" type="TextureButton" parent="Popup"]
 margin_left = 208.0

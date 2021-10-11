@@ -3,9 +3,25 @@
 [ext_resource path="res://sprites/background/sky bg.png" type="Texture" id=1]
 [ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://sprites/buttons or icons/big biscuit.png" type="Texture" id=3]
-[ext_resource path="res://sprites/buttons or icons/delete button.png" type="Texture" id=4]
+[ext_resource path="res://sprites/buttons or icons/cancel button.png" type="Texture" id=4]
 [ext_resource path="res://sprites/buttons or icons/save button.png" type="Texture" id=5]
 [ext_resource path="res://Teacher/create quiz/AddQuestionPage.gd" type="Script" id=6]
+
+[sub_resource type="DynamicFont" id=8]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 32
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -20,22 +36,6 @@ size = 32
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
-size = 32
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=5]
-size = 32
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=6]
-size = 32
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=7]
-size = 32
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=8]
 size = 32
 font_data = ExtResource( 2 )
 
@@ -63,6 +63,54 @@ margin_bottom = 500.0
 texture = ExtResource( 3 )
 expand = true
 stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CorrectOptionLabel" type="Label" parent="BiscuitBackground"]
+margin_left = 80.0
+margin_top = 616.0
+margin_right = 444.0
+margin_bottom = 668.0
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Correct Option:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuestionContentLabel" type="Label" parent="BiscuitBackground"]
+margin_left = 64.0
+margin_top = 144.0
+margin_right = 284.0
+margin_bottom = 196.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Question:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuestionNumberLabel" type="Label" parent="BiscuitBackground"]
+margin_left = 64.0
+margin_top = 56.0
+margin_right = 476.0
+margin_bottom = 108.0
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Question Number:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WrongOptionsLabel" type="Label" parent="BiscuitBackground"]
+margin_left = 72.0
+margin_top = 464.0
+margin_right = 512.0
+margin_bottom = 516.0
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Incorrect Options:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -127,54 +175,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="QuestionNumberLabel" type="Label" parent="."]
-margin_left = 136.0
-margin_top = 96.0
-margin_right = 548.0
-margin_bottom = 148.0
-custom_fonts/font = SubResource( 5 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Question Number:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="QuestionContentLabel" type="Label" parent="."]
-margin_left = 136.0
-margin_top = 184.0
-margin_right = 356.0
-margin_bottom = 236.0
-custom_fonts/font = SubResource( 6 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Question:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="WrongOptionsLabel" type="Label" parent="."]
-margin_left = 144.0
-margin_top = 504.0
-margin_right = 584.0
-margin_bottom = 556.0
-custom_fonts/font = SubResource( 7 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Incorrect Options:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CorrectOptionLabel" type="Label" parent="."]
-margin_left = 152.0
-margin_top = 656.0
-margin_right = 516.0
-margin_bottom = 708.0
-custom_fonts/font = SubResource( 8 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Correct Option:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="SaveButton" type="TextureButton" parent="."]
 margin_left = 576.0
 margin_top = 840.0
@@ -187,7 +187,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="DeleteButton" type="TextureButton" parent="."]
+[node name="CancelButton" type="TextureButton" parent="."]
 margin_left = 1032.0
 margin_top = 800.0
 margin_right = 1392.0
@@ -198,3 +198,6 @@ stretch_mode = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[connection signal="pressed" from="SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="CancelButton" to="." method="_on_CancelButton_pressed"]

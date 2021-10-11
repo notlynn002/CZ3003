@@ -9,8 +9,9 @@ func _ready():
 
 
 func _on_CreateQuizButton_pressed():
-	pass # Replace with function body.
-	# navigate to create quiz page
+	var root = get_tree().root
+	var creatqQuizPage = preload('res://Teacher/create quiz/QuizCreationPage.tscn').instance()
+	root.add_child(creatqQuizPage)
 
 
 func _on_ManageClassButton_pressed():
