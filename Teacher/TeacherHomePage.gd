@@ -7,7 +7,7 @@ func _ready():
 	pass
 	
 func _on_CreateQuizButton_pressed():
-	get_tree().change_scene("res://Teacher/Create Quiz/CreateQuiz.tscn")
+	get_tree().change_scene("res://Teacher/Create Quiz/QuizCreationPage.tscn")
 
 func _on_ManageClassButton_pressed():
 	get_tree().change_scene("res://Teacher/Manage Class/ManageClass.tscn")
