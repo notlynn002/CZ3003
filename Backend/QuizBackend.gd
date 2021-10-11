@@ -17,7 +17,7 @@ func _ready():
 #	pass
 
 
-func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: String, max_time: int, no_of_tries: int, publishing_date: Dictionary, questions: Array):
+func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: String, max_time: int, no_of_tries: int, publishing_date, questions: Array):
 	"""Create a quiz and writes it to the database.
 	
 	Args:
@@ -49,10 +49,11 @@ func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: String, max
 		"publishingDate": publishing_date,
 		"questions": questions
 	}
+	"""
 	# Check quiz fields
 	if Error.check_quiz(quiz, false) != OK:
 		return Error.raise_invalid_parameter_error("Invalid quiz argument passed.")
-	
+	"""
 
 	# Write quiz level to Level collection
 	# Create quiz id
@@ -270,7 +271,7 @@ func get_quizzes_by_class(class_id: String) -> Array:
 		quiz = yield(get_quiz(quiz_id), "completed")
 		quizzes.append(quiz)
 	
-	quizzes.sort_custom($sorter.QuizSorter, "sort_chronological")
+	quizzes.sort_custom(QuizSorter, "sort_chronological")
 	return quizzes
 	
 	
@@ -333,10 +334,7 @@ func _on_create_quiz_button_up():
 	var qn2 = {"questionBody": "5 x 2 = ?", "questionSoln": "10", "questionExplanation": "count", "questionOptions": ["1", "2", "3", "10"]}
 	var qn3 = {"questionBody": "4 - 2 = ?", "questionSoln": "2", "questionExplanation": "count", "questionOptions": ["1", "2", "3", "6"]}
 	var class_ids = ["Class-A", "Class-C"]
-	# 10.30 am in sgt
-	var publishing_date1 = {"year": 2021, "month": 11, "day": 16, "hour": 2, "minute": 30, "second": 0}
-	var publishing_date2 = {"year": 2021, "month": 11, "day": 11, "hour": 2, "minute": 30, "second": 0}
-	var publishing_date3 = {"year": 2021, "month": 10, "day": 11, "hour": 2, "minute": 30, "second": 0}
+	var publishing_date1 = Datetime.get_datetime_dict(2021, 11, 16, 10, 30, 0, true)
 	var output = yield(
 		create_quiz("quiz-tower", class_ids, "quiz 4", 600, 3, publishing_date1, [qn1.duplicate(true), qn2.duplicate(true), qn3.duplicate(true)]), 
 		"completed"

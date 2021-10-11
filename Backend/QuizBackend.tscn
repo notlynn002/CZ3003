@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Backend/QuizBackend.gd" type="Script" id=1]
-[ext_resource path="res://Backend/Sorters.tscn" type="PackedScene" id=2]
 
 [node name="Control" type="Control"]
 margin_right = 40.0
@@ -60,12 +59,6 @@ text = "update quiz"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="sorter" parent="." instance=ExtResource( 2 )]
-margin_left = 52.0
-margin_top = 107.0
-margin_right = 92.0
-margin_bottom = 147.0
 
 [connection signal="button_up" from="test" to="." method="_on_test_button_up"]
 [connection signal="button_up" from="create quiz" to="." method="_on_create_quiz_button_up"]
