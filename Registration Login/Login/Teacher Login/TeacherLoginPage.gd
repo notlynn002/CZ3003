@@ -2,13 +2,16 @@ extends CanvasLayer
 
 
 # Declare member variables here. Examples:
-var teacher_name
+var email
 var password
+var currUser
+var profileDetails
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$MuteButton.hide() # dont show sound off icon until it is pressed
-	pass # Replace with function body.
+	Firebase.Auth.connect("login_succeeded", self, "_on_FirebaseAuth_login_succeeded")
+	Firebase.Auth.connect("login_failed", self, "_on_login_failed")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,13 +36,46 @@ func _on_SoundButton_pressed():
 	$MuteButton.show() # display sound off icon
 
 
-func _on_NameInput_text_entered(name):
-	teacher_name = name
-
-
-func _on_PasswordInput_text_entered(pw):
-	password = pw
-
-
 func _on_LoginButton_pressed():
+	email = $EmailInput.text
+	password = $PasswordInput.text
+	login(email, password, 'teacher')
 	get_tree().change_scene("res://Teacher/TeacherHomePage.tscn")
+	
+###### ALL THE BACKEND FUNCTIONS ######
+func on_login_failed(error_code, message):
+	currUser = null
+	profileDetails = null
+	print("error code: " + str(error_code))
+	print("message: " + str(message))
+
+
+func login(email, password, role):
+	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
+	var query :FirestoreQuery = FirestoreQuery.new() 
+	query.from('User')
+	query.where('email', FirestoreQuery.OPERATOR.EQUAL, email)
+	var query_task :FirestoreTask = Firebase.Firestore.query(query)
+	var result : Array = yield(query_task, 'task_finished')
+	print(result)
+	if result == []:
+		print("No account found with this email")
+	elif result[0].doc_fields.role != role:
+		print("you are not authorised to log in as a "+ role)
+	else:
+		var res = result[0].doc_fields
+		res["userId"] = result[0].doc_name
+		currUser = res
+		
+		Firebase.Auth.login_with_email_and_password(email, password)
+	
+
+	
+func _on_FirebaseAuth_login_succeeded(auth_info):
+	print("login succcess!")
+	if auth_info.localid != "bKVRE45BXPY2R8RhochyJlefPW92":
+		Firebase.Auth.save_auth(auth_info)
+		print(currUser)
+		return currUser
+	# change scene
+	pass

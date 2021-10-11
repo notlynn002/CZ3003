@@ -27,7 +27,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NameLabel" type="TextureRect" parent="."]
+[node name="EmailLabel" type="TextureRect" parent="."]
 margin_left = 376.0
 margin_top = 360.0
 margin_right = 968.0
@@ -82,7 +82,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NameInput" type="LineEdit" parent="."]
+[node name="EmailInput" type="LineEdit" parent="."]
 margin_left = 912.0
 margin_top = 424.0
 margin_right = 1392.0
@@ -120,6 +120,4 @@ __meta__ = {
 [connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="pressed" from="SoundButton" to="." method="_on_SoundButton_pressed"]
 [connection signal="pressed" from="MuteButton" to="." method="_on_MuteButton_pressed"]
-[connection signal="text_entered" from="NameInput" to="." method="_on_NameInput_text_entered"]
-[connection signal="text_entered" from="PasswordInput" to="." method="_on_PasswordInput_text_entered"]
 [connection signal="pressed" from="LoginButton" to="." method="_on_LoginButton_pressed"]

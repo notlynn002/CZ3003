@@ -7,6 +7,7 @@ func reset():
 	SELECTED_CHALLENGEES = []
 	
 func append(item):
+	print("item: " + str(item))
 	SELECTED_CHALLENGEES.append(item)
 	
 func remove(item):

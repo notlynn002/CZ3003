@@ -12,22 +12,6 @@
 [ext_resource path="res://sprites/buttons or icons/schedule button.png" type="Texture" id=12]
 [ext_resource path="res://Teacher/create quiz/QuizCreationPage.gd" type="Script" id=13]
 
-[sub_resource type="DynamicFont" id=13]
-size = 32
-font_data = ExtResource( 1 )
-
-[sub_resource type="DynamicFont" id=8]
-size = 32
-font_data = ExtResource( 1 )
-
-[sub_resource type="DynamicFont" id=9]
-size = 32
-font_data = ExtResource( 1 )
-
-[sub_resource type="DynamicFont" id=14]
-size = 32
-font_data = ExtResource( 1 )
-
 [sub_resource type="DynamicFont" id=1]
 size = 32
 font_data = ExtResource( 1 )
@@ -36,15 +20,17 @@ font_data = ExtResource( 1 )
 size = 32
 font_data = ExtResource( 1 )
 
-[sub_resource type="Theme" id=3]
-default_font = SubResource( 2 )
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 32
 font_data = ExtResource( 1 )
 
-[sub_resource type="Theme" id=5]
-default_font = SubResource( 4 )
+[sub_resource type="DynamicFont" id=5]
+size = 32
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=6]
 size = 32
@@ -52,6 +38,13 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="Theme" id=7]
 default_font = SubResource( 6 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=9]
+default_font = SubResource( 8 )
 
 [sub_resource type="DynamicFont" id=10]
 size = 32
@@ -61,6 +54,13 @@ font_data = ExtResource( 1 )
 default_font = SubResource( 10 )
 
 [sub_resource type="DynamicFont" id=12]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=13]
+default_font = SubResource( 12 )
+
+[sub_resource type="DynamicFont" id=14]
 size = 32
 font_data = ExtResource( 1 )
 
@@ -154,7 +154,7 @@ margin_left = 648.0
 margin_top = 136.0
 margin_right = 772.0
 margin_bottom = 188.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "tries:"
 __meta__ = {
@@ -166,7 +166,7 @@ margin_left = 72.0
 margin_top = 136.0
 margin_right = 216.0
 margin_bottom = 188.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "hours:"
 __meta__ = {
@@ -178,7 +178,7 @@ margin_left = 392.0
 margin_top = 136.0
 margin_right = 504.0
 margin_bottom = 188.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "mins:"
 __meta__ = {
@@ -190,7 +190,7 @@ margin_left = 136.0
 margin_top = 240.0
 margin_right = 344.0
 margin_bottom = 292.0
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Question"
 __meta__ = {
@@ -202,7 +202,7 @@ margin_left = 536.0
 margin_top = 240.0
 margin_right = 744.0
 margin_bottom = 292.0
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Excerpt"
 __meta__ = {
@@ -238,7 +238,7 @@ margin_left = 152.0
 margin_top = 88.0
 margin_right = 960.0
 margin_bottom = 150.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 5 )
 align = 1
 placeholder_text = "Quiz Name"
 __meta__ = {
@@ -250,7 +250,7 @@ margin_left = 320.0
 margin_top = 168.0
 margin_right = 432.0
 margin_bottom = 226.0
-theme = SubResource( 3 )
+theme = SubResource( 7 )
 text = "1"
 align = 1
 items = [ "1", null, false, 0, null, "2", null, false, 1, null, "3", null, false, 2, null, "4", null, false, 3, null, "5", null, false, 4, null ]
@@ -264,7 +264,7 @@ margin_left = 860.0
 margin_top = 168.0
 margin_right = 956.0
 margin_bottom = 227.0
-theme = SubResource( 5 )
+theme = SubResource( 9 )
 text = "1"
 align = 1
 items = [ "1", null, false, 0, null ]
@@ -278,7 +278,7 @@ margin_left = 1104.0
 margin_top = 88.0
 margin_right = 1632.0
 margin_bottom = 146.0
-theme = SubResource( 7 )
+theme = SubResource( 11 )
 text = "Fraction"
 align = 1
 items = [ "Fraction", null, false, 0, null, "Ratio", null, false, 1, null, "Numbers", null, false, 2, null ]
@@ -303,8 +303,8 @@ margin_left = 592.0
 margin_top = 168.0
 margin_right = 704.0
 margin_bottom = 228.0
-theme = SubResource( 11 )
-custom_fonts/font = SubResource( 12 )
+theme = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 text = "5"
 align = 1
 items = [ "5", null, false, 0, null ]

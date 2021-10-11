@@ -5,8 +5,10 @@ export (PackedScene) var Panel
 
 
 # Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var classID
+
+func init(class_id):
+	classID = class_id
 
 
 # Called when the node enters the scene tree for the first time.
@@ -31,8 +33,11 @@ func _on_CloseButton_pressed():
 
 
 func _on_CreateChallengeButton_pressed():
-	#SELECTED_CHALLENGEES.reset()
-	get_tree().change_scene("res://Game Play/Challenge/ChallengeTopicPage.tscn")
+	SELECTED_CHALLENGEES.reset()
+	var root = get_tree().root
+	var topicPg = preload("res://Game Play/Challenge/ChallengeTopicPage.tscn").instance()
+	topicPg.init(classID)
+	root.add_child(topicPg)
 
 
 func _on_BackButton_pressed():

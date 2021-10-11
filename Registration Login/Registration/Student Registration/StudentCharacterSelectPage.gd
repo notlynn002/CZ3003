@@ -7,6 +7,8 @@ var student_name
 var email
 var password
 var classIndex
+var currUser
+var profileDetails
 
 func init(sName, emailAddr, pw, idx):
 	student_name = sName
@@ -18,12 +20,8 @@ func init(sName, emailAddr, pw, idx):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$MuteButton.hide() # dont show sound off icon until it is pressed
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	Firebase.Auth.connect("signup_succeeded", self, "_on_FirebaseAuth_signup_succeeded")
+	Firebase.Auth.connect("signup_failed", self, "on_login_failed")
 
 
 func _on_BackButton_pressed():
@@ -44,7 +42,7 @@ func _on_MuteButton_pressed():
 
 
 func _on_RegisterButton_pressed():
-	# save everything to db
+	signup(email, password)
 	var homepage = preload("res://Game Play/StudentHomePage.tscn").instance()
 	get_tree().get_root().add_child(homepage)
 	get_tree().get_root().remove_child(self)
@@ -66,3 +64,34 @@ func _on_HuntressButton_pressed():
 func _on_KingButton_pressed():
 	character = "king" # or however the backend stores character
 	$SelectedCharacterLabel.text = character
+	
+########## ALL THE BACKEND FUNCTIONS ############
+func signup(email, password):
+	Firebase.Auth.signup_with_email_and_password(email, password)
+
+func _on_FirebaseAuth_signup_succeeded(auth_info):
+	print("Sign up success!")
+	Firebase.Auth.save_auth(auth_info)
+	createProfile(auth_info)
+
+func createProfile(auth_info):
+	var user_collection : FirestoreCollection = Firebase.Firestore.collection("User")
+	profileDetails['email'] = auth_info.email
+	var add_user_task :FirestoreTask = user_collection.add(auth_info.localid, profileDetails)
+	var addedUser : FirestoreDocument = yield(add_user_task, "task_finished")
+	var res = addedUser.doc_fields
+	res["userId"] = addedUser.doc_name
+	currUser = res
+	return res
+	
+
+	
+
+	
+	
+
+
+
+
+
+

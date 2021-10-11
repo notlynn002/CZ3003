@@ -184,8 +184,5 @@ __meta__ = {
 [connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="pressed" from="SoundButton" to="." method="_on_SoundButton_pressed"]
 [connection signal="pressed" from="MuteButton" to="." method="_on_MuteButton_pressed"]
-[connection signal="text_entered" from="NameInput" to="." method="_on_NameInput_text_entered"]
-[connection signal="text_entered" from="PasswordInput" to="." method="_on_PasswordInput_text_entered"]
-[connection signal="text_entered" from="ConfirmPasswordInput" to="." method="_on_ConfirmPasswordInput_text_entered"]
 [connection signal="pressed" from="RegisterButton" to="." method="_on_RegisterButton_pressed"]
 [connection signal="text_entered" from="EmailInput" to="." method="_on_EmailInput_text_entered"]
