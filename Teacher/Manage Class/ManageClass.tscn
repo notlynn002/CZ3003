@@ -1,0 +1,222 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://PixulBrush.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Teacher/Manage Class/ManageClass.gd" type="Script" id=3]
+[ext_resource path="res://sprites/buttons or icons/quit icon.png" type="Texture" id=4]
+[ext_resource path="res://mytheme.tres" type="Theme" id=5]
+[ext_resource path="res://sprites/background/teacher homepage bg.png" type="Texture" id=6]
+[ext_resource path="res://sprites/buttons or icons/rounded rectangular popup.png" type="Texture" id=7]
+[ext_resource path="res://sprites/buttons or icons/create class button.png" type="Texture" id=8]
+[ext_resource path="res://sprites/buttons or icons/view stats button.png" type="Texture" id=9]
+[ext_resource path="res://sprites/buttons or icons/biscuit popup.png" type="Texture" id=10]
+[ext_resource path="res://sprites/buttons or icons/x button.png" type="Texture" id=11]
+[ext_resource path="res://pixulbrush_normal.tres" type="DynamicFont" id=12]
+
+[sub_resource type="DynamicFont" id=1]
+size = 108
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 42
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 48
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.917647, 0.831373, 0.666667, 1 )
+
+[node name="ManageClass" type="CanvasLayer"]
+script = ExtResource( 3 )
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameNameLabel" type="Label" parent="."]
+margin_left = 536.0
+margin_top = 136.0
+margin_right = 1324.0
+margin_bottom = 312.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "math4fun"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LogoutButton" type="TextureButton" parent="."]
+margin_left = 1808.0
+margin_top = 16.0
+margin_right = 1884.0
+margin_bottom = 80.0
+texture_normal = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LogoutLabel" type="Label" parent="."]
+margin_left = 1792.0
+margin_top = 88.0
+margin_right = 1906.0
+margin_bottom = 127.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "logout"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ManageClass" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.498961
+anchor_right = 0.5
+anchor_bottom = 0.498961
+margin_left = -488.0
+margin_top = -188.0
+margin_right = 472.0
+margin_bottom = 459.0
+texture = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ManageClass"]
+margin_left = 280.0
+margin_top = 79.5
+margin_right = 707.0
+margin_bottom = 148.5
+custom_fonts/font = SubResource( 3 )
+text = "Manage Class"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreateClassButton" type="TextureButton" parent="ManageClass"]
+margin_left = 208.0
+margin_top = 223.5
+margin_right = 744.0
+margin_bottom = 383.5
+texture_normal = ExtResource( 8 )
+expand = true
+
+[node name="ViewStatsButton" type="TextureButton" parent="ManageClass"]
+margin_left = 208.0
+margin_top = 409.0
+margin_right = 752.0
+margin_bottom = 562.0
+texture_normal = ExtResource( 9 )
+expand = true
+
+[node name="ManageClose" type="TextureButton" parent="ManageClass"]
+margin_left = 784.0
+margin_top = 79.5
+margin_right = 863.0
+margin_bottom = 151.5
+texture_normal = ExtResource( 11 )
+
+[node name="CreateClass" type="TextureRect" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -501.0
+margin_top = -186.0
+margin_right = 493.0
+margin_bottom = 481.0
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreateClose" type="TextureButton" parent="CreateClass"]
+margin_left = 821.0
+margin_top = 70.0
+margin_right = 900.0
+margin_bottom = 142.0
+texture_normal = ExtResource( 11 )
+
+[node name="CreateClassText" type="RichTextLabel" parent="CreateClass"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 245.0
+margin_top = 78.0
+margin_right = 783.0
+margin_bottom = 164.0
+custom_fonts/normal_font = SubResource( 4 )
+text = "CREATE CLASS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBiscuit" type="TextureRect" parent="CreateClass"]
+margin_left = 62.5355
+margin_top = 185.946
+margin_right = 937.536
+margin_bottom = 386.946
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameText" type="RichTextLabel" parent="CreateClass/NameBiscuit"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 86.4645
+margin_top = 14.054
+margin_right = 335.464
+margin_bottom = 186.054
+custom_fonts/normal_font = ExtResource( 12 )
+text = "
+NAME :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameInput" type="LineEdit" parent="CreateClass"]
+margin_left = 325.0
+margin_top = 246.0
+margin_right = 801.0
+margin_bottom = 332.0
+custom_styles/normal = SubResource( 5 )
+custom_fonts/font = ExtResource( 12 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+caret_blink = true
+caret_blink_speed = 0.4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SaveButton" type="Button" parent="CreateClass"]
+margin_left = 333.0
+margin_top = 438.0
+margin_right = 677.0
+margin_bottom = 566.0
+theme = ExtResource( 5 )
+text = "SAVE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="LogoutButton" to="." method="_on_LogoutButton_pressed"]
+[connection signal="pressed" from="ManageClass/CreateClassButton" to="." method="_on_CreateClassButton_pressed"]
+[connection signal="pressed" from="ManageClass/ViewStatsButton" to="." method="_on_ViewStatsButton_pressed"]
+[connection signal="pressed" from="ManageClass/ManageClose" to="." method="_on_ManageClose_pressed"]
+[connection signal="pressed" from="CreateClass/CreateClose" to="." method="_on_CreateClose_pressed"]
+[connection signal="text_entered" from="CreateClass/NameInput" to="." method="_on_NameInput_text_entered"]
+[connection signal="pressed" from="CreateClass/SaveButton" to="." method="_on_SaveButton_pressed"]
