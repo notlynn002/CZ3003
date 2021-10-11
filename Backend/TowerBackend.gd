@@ -5,15 +5,21 @@ extends Control
 func _ready():
 	Firebase.Auth.login_with_email_and_password("test@maildrop.cc", "password")
 
-
-# Get all towers available in database. doc_name = towerID
-func _on_Get_all_towers_button_up():
+func get_all_towers():
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Tower')
 	
 	var query_task : FirestoreTask = Firebase.Firestore.query(query)
 	var result = yield(query_task, 'task_finished')
-	print(result)
+	var towerIds = []
+	for i in result:
+		towerIds.append(i.doc_name)
+	return towerIds
+	
+# Get all towers available in database. doc_name = towerID
+func _on_Get_all_towers_button_up():
+	var towerIds = yield(get_all_towers(), 'completed')
+	print(towerIds)
 
 
 func get_level_for_tower(towerID):
@@ -24,11 +30,14 @@ func get_level_for_tower(towerID):
 	
 	var query_task : FirestoreTask = Firebase.Firestore.query(query)
 	var result = yield(query_task, 'task_finished')
-	print(result)
+	var levelIds = []
+	for i in result:
+		levelIds.append(i.doc_name)
+	return levelIds
 	
 	
 func _on_Get_levels_for_1_tower_button_up():
-	get_level_for_tower('fraction-tower')
+	get_level_for_tower('four-operations-tower')
 	pass
 
 func get_questions_by_level(levelID):
