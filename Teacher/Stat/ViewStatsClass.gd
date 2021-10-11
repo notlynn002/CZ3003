@@ -18,8 +18,10 @@ func _ready():
 
 func _on_ViewByOptionbutton_item_selected(index):
 	if index == 2:
-		get_tree().change_scene("res://Teacher/Stat/ViewStatsStudent.tscn")
+		var root = get_tree().root
+		var createViewStatsStudentPage = preload("res://Teacher/Stat/ViewStatsStudent.tscn").instance()
+		root.add_child(createViewStatsStudentPage)
 
 
 func _on_BackButton_pressed():
-	get_tree().change_scene("res://Teacher/TeacherHomePage.tscn")
+	self.queue_free()

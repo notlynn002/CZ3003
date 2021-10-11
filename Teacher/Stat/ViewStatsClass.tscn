@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://pixulbrush_normal.tres" type="DynamicFont" id=1]
 [ext_resource path="res://sprites/background/teacher homepage bg.png" type="Texture" id=2]
 [ext_resource path="res://sprites/buttons or icons/biscuit popup.png" type="Texture" id=3]
-[ext_resource path="res://mytheme.tres" type="Theme" id=4]
+[ext_resource path="res://Teacher/mytheme.tres" type="Theme" id=4]
 [ext_resource path="res://Teacher/Stat/View Stats hover.tres" type="StyleBox" id=5]
 [ext_resource path="res://Teacher/Stat/View Stats.tres" type="StyleBox" id=6]
 [ext_resource path="res://Teacher/Stat/ViewStatsClass.gd" type="Script" id=7]
@@ -13,7 +12,6 @@ texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 522, 351 )
 
 [sub_resource type="Theme" id=2]
-default_font = ExtResource( 1 )
 TexturedRect/styles/ = SubResource( 1 )
 
 [node name="CanvasLayer" type="CanvasLayer"]
@@ -60,7 +58,6 @@ theme = ExtResource( 4 )
 custom_styles/hover = ExtResource( 5 )
 custom_styles/pressed = ExtResource( 5 )
 custom_styles/normal = ExtResource( 6 )
-custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
@@ -100,7 +97,6 @@ theme = ExtResource( 4 )
 custom_styles/hover = ExtResource( 5 )
 custom_styles/pressed = ExtResource( 5 )
 custom_styles/normal = ExtResource( 6 )
-custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
@@ -125,7 +121,6 @@ theme = ExtResource( 4 )
 custom_styles/hover = ExtResource( 5 )
 custom_styles/pressed = ExtResource( 5 )
 custom_styles/normal = ExtResource( 6 )
-custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
@@ -150,7 +145,6 @@ theme = ExtResource( 4 )
 custom_styles/hover = ExtResource( 5 )
 custom_styles/pressed = ExtResource( 5 )
 custom_styles/normal = ExtResource( 6 )
-custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )

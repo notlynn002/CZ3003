@@ -12,7 +12,9 @@ func _on_CreateQuizButton_pressed():
 	root.add_child(createQuizPage)
 
 func _on_ManageClassButton_pressed():
-	get_tree().change_scene("res://Teacher/Manage Class/ManageClass.tscn")
+	var root = get_tree().root
+	var createManageClassPage = preload("res://Teacher/Manage Class/ManageClass.tscn").instance()
+	root.add_child(createManageClassPage)
 
 func _on_LogoutButton_pressed():
 	get_tree().change_scene("res://Registration Login/StartPage.tscn")

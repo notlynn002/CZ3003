@@ -14,10 +14,12 @@ func _on_CreateClassButton_pressed():
 	$CreateClass.show()
 
 func _on_ViewStatsButton_pressed():
-	get_tree().change_scene("res://Teacher/Stat/ViewStatsClass.tscn")
+	var root = get_tree().root
+	var createStatsPage = preload("res://Teacher/Stat/ViewStatsClass.tscn").instance()
+	root.add_child(createStatsPage)
 
 func _on_ManageClose_pressed():
-	get_tree().change_scene("res://Teacher/TeacherHomePage.tscn")
+	self.queue_free()
 
 func _on_CreateClose_pressed():
 	$CreateClass.hide()

@@ -24,4 +24,4 @@ func _on_ViewClass_item_selected(input):
 	className = input
 
 func _on_BackButton_pressed():
-	get_tree().change_scene("res://Teacher/Stat/ViewStatsClass.tscn")
+	self.queue_free()
