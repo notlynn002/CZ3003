@@ -13,7 +13,7 @@
 [ext_resource path="res://sprites/buttons or icons/schedule button.png" type="Texture" id=12]
 [ext_resource path="res://Teacher/create quiz/QuizCreationPage.gd" type="Script" id=13]
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=1]
 size = 32
 font_data = ExtResource( 1 )
 
@@ -25,7 +25,7 @@ font_data = ExtResource( 1 )
 size = 32
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=4]
 size = 32
 font_data = ExtResource( 1 )
 
@@ -164,7 +164,7 @@ margin_left = 136.0
 margin_top = 240.0
 margin_right = 344.0
 margin_bottom = 292.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Question"
 __meta__ = {
@@ -176,7 +176,7 @@ margin_left = 536.0
 margin_top = 240.0
 margin_right = 744.0
 margin_bottom = 292.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Excerpt"
 __meta__ = {
@@ -236,7 +236,7 @@ margin_left = 648.0
 margin_top = 136.0
 margin_right = 772.0
 margin_bottom = 188.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "tries:"
 __meta__ = {

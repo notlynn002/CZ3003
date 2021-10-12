@@ -147,17 +147,19 @@ func _on_YearOptionButton_item_selected(index):
 
 
 func _on_PublishNowButton_pressed():
-	var publishingDateTime = OS.get_datetime()
+	var publishingDateTime = Datetime.sgt_to_utc_datetime(OS.get_datetime())
 	quizName = $QuizNameInput.text
 	var duration = quizDurationHour*3600 + quizDurationMin*60
 	var qns = Globals.get('quizQuestions')
-	create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns)
+	yield(create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns), "completed")
+	print("publish now")
+	print(qns)
 	self.queue_free()
 	get_node('/root/QuizCreationPage').queue_free()
 
 
 func _on_ScheduleButton_pressed():
-	var publishingDateTime = Datetime.get_datetime_dict(quizYear, quizMonth, quizDay, quizTimeHour, quizTimeMin, false)
+	var publishingDateTime = Datetime.get_datetime_dict(quizYear, quizMonth, quizDay, quizTimeHour, quizTimeMin, true)
 	quizName = $QuizNameInput.text
 	var duration = quizDurationHour*3600 + quizDurationMin*60
 	var qns = Globals.get('quizQuestions')
@@ -201,12 +203,6 @@ func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: String, max
 		no_of_tries (int): Maximum number of tries that a student is allowed for the quiz.
 		publishing_date (Dictionary): Quiz publishing date in UTC time, formatted as a datetime Dictionary.
 		questions (Array[Dictionary]): Quiz questions as Dictionary objects.
-			All Dictionary keys should be Strings.
-			Each Dictionary should contains following keys-value pairs:
-				questionBody (String): Question body.
-				questionOptions (Array[String]): Question options.
-				questionSoln (String): Question solution.
-				questionExplanation (String): Question explanation.
 	
 	Raises:
 		ERR_INVALID_PARAMETER: If a parameter has an invalid value or if a quiz has the same name as an existing quiz (case sensitive).
@@ -222,11 +218,6 @@ func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: String, max
 		"publishingDate": publishing_date,
 		"questions": questions
 	}
-	"""
-	# Check quiz fields
-	if Error.check_quiz(quiz, false) != OK:
-		return Error.raise_invalid_parameter_error("Invalid quiz argument passed.")
-	"""
 
 	# Write quiz level to Level collection
 	# Create quiz id
@@ -241,10 +232,19 @@ func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: String, max
 		return Error.raise_invalid_parameter_error("'%s' is already the name of an existing quiz" % quiz["quizName"])
 	
 	# Add questions
+	var qn_data
+	var qn_options
 	collection = Firebase.Firestore.collection("Question")
 	for question in questions:
-		question["levelID"] = quiz_level_id
-		task = collection.add("", question)
+		qn_options = [question["correctOption"], question["wrongOption1"], question["wrongOption2"], question["wrongOption3"]]
+		qn_options.shuffle()
+		qn_data = {
+			"levelID": quiz_level_id,
+			"questionBody": question["qnContent"],
+			"questionOptions": qn_options,
+			"questionSoln": question["correctOption"]
+		}
+		task = collection.add("", qn_data)
 		yield(task, "task_finished")
 	
 	# Add quiz id to class
