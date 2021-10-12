@@ -11,6 +11,7 @@ func init(class_id, topic):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Globals.get('selectedChallengees').clear()
 	$MuteButton.hide()
 	$NoticePopup/TopicLabel.text = "Topic: " + selectedTopic
 	
@@ -37,9 +38,9 @@ func _on_MuteButton_pressed():
 
 
 func _on_ChallengeButton_pressed():
-	var challenge_questions = yield(getRandomQuestionId('Four Operations'), 'completed')
+	var challenge_questions = yield(getRandomQuestionId(selectedTopic), 'completed')
 	print(challenge_questions)
-	print(SELECTED_CHALLENGEES)
+	print(Globals.get('selectedChallengees'))
 	# navigate to challenge page
 
 func get_towerid_by_topic(topic):

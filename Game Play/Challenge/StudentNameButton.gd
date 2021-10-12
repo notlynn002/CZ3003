@@ -28,9 +28,9 @@ func _on_Button_pressed():
 	if not selected:
 		$Button/StudentName.add_color_override("font_color", Color(0,0,0,1))
 		selected = true
-		SELECTED_CHALLENGEES.append(studentIndex)
+		Globals.get('selectedChallengees').append(studentIndex)
 	else:
 		$Button/StudentName.add_color_override("font_color", Color(255,255,255,1))
 		selected = false
-		SELECTED_CHALLENGEES.remove(studentIndex)
+		Globals.get('selectedChallengees').remove(studentIndex)
 		

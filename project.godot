@@ -45,6 +45,11 @@ _global_script_classes=[ {
 "path": "res://addons/calendar_button/class/Date.gd"
 }, {
 "base": "Reference",
+"class": "Datetime",
+"language": "GDScript",
+"path": "res://Backend/Datetime.gd"
+}, {
+"base": "Reference",
 "class": "DocExporter",
 "language": "GDScript",
 "path": "res://addons/silicon.util.custom_docs/doc_exporter/doc_exporter.gd"
@@ -159,6 +164,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/silicon.util.custom_docs/doc_item/property_doc_item.gd"
 }, {
+"base": "Reference",
+"class": "QuizSorter",
+"language": "GDScript",
+"path": "res://Backend/QuizSorter.gd"
+}, {
 "base": "PanelContainer",
 "class": "RepositoryItem",
 "language": "GDScript",
@@ -192,6 +202,7 @@ _global_script_class_icons={
 "ConstantDocItem": "",
 "ContributorClass": "",
 "Date": "",
+"Datetime": "",
 "DocExporter": "",
 "DocItem": "",
 "Error": "",
@@ -215,6 +226,7 @@ _global_script_class_icons={
 "InvitationItem": "",
 "MethodDocItem": "",
 "PropertyDocItem": "",
+"QuizSorter": "",
 "RepositoryItem": "",
 "SignalDocItem": "",
 "StorageReference": "",
@@ -237,6 +249,7 @@ UserData="*res://addons/github-integration/scripts/user_data.gd"
 RestHandler="*res://addons/github-integration/scenes/RestHandler.tscn"
 SELECTED_CHALLENGEES="*res://Game Play/Challenge/GlobalVars.gd"
 GlobalArray="*res://Game Play/GlobalArray.gd"
+Globals="*res://Globals.tscn"
 
 [display]
 

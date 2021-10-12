@@ -33,7 +33,6 @@ func _on_CloseButton_pressed():
 
 
 func _on_CreateChallengeButton_pressed():
-	SELECTED_CHALLENGEES.reset()
 	var root = get_tree().root
 	var topicPg = preload("res://Game Play/Challenge/ChallengeTopicPage.tscn").instance()
 	topicPg.init(classID)
