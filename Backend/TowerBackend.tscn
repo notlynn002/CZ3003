@@ -55,6 +55,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="get last level attempted" type="Button" parent="."]
+margin_left = 303.0
+margin_top = 200.0
+margin_right = 472.0
+margin_bottom = 243.0
+text = "get last level attempted"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="sumbit attempt" type="Button" parent="."]
 margin_left = 88.0
 margin_top = 275.0
@@ -80,5 +90,6 @@ __meta__ = {
 [connection signal="button_up" from="Get questions by level" to="." method="_on_Get_questions_by_level_button_up"]
 [connection signal="button_up" from="test button" to="." method="_on_test_button_button_up"]
 [connection signal="button_up" from="Get level attempt" to="." method="_on_Get_level_attempt_button_up"]
+[connection signal="button_up" from="get last level attempted" to="." method="_on_get_last_level_attempted_button_up"]
 [connection signal="button_up" from="sumbit attempt" to="." method="_on_sumbit_attempt_button_up"]
 [connection signal="button_up" from="login" to="." method="_on_login_button_up"]
