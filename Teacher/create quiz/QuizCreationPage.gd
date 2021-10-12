@@ -170,7 +170,7 @@ func _on_ScheduleButton_pressed():
 	print(quizAttempts)
 	print(publishingDateTime)
 	print(qns)
-	create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns)
+	yield(create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns), "completed")
 	self.queue_free()
 	get_node('/root/QuizCreationPage').queue_free()
 
