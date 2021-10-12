@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Backend/DataImporter.gd" type="Script" id=1]
+[ext_resource path="res://Backend/DataHandler.gd" type="Script" id=1]
 
 [node name="Control" type="Control"]
 margin_right = 40.0
@@ -20,4 +20,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="rename tower" type="Button" parent="."]
+margin_left = 99.7526
+margin_top = 190.617
+margin_right = 289.753
+margin_bottom = 273.617
+text = "rename tower"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="button_up" from="write questions" to="." method="_on_write_questions_button_up"]
+[connection signal="button_up" from="rename tower" to="." method="_on_rename_tower_button_up"]
