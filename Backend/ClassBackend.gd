@@ -1,5 +1,6 @@
 extends Control
 
+class_name ClassBackend
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -17,7 +18,7 @@ func _ready():
 #	pass
 
 
-func create_class(teacher_id: String, class_name_: String):
+static func create_class(teacher_id: String, class_name_: String):
 	"""Create a class and write it to the database.
 	
 	Args:
@@ -41,7 +42,7 @@ func create_class(teacher_id: String, class_name_: String):
 		return Error.raise_invalid_parameter_error("'%s' is already the name of an existing class." % class_name_)
 
 
-func _query_classes(teacher_id: String) -> Array:
+static func _query_classes(teacher_id: String) -> Array:
 	var query: FirestoreQuery = FirestoreQuery.new()
 	query.from("Class")
 	query.where("teacherID", FirestoreQuery.OPERATOR.EQUAL, teacher_id)
@@ -50,7 +51,7 @@ func _query_classes(teacher_id: String) -> Array:
 	return yield(task, "task_finished")
 
 
-func get_class_ids(teacher_id: String) -> Array:
+static func get_class_ids(teacher_id: String) -> Array:
 	"""Gets the class IDs for a teacher. 
 	
 	Args:
@@ -75,7 +76,7 @@ func get_class_ids(teacher_id: String) -> Array:
 	return class_ids
 
 
-func get_class_names(teacher_id: String) -> Array:
+static func get_class_names(teacher_id: String) -> Array:
 	"""Gets the class names for a teacher. 
 	
 	Args:
@@ -100,7 +101,7 @@ func get_class_names(teacher_id: String) -> Array:
 	return class_names
 	
 
-func get_classes(teacher_id: String) -> Array:
+static func get_classes(teacher_id: String) -> Array:
 	"""Gets the classes and their details for a teacher. 
 	
 	Args:
@@ -130,7 +131,7 @@ func get_classes(teacher_id: String) -> Array:
 	return classes
 	
 
-func delete_class(class_id: String):
+static func delete_class(class_id: String):
 	""" Delete a class from the database.
 	
 	Args:
@@ -142,24 +143,24 @@ func delete_class(class_id: String):
 	yield(task, "task_finished")
 	
 	
-func _on_test_button_up():
+static func _on_test_button_up():
 	var error = Error.raise_invalid_parameter_error("test")
 	print(error)
 
 
-func _on_get_classes_button_up():
+static func _on_get_classes_button_up():
 	var teacher_id: String = "dummyteacher"
 	var output = yield(get_classes(teacher_id), "completed")
 	print(output)
 
 
-func _on_add_class_button_up():
+static func _on_add_class_button_up():
 	var teacher_id: String = "dummyteacher1"
 	for class_name_ in ["Class A", "Class C", "Class D"]:
 		yield(create_class(teacher_id, class_name_), "completed")
 	yield(create_class("dummyteacher2", "Class B"), "completed")
 
 
-func _on_delete_class_button_up():
+static func _on_delete_class_button_up():
 	for class_id in ["GoMgztUAVdjMLzdOZqDK", "GuZdfFqnzz0RBiw6jAkA", "uIiaQ6tIXWY4XXr3EjpG", "wRMIZo7Tdmxnl2eANSJh"]:
 		yield(delete_class(class_id), "completed")
