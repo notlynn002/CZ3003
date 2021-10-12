@@ -3,7 +3,10 @@ extends CanvasLayer
 
 # Declare member variables here. Examples:
 var topic
+var classID
 
+func init(class_id):
+	classID = class_id
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -38,7 +41,7 @@ func _on_ChallengeButton_pressed():
 	var Root = get_tree().root
 	var challengee = preload("res://Game Play/Challenge/ChallengeePage.tscn").instance()
 	#if not topic:
-	challengee.init(topic)
+	challengee.init(classID, topic)
 	print(topic)
 	Root.add_child(challengee)
 

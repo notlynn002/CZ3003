@@ -3,6 +3,7 @@ extends CanvasLayer
 # Declare member variables here. Examples:
 var character
 var chosen_tower
+var classID
 export (PackedScene) var King
 export (PackedScene) var Archer
 export (PackedScene) var Huntress
@@ -61,8 +62,10 @@ func _on_MuteButton_pressed():
 
 
 func _on_ChallengeButton_pressed():
-	# navigate to challenge page
-	get_tree().change_scene("res://Game Play/Challenge/ChallengeNotifPage.tscn")
+	var root = get_tree().root
+	var challengeNotif = preload("res://Game Play/Challenge/ChallengeNotifPage.tscn").instance()
+	challengeNotif.init(classID)
+	root.add_child(challengeNotif)
 
 
 func _on_MailButton_pressed():

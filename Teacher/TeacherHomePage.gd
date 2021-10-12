@@ -1,37 +1,20 @@
 extends CanvasLayer
 
-
 # Declare member variables here. Examples:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Popup.hide()
-
-
+	pass
+	
 func _on_CreateQuizButton_pressed():
 	var root = get_tree().root
-	var creatqQuizPage = preload('res://Teacher/create quiz/QuizCreationPage.tscn').instance()
-	root.add_child(creatqQuizPage)
-
+	var createQuizPage = preload('res://Teacher/create quiz/QuizCreationPage.tscn').instance()
+	root.add_child(createQuizPage)
 
 func _on_ManageClassButton_pressed():
-	$Popup.show()
-	
-
-
-func _on_CreateClassButton_pressed():
-	pass # Replace with function body.
-	# navigate to create class page
-
-
-func _on_ViewStatsButton_pressed():
-	pass # Replace with function body.
-	# navigate to view stats page
-
-
-func _on_CloseButton_pressed():
-	$Popup.hide()
-
+	var root = get_tree().root
+	var createManageClassPage = preload("res://Teacher/Manage Class/ManageClass.tscn").instance()
+	root.add_child(createManageClassPage)
 
 func _on_LogoutButton_pressed():
 	get_tree().change_scene("res://Registration Login/StartPage.tscn")

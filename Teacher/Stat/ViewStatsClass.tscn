@@ -1,0 +1,160 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://sprites/background/teacher homepage bg.png" type="Texture" id=2]
+[ext_resource path="res://sprites/buttons or icons/biscuit popup.png" type="Texture" id=3]
+[ext_resource path="res://Teacher/mytheme.tres" type="Theme" id=4]
+[ext_resource path="res://Teacher/Stat/View Stats hover.tres" type="StyleBox" id=5]
+[ext_resource path="res://Teacher/Stat/View Stats.tres" type="StyleBox" id=6]
+[ext_resource path="res://Teacher/Stat/ViewStatsClass.gd" type="Script" id=7]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 522, 351 )
+
+[sub_resource type="Theme" id=2]
+TexturedRect/styles/ = SubResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource( 7 )
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UIBackground" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -984.0
+margin_top = -524.0
+margin_right = 1000.0
+margin_bottom = 572.0
+rect_pivot_offset = Vector2( 744, 656 )
+theme = SubResource( 2 )
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ViewByOptionbutton" type="OptionButton" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -856.0
+margin_top = -428.0
+margin_right = -32.0
+margin_bottom = -132.0
+theme = ExtResource( 4 )
+custom_styles/hover = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 5 )
+custom_styles/normal = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "View By"
+align = 1
+items = [ "View By", null, true, 0, null, "Class", null, false, 1, null, "Student", null, false, 2, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 416.0
+margin_top = -276.0
+margin_right = 832.0
+margin_bottom = -148.0
+theme = ExtResource( 4 )
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewLevel" type="OptionButton" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 416.0
+margin_top = -420.0
+margin_right = 832.0
+margin_bottom = -292.0
+theme = ExtResource( 4 )
+custom_styles/hover = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 5 )
+custom_styles/normal = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Level -"
+align = 1
+items = [ "Level -", null, true, 0, null, "Level 1", null, false, 1, null, "Level 2", null, false, 2, null, "Level 3", null, false, 3, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewClass" type="OptionButton" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -276.0
+margin_right = 400.0
+margin_bottom = -148.0
+theme = ExtResource( 4 )
+custom_styles/hover = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 5 )
+custom_styles/normal = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Class -"
+align = 1
+items = [ "Class -", null, true, 0, null, "Class 5D", null, false, 1, null, "Class 5E", null, false, 2, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewTower" type="OptionButton" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -420.0
+margin_right = 400.0
+margin_bottom = -292.0
+theme = ExtResource( 4 )
+custom_styles/hover = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 5 )
+custom_styles/normal = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Tower -"
+align = 1
+items = [ "Tower -", null, true, 0, null, "Tower 1", null, false, 1, null, "Tower 2", null, false, 2, null, "Tower 3", null, false, 3, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="item_selected" from="ViewByOptionbutton" to="." method="_on_ViewByOptionbutton_item_selected"]
+[connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]

@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/silicon.util.custom_docs/doc_item/doc_item.gd"
 }, {
+"base": "Reference",
+"class": "Error",
+"language": "GDScript",
+"path": "res://Backend/Error.gd"
+}, {
 "base": "HTTPRequest",
 "class": "FirebaseAuth",
 "language": "GDScript",
@@ -189,6 +194,7 @@ _global_script_class_icons={
 "Date": "",
 "DocExporter": "",
 "DocItem": "",
+"Error": "",
 "FirebaseAuth": "",
 "FirebaseContainer": "",
 "FirebaseDatabase": "",
