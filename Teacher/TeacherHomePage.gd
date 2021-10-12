@@ -7,6 +7,7 @@ func _ready():
 	pass
 	
 func _on_CreateQuizButton_pressed():
+	Globals.get('quizQuestions').clear()
 	var root = get_tree().root
 	var createQuizPage = preload('res://Teacher/create quiz/QuizCreationPage.tscn').instance()
 	createQuizPage.init()
