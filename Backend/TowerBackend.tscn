@@ -46,10 +46,10 @@ margin_bottom = 48.0
 text = "test button"
 
 [node name="Get level attempt" type="Button" parent="."]
-margin_left = 86.0
-margin_top = 203.0
-margin_right = 255.0
-margin_bottom = 246.0
+margin_left = 306.315
+margin_top = 132.365
+margin_right = 475.315
+margin_bottom = 175.365
 text = "get level attempt"
 __meta__ = {
 "_edit_use_anchors_": false

@@ -9,6 +9,7 @@ export (PackedScene) var Archer
 export (PackedScene) var Huntress
 export (PackedScene) var Samurai
 
+var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -84,20 +85,25 @@ func _on_CreamCastleButton_pressed():
 	$PopupMenu/PopUpLabel.text = "Topic:    Ratio" # set label text
 	$PopupMenu.show() # display popup
 	chosen_tower = "Ratio" # update chosen tower
+	var towerIds = yield(towerBackend.get_level_for_tower("ratio-tower"), 'completed')
 
 
 func _on_WoodCastleButton_pressed():
 	$PopupMenu/PopUpLabel.text = "Topic:    Fraction" # set label text
 	$PopupMenu.show() # display popup
 	chosen_tower = "Fraction" # update chosen tower
+	var towerIds = yield(towerBackend.get_level_for_tower("fraction-tower"), 'completed')
 
 func _on_MetalCastleButton_pressed():
 	$PopupMenu/PopUpLabel.text = "Topic:    Numbers" # set label text
 	$PopupMenu.show() # display popup
 	chosen_tower = "Numbers" # update chosen tower
+	var startTower = preload("res://Game Play/Normal Level/NormalLevel.tscn").instance()
+	startTower.init(chosen_tower)
+
 
 func _on_EnterTowerButton_pressed():
-	get_tree().change_scene("res://Game Play/NormalLevel.tscn")
+	get_tree().change_scene("res://Game Play/Normal Level/NormalLevel.tscn")
 	 # Replace with function body.
 	# navigate to inside tower
 

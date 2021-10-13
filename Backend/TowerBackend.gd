@@ -53,16 +53,16 @@ static func get_questions_by_level(levelID):
 	for i in result:
 		res.append(i.doc_fields)
 	var sm : Array = [1,2,3]
-	print(typeof(res))
+	#print(typeof(res))
 	
-	print(res)
+	#print(res)
 	return res
 	
 	
 func _on_Get_questions_by_level_button_up():
-	get_questions_by_level('dummylevel1')
-	pass # Replace with function body.
-	
+	var qn: Array =  yield(get_questions_by_level("numbers-01"),"completed")
+	print(qn[1])
+
 	
 static func get_last_level_attempted(student_id: String, tower_id: String) -> int:
 	tower_id.erase(tower_id.find("-tower"), "-tower".length())
