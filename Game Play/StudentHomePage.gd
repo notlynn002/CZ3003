@@ -14,7 +14,7 @@ export (PackedScene) var Samurai
 func _ready():
 	$MuteButton.hide() # dont show sound off icon until it is pressed
 	$PopupMenu.hide() # dont showpopup until one of the castle is pressed
-	# get student's selected characterfrom db
+	# get student's selected character from db
 	character = "king" # set as king for now
 	if character == "king":
 		var king = King.instance() # create an instance of king object
