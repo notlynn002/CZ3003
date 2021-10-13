@@ -1,11 +1,12 @@
 extends Control
 
+class_name TowerBackend
 
 
 func _ready():
 	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
 
-func get_all_towers():
+static func get_all_towers():
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Tower')
 	
@@ -22,7 +23,7 @@ func _on_Get_all_towers_button_up():
 	print(towerIds)
 
 
-func get_level_for_tower(towerID):
+static func get_level_for_tower(towerID):
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Level')
 	query.where('towerID', FirestoreQuery.OPERATOR.EQUAL, towerID)
@@ -41,7 +42,7 @@ func _on_Get_levels_for_1_tower_button_up():
 	pass
 
 
-func get_questions_by_level(levelID):
+static func get_questions_by_level(levelID):
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Question')
 	query.where('levelID', FirestoreQuery.OPERATOR.EQUAL, levelID)
@@ -63,7 +64,7 @@ func _on_Get_questions_by_level_button_up():
 	pass # Replace with function body.
 	
 	
-func get_last_level_attempted(student_id: String, tower_id: String) -> int:
+static func get_last_level_attempted(student_id: String, tower_id: String) -> int:
 	tower_id.erase(tower_id.find("-tower"), "-tower".length())
 	var prev_level_no: int = 1
 	var level_no: int = 1
@@ -77,7 +78,7 @@ func get_last_level_attempted(student_id: String, tower_id: String) -> int:
 	return prev_level_no
 	
 	
-func get_level_attempt(student_id: String, level_id: String, type: String) -> Array:
+static func get_level_attempt(student_id: String, level_id: String, type: String) -> Array:
 	""" Gets the level question attempts for a student.
 	
 	Args:
@@ -122,7 +123,7 @@ func get_level_attempt(student_id: String, level_id: String, type: String) -> Ar
 	return question_attempts
 	
 	
-func _get_question_attempt(student_id: String, question_id: String,  type: String) -> Dictionary:
+static func _get_question_attempt(student_id: String, question_id: String,  type: String) -> Dictionary:
 	""" Gets a question attempt for a student.
 	
 	Args:
@@ -155,7 +156,7 @@ func _get_question_attempt(student_id: String, question_id: String,  type: Strin
 	return Error.raise_invalid_parameter_error("Either 'student_id', 'question_id' or 'type' has an invalid value")
 
 
-func _add_question_attempt(question_attempt: Dictionary):
+static func _add_question_attempt(question_attempt: Dictionary):
 	""" Write a question attempt to the database.
 	
 	Args:
@@ -177,7 +178,7 @@ func _add_question_attempt(question_attempt: Dictionary):
 	yield(task, "task_finished")
 	
 
-func _update_question_attempt(attempt_id: String, question_attempt: Dictionary):
+static func _update_question_attempt(attempt_id: String, question_attempt: Dictionary):
 	""" Overwrite fields of a question attempt in the database.
 	
 	Args:
@@ -192,7 +193,7 @@ func _update_question_attempt(attempt_id: String, question_attempt: Dictionary):
 	yield(task, "task_finished")
 
 
-func _add_first_attempts(student_id: String, question_attempts: Array):
+static func _add_first_attempts(student_id: String, question_attempts: Array):
 	""" Write first question attempts to the database.
 	
 	Args:
@@ -213,7 +214,7 @@ func _add_first_attempts(student_id: String, question_attempts: Array):
 		yield(_add_question_attempt(qn_attempt), "completed")
 
 
-func _add_best_attempts(student_id: String, question_attempts: Array):
+static func _add_best_attempts(student_id: String, question_attempts: Array):
 	""" Write best question attempts to the database.
 	
 	Args:
@@ -234,7 +235,7 @@ func _add_best_attempts(student_id: String, question_attempts: Array):
 		yield(_add_question_attempt(qn_attempt), "completed")
 		
 
-func _update_best_attempts(student_id: String, question_attempts: Array):
+static func _update_best_attempts(student_id: String, question_attempts: Array):
 	""" Update best question attempts in the database.
 	
 	Args:
@@ -252,7 +253,7 @@ func _update_best_attempts(student_id: String, question_attempts: Array):
 		yield(_update_question_attempt(attempt_id, qn_attempt), "completed")
 
 
-func _check_first_attempt_exists(student_id: String, question_id: String) -> bool:
+static func _check_first_attempt_exists(student_id: String, question_id: String) -> bool:
 	""" Check if a student has attempted a specific question.
 	
 	Args:
@@ -273,7 +274,7 @@ func _check_first_attempt_exists(student_id: String, question_id: String) -> boo
 		return false
 	
 	
-func _check_is_best_attempt(old_best_attempts: Array, new_best_attempts: Array) -> bool:
+static func _check_is_best_attempt(old_best_attempts: Array, new_best_attempts: Array) -> bool:
 	""" Check if some new question attempts are better than some existing attempts
 	
 	Args:
@@ -307,7 +308,7 @@ func _check_is_best_attempt(old_best_attempts: Array, new_best_attempts: Array) 
 			return true
 		
 	
-func submit_attempt(student_id: String, question_attempts: Array):
+static func submit_attempt(student_id: String, question_attempts: Array):
 	"""Write a student's question attempts to the database.
 	
 	This functions writes two types of attempts - first and best. 

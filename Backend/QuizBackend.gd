@@ -1,5 +1,6 @@
 extends Control
 
+class_name QuizBackend
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -17,7 +18,7 @@ func _ready():
 #	pass
 
 
-func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: String, max_time: int, no_of_tries: int, publishing_date, questions: Array):
+static func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: String, max_time: int, no_of_tries: int, publishing_date, questions: Array):
 	"""Create a quiz and writes it to the database.
 	
 	Args:
@@ -86,7 +87,7 @@ func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: String, max
 		yield(task, "task_finished")
 
 
-func delete_quiz(quiz_level_id: String, class_ids: Array):
+static func delete_quiz(quiz_level_id: String, class_ids: Array):
 	"""Delete a quiz and remove its data from the database
 	
 	Args:
@@ -137,7 +138,7 @@ func delete_quiz(quiz_level_id: String, class_ids: Array):
 		yield(task, "task_finished")
  
 
-func _query_quiz_questions(quiz_level_id: String) -> Array:
+static func _query_quiz_questions(quiz_level_id: String) -> Array:
 	""" Get the questions for a quiz.
 	
 	Args:
@@ -155,7 +156,7 @@ func _query_quiz_questions(quiz_level_id: String) -> Array:
 	return question_docs
 	
 
-func get_quiz(quiz_level_id: String) -> Dictionary:
+static func get_quiz(quiz_level_id: String) -> Dictionary:
 	""" Get a quiz and its details.
 	
 	Args:
@@ -207,7 +208,7 @@ func get_quiz(quiz_level_id: String) -> Dictionary:
 	return quiz 
 
 
-func get_quiz_ids_by_class(class_id: String) -> Array:
+static func get_quiz_ids_by_class(class_id: String) -> Array:
 	""" Get the quiz level IDs for a class.
 	
 	Args:
@@ -228,7 +229,7 @@ func get_quiz_ids_by_class(class_id: String) -> Array:
 	return doc.doc_fields["quizList"]
 
 
-func get_quizzes_by_class(class_id: String) -> Array:
+static func get_quizzes_by_class(class_id: String) -> Array:
 	""" Get quizzes and their details for a class
 	
 	Args:
@@ -273,7 +274,7 @@ func get_quizzes_by_class(class_id: String) -> Array:
 	return quizzes
 	
 	
-func update_quiz(quiz_level_id: String, quiz: Dictionary):
+static func update_quiz(quiz_level_id: String, quiz: Dictionary):
 	# Check quiz for invalid fields
 	#if Error.check_quiz(quiz, false) != OK:
 	#	return Error.raise_invalid_parameter_error("'quiz' Dictionary has an invalid field")

@@ -143,24 +143,24 @@ static func delete_class(class_id: String):
 	yield(task, "task_finished")
 	
 	
-static func _on_test_button_up():
+func _on_test_button_up():
 	var error = Error.raise_invalid_parameter_error("test")
 	print(error)
 
 
-static func _on_get_classes_button_up():
+func _on_get_classes_button_up():
 	var teacher_id: String = "dummyteacher"
 	var output = yield(get_classes(teacher_id), "completed")
 	print(output)
 
 
-static func _on_add_class_button_up():
+func _on_add_class_button_up():
 	var teacher_id: String = "dummyteacher1"
 	for class_name_ in ["Class A", "Class C", "Class D"]:
 		yield(create_class(teacher_id, class_name_), "completed")
 	yield(create_class("dummyteacher2", "Class B"), "completed")
 
 
-static func _on_delete_class_button_up():
+func _on_delete_class_button_up():
 	for class_id in ["GoMgztUAVdjMLzdOZqDK", "GuZdfFqnzz0RBiw6jAkA", "uIiaQ6tIXWY4XXr3EjpG", "wRMIZo7Tdmxnl2eANSJh"]:
 		yield(delete_class(class_id), "completed")
