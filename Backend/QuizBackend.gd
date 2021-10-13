@@ -314,18 +314,8 @@ static func update_quiz(quiz_level_id: String, quiz: Dictionary):
 
 
 func _on_test_button_up():
-	var collection = Firebase.Firestore.collection("Level")
-	var task = collection.get("test")
-	var output = yield(task, "task_finished")
+	var output = yield(get_quiz_ids_by_class("test-class-2"), "completed")
 	print(output)
-	print("dones")
-	"""
-	var temp1 = Firebase.Firestore.collection("Level")
-	var temp2 = temp1.get("a8tIZLze9Jp8h8kmEfuJ")
-	var temp3 = yield(temp2, "task_finished")
-	print(temp3)
-	print("done")
-	"""
 
 
 func _on_create_quiz_button_up():
@@ -352,7 +342,7 @@ func _on_delete_quiz_button_up():
 
 
 func _on_get_quizzes_by_class_button_up():
-	var class_id = "Class-A"
+	var class_id = "test-class-2"
 	var output = get_quizzes_by_class(class_id)
 	output = yield(output, "completed")
 	for e in output:
