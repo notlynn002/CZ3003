@@ -263,12 +263,11 @@ static func _check_first_attempt_exists(student_id: String, question_id: String)
 	Returns:
 		bool: True if student has attempted the question, false otherwise.
 	"""
-	var query = FirestoreQuery.new()
-	query.from("Question_Attempt", false)
-	query.where("questionID", FirestoreQuery.OPERATOR.EQUAL, question_id)
-	var task = Firebase.Firestore.query(query)
+	var collection: FirestoreCollection = Firebase.Firestore.collection("Question_Attempt")
+	var attempt_id: String = "%s-%s-first" % [student_id, question_id]
+	var task = collection.get(attempt_id)
 	var result = yield(task, "task_finished")
-	if result:
+	if result is FirestoreDocument:
 		return true
 	else:
 		return false
@@ -372,5 +371,5 @@ func _on_login_button_up():
 
 
 func _on_get_last_level_attempted_button_up():
-	var output = yield(get_last_level_attempted("XKwVQ9EqJ7xjEhHoPr0A", "numbers-tower"), "completed")
+	var output = yield(get_last_level_attempted("test-student1", "numbers-tower"), "completed")
 	print(output)
