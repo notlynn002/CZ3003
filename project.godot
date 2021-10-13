@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/calendar_button/scripts/calendar_buttons.gd"
 }, {
+"base": "Control",
+"class": "ClassBackend",
+"language": "GDScript",
+"path": "res://Backend/ClassBackend.gd"
+}, {
 "base": "DocItem",
 "class": "ClassDocItem",
 "language": "GDScript",
@@ -164,6 +169,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/silicon.util.custom_docs/doc_item/property_doc_item.gd"
 }, {
+"base": "Control",
+"class": "QuizBackend",
+"language": "GDScript",
+"path": "res://Backend/QuizBackend.gd"
+}, {
 "base": "Reference",
 "class": "QuizSorter",
 "language": "GDScript",
@@ -189,6 +199,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/godot-firebase/storage/storage_task.gd"
 }, {
+"base": "Control",
+"class": "TowerBackend",
+"language": "GDScript",
+"path": "res://Backend/TowerBackend.gd"
+}, {
 "base": "Reference",
 "class": "WindowRestrictor",
 "language": "GDScript",
@@ -198,6 +213,7 @@ _global_script_class_icons={
 "ArgumentDocItem": "",
 "Calendar": "",
 "CalendarButtons": "",
+"ClassBackend": "",
 "ClassDocItem": "",
 "ConstantDocItem": "",
 "ContributorClass": "",
@@ -226,11 +242,13 @@ _global_script_class_icons={
 "InvitationItem": "",
 "MethodDocItem": "",
 "PropertyDocItem": "",
+"QuizBackend": "",
 "QuizSorter": "",
 "RepositoryItem": "",
 "SignalDocItem": "",
 "StorageReference": "",
 "StorageTask": "",
+"TowerBackend": "",
 "WindowRestrictor": ""
 }
 

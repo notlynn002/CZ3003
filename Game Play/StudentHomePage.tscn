@@ -34,13 +34,13 @@ size = 24
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 7 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 224, 272 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 224, 296 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 209.28, 304 )
 
 [sub_resource type="DynamicFont" id=6]
@@ -189,7 +189,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WoodCastleButton/StaticBody2D"]
 position = Vector2( 240, 304 )
-shape = SubResource( 5 )
+shape = SubResource( 3 )
 
 [node name="CreamCastleButton" type="TextureButton" parent="."]
 margin_left = 0.755066
@@ -206,7 +206,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CreamCastleButton/StaticBody2D"]
 position = Vector2( 221, 344 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="MetalCastleButton" type="TextureButton" parent="."]
 margin_left = 1507.92
@@ -223,7 +223,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MetalCastleButton/StaticBody2D"]
 position = Vector2( 230.72, 312 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="QuizTower" type="TextureButton" parent="."]
 margin_left = 499.183
@@ -240,7 +240,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="QuizTower/StaticBody2D"]
 position = Vector2( 230.72, 312 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="RatioLabel" type="TextureRect" parent="."]
 margin_left = 141.755

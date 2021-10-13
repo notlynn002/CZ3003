@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://sprites/buttons or icons/biscuit popup.png" type="Texture" id=2]
+[ext_resource path="res://Game Play/Arena/AnswerComponent.gd" type="Script" id=3]
+[ext_resource path="res://sprites/buttons or icons/add question button.png" type="Texture" id=4]
+
+[sub_resource type="RectangleShape2D" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 1 )
+
+[node name="AnswerComponent" type="StaticBody2D"]
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="AnsButton" type="TextureButton" parent="CollisionShape2D"]
+margin_right = 312.0
+margin_bottom = 224.0
+texture_normal = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Answer" type="Label" parent="CollisionShape2D/AnsButton"]
+margin_left = 40.0
+margin_top = 48.0
+margin_right = 268.0
+margin_bottom = 176.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "10 apples"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+margin_left = 80.0
+margin_top = 56.0
+margin_right = 176.0
+margin_bottom = 176.0
+texture_normal = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="CollisionShape2D/AnsButton" to="." method="_on_AnsButton_pressed"]
