@@ -1,4 +1,5 @@
 extends StaticBody2D
+signal answered
 
 # Declare member variables here. Examples:
 var answer
@@ -15,6 +16,5 @@ func _ready():
 func _on_AnsButton_pressed():
 	if correct:
 		Globals.score += 1
-		
-	print("here")
+	emit_signal('answered')
 

@@ -71,5 +71,3 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BrickFloor/StaticBody2D"]
 position = Vector2( 952, 48 )
 shape = SubResource( 2 )
-
-[connection signal="answered" from="." to="." method="_on_ArenaPage_answered"]
