@@ -69,10 +69,10 @@ func test_create_quiz():
 		if not options is Array:
 			fail_test("question options is in incorrect format")
 		else:
-			assert_true(options.has(qns[0]["wrongOption1"]))
-			assert_true(options.has(qns[0]["wrongOption2"]))
-			assert_true(options.has(qns[0]["wrongOption3"]))
-			assert_true(options.has(qns[0]["correctOption"]))
+			assert_has(options, qns[0]["wrongOption1"])
+			assert_has(options, qns[0]["wrongOption2"])
+			assert_has(options, qns[0]["wrongOption3"])
+			assert_has(options, qns[0]["correctOption"])
 		assert_eq(data.get("questionSoln"), qns[0]["correctOption"])
 			
 	# Check class data
@@ -81,7 +81,7 @@ func test_create_quiz():
 	doc = yield(task, "task_finished")
 	var quiz_list = doc.doc_fields.get("quizList")
 	assert_eq(quiz_list.size(), 1)
-	assert_true(quiz_list.has(quiz_id2))
+	assert_has(quiz_list, quiz_id2)
 
 
 func test_get_quiz():
@@ -104,17 +104,17 @@ func test_get_quiz():
 		assert_eq(qn_data[0].get("levelID"), quiz_id1)
 		assert_eq(qn_data[0].get("questionBody"), qns[0]["qnContent"])
 		var options = qn_data[0].get("questionOptions")
-		assert_true(options.has(qns[0]["wrongOption1"]))
-		assert_true(options.has(qns[0]["wrongOption2"]))
-		assert_true(options.has(qns[0]["wrongOption3"]))
-		assert_true(options.has(qns[0]["correctOption"]))
+		assert_has(options, qns[0]["wrongOption1"])
+		assert_has(options, qns[0]["wrongOption2"])
+		assert_has(options, qns[0]["wrongOption3"])
+		assert_has(options, qns[0]["correctOption"])
 		assert_eq(qn_data[0].get("questionSoln"), qns[0]["correctOption"])
 		
 
 func test_get_quiz_ids_by_class():
 	var quiz_ids = yield(QuizBackend.get_quiz_ids_by_class(class_id1), "completed")
 	assert_eq(quiz_ids.size(), 1, "num")
-	assert_true(quiz_ids.has(quiz_id1))
+	assert_has(quiz_ids, quiz_id1)
 
 
 func test_get_quizzes_by_class():
@@ -140,9 +140,9 @@ func test_get_quizzes_by_class():
 		assert_eq(qn_data[0].get("levelID"), quiz_id1)
 		assert_eq(qn_data[0].get("questionBody"), qns[0]["qnContent"])
 		var options = qn_data[0].get("questionOptions")
-		assert_true(options.has(qns[0]["wrongOption1"]))
-		assert_true(options.has(qns[0]["wrongOption2"]))
-		assert_true(options.has(qns[0]["wrongOption3"]))
-		assert_true(options.has(qns[0]["correctOption"]))
+		assert_has(options, qns[0]["wrongOption1"])
+		assert_has(options, qns[0]["wrongOption2"])
+		assert_has(options, qns[0]["wrongOption3"])
+		assert_has(options, qns[0]["correctOption"])
 		assert_eq(qn_data[0].get("questionSoln"), qns[0]["correctOption"])
 	
