@@ -103,7 +103,6 @@ static func get_level_attempt(student_id: String, level_id: String, type: String
 	var query = FirestoreQuery.new()
 	query.from("Question", false)
 	query.where("levelID", FirestoreQuery.OPERATOR.EQUAL, level_id)
-	query.select([])
 	var task: FirestoreTask = Firebase.Firestore.query(query)
 	var question_docs: Array = yield(task, "task_finished") # Array<FirestoreDocument>
 	if not question_docs:
@@ -114,8 +113,7 @@ static func get_level_attempt(student_id: String, level_id: String, type: String
 	var question_attempts: Array = []
 	for question_doc in question_docs:
 		var question_id: String = question_doc.doc_name
-		query = _get_question_attempt(student_id, question_id, type)
-		question_attempt = yield(query, "completed")
+		question_attempt = yield(_get_question_attempt(student_id, question_id, type), "completed")
 		if (question_attempt is int):
 			return Error.raise_invalid_parameter_error("Either 'student_id' or 'type' has an invalid value")
 		question_attempts.append(question_attempt)
@@ -138,22 +136,14 @@ static func _get_question_attempt(student_id: String, question_id: String,  type
 		ERR_INVALID_PARAMETER: If there is no attempt for the specific student_id, question_id and best values.
 	
 	"""
-	var query: FirestoreQuery = FirestoreQuery.new()
-	query.from("Question_Attempt", false)
-	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id, FirestoreQuery.OPERATOR.AND)
-	query.where("questionID", FirestoreQuery.OPERATOR.EQUAL, question_id, FirestoreQuery.OPERATOR.AND)
-	query.where("type", FirestoreQuery.OPERATOR.EQUAL, type)
-	
-	var task: FirestoreTask = Firebase.Firestore.query(query)
-	var data: Array =  yield(task, "task_finished")
-	if not data:
+	var collection: FirestoreCollection = Firebase.Firestore.collection("Question_Attempt")
+	var attempt_id: String = "%s-%s-%s" % [student_id, question_id, type]
+	var task: FirestoreTask = collection.get(attempt_id)
+	var data =  yield(task, "task_finished")
+	if not data is FirestoreDocument:
 		return Error.raise_invalid_parameter_error("Either 'student_id', 'question_id' or 'type' has an invalid value")
-	var attempt: Dictionary
-	for doc in data:
-		attempt = doc.doc_fields
-		if (attempt["studentID"]==student_id) and (attempt["questionID"]==question_id) and (attempt["type"]==type):
-			return attempt
-	return Error.raise_invalid_parameter_error("Either 'student_id', 'question_id' or 'type' has an invalid value")
+	else:
+		return data.doc_fields
 
 
 static func _add_question_attempt(question_attempt: Dictionary):
@@ -171,10 +161,9 @@ static func _add_question_attempt(question_attempt: Dictionary):
 	Returns:
 		void
 	"""
-	var task: FirestoreTask
 	var collection: FirestoreCollection = Firebase.Firestore.collection("Question_Attempt")
 	var attempt_id = "%s-%s-%s" % [question_attempt["studentID"], question_attempt["questionID"], question_attempt["type"]]
-	task = collection.add(attempt_id, question_attempt)
+	var task = collection.add(attempt_id, question_attempt)
 	yield(task, "task_finished")
 	
 
@@ -347,8 +336,7 @@ static func submit_attempt(student_id: String, question_attempts: Array):
 
 
 func _on_Get_level_attempt_button_up():
-	var output = get_level_attempt("dummystudent1", "dummylevel1", "best")
-	output = yield(output, "completed")
+	var output = yield(get_level_attempt("test-student1", "numbers-01", "first"), "completed")
 	print(output)
 
 
@@ -363,8 +351,15 @@ func _on_sumbit_attempt_button_up():
 
 
 func _on_test_button_button_up():
-	pass
-
+	var student_id1 = "test-student1"
+	var student_id2 = "test-student2"
+	var query = FirestoreQuery.new()
+	query.from("Question_Attempt", false)
+	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id1, FirestoreQuery.OPERATOR.AND)
+	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id2)
+	var task = Firebase.Firestore.query(query)
+	var docs = yield(task, "task_finished")
+	print(docs)
 
 func _on_login_button_up():
 	Firebase.Auth.login_with_email_and_password("test@maildrop.cc", "password")
