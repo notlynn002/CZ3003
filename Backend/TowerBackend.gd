@@ -368,3 +368,37 @@ func _on_login_button_up():
 func _on_get_last_level_attempted_button_up():
 	var output = yield(get_last_level_attempted("test-student1", "numbers-tower"), "completed")
 	print(output)
+
+
+func _on_submit_multiple_level_attempts_button_up():
+	var student_id = "iZKcmDRrSdc0zn8vU6ZnxaEpPGH2"
+	var tower_id = "numbers-tower"
+	var max_level = 10
+	
+	# get level ids 
+	var level_ids = yield(get_level_for_tower(tower_id), "completed")
+	
+	# For each level, submit attempts
+	for i in range(max_level):
+		# get question docs
+		var level_id = level_ids[i]
+		var query = FirestoreQuery.new()
+		query.from("Question")
+		query.where("levelID", FirestoreQuery.OPERATOR.EQUAL, level_id)
+		var task = Firebase.Firestore.query(query)
+		var docs = yield(task, "task_finished")
+		
+		# for each qn in level, create qn attempt
+		var attempts = []
+		for doc in docs:
+			var attempt = {
+				"questionID": doc.doc_name,
+				"duration": randi()%500+1, # random int between 1 and 500
+				"correct": bool(randi()%2) # random bool
+			}
+			attempts.append(attempt)
+		
+		# submit attempts for level
+		yield(_add_first_attempts(student_id, attempts), "completed")
+	
+	print("done")

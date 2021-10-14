@@ -75,6 +75,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="submit multiple level attempts" type="Button" parent="."]
+margin_left = 307.0
+margin_top = 274.0
+margin_right = 519.0
+margin_bottom = 317.0
+text = "submit multiple level attempts"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="login" type="Button" parent="."]
 margin_left = 271.0
 margin_top = 8.0
@@ -92,4 +102,5 @@ __meta__ = {
 [connection signal="button_up" from="Get level attempt" to="." method="_on_Get_level_attempt_button_up"]
 [connection signal="button_up" from="get last level attempted" to="." method="_on_get_last_level_attempted_button_up"]
 [connection signal="button_up" from="sumbit attempt" to="." method="_on_sumbit_attempt_button_up"]
+[connection signal="button_up" from="submit multiple level attempts" to="." method="_on_submit_multiple_level_attempts_button_up"]
 [connection signal="button_up" from="login" to="." method="_on_login_button_up"]
