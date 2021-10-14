@@ -1,9 +1,5 @@
 extends Node2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 var lvlCounter = 0
 var prevscene
 var clearlvl
@@ -14,6 +10,7 @@ var qnOfLevel: Array
 
 var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 var normalLvlQn1 = preload("res://Game Play/Normal Level/NormalLevelQn1.tscn").instance()
+var normalLvlQn2 = preload("res://Game Play/Normal Level/NormalLevelQn2Updated.tscn").instance()
 
 func _ready():
 	pass
@@ -102,15 +99,15 @@ func _on_Door1_pressed():
 	#towerBackend.get_last_level_attempted("XKwVQ9EqJ7xjEhHoPr0A", "numbers-tower")
 	if GlobalArray.nowAtTower == "Numbers":
 		if nowAtLevel <= 5:
-			qnOfLevel =  yield(TowerBackend.get_questions_by_level("numbers-01"),"completed")
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-01"),"completed")
 		elif nowAtLevel > 5 && nowAtLevel <= 10:
-			qnOfLevel = towerBackend.get_questions_by_level("numbers-06")
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-06"),"completed")
 		elif nowAtLevel > 10 && nowAtLevel <= 15:
-			qnOfLevel = towerBackend.get_questions_by_level("numbers-11")
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-011"),"completed")
 		elif nowAtLevel > 15 && nowAtLevel <= 20:
-			qnOfLevel = towerBackend.get_questions_by_level("numbers-16")
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-16"),"completed")
 		else:
-			qnOfLevel = towerBackend.get_questions_by_level("numbers-21")
+			qnOfLevel =  yield(TowerBackend.get_questions_by_level("numbers-21"),"completed")
 		GlobalArray.questionBank = qnOfLevel
 		normalLvlQn1.init(qnOfLevel)
 #	elif GlobalArray.nowAtTower == "Fractions":
@@ -124,25 +121,79 @@ func _on_Door2_pressed():
 	var currentLoc
 	currentLoc = get_node("King").get_position()
 	GlobalArray.playerPosition = currentLoc
-	if GlobalArray.L1Door1:
-		GlobalArray.L1Door2 = true
-		get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
+	var nowAtLevel = 2 #need to change
+	#towerBackend.get_last_level_attempted("XKwVQ9EqJ7xjEhHoPr0A", "numbers-tower")
+	if GlobalArray.nowAtTower == "Numbers":
+		if nowAtLevel <= 5:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-02"),"completed")
+		elif nowAtLevel > 5 && nowAtLevel <= 10:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-07"),"completed")
+		elif nowAtLevel > 10 && nowAtLevel <= 15:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-12"),"completed")
+		elif nowAtLevel > 15 && nowAtLevel <= 20:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-17"),"completed")
+		else:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-22"),"completed")
+		GlobalArray.questionBank = qnOfLevel
+		normalLvlQn1.init(qnOfLevel)
+	
+	get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
+	self.queue_free()
+#	if GlobalArray.L1Door1:
+#		GlobalArray.L1Door2 = true
+#	elif GlobalArray.nowAtTower == "Fractions":
+#		var qnOfLevel = towerBackend.get_questions_by_level()
 
 func _on_Door3_pressed():
 	var currentLoc
 	currentLoc = get_node("King").get_position()
 	GlobalArray.playerPosition = currentLoc
-	if GlobalArray.L1Door2:
-		GlobalArray.L1Door3 = true
-		get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
+#	if GlobalArray.L1Door2:
+#		GlobalArray.L1Door3 = true
+#		get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
+	var nowAtLevel = 3 #need to change
+	#towerBackend.get_last_level_attempted("XKwVQ9EqJ7xjEhHoPr0A", "numbers-tower")
+	if GlobalArray.nowAtTower == "Numbers":
+		if nowAtLevel <= 5:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-03"),"completed")
+		elif nowAtLevel > 5 && nowAtLevel <= 10:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-08"),"completed")
+		elif nowAtLevel > 10 && nowAtLevel <= 15:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-13"),"completed")
+		elif nowAtLevel > 15 && nowAtLevel <= 20:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-18"),"completed")
+		else:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-23"),"completed")
+		GlobalArray.questionBank = qnOfLevel
+		normalLvlQn1.init(qnOfLevel)
+	get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
+	self.queue_free()
+	
 
 func _on_Door4_pressed():
 	var currentLoc
 	currentLoc = get_node("King").get_position()
 	GlobalArray.playerPosition = currentLoc
-	if GlobalArray.L1Door3:
-		GlobalArray.L1Door4 = true
-		get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
+#	if GlobalArray.L1Door3:
+#		GlobalArray.L1Door4 = true
+#		get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
+	var nowAtLevel = 4 #need to change
+	#towerBackend.get_last_level_attempted("XKwVQ9EqJ7xjEhHoPr0A", "numbers-tower")
+	if GlobalArray.nowAtTower == "Numbers":
+		if nowAtLevel <= 5:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-04"),"completed")
+		elif nowAtLevel > 5 && nowAtLevel <= 10:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-09"),"completed")
+		elif nowAtLevel > 10 && nowAtLevel <= 15:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-14"),"completed")
+		elif nowAtLevel > 15 && nowAtLevel <= 20:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-19"),"completed")
+		else:
+			qnOfLevel = yield(TowerBackend.get_questions_by_level("numbers-24"),"completed")
+		GlobalArray.questionBank = qnOfLevel
+		normalLvlQn1.init(qnOfLevel)
+	get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
+	self.queue_free()
 
 func _on_Door5_pressed():
 	var currentLoc
