@@ -339,9 +339,9 @@ position = Vector2( 1311.28, -2.18402 )
 position = Vector2( 1579.32, 2.44794 )
 
 [node name="Layer1Door1" type="TextureButton" parent="."]
-margin_left = -12.2729
+margin_left = -14.3918
 margin_top = 513.835
-margin_right = 287.727
+margin_right = 285.608
 margin_bottom = 849.835
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
@@ -350,9 +350,9 @@ __meta__ = {
 }
 
 [node name="Layer1Door2" type="TextureButton" parent="."]
-margin_left = 241.727
+margin_left = 239.608
 margin_top = 511.836
-margin_right = 541.727
+margin_right = 539.608
 margin_bottom = 847.836
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
@@ -640,7 +640,10 @@ shape = SubResource( 2 )
 position = Vector2( 28.5485, 843.214 )
 
 [node name="Camera2D" type="Camera2D" parent="King"]
+position = Vector2( 928.09, -307.244 )
 current = true
+limit_left = 0
+limit_right = 1900
 smoothing_enabled = true
 
 [connection signal="pressed" from="Layer1Door1" to="." method="_on_Door1_pressed"]

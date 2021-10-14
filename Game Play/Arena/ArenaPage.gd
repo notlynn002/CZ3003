@@ -1,11 +1,10 @@
 extends CanvasLayer
-signal answered
 
 # Declare member variables here. Examples:
 var questionList
 var studentID
 var id
-var type
+var arenaType
 var duration
 var character
 
@@ -16,10 +15,10 @@ export (PackedScene) var Samurai
 export (PackedScene) var Question
 export (PackedScene) var Answer
 
-func init(stuID, arenaID, arenaType):
+func init(stuID, arenaID, type):
 	id = arenaID
 	studentID = stuID
-	type = arenaType
+	arenaType = type
 	
 
 # Called when the node enters the scene tree for the first time.
@@ -96,12 +95,7 @@ func _ready():
 		add_child(ans3)
 		add_child(ans4)
 		
-		if ans1.get_node("TextureButton").pressed:
-			print("test")
-			emit_signal("answered")
-
-		yield(self, "answered")
-		
+		yield(Coroutines.await_any_signal([ans1, "answered", ans2, "answered", ans3, "answered", ans4, "answered"]), "completed")
 		
 	
 	# when done with for loop
@@ -128,3 +122,5 @@ func _process(delta):
 		# navigate back to home page
 
 
+func on_answered():
+	pass

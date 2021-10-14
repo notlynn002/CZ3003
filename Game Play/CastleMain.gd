@@ -8,87 +8,117 @@ var lvlCounter = 0
 var prevscene
 var clearlvl
 var clearedLvl
+var towerLvlIdArray
+var qnOfLevel: Array
+
+
+var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
+var normalLvlQn1 = preload("res://Game Play/Normal Level/NormalLevelQn1.tscn").instance()
 
 func _ready():
 	pass
 	
-func init(clearedLvl):
+func init(nowAtTower):
 	clearlvl = clearedLvl
 	var position_vector = GlobalArray.playerPosition
-	get_node("King").set_position(position_vector)
+	#get_node("King").set_position(position_vector)
+	print(nowAtTower)
+	GlobalArray.nowAtTower = nowAtTower
+	if nowAtTower == "Numbers":
+		var level = yield(towerBackend.get_level_for_tower("numbers-tower"), 'completed')
+			
 	
-	if GlobalArray.layerCount >= 1:
-		if clearlvl >= 1:
-			$Layer1Door1.hide()
-		if clearlvl >= 2:
-			$Layer1Door2.hide()
-		if clearlvl >= 3:
-			$Layer1Door3.hide()
-		if clearlvl >= 4:
-			$Layer1Door4.hide()
-		if clearlvl >= 5:
-			$Layer1Door5.hide()
-			$TowerBackground/BlockBrick.hide()
-			$TowerBackground/BlockBrick/CollisionShape2D.remove_and_skip()
-	if GlobalArray.layerCount >= 2:
-		print("Layer2 door 1: ", clearlvl)
-		if clearlvl >= 6:
-			$Layer2Door1.hide()
-		if clearlvl >= 7:
-			$Layer2Door2.hide()
-		if clearlvl >= 8:
-			$Layer2Door3.hide()
-		if clearlvl >= 9:
-			$Layer2Door4.hide()
-		if clearlvl >= 10:
-			$Layer2Door5.hide()
-			$TowerBackground2/BlockBrick.hide()
-			$TowerBackground2/BlockBrick/CollisionShape2D.remove_and_skip()
-	if GlobalArray.layerCount >= 3:
-		if clearlvl >= 11:
-			$Layer3Door1.hide()
-		if clearlvl >= 12:
-			$Layer3Door2.hide()
-		if clearlvl >= 13:
-			$Layer3Door3.hide()
-		if clearlvl >= 14:
-			$Layer3Door4.hide()
-		if clearlvl >= 15:
-			$Layer3Door5.hide()
-			$TowerBackground2/BlockBrick2.hide()
-			$TowerBackground2/BlockBrick2/CollisionShape2D.remove_and_skip()
-	if GlobalArray.layerCount >= 4:
-		if clearlvl >= 16:
-			$Layer4Door1.hide()
-		if clearlvl >= 17:
-			$Layer4Door2.hide()
-		if clearlvl >= 18:
-			$Layer4Door3.hide()
-		if clearlvl >= 19:
-			$Layer4Door4.hide()
-		if clearlvl >= 20:
-			$Layer4Door5.hide()
-			$TowerBackground3/BlockBrick.hide()
-			$TowerBackground3/BlockBrick/CollisionShape2D.remove_and_skip()
-	if GlobalArray.layerCount >= 5:
-		if clearlvl >= 21:
-			$Layer5Door1.hide()
-		if clearlvl >= 22:
-			$Layer5Door2.hide()
-		if clearlvl >= 23:
-			$Layer5Door3.hide()
-		if clearlvl >= 24:
-			$Layer5Door4.hide()
-		if clearlvl >= 25:
-			$Layer5Door5.hide()
+#	if GlobalArray.layerCount >= 1:
+#		if clearlvl >= 1:
+#			$Layer1Door1.hide()
+#		if clearlvl >= 2:
+#			$Layer1Door2.hide()
+#		if clearlvl >= 3:
+#			$Layer1Door3.hide()
+#		if clearlvl >= 4:
+#			$Layer1Door4.hide()
+#		if clearlvl >= 5:
+#			$Layer1Door5.hide()
+#			$TowerBackground/BlockBrick.hide()
+#			$TowerBackground/BlockBrick/CollisionShape2D.remove_and_skip()
+#	if GlobalArray.layerCount >= 2:
+#		print("Layer2 door 1: ", clearlvl)
+#		if clearlvl >= 6:
+#			$Layer2Door1.hide()
+#		if clearlvl >= 7:
+#			$Layer2Door2.hide()
+#		if clearlvl >= 8:
+#			$Layer2Door3.hide()
+#		if clearlvl >= 9:
+#			$Layer2Door4.hide()
+#		if clearlvl >= 10:
+#			$Layer2Door5.hide()
+#			$TowerBackground2/BlockBrick.hide()
+#			$TowerBackground2/BlockBrick/CollisionShape2D.remove_and_skip()
+#	if GlobalArray.layerCount >= 3:
+#		if clearlvl >= 11:
+#			$Layer3Door1.hide()
+#		if clearlvl >= 12:
+#			$Layer3Door2.hide()
+#		if clearlvl >= 13:
+#			$Layer3Door3.hide()
+#		if clearlvl >= 14:
+#			$Layer3Door4.hide()
+#		if clearlvl >= 15:
+#			$Layer3Door5.hide()
+#			$TowerBackground2/BlockBrick2.hide()
+#			$TowerBackground2/BlockBrick2/CollisionShape2D.remove_and_skip()
+#	if GlobalArray.layerCount >= 4:
+#		if clearlvl >= 16:
+#			$Layer4Door1.hide()
+#		if clearlvl >= 17:
+#			$Layer4Door2.hide()
+#		if clearlvl >= 18:
+#			$Layer4Door3.hide()
+#		if clearlvl >= 19:
+#			$Layer4Door4.hide()
+#		if clearlvl >= 20:
+#			$Layer4Door5.hide()
+#			$TowerBackground3/BlockBrick.hide()
+#			$TowerBackground3/BlockBrick/CollisionShape2D.remove_and_skip()
+#	if GlobalArray.layerCount >= 5:
+#		if clearlvl >= 21:
+#			$Layer5Door1.hide()
+#		if clearlvl >= 22:
+#			$Layer5Door2.hide()
+#		if clearlvl >= 23:
+#			$Layer5Door3.hide()
+#		if clearlvl >= 24:
+#			$Layer5Door4.hide()
+#		if clearlvl >= 25:
+#			$Layer5Door5.hide()
 		
 func _on_Door1_pressed():
 	var currentLoc
 	currentLoc = get_node("King").get_position()
 	GlobalArray.playerPosition = currentLoc
 	GlobalArray.L1Door1 = true
+	var nowAtLevel = 1 #need to change
+	#towerBackend.get_last_level_attempted("XKwVQ9EqJ7xjEhHoPr0A", "numbers-tower")
+	if GlobalArray.nowAtTower == "Numbers":
+		if nowAtLevel <= 5:
+			qnOfLevel =  yield(TowerBackend.get_questions_by_level("numbers-01"),"completed")
+		elif nowAtLevel > 5 && nowAtLevel <= 10:
+			qnOfLevel = towerBackend.get_questions_by_level("numbers-06")
+		elif nowAtLevel > 10 && nowAtLevel <= 15:
+			qnOfLevel = towerBackend.get_questions_by_level("numbers-11")
+		elif nowAtLevel > 15 && nowAtLevel <= 20:
+			qnOfLevel = towerBackend.get_questions_by_level("numbers-16")
+		else:
+			qnOfLevel = towerBackend.get_questions_by_level("numbers-21")
+		GlobalArray.questionBank = qnOfLevel
+		normalLvlQn1.init(qnOfLevel)
+#	elif GlobalArray.nowAtTower == "Fractions":
+#		var qnOfLevel = towerBackend.get_questions_by_level()
 	get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
 	self.queue_free()
+	
+	
 	
 func _on_Door2_pressed():
 	var currentLoc

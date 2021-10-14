@@ -14,11 +14,11 @@
 size = 24
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 24
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=3]
 size = 30
 font_data = ExtResource( 5 )
 
@@ -111,7 +111,7 @@ margin_left = 1008.0
 margin_top = 171.0
 margin_right = 1376.0
 margin_bottom = 223.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 align = 1
 autowrap = true
 __meta__ = {
@@ -122,8 +122,8 @@ __meta__ = {
 margin_left = 232.0
 margin_top = 266.0
 margin_right = 1732.0
-margin_bottom = 318.0
-custom_fonts/font = SubResource( 2 )
+margin_bottom = 315.0
+custom_fonts/font = SubResource( 3 )
 text = "Rank        Name              Level        No. of Correct        Total Time Taken"
 align = 3
 __meta__ = {

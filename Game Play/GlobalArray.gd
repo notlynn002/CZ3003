@@ -19,3 +19,7 @@ var L1Door5 = false
 var L1Door1Open = false
 
 var playerPosition
+var nowAtTower
+var qnBody
+var question
+var questionBank: Array

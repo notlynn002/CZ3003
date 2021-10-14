@@ -268,6 +268,7 @@ RestHandler="*res://addons/github-integration/scenes/RestHandler.tscn"
 SELECTED_CHALLENGEES="*res://Game Play/Challenge/GlobalVars.gd"
 GlobalArray="*res://Game Play/GlobalArray.gd"
 Globals="*res://Globals.tscn"
+Coroutines="*res://Coroutines.tscn"
 
 [display]
 
