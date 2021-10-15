@@ -1,0 +1,100 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://sprites/buttons or icons/long ribbon banner.png" type="Texture" id=1]
+[ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Game Play/Notification/MailButton.gd" type="Script" id=3]
+[ext_resource path="res://sprites/buttons or icons/rectangular popup.png" type="Texture" id=4]
+[ext_resource path="res://sprites/buttons or icons/no button.png" type="Texture" id=5]
+[ext_resource path="res://sprites/buttons or icons/yes button.png" type="Texture" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 2 )
+
+[node name="Mail" type="Control"]
+margin_left = -40.0
+margin_top = -16.0
+margin_right = -40.0
+margin_bottom = -16.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ],
+"_edit_use_anchors_": false
+}
+
+[node name="MailButton" type="TextureButton" parent="."]
+margin_left = 8.0
+margin_top = 12.3275
+margin_right = 798.0
+margin_bottom = 119.327
+texture_normal = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MailMessage" type="Label" parent="MailButton"]
+margin_left = 85.3071
+margin_top = 33.6739
+margin_right = 748.307
+margin_bottom = 72.6739
+custom_fonts/font = SubResource( 1 )
+text = "Jason has challenged you in Fraction!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Popup" type="TextureRect" parent="."]
+margin_left = 152.0
+margin_top = -72.0
+margin_right = 614.0
+margin_bottom = 191.0
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Popup"]
+margin_left = 62.0
+margin_top = 40.0
+margin_right = 390.0
+margin_bottom = 136.0
+custom_fonts/font = SubResource( 2 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YesButton" type="TextureButton" parent="Popup"]
+margin_left = 46.0
+margin_top = 160.0
+margin_right = 223.0
+margin_bottom = 246.0
+texture_normal = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NoButton" type="TextureButton" parent="Popup"]
+margin_left = 254.0
+margin_top = 160.0
+margin_right = 430.0
+margin_bottom = 246.0
+texture_normal = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="MailButton" to="." method="_on_MailButton_pressed"]
+[connection signal="pressed" from="Popup/YesButton" to="." method="_on_YesButton_pressed"]
+[connection signal="pressed" from="Popup/NoButton" to="." method="_on_NoButton_pressed"]

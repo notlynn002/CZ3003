@@ -104,7 +104,7 @@ static func get_level_attempt(student_id: String, level_id: String, type: String
 	var task: FirestoreTask = Firebase.Firestore.query(query)
 	var question_docs: Array = yield(task, "task_finished") # Array<FirestoreDocument>
 	if not question_docs:
-		return Error.raise_invalid_parameter_error("'%s' is not a valid level ID" % level_id)
+		Error.raise_invalid_parameter_error("'%s' is not a valid level ID" % level_id)
 	
 	# Query question attempts
 	var question_attempt
@@ -113,7 +113,8 @@ static func get_level_attempt(student_id: String, level_id: String, type: String
 		var question_id: String = question_doc.doc_name
 		question_attempt = yield(_get_question_attempt(student_id, question_id, type), "completed")
 		if (question_attempt is int):
-			return Error.raise_invalid_parameter_error("Either 'student_id' or 'type' has an invalid value")
+			Error.raise_invalid_parameter_error("Either 'student_id' or 'type' has an invalid value")
+			continue
 		question_attempts.append(question_attempt)
 	
 	return question_attempts
@@ -368,6 +369,7 @@ func _on_get_last_level_attempted_button_up():
 	print(output)
 
 
+<<<<<<< HEAD
 
 func get_leaderboard(towerID):
 	# get all the levelIDs of teh boss levels in this tower
@@ -432,3 +434,37 @@ func _on_getLeaderboard_button_up():
 	pass # Replace with function body.
 	
 
+=======
+func _on_submit_multiple_level_attempts_button_up():
+	var student_id = "iZKcmDRrSdc0zn8vU6ZnxaEpPGH2"
+	var tower_id = "numbers-tower"
+	var max_level = 10
+	
+	# get level ids 
+	var level_ids = yield(get_level_for_tower(tower_id), "completed")
+	
+	# For each level, submit attempts
+	for i in range(max_level):
+		# get question docs
+		var level_id = level_ids[i]
+		var query = FirestoreQuery.new()
+		query.from("Question")
+		query.where("levelID", FirestoreQuery.OPERATOR.EQUAL, level_id)
+		var task = Firebase.Firestore.query(query)
+		var docs = yield(task, "task_finished")
+		
+		# for each qn in level, create qn attempt
+		var attempts = []
+		for doc in docs:
+			var attempt = {
+				"questionID": doc.doc_name,
+				"duration": randi()%120+1, # random int between 1 and 120 (2 mins)
+				"correct": bool(randi()%2) # random bool
+			}
+			attempts.append(attempt)
+		
+		# submit attempts for level
+		yield(_add_first_attempts(student_id, attempts), "completed")
+	
+	print("done")
+>>>>>>> ef4a99d2c6610bc75b51cfb59a57304b80001e38

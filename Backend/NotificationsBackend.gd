@@ -13,8 +13,9 @@ func get_notification_for_user(user_id):
 	query.where('receiverID', FirestoreQuery.OPERATOR.EQUAL, user_id)
 	query.order_by('creationDateTime', FirestoreQuery.DIRECTION.DESCENDING)
 
-	var query_task : FirestoreTask = Firebase.Firestore.query(query)
+	var query_task : FirestoreTask = Firebase.Firestore.query(query) 
 	var result = yield(query_task, 'task_finished')
+	result.sort_custom(NotificationsSorter, "sort_latest_first") # sorts notifications by creation time 
 	return result
 
 func _on_Get_Notifications_for_User_button_up():
@@ -27,7 +28,7 @@ func send_quiz_notification_to_students(studentIdList):
 	var notification = {
 		'message' : 'You have a new quiz to do!',
 		'notificationType' : 'new quiz',
-		'creationDateTime' : OS.get_unix_time()
+		'creationDateTime' : OS.get_datetime() # gets current datetime in datetime dict format 
 	}
 	var task: FirestoreTask
 	var collection : FirestoreCollection = Firebase.Firestore.collection('Notification')
@@ -49,7 +50,7 @@ func send_challenge_completed_notification(challengerID):
 	var notification = {
 		'message' : 'Your challenge has been completed.',
 		'notificationType' : 'completed challenge',
-		'creationDateTime' : OS.get_unix_time(),
+		'creationDateTime' : OS.get_datetime(), # gets current datetime in datetime dict format
 		'receiverID' : challengerID
 	}
 	
@@ -67,7 +68,7 @@ func send_challenge_declined_notification(challengerID):
 	var notification = {
 		'message' : 'Your challenge has been declined.',
 		'notificationType' : 'challenge declined',
-		'creationDateTime' : OS.get_unix_time(),
+		'creationDateTime' : OS.get_datetime(), # gets current datetime in datetime dict format 
 		'receiverID' : challengerID
 	}
 	

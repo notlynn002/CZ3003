@@ -164,6 +164,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/silicon.util.custom_docs/doc_item/method_doc_item.gd"
 }, {
+"base": "Reference",
+"class": "NotificationsSorter",
+"language": "GDScript",
+"path": "res://Backend/NotificationsSorter.gd"
+}, {
 "base": "DocItem",
 "class": "PropertyDocItem",
 "language": "GDScript",
@@ -188,6 +193,11 @@ _global_script_classes=[ {
 "class": "SignalDocItem",
 "language": "GDScript",
 "path": "res://addons/silicon.util.custom_docs/doc_item/signal_doc_item.gd"
+}, {
+"base": "Control",
+"class": "StatsBackend",
+"language": "GDScript",
+"path": "res://Backend/StatsBackend.gd"
 }, {
 "base": "Reference",
 "class": "StorageReference",
@@ -241,11 +251,13 @@ _global_script_class_icons={
 "GistItem": "",
 "InvitationItem": "",
 "MethodDocItem": "",
+"NotificationsSorter": "",
 "PropertyDocItem": "",
 "QuizBackend": "",
 "QuizSorter": "",
 "RepositoryItem": "",
 "SignalDocItem": "",
+"StatsBackend": "",
 "StorageReference": "",
 "StorageTask": "",
 "TowerBackend": "",

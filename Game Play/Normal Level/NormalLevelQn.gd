@@ -14,6 +14,7 @@ var explanation
 
 var levelId
 var qnId
+var questionBank: Array
 var submitAttempts: Dictionary
 var qnDescription: Dictionary
 
@@ -71,17 +72,6 @@ func init(qnBank):
 	
 	#var qnBody = qnDescription["questionBody"]
 	#print(qnBody)
-	
-#Checking Qn1
-#func _on_Correct_pressed():
-#	$Qn1/AnsCorrectMsg.show()
-#	$Qn1/AnsButton.show()
-#	$Qn1/NextButton.show()
-#
-#func _on_Wrong_pressed():
-#	$Qn1/AnsWrongMsg.show()
-#	$Qn1/AnsButton.show()
-#	$Qn1/NextButton.show()
 	
 func _on_A_pressed():
 	if aIsCorrect:

@@ -3,7 +3,7 @@ extends CanvasLayer
 
 # Declare member variables here. Examples:
 var details
-var tower 
+var tower = 'Fraction'
 export (PackedScene) var Details
 
 func init(towerName):

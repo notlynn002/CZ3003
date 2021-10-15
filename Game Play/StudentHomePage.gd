@@ -4,6 +4,8 @@ extends CanvasLayer
 var character
 var chosen_tower
 var classID
+var lastLevelAttempted
+
 export (PackedScene) var King
 export (PackedScene) var Archer
 export (PackedScene) var Huntress
@@ -70,8 +72,9 @@ func _on_ChallengeButton_pressed():
 
 
 func _on_MailButton_pressed():
-	pass # Replace with function body.
-	# navigate to notifications popup
+	var root = get_tree().root
+	var notifPage = preload('res://Game Play/Notification/NotificationsPage.tscn').instance()
+	root.add_child(notifPage)
 
 
 func _on_LogoutButton_pressed():
