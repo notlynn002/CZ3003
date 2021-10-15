@@ -20,4 +20,81 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="get class ids and names" type="Button" parent="."]
+margin_left = 733.0
+margin_top = 62.0
+margin_right = 991.0
+margin_bottom = 151.0
+text = "get class ids and names"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="get student ids and names" type="Button" parent="."]
+margin_left = 730.0
+margin_top = 188.0
+margin_right = 988.0
+margin_bottom = 277.0
+text = "get student ids and names"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="get tower ids and names" type="Button" parent="."]
+margin_left = 733.367
+margin_top = 323.818
+margin_right = 991.367
+margin_bottom = 412.818
+text = "get tower ids and names"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="get level ids and names" type="Button" parent="."]
+margin_left = 731.123
+margin_top = 452.901
+margin_right = 989.123
+margin_bottom = 541.901
+text = "get level ids and names"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="get tower stats by class" type="Button" parent="."]
+margin_left = 407.0
+margin_top = 66.0
+margin_right = 665.0
+margin_bottom = 155.0
+text = "get tower stats by class"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="get level stats by class" type="Button" parent="."]
+margin_left = 407.0
+margin_top = 188.0
+margin_right = 665.0
+margin_bottom = 277.0
+text = "get level stats by class"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="get level stats by student" type="Button" parent="."]
+margin_left = 407.0
+margin_top = 322.0
+margin_right = 665.0
+margin_bottom = 411.0
+text = "get level stats by student"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="button_up" from="test" to="." method="_on_test_button_up"]
+[connection signal="button_up" from="get class ids and names" to="." method="_on_get_class_ids_and_names_button_up"]
+[connection signal="button_up" from="get student ids and names" to="." method="_on_get_student_ids_and_names_button_up"]
+[connection signal="button_up" from="get tower ids and names" to="." method="_on_get_tower_ids_and_names_button_up"]
+[connection signal="button_up" from="get level ids and names" to="." method="_on_get_level_ids_and_names_button_up"]
+[connection signal="button_up" from="get tower stats by class" to="." method="_on_get_tower_stats_by_class_button_up"]
+[connection signal="button_up" from="get level stats by class" to="." method="_on_get_level_stats_by_class_button_up"]
+[connection signal="button_up" from="get level stats by student" to="." method="_on_get_level_stats_by_student_button_up"]

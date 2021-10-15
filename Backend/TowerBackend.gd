@@ -106,7 +106,7 @@ static func get_level_attempt(student_id: String, level_id: String, type: String
 	var task: FirestoreTask = Firebase.Firestore.query(query)
 	var question_docs: Array = yield(task, "task_finished") # Array<FirestoreDocument>
 	if not question_docs:
-		return Error.raise_invalid_parameter_error("'%s' is not a valid level ID" % level_id)
+		Error.raise_invalid_parameter_error("'%s' is not a valid level ID" % level_id)
 	
 	# Query question attempts
 	var question_attempt
@@ -115,7 +115,8 @@ static func get_level_attempt(student_id: String, level_id: String, type: String
 		var question_id: String = question_doc.doc_name
 		question_attempt = yield(_get_question_attempt(student_id, question_id, type), "completed")
 		if (question_attempt is int):
-			return Error.raise_invalid_parameter_error("Either 'student_id' or 'type' has an invalid value")
+			Error.raise_invalid_parameter_error("Either 'student_id' or 'type' has an invalid value")
+			continue
 		question_attempts.append(question_attempt)
 	
 	return question_attempts
@@ -393,7 +394,7 @@ func _on_submit_multiple_level_attempts_button_up():
 		for doc in docs:
 			var attempt = {
 				"questionID": doc.doc_name,
-				"duration": randi()%500+1, # random int between 1 and 500
+				"duration": randi()%120+1, # random int between 1 and 120 (2 mins)
 				"correct": bool(randi()%2) # random bool
 			}
 			attempts.append(attempt)
