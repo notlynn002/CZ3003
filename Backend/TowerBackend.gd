@@ -369,7 +369,7 @@ func _on_get_last_level_attempted_button_up():
 	print(output)
 
 
-<<<<<<< HEAD
+
 
 func get_leaderboard(towerID):
 	# get all the levelIDs of teh boss levels in this tower
@@ -434,7 +434,7 @@ func _on_getLeaderboard_button_up():
 	pass # Replace with function body.
 	
 
-=======
+
 func _on_submit_multiple_level_attempts_button_up():
 	var student_id = "iZKcmDRrSdc0zn8vU6ZnxaEpPGH2"
 	var tower_id = "numbers-tower"
@@ -467,4 +467,4 @@ func _on_submit_multiple_level_attempts_button_up():
 		yield(_add_first_attempts(student_id, attempts), "completed")
 	
 	print("done")
->>>>>>> ef4a99d2c6610bc75b51cfb59a57304b80001e38
+

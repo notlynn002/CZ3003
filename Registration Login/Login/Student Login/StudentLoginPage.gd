@@ -4,8 +4,6 @@ extends CanvasLayer
 # Declare member variables here. Examples:
 var email
 var password
-var currUser
-var profileDetails
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -38,8 +36,7 @@ func _on_LoginButton_pressed():
 	
 ######## ALL BACKEND FUNCTIONS #########
 func on_login_failed(error_code, message):
-	currUser = null
-	profileDetails = null
+	Globals.currUser = null
 	print("error code: " + str(error_code))
 	print("message: " + str(message))
 
@@ -59,7 +56,7 @@ func login(email, password, role):
 	else:
 		var res = result[0].doc_fields
 		res["userId"] = result[0].doc_name
-		currUser = res
+		Globals.currUser = res
 		
 		Firebase.Auth.login_with_email_and_password(email, password)
 	
@@ -69,7 +66,7 @@ func _on_FirebaseAuth_login_succeeded(auth_info):
 	print("login succcess!")
 	if auth_info.localid != "bKVRE45BXPY2R8RhochyJlefPW92":
 		Firebase.Auth.save_auth(auth_info)
-		print(currUser)
-		return currUser
+		print(Globals.currUser)
+		
 	# change scene
 	pass
