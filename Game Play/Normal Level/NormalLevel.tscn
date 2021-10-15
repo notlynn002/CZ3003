@@ -338,7 +338,7 @@ position = Vector2( 1311.28, -2.18402 )
 [node name="TowerDoor5Open5" parent="." instance=ExtResource( 10 )]
 position = Vector2( 1579.32, 2.44794 )
 
-[node name="Layer1Door1" type="TextureButton" parent="."]
+[node name="Door1" type="TextureButton" parent="."]
 margin_left = -14.3918
 margin_top = 513.835
 margin_right = 285.608
@@ -349,7 +349,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer1Door2" type="TextureButton" parent="."]
+[node name="Door2" type="TextureButton" parent="."]
 margin_left = 239.608
 margin_top = 511.836
 margin_right = 539.608
@@ -360,7 +360,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer1Door3" type="TextureButton" parent="."]
+[node name="Door3" type="TextureButton" parent="."]
 margin_left = 511.727
 margin_top = 511.836
 margin_right = 811.727
@@ -371,7 +371,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer1Door4" type="TextureButton" parent="."]
+[node name="Door4" type="TextureButton" parent="."]
 margin_left = 784.105
 margin_top = 514.835
 margin_right = 1084.11
@@ -382,7 +382,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer1Door5" type="TextureButton" parent="."]
+[node name="Door5" type="TextureButton" parent="."]
 margin_left = 1094.6
 margin_top = 521.836
 margin_right = 1394.6
@@ -393,7 +393,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer2Door1" type="TextureButton" parent="."]
+[node name="Door6" type="TextureButton" parent="."]
 margin_left = 1465.37
 margin_top = -111.46
 margin_right = 1765.37
@@ -404,7 +404,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer2Door2" type="TextureButton" parent="."]
+[node name="Door7" type="TextureButton" parent="."]
 margin_left = 1197.44
 margin_top = -115.364
 margin_right = 1497.44
@@ -415,7 +415,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer2Door3" type="TextureButton" parent="."]
+[node name="Door8" type="TextureButton" parent="."]
 margin_left = 927.425
 margin_top = -116.392
 margin_right = 1227.43
@@ -426,7 +426,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer2Door4" type="TextureButton" parent="."]
+[node name="Door9" type="TextureButton" parent="."]
 margin_left = 656.777
 margin_top = -113.867
 margin_right = 956.777
@@ -437,7 +437,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer2Door5" type="TextureButton" parent="."]
+[node name="Door10" type="TextureButton" parent="."]
 margin_left = 417.183
 margin_top = -106.523
 margin_right = 717.183
@@ -448,7 +448,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer3Door1" type="TextureButton" parent="."]
+[node name="Door11" type="TextureButton" parent="."]
 margin_left = 111.511
 margin_top = -713.694
 margin_right = 411.511
@@ -459,7 +459,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer3Door2" type="TextureButton" parent="."]
+[node name="Door12" type="TextureButton" parent="."]
 margin_left = 376.833
 margin_top = -722.706
 margin_right = 676.838
@@ -470,7 +470,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer3Door3" type="TextureButton" parent="."]
+[node name="Door13" type="TextureButton" parent="."]
 margin_left = 660.19
 margin_top = -717.747
 margin_right = 960.19
@@ -481,7 +481,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer3Door4" type="TextureButton" parent="."]
+[node name="Door14" type="TextureButton" parent="."]
 margin_left = 921.942
 margin_top = -719.208
 margin_right = 1221.94
@@ -492,7 +492,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer3Door5" type="TextureButton" parent="."]
+[node name="Door15" type="TextureButton" parent="."]
 margin_left = 1219.15
 margin_top = -711.605
 margin_right = 1519.15
@@ -503,7 +503,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer4Door1" type="TextureButton" parent="."]
+[node name="Door16" type="TextureButton" parent="."]
 margin_left = 1606.68
 margin_top = -1296.87
 margin_right = 1906.68
@@ -514,7 +514,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer4Door2" type="TextureButton" parent="."]
+[node name="Door17" type="TextureButton" parent="."]
 margin_left = 1332.71
 margin_top = -1296.69
 margin_right = 1632.71
@@ -525,7 +525,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer4Door3" type="TextureButton" parent="."]
+[node name="Door18" type="TextureButton" parent="."]
 margin_left = 1061.69
 margin_top = -1296.72
 margin_right = 1361.69
@@ -536,7 +536,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer4Door4" type="TextureButton" parent="."]
+[node name="Door19" type="TextureButton" parent="."]
 margin_left = 794.043
 margin_top = -1297.19
 margin_right = 1094.04
@@ -547,7 +547,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer4Door5" type="TextureButton" parent="."]
+[node name="Door20" type="TextureButton" parent="."]
 margin_left = 552.124
 margin_top = -1286.58
 margin_right = 852.124
@@ -558,7 +558,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer5Door1" type="TextureButton" parent="."]
+[node name="Door21" type="TextureButton" parent="."]
 margin_left = 183.654
 margin_top = -1920.18
 margin_right = 483.654
@@ -569,7 +569,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer5Door2" type="TextureButton" parent="."]
+[node name="Door22" type="TextureButton" parent="."]
 margin_left = 476.026
 margin_top = -1918.98
 margin_right = 776.026
@@ -580,7 +580,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer5Door3" type="TextureButton" parent="."]
+[node name="Door23" type="TextureButton" parent="."]
 margin_left = 771.555
 margin_top = -1923.85
 margin_right = 1071.56
@@ -591,7 +591,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer5Door4" type="TextureButton" parent="."]
+[node name="Door24" type="TextureButton" parent="."]
 margin_left = 1066.59
 margin_top = -1919.55
 margin_right = 1366.59
@@ -602,7 +602,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Layer5Door5" type="TextureButton" parent="."]
+[node name="Door25" type="TextureButton" parent="."]
 margin_left = 1375.07
 margin_top = -1910.47
 margin_right = 1675.07
@@ -646,28 +646,28 @@ limit_left = 0
 limit_right = 1900
 smoothing_enabled = true
 
-[connection signal="pressed" from="Layer1Door1" to="." method="_on_Door1_pressed"]
-[connection signal="pressed" from="Layer1Door2" to="." method="_on_Door2_pressed"]
-[connection signal="pressed" from="Layer1Door3" to="." method="_on_Door3_pressed"]
-[connection signal="pressed" from="Layer1Door4" to="." method="_on_Door4_pressed"]
-[connection signal="pressed" from="Layer1Door5" to="." method="_on_Door5_pressed"]
-[connection signal="pressed" from="Layer2Door1" to="." method="_on_Door1_pressed"]
-[connection signal="pressed" from="Layer2Door2" to="." method="_on_Door2_pressed"]
-[connection signal="pressed" from="Layer2Door3" to="." method="_on_Door3_pressed"]
-[connection signal="pressed" from="Layer2Door4" to="." method="_on_Door4_pressed"]
-[connection signal="pressed" from="Layer2Door5" to="." method="_on_Door5_pressed"]
-[connection signal="pressed" from="Layer3Door1" to="." method="_on_Door1_pressed"]
-[connection signal="pressed" from="Layer3Door2" to="." method="_on_Door2_pressed"]
-[connection signal="pressed" from="Layer3Door3" to="." method="_on_Door3_pressed"]
-[connection signal="pressed" from="Layer3Door4" to="." method="_on_Door4_pressed"]
-[connection signal="pressed" from="Layer3Door5" to="." method="_on_Door5_pressed"]
-[connection signal="pressed" from="Layer4Door1" to="." method="_on_Door1_pressed"]
-[connection signal="pressed" from="Layer4Door2" to="." method="_on_Door2_pressed"]
-[connection signal="pressed" from="Layer4Door3" to="." method="_on_Door3_pressed"]
-[connection signal="pressed" from="Layer4Door4" to="." method="_on_Door4_pressed"]
-[connection signal="pressed" from="Layer4Door5" to="." method="_on_Door5_pressed"]
-[connection signal="pressed" from="Layer5Door1" to="." method="_on_Door1_pressed"]
-[connection signal="pressed" from="Layer5Door2" to="." method="_on_Door2_pressed"]
-[connection signal="pressed" from="Layer5Door3" to="." method="_on_Door3_pressed"]
-[connection signal="pressed" from="Layer5Door4" to="." method="_on_Door4_pressed"]
-[connection signal="pressed" from="Layer5Door5" to="." method="_on_Door5_pressed"]
+[connection signal="pressed" from="Door1" to="." method="_on_NormalLevelDoor_pressed"]
+[connection signal="pressed" from="Door2" to="." method="_on_NormalLevelDoor_pressed"]
+[connection signal="pressed" from="Door3" to="." method="_on_NormalLevelDoor_pressed"]
+[connection signal="pressed" from="Door4" to="." method="_on_NormalLevelDoor_pressed"]
+[connection signal="pressed" from="Door5" to="." method="_on_BossLevelDoor_pressed"]
+[connection signal="pressed" from="Door6" to="." method="_on_Door1_pressed"]
+[connection signal="pressed" from="Door7" to="." method="_on_Door2_pressed"]
+[connection signal="pressed" from="Door8" to="." method="_on_Door3_pressed"]
+[connection signal="pressed" from="Door9" to="." method="_on_Door4_pressed"]
+[connection signal="pressed" from="Door10" to="." method="_on_Door5_pressed"]
+[connection signal="pressed" from="Door11" to="." method="_on_Door1_pressed"]
+[connection signal="pressed" from="Door12" to="." method="_on_Door2_pressed"]
+[connection signal="pressed" from="Door13" to="." method="_on_Door3_pressed"]
+[connection signal="pressed" from="Door14" to="." method="_on_Door4_pressed"]
+[connection signal="pressed" from="Door15" to="." method="_on_Door5_pressed"]
+[connection signal="pressed" from="Door16" to="." method="_on_Door1_pressed"]
+[connection signal="pressed" from="Door17" to="." method="_on_Door2_pressed"]
+[connection signal="pressed" from="Door18" to="." method="_on_Door3_pressed"]
+[connection signal="pressed" from="Door19" to="." method="_on_Door4_pressed"]
+[connection signal="pressed" from="Door20" to="." method="_on_Door5_pressed"]
+[connection signal="pressed" from="Door21" to="." method="_on_Door1_pressed"]
+[connection signal="pressed" from="Door22" to="." method="_on_Door2_pressed"]
+[connection signal="pressed" from="Door23" to="." method="_on_Door3_pressed"]
+[connection signal="pressed" from="Door24" to="." method="_on_Door4_pressed"]
+[connection signal="pressed" from="Door25" to="." method="_on_Door5_pressed"]

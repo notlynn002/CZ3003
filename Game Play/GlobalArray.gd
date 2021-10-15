@@ -9,6 +9,7 @@ var levelCount = 0
 var layerCount = 1
 
 var nowAtLvl = 0
+var lastLvlAttempted = 0
 
 var L1Door1 = false
 var L1Door2 = false
