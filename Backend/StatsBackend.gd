@@ -206,7 +206,7 @@ static func get_tower_stats_by_class(tower_id: String, class_ids: Array) -> Arra
 			"student_name" (String): Student's name.
 			"max_level" (int): Last level attempted by student for the tower.
 			"avg_score" (float): Student's average score for attempted boss levels in the tower.
-			"avg_timing" (float): Student's average timing for attempted boss levels in the tower. Timing is expressed as total seconds.
+			"avg_time" (float): Student's average timing for attempted boss levels in the tower. Timing is expressed as total seconds.
 	
 	"""
 	# this function cannot be used for quiz tower
@@ -283,7 +283,7 @@ static func get_level_stats_by_class(level_id: String, class_ids: Array) -> Arra
 			"qn_content" (String): Question content.
 			"attempt_percent" (float): Percentage of students who attempted the question.
 			"correct_percent" (float): Out of the students who attempted the question, the percentage of them that got the question correct.
-			"avg_timing" (float): Average timing of students who attempted the question. Timing is expressed as total seconds.
+			"avg_time" (float): Average timing of students who attempted the question. Timing is expressed as total seconds.
 	
 	"""
 	var student_info: Dictionary = yield(get_student_ids_and_names(class_ids), "completed")
