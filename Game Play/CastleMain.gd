@@ -6,6 +6,7 @@ var clearlvl
 var clearedLvl
 
 var lastLvlAttempted
+var correcNo: Array
 var nowAtLevel
 var strNowAtLevel
 var qnInDataBase
@@ -18,9 +19,18 @@ var normalLvlQn1 = preload("res://Game Play/Normal Level/NormalLevelQn1.tscn").i
 var normalLvlQn2 = preload("res://Game Play/Normal Level/NormalLevelQn2Updated.tscn").instance()
 
 func _ready():
+	$lvl1Stars/star1.hide()
+	$lvl1Stars/star2.hide()
+	$lvl1Stars/star3.hide()
+	#$lvl2Stars.hide()
 	var i = 1
-	#lastLvlAttempted = towerBackend.get_last_level_attempted("HjgDICIEdI4btnow8RP6", "numbers-tower")
-	lastLvlAttempted = 2
+	if GlobalArray.nowAtTower == "Numbers":
+		#lastLvlAttempted = yield(towerBackend.get_last_level_attempted("HjgDICIEdI4btnow8RP6", "numbers-tower"), "completed")
+		lastLvlAttempted = 2
+		#correctNo = yield(towerBackend.get_correct_No("HjgDICIEdI4btnow8RP6", "numbers-tower"), "completed")
+		#correcNo = [1]
+	
+	#open the door for levels attempted
 	while i <= lastLvlAttempted:
 		var closedDoor = get_node("Door" + String(i))
 		closedDoor.hide()
@@ -31,6 +41,20 @@ func _ready():
 		var lockedDoor = get_node("Door" + String(j))
 		lockedDoor.disabled = true
 		j += 1
+	#shows the stars
+	#_star_Manager(correcNo)
+	correcNo = [2]
+	print(len(correcNo))
+	var k = 0
+	var showStars
+	while k < len(correcNo):
+		showStars = correcNo[k]
+		var locNode = "lvl" + String(k+1) + "Stars/" + "star" + String(showStars)
+		print(locNode)
+		#stars = get_node("lvl1Stars/1star")
+		var stars = get_node(locNode)
+		stars.show()
+		k += 1
 	
 func init(nowAtTower):
 	clearlvl = clearedLvl
@@ -46,10 +70,9 @@ func _on_NormalLevelDoor_pressed():
 	var currentLoc
 	currentLoc = get_node("King").get_position()
 	GlobalArray.playerPosition = currentLoc
-	GlobalArray.L1Door1 = true
 	
 	#get the current level
-	#nowAtLevel = towerBackend.get_last_level_attempted("HjgDICIEdI4btnow8RP6", "numbers-tower") + 1
+	#nowAtLevel = yield(towerBackend.get_last_level_attempted("HjgDICIEdI4btnow8RP6", "numbers-tower"), "completed") + 1
 	nowAtLevel = 3 #need to change
 	if nowAtLevel < 10:
 		strNowAtLevel = "0" + String(nowAtLevel)
@@ -77,3 +100,18 @@ func _on_BossLevelDoor_pressed():
 	if GlobalArray.L1Door4:
 		get_tree().change_scene("res://Game Play/Boss Level/BossLevel.tscn")
 
+func _star_Manager(ansArray):
+	print("here")
+	correcNo = ansArray
+	print(correcNo)
+	var i = 0
+	var showStars
+	while i < len(correcNo):
+		print("while loop")
+		showStars = correcNo[i]
+		var locNode = "lvl" + String(i+1) + "Stars/" + String(showStars) + "star"
+		print(locNode)
+		#stars = get_node("lvl1Stars/1star")
+		var stars = get_node(locNode)
+		stars.show()
+		i += 1

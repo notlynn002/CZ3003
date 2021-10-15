@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Game Play/Normal Level/TowerStaircase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/King.tscn" type="PackedScene" id=2]
@@ -11,11 +11,26 @@
 [ext_resource path="res://sprites/tower/closed  boss level door.png" type="Texture" id=9]
 [ext_resource path="res://Game Play/Boss Level/BossLevelDoorOpen.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Game Play/Normal Level/TowerStaircaseRev.tscn" type="PackedScene" id=11]
+[ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=12]
+[ext_resource path="res://sprites/buttons or icons/sound off icon.png" type="Texture" id=13]
+[ext_resource path="res://sprites/buttons or icons/quit icon.png" type="Texture" id=14]
+[ext_resource path="res://sprites/buttons or icons/challenge icon.png" type="Texture" id=15]
+[ext_resource path="res://sprites/buttons or icons/sound on icon.png" type="Texture" id=16]
+[ext_resource path="res://sprites/buttons or icons/mail icon.png" type="Texture" id=17]
+[ext_resource path="res://sprites/tower/star.png" type="Texture" id=18]
+[ext_resource path="res://sprites/tower/2 stars.png" type="Texture" id=19]
+[ext_resource path="res://sprites/tower/3 stars.png" type="Texture" id=20]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31.4409, 144.539 )
 
 [sub_resource type="RectangleShape2D" id=2]
+
+[sub_resource type="DynamicFont" id=3]
+resource_local_to_scene = true
+size = 24
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 12 )
 
 [node name="NormalLevel" type="Node2D"]
 script = ExtResource( 5 )
@@ -76,29 +91,12 @@ position = Vector2( 1705.57, 958.306 )
 [node name="TowerBricks15" parent="TowerBackground" instance=ExtResource( 4 )]
 position = Vector2( 1987.57, 962.306 )
 
-[node name="TowerBricks17" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( 380.837, 407.331 )
-
-[node name="TowerBricks18" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( 671.763, 405.491 )
-
-[node name="TowerBricks19" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( 957.893, 405.701 )
-
-[node name="TowerBricks20" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( 1247.77, 405.601 )
-
 [node name="TowerBricks22" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( 1536.55, 408.641 )
-
-[node name="TowerBricks23" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( 95.2924, 408.281 )
+position = Vector2( 1629.99, 619.546 )
+rotation = 1.5708
 
 [node name="TowerBricks24" parent="TowerBackground" instance=ExtResource( 4 )]
 position = Vector2( 283.146, 333.581 )
-
-[node name="TowerBricks25" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( -10.8542, 335.581 )
 
 [node name="TowerBricks27" parent="TowerBackground" instance=ExtResource( 4 )]
 position = Vector2( 576.715, 331.887 )
@@ -113,7 +111,7 @@ position = Vector2( 1168.72, 333.887 )
 position = Vector2( 1450.72, 337.887 )
 
 [node name="BlockBrick" type="StaticBody2D" parent="TowerBackground"]
-position = Vector2( 1811.13, 116.304 )
+position = Vector2( 1754.13, 47.304 )
 
 [node name="Sprite" type="Sprite" parent="TowerBackground/BlockBrick"]
 position = Vector2( -124.482, 426.127 )
@@ -135,18 +133,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TowerBricks18" parent="TowerBackground2" instance=ExtResource( 4 )]
-position = Vector2( 519.789, 868.822 )
-
-[node name="TowerBricks19" parent="TowerBackground2" instance=ExtResource( 4 )]
-position = Vector2( 805.919, 869.032 )
-
-[node name="TowerBricks20" parent="TowerBackground2" instance=ExtResource( 4 )]
-position = Vector2( 1095.79, 868.932 )
-
-[node name="TowerBricks22" parent="TowerBackground2" instance=ExtResource( 4 )]
-position = Vector2( 1384.57, 871.972 )
-
 [node name="TowerBricks24" parent="TowerBackground2" instance=ExtResource( 4 )]
 position = Vector2( 332.759, 794.392 )
 
@@ -162,20 +148,9 @@ position = Vector2( 1218.33, 794.698 )
 [node name="TowerBricks30" parent="TowerBackground2" instance=ExtResource( 4 )]
 position = Vector2( 1500.33, 798.698 )
 
-[node name="TowerBricks21" parent="TowerBackground2" instance=ExtResource( 4 )]
-position = Vector2( 484.153, 273.702 )
-
-[node name="TowerBricks23" parent="TowerBackground2" instance=ExtResource( 4 )]
-position = Vector2( 770.283, 273.912 )
-
-[node name="TowerBricks25" parent="TowerBackground2" instance=ExtResource( 4 )]
-position = Vector2( 1060.16, 273.812 )
-
-[node name="TowerBricks26" parent="TowerBackground2" instance=ExtResource( 4 )]
-position = Vector2( 1348.94, 276.852 )
-
 [node name="TowerBricks31" parent="TowerBackground2" instance=ExtResource( 4 )]
-position = Vector2( 297.123, 199.272 )
+position = Vector2( 1655.99, 458.231 )
+rotation = 1.5708
 
 [node name="TowerBricks32" parent="TowerBackground2" instance=ExtResource( 4 )]
 position = Vector2( 590.693, 197.578 )
@@ -202,7 +177,7 @@ position = Vector2( 19.5387, 112.246 )
 shape = SubResource( 1 )
 
 [node name="BlockBrick2" type="StaticBody2D" parent="TowerBackground2"]
-position = Vector2( 1689.11, 0.101837 )
+position = Vector2( 1635.11, -57.8982 )
 
 [node name="Sprite" type="Sprite" parent="TowerBackground2/BlockBrick2"]
 position = Vector2( 22.1831, 377.479 )
@@ -223,18 +198,6 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="TowerBricks18" parent="TowerBackground3" instance=ExtResource( 4 )]
-position = Vector2( 620.583, 715.112 )
-
-[node name="TowerBricks19" parent="TowerBackground3" instance=ExtResource( 4 )]
-position = Vector2( 906.713, 715.322 )
-
-[node name="TowerBricks20" parent="TowerBackground3" instance=ExtResource( 4 )]
-position = Vector2( 1196.59, 715.222 )
-
-[node name="TowerBricks22" parent="TowerBackground3" instance=ExtResource( 4 )]
-position = Vector2( 1485.37, 718.262 )
 
 [node name="TowerBricks24" parent="TowerBackground3" instance=ExtResource( 4 )]
 position = Vector2( 433.553, 640.682 )
@@ -645,6 +608,147 @@ current = true
 limit_left = 0
 limit_right = 1900
 smoothing_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ChallengeButton" type="TextureButton" parent="CanvasLayer"]
+margin_left = 1499.41
+margin_top = 17.0
+margin_right = 1595.41
+margin_bottom = 107.0
+texture_normal = ExtResource( 15 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MailButton" type="TextureButton" parent="CanvasLayer"]
+margin_left = 1609.76
+margin_top = 10.7621
+margin_right = 1714.76
+margin_bottom = 105.762
+texture_normal = ExtResource( 17 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LogoutButton" type="TextureButton" parent="CanvasLayer"]
+margin_left = 1829.0
+margin_top = 14.0
+margin_right = 1911.0
+margin_bottom = 94.0
+texture_normal = ExtResource( 14 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundButton" type="TextureButton" parent="CanvasLayer"]
+margin_left = 1705.08
+margin_top = 11.7095
+margin_right = 1826.08
+margin_bottom = 105.709
+texture_normal = ExtResource( 16 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MuteButton" type="TextureButton" parent="CanvasLayer"]
+margin_left = 1702.72
+margin_top = 8.11893
+margin_right = 1846.72
+margin_bottom = 116.119
+texture_normal = ExtResource( 13 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChallengeLabel" type="Label" parent="CanvasLayer"]
+margin_left = 1441.81
+margin_top = 122.762
+margin_right = 1612.81
+margin_bottom = 161.762
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.984314, 0.980392, 0.980392, 1 )
+text = "challenge"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MailLabel" type="Label" parent="CanvasLayer"]
+margin_left = 1633.69
+margin_top = 123.254
+margin_right = 1705.69
+margin_bottom = 162.254
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.984314, 0.980392, 0.980392, 1 )
+text = "mail"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundLabel" type="Label" parent="CanvasLayer"]
+margin_left = 1728.57
+margin_top = 120.779
+margin_right = 1821.57
+margin_bottom = 159.779
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.996078, 0.984314, 0.984314, 1 )
+text = "music"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LogoutLabel" type="Label" parent="CanvasLayer"]
+margin_left = 1840.11
+margin_top = 119.779
+margin_right = 1909.11
+margin_bottom = 158.779
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.972549, 0.964706, 0.964706, 1 )
+text = "quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lvl1Stars" type="StaticBody2D" parent="."]
+
+[node name="star1" type="Sprite" parent="lvl1Stars"]
+position = Vector2( 98.7044, 425.89 )
+scale = Vector2( 0.186388, 0.186388 )
+texture = ExtResource( 18 )
+
+[node name="star2" type="Sprite" parent="lvl1Stars"]
+position = Vector2( 99.9467, 427.016 )
+scale = Vector2( 0.397995, 0.397995 )
+texture = ExtResource( 19 )
+
+[node name="star3" type="Sprite" parent="lvl1Stars"]
+position = Vector2( 99.1255, 431.334 )
+scale = Vector2( 0.354829, 0.354829 )
+texture = ExtResource( 20 )
+
+[node name="lvl2Stars" type="StaticBody2D" parent="."]
+position = Vector2( 249, 0 )
+
+[node name="star1" type="Sprite" parent="lvl2Stars"]
+position = Vector2( 96.4229, 422.865 )
+scale = Vector2( 0.190724, 0.215185 )
+texture = ExtResource( 18 )
+
+[node name="star2" type="Sprite" parent="lvl2Stars"]
+position = Vector2( 99.9467, 427.016 )
+scale = Vector2( 0.397995, 0.397995 )
+texture = ExtResource( 19 )
+
+[node name="star3" type="Sprite" parent="lvl2Stars"]
+position = Vector2( 99.1255, 431.334 )
+scale = Vector2( 0.354829, 0.354829 )
+texture = ExtResource( 20 )
 
 [connection signal="pressed" from="Door1" to="." method="_on_NormalLevelDoor_pressed"]
 [connection signal="pressed" from="Door2" to="." method="_on_NormalLevelDoor_pressed"]

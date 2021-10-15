@@ -15,11 +15,24 @@ __meta__ = {
 }
 
 [node name="Get all towers" type="Button" parent="."]
-margin_left = 72.2654
-margin_top = 61.6294
-margin_right = 270.265
-margin_bottom = 98.6294
+margin_left = 63.2654
+margin_top = 73.6294
+margin_right = 261.265
+margin_bottom = 110.629
 text = "Get all towers"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="getLeaderboard" type="Button" parent="."]
+margin_left = 311.265
+margin_top = 65.6294
+margin_right = 509.265
+margin_bottom = 102.629
+text = "get leaderboard"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Get levels for 1 tower" type="Button" parent="."]
 margin_left = 74.0
@@ -96,6 +109,7 @@ __meta__ = {
 }
 
 [connection signal="button_up" from="Get all towers" to="." method="_on_Get_all_towers_button_up"]
+[connection signal="button_up" from="getLeaderboard" to="." method="_on_getLeaderboard_button_up"]
 [connection signal="button_up" from="Get levels for 1 tower" to="." method="_on_Get_levels_for_1_tower_button_up"]
 [connection signal="button_up" from="Get questions by level" to="." method="_on_Get_questions_by_level_button_up"]
 [connection signal="button_up" from="test button" to="." method="_on_test_button_button_up"]

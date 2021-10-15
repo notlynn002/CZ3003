@@ -6,7 +6,6 @@ var teacher_name
 var password
 var cfm_password
 var email
-var currUser
 var profileDetails
 
 # Called when the node enters the scene tree for the first time.
@@ -50,11 +49,13 @@ func _on_ConfirmPasswordInput_text_entered(cfm_pw):
 func _on_RegisterButton_pressed():
 	email = $EmailInput.text
 	password = $PasswordInput.text
-	signup(email, password)
+	var pd = {"name": teacher_name, "role": "teacher"}
+	signup(email, password,pd )
 	get_tree().change_scene("res://Teacher/TeacherHomePage.tscn")
 
 ########## ALL THE BACKEND FUNCTIONS ############
-func signup(email, password):
+func signup(email, password, pd):
+	profileDetails = pd
 	Firebase.Auth.signup_with_email_and_password(email, password)
 
 func _on_FirebaseAuth_signup_succeeded(auth_info):
@@ -69,7 +70,13 @@ func createProfile(auth_info):
 	var addedUser : FirestoreDocument = yield(add_user_task, "task_finished")
 	var res = addedUser.doc_fields
 	res["userId"] = addedUser.doc_name
-	currUser = res
+	Globals.currUser = res
 	return res
+	
+func on_login_failed(error_code, message):
+	Globals.currUser = null
+	profileDetails = null
+	print("error code: " + str(error_code))
+	print("message: " + str(message))
 	
 
