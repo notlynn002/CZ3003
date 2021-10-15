@@ -51,11 +51,9 @@ static func get_questions_by_level(levelID):
 	var result: Array = yield(query_task, 'task_finished')
 	var res:Array = []
 	for i in result:
+		i.doc_fields['questionID'] = i.doc_name
 		res.append(i.doc_fields)
-	var sm : Array = [1,2,3]
-	#print(typeof(res))
-	
-	#print(res)
+		
 	return res
 	
 	
@@ -368,3 +366,69 @@ func _on_login_button_up():
 func _on_get_last_level_attempted_button_up():
 	var output = yield(get_last_level_attempted("test-student1", "numbers-tower"), "completed")
 	print(output)
+
+
+
+func get_leaderboard(towerID):
+	# get all the levelIDs of teh boss levels in this tower
+	var query : FirestoreQuery = FirestoreQuery.new()
+	query.from('Level')
+	query.where('towerID', FirestoreQuery.OPERATOR.EQUAL, towerID)
+	query.where('levelType', FirestoreQuery.OPERATOR.EQUAL,"boss")
+	query.select([])
+	var query_task : FirestoreTask = Firebase.Firestore.query(query)
+	var result = yield(query_task, 'task_finished')
+	print(result)
+	
+	
+	var attempts = []
+	for i in result:
+		var q_query : FirestoreQuery = FirestoreQuery.new()
+		q_query.from('Question')
+		q_query.where('levelID', FirestoreQuery.OPERATOR.EQUAL, i.doc_name)
+		q_query.select([])
+		var qn_query : FirestoreTask = Firebase.Firestore.query(q_query)
+		var qns = yield(qn_query, 'task_finished')
+		#print(i.doc_name)
+		#print("____________________________________")
+		#print(qns)
+		for qn in qns:
+			var a_query : FirestoreQuery = FirestoreQuery.new()
+			a_query.from('Question_Attempt')
+			a_query.where('questionID', FirestoreQuery.OPERATOR.EQUAL, qn.doc_name)
+			a_query.where('type', FirestoreQuery.OPERATOR.EQUAL, "first")
+			a_query.where('correct', FirestoreQuery.OPERATOR.EQUAL, true)
+			var attempt_query : FirestoreTask = Firebase.Firestore.query(a_query)
+			var qn_attempts = yield(attempt_query, 'task_finished')
+			print(qn.doc_name)
+			print("____________________________________")
+			print(qn_attempts)
+			attempts.append_array(qn_attempts)
+	var student_dict = {}
+	# {name: , totalCorrect: , timing , highestLevel: }
+	for attempt in attempts:
+		var studentID = attempt.studentID
+		var level = int(attempt.questionID.split("-")[1])
+		if studentID in student_dict:
+			student_dict[studentID]["totalCorrect"] += 1
+			student_dict[studentID]["timing"] += attempt.duration
+			
+			student_dict[studentID]["highestLevel"] = max(student_dict[studentID].highestLevel, level)
+				
+		else:
+			var user = AuthBackend.getUser(attempt.studentID)
+			student_dict[studentID] = {"name": user.name, "highestLevel": level, "totalCorrect": 1, "timing": attempt.duration}
+	
+	var rankings = student_dict.values()
+	rankings.sort_custom(LeaderboardSorter, "sort_rankings_order")
+	return rankings
+	
+
+	
+
+
+func _on_getLeaderboard_button_up():
+	get_leaderboard('numbers-tower')
+	pass # Replace with function body.
+	
+
