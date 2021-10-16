@@ -38,7 +38,7 @@ outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 7 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 224, 272 )
+extents = Vector2( 224.155, 221.824 )
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 224, 296 )
@@ -197,7 +197,7 @@ __meta__ = {
 [node name="StaticBody2D" type="StaticBody2D" parent="WoodCastleButton"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WoodCastleButton/StaticBody2D"]
-position = Vector2( 240, 304 )
+position = Vector2( 233.265, 364.613 )
 shape = SubResource( 4 )
 
 [node name="CreamCastleButton" type="TextureButton" parent="."]
