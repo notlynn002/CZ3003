@@ -49,9 +49,9 @@ func _on_ConfirmPasswordInput_text_entered(cfm_pw):
 func _on_RegisterButton_pressed():
 	email = $EmailInput.text
 	password = $PasswordInput.text
-	var pd = {"name": teacher_name, "role": "teacher"}
+	var pd = {"name": $NameInput.text, "role": "teacher"}
 	signup(email, password,pd )
-	get_tree().change_scene("res://Teacher/TeacherHomePage.tscn")
+	
 
 ########## ALL THE BACKEND FUNCTIONS ############
 func signup(email, password, pd):
@@ -71,7 +71,7 @@ func createProfile(auth_info):
 	var res = addedUser.doc_fields
 	res["userId"] = addedUser.doc_name
 	Globals.currUser = res
-	return res
+	get_tree().change_scene("res://Teacher/TeacherHomePage.tscn")
 	
 func on_login_failed(error_code, message):
 	Globals.currUser = null
