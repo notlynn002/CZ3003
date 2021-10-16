@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/silicon.util.custom_docs/doc_item/argument_doc_item.gd"
 }, {
+"base": "Control",
+"class": "AuthBackend",
+"language": "GDScript",
+"path": "res://Backend/AuthBackend.gd"
+}, {
 "base": "Reference",
 "class": "Calendar",
 "language": "GDScript",
@@ -73,11 +78,6 @@ _global_script_classes=[ {
 "class": "FirebaseAuth",
 "language": "GDScript",
 "path": "res://addons/godot-firebase/auth/auth.gd"
-}, {
-"base": "Control",
-"class": "FirebaseContainer",
-"language": "GDScript",
-"path": "res://addons/godot-firebase/containers/container.gd"
 }, {
 "base": "Node",
 "class": "FirebaseDatabase",
@@ -159,6 +159,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/github-integration/scripts/InvitationItem.gd"
 }, {
+"base": "Reference",
+"class": "LeaderboardSorter",
+"language": "GDScript",
+"path": "res://Backend/LeaderboardSorter.gd"
+}, {
 "base": "DocItem",
 "class": "MethodDocItem",
 "language": "GDScript",
@@ -221,6 +226,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "ArgumentDocItem": "",
+"AuthBackend": "",
 "Calendar": "",
 "CalendarButtons": "",
 "ClassBackend": "",
@@ -233,7 +239,6 @@ _global_script_class_icons={
 "DocItem": "",
 "Error": "",
 "FirebaseAuth": "",
-"FirebaseContainer": "",
 "FirebaseDatabase": "",
 "FirebaseDatabaseReference": "",
 "FirebaseDatabaseStore": "",
@@ -250,6 +255,7 @@ _global_script_class_icons={
 "FunctionTask": "",
 "GistItem": "",
 "InvitationItem": "",
+"LeaderboardSorter": "",
 "MethodDocItem": "",
 "NotificationsSorter": "",
 "PropertyDocItem": "",

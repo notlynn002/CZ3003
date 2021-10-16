@@ -86,11 +86,16 @@ func createChallenge(topic, challenger_id, challengee_id):
 	
 	task = collection.add("", challengeDetails)
 	var challengeID = yield(task, "task_finished")
+	challengeID = challengeID.doc_name
+	
+	var challengee_collection : FirestoreCollection = Firebase.Firestore.collection('Challengee_Record')
 	
 	# Create Challengee Records for each of the challengees
+	for challengee in challengee_id:
+		var add_challengee_record : FirestoreTask = challengee_collection.add("", {"challengeID" : challengeID, "challengeStatus": 'sent', "challengeeID":challengee})
+		yield(add_challengee_record, "task_finished")
 	
-	
-	return challengeID.doc_name
+	return challengeID
 
 func _on_Create_Challenge_button_up():
 	# Example inputs

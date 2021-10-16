@@ -23,6 +23,7 @@ func init(stuID, arenaID, type):
 
 # Called when the node enters the scene tree for the first time.
 func _ready(): 
+	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
 	# get student's selected character from db
 	character = "king" # set as king for now
 	if character == "king":
@@ -56,6 +57,13 @@ func _ready():
 	# $Timer.set_wait_time(duration)
 	$Timer.start()
 	$TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Timer.time_left / 60), int($Timer.time_left) % 60]
+	
+	if arenaType == 'challenge':
+		pass # get challenge by id
+		 # get questions array
+	elif arenaType == 'quiz':
+		var quiz = yield(get_quiz(id), "completed")
+		var questions = quiz['questions']
 	
 	# loop through qnList
 	# for each qn, get qn details from backend
@@ -121,6 +129,71 @@ func _process(delta):
 		# save score and time to corresponsing db
 		# navigate back to home page
 
-
-func on_answered():
-	pass
+######## BACKEND FUNCTIONS ###########
+static func get_quiz(quiz_level_id: String) -> Dictionary:
+	""" Get a quiz and its details.
+	
+	Args:
+		quiz_level_id (String): Level ID of the quiz.
+		
+	Returns:
+		Dictionary: The quiz as a dictionary.
+			The Dictionary contains following keys-value pairs (all keys are Strings):
+				towerID (String): Tower ID of the quiz tower.
+				levelType (String): Fixed as 'quiz'.
+				levelDuration (int): Maximum time that a student is allowed for the quiz, formatted as total seconds.
+				quizName (String): Quiz name.
+				attemptNo (int): Maximum number of tries that a student is allowed for the quiz.
+				publishingDate (Dictionary): Quiz publishing date in UTC time, formatted as a datetime Dictionary.
+				questions (Array[Dictionary]): Quiz questions as Dictionary objects. 
+					Each Dictionary contains following keys-value pairs (all keys are Strings):
+						questionID (String): Question ID.
+						levelID (String): Quiz level ID.
+						questionNo (int): Question number.
+						questionBody (String): Question body.
+						questionOptions (Array[String]): Question options.
+						questionSoln (String): Question solution.
+						questionExplanation (String): Question explanation.
+	
+	Raises:
+		ERR_INVALID_PARAMETER: If quiz level ID is invalid.
+		
+	"""
+	var quiz: Dictionary
+	
+	# Get quiz level data
+	var collection: FirestoreCollection = Firebase.Firestore.collection("Level")
+	var task: FirestoreTask = collection.get(quiz_level_id)
+	var level_doc = yield(task, "task_finished")
+	if not level_doc is FirestoreDocument:
+		return Error.raise_invalid_parameter_error("'%s' is not a valid quiz level ID" % quiz_level_id)
+	quiz = level_doc.doc_fields
+	
+	# Get quiz question data
+	var question_docs: Array = yield(_query_quiz_questions(quiz_level_id), "completed")
+	var question_dict: Dictionary
+	var question_dicts = []	
+	for question_doc in question_docs:
+		question_dict = question_doc.doc_fields
+		question_dict["questionID"] =  question_doc.doc_name
+		question_dicts.append(question_dict)
+	quiz["questions"] = question_dicts		
+	
+	return quiz 
+	
+static func _query_quiz_questions(quiz_level_id: String) -> Array:
+	""" Get the questions for a quiz.
+	
+	Args:
+		quiz_level_id (String): Level ID of the quiz.
+		
+	Returns:
+		Array[FirestoreDocument]: The question documents.
+		
+	"""
+	var query: FirestoreQuery = FirestoreQuery.new()
+	query.from("Question")
+	query.where("levelID", FirestoreQuery.OPERATOR.EQUAL, quiz_level_id) 
+	var task: FirestoreTask = Firebase.Firestore.query(query)
+	var question_docs: Array = yield(task, "task_finished")
+	return question_docs
