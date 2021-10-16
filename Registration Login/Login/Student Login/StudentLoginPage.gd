@@ -32,7 +32,7 @@ func _on_LoginButton_pressed():
 	email = $EmailInput.text
 	password = $PasswordInput.text
 	login(email, password, 'student')
-	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
+	
 	
 ######## ALL BACKEND FUNCTIONS #########
 func on_login_failed(error_code, message):
@@ -63,10 +63,12 @@ func login(email, password, role):
 
 	
 func _on_FirebaseAuth_login_succeeded(auth_info):
-	print("login succcess!")
+
 	if auth_info.localid != "bKVRE45BXPY2R8RhochyJlefPW92":
+		print("login succcess!")
 		Firebase.Auth.save_auth(auth_info)
 		print(Globals.currUser)
+		get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
 		
 	# change scene
 	pass

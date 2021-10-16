@@ -43,9 +43,9 @@ func _on_MuteButton_pressed():
 func _on_RegisterButton_pressed():
 	var pd = {"character": character, "classID": classIndex, "name": student_name, "role": "student"}
 	signup(email, password, pd)
-	var homepage = preload("res://Game Play/StudentHomePage.tscn").instance()
-	get_tree().get_root().add_child(homepage)
-	get_tree().get_root().remove_child(self)
+	#var homepage = preload("res://Game Play/StudentHomePage.tscn").instance()
+	#get_tree().get_root().add_child(homepage)
+	#get_tree().get_root().remove_child(self)
 
 
 func _on_SamuraiButton_pressed():
@@ -83,7 +83,10 @@ func createProfile(auth_info):
 	var res = addedUser.doc_fields
 	res["userId"] = addedUser.doc_name
 	Globals.currUser = res
-	return res
+	var homepage = preload("res://Game Play/StudentHomePage.tscn").instance()
+	get_tree().get_root().add_child(homepage)
+	get_tree().get_root().remove_child(self)
+	
 
 	
 
