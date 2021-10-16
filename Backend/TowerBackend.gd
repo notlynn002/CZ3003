@@ -370,59 +370,75 @@ func _on_get_last_level_attempted_button_up():
 
 
 
-
-func get_leaderboard(towerID):
-	# get all the levelIDs of teh boss levels in this tower
+#output format - sorted list [{"name": String, "highestLevel", int, "totalCorrect" int, "timing" int}]
+static func get_leaderboard(towerID):
+	# get all the levelIDs of the boss levels in this tower
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Level')
-	query.where('towerID', FirestoreQuery.OPERATOR.EQUAL, towerID)
+	query.where('towerID', FirestoreQuery.OPERATOR.EQUAL, towerID, FirestoreQuery.OPERATOR.AND)
 	query.where('levelType', FirestoreQuery.OPERATOR.EQUAL,"boss")
 	query.select([])
 	var query_task : FirestoreTask = Firebase.Firestore.query(query)
 	var result = yield(query_task, 'task_finished')
-	print(result)
-	
+	#print(result)
 	
 	var attempts = []
 	for i in result:
-		var q_query : FirestoreQuery = FirestoreQuery.new()
-		q_query.from('Question')
-		q_query.where('levelID', FirestoreQuery.OPERATOR.EQUAL, i.doc_name)
-		q_query.select([])
-		var qn_query : FirestoreTask = Firebase.Firestore.query(q_query)
-		var qns = yield(qn_query, 'task_finished')
+		#var q_query : FirestoreQuery = FirestoreQuery.new()
+		#q_query.from('Question')
+		#q_query.where('levelID', FirestoreQuery.OPERATOR.EQUAL, i.doc_name)
+		#q_query.select([])
+		#var qn_query : FirestoreTask = Firebase.Firestore.query(q_query)
+		#var qns = yield(qn_query, 'task_finished')
 		#print(i.doc_name)
 		#print("____________________________________")
 		#print(qns)
-		for qn in qns:
+		for qnNo in range(1,6):
+			var qn = i.doc_name +"-" + str(qnNo)
 			var a_query : FirestoreQuery = FirestoreQuery.new()
 			a_query.from('Question_Attempt')
-			a_query.where('questionID', FirestoreQuery.OPERATOR.EQUAL, qn.doc_name)
+			a_query.where('questionID', FirestoreQuery.OPERATOR.EQUAL, qn, FirestoreQuery.OPERATOR.AND)
 			a_query.where('type', FirestoreQuery.OPERATOR.EQUAL, "first")
-			a_query.where('correct', FirestoreQuery.OPERATOR.EQUAL, true)
+			
 			var attempt_query : FirestoreTask = Firebase.Firestore.query(a_query)
 			var qn_attempts = yield(attempt_query, 'task_finished')
-			print(qn.doc_name)
-			print("____________________________________")
-			print(qn_attempts)
-			attempts.append_array(qn_attempts)
+			for att in qn_attempts:
+				attempts.append(att.doc_fields)
+			
+	#print(attempts)
+	
 	var student_dict = {}
 	# {name: , totalCorrect: , timing , highestLevel: }
 	for attempt in attempts:
 		var studentID = attempt.studentID
 		var level = int(attempt.questionID.split("-")[1])
+		
 		if studentID in student_dict:
-			student_dict[studentID]["totalCorrect"] += 1
-			student_dict[studentID]["timing"] += attempt.duration
+			if attempt.correct:
+				student_dict[studentID]["totalCorrect"] += 1
+				student_dict[studentID]["timing"] += attempt.duration
 			
 			student_dict[studentID]["highestLevel"] = max(student_dict[studentID].highestLevel, level)
 				
 		else:
-			var user = AuthBackend.getUser(attempt.studentID)
-			student_dict[studentID] = {"name": user.name, "highestLevel": level, "totalCorrect": 1, "timing": attempt.duration}
+			var user = yield(AuthBackend.getUser(attempt.studentID), "completed")
+			
+			if user != null:
+				if attempt.correct:
+					student_dict[studentID] = {"name": user.name, "highestLevel": level, "totalCorrect": 1, "timing": attempt.duration}
+				else:
+					student_dict[studentID] = {"name": user.name, "highestLevel": level, "totalCorrect": 0, "timing": 0}
 	
 	var rankings = student_dict.values()
+	
+	
+	#rankings.append({"name": "earth", "highestLevel": 5, "totalCorrect": 5, "timing": 200})
+	#rankings.append({"name": "moon", "highestLevel": 15, "totalCorrect": 0, "timing": 0})
+	#rankings.append({"name": "sun", "highestLevel": 10, "totalCorrect": 4, "timing": 100})
+	#rankings.append({"name": "star", "highestLevel": 10, "totalCorrect": 5, "timing": 200})
+	
 	rankings.sort_custom(LeaderboardSorter, "sort_rankings_order")
+	
 	return rankings
 	
 
