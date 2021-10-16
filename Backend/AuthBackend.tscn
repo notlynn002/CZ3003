@@ -52,10 +52,10 @@ __meta__ = {
 }
 
 [node name="getUser" type="Button" parent="."]
-margin_left = 517.0
-margin_top = 233.0
-margin_right = 632.0
-margin_bottom = 253.0
+margin_left = 512.0
+margin_top = 227.0
+margin_right = 627.0
+margin_bottom = 247.0
 text = "getUser"
 __meta__ = {
 "_edit_use_anchors_": false

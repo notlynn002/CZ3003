@@ -36,6 +36,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Update Challenge Result" type="Button" parent="."]
+margin_left = 140.0
+margin_top = 430.0
+margin_right = 687.0
+margin_bottom = 483.0
+text = "Update Challenge Result"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="button_up" from="Get 10 Random Qns" to="." method="_on_Get_10_Random_Qns_button_up"]
 [connection signal="button_up" from="Create Challenge" to="." method="_on_Create_Challenge_button_up"]
 [connection signal="button_up" from="Reject Challenge" to="." method="_on_Reject_Challenge_button_up"]
+[connection signal="button_up" from="Update Challenge Result" to="." method="_on_Update_Challenge_Result_button_up"]

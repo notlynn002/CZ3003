@@ -1,12 +1,11 @@
 extends Control
-
+class_name AuthBackend
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-
 var profileDetails = null
-var currUser = null
+#var currUser = null
 
 
 # Called when the node enters the scene tree for the first time.
@@ -17,7 +16,7 @@ func _ready():
 	Firebase.Auth.connect("signup_failed", self, "on_login_failed")
 
 func on_login_failed(error_code, message):
-	currUser = null
+	Globals.currUser = null
 	profileDetails = null
 	print("error code: " + str(error_code))
 	print("message: " + str(message))
@@ -30,7 +29,7 @@ func login(email, password, role):
 	query.where('email', FirestoreQuery.OPERATOR.EQUAL, email)
 	var query_task :FirestoreTask = Firebase.Firestore.query(query)
 	var result : Array = yield(query_task, 'task_finished')
-	print(result)
+	
 	if result == []:
 		print("No account found with this email")
 	elif result[0].doc_fields.role != role:
@@ -38,7 +37,8 @@ func login(email, password, role):
 	else:
 		var res = result[0].doc_fields
 		res["userId"] = result[0].doc_name
-		currUser = res
+		Globals.currUser = res
+		print(Globals.currUser)
 		
 		Firebase.Auth.login_with_email_and_password(email, password)
 	
@@ -53,16 +53,16 @@ func _on_FirebaseAuth_login_succeeded(auth_info):
 	print("login succcess!")
 	if auth_info.localid != "bKVRE45BXPY2R8RhochyJlefPW92":
 		Firebase.Auth.save_auth(auth_info)
-		print(currUser)
-		return currUser
+		print(Globals.currUser)
 	# change scene
 	pass
 
 
 
 	
-func signup(email, password):
+func signup(email, password, pd):
 	Firebase.Auth.signup_with_email_and_password(email, password)
+	profileDetails = pd
 
 func _on_FirebaseAuth_signup_succeeded(auth_info):
 	print("Sign up success!")
@@ -76,26 +76,28 @@ func createProfile(auth_info):
 	var addedUser : FirestoreDocument = yield(add_user_task, "task_finished")
 	var res = addedUser.doc_fields
 	res["userId"] = addedUser.doc_name
-	currUser = res
+	Globals.currUser = res
 	return res
 	
 func _on_t_signup_button_up():
-	profileDetails = {"name": "TestTeacher2", "role": "teacher"}
-	signup("teacher2@gmail.com", "123456")
+	var pd = {"name": "TestTeacher3", "role": "teacher"}
+	signup("teacher3@gmail.com", "123456", pd)
+	
 	pass # Replace with function body.
 
 func _on_s_signup_button_up():
-	profileDetails = {"characterId": 1, "classId": "dummyClass", "name": "TestStudent", "role": "student"}
-	signup("student@gmail.com", "123456")
+	var pd = {"character": "king", "classId": "dummyClass", "name": "TestStudent007", "role": "student"}
+	signup("student007@gmail.com", "123456", pd)
 	pass # Replace with function body.
 
 
-func _on_logout_button_up():
+static func logout():
 	Firebase.Auth.logout()
-	profileDetails = null
-	currUser = null
-	print("User has logged out. current user set to" + str(currUser))
+	Globals.currUser = null
+	print("User has logged out. current user set to" + str(Globals.currUser))
 	pass # Replace with function body.
+func _on_logout_button_up():
+	logout()
 	
 	
 
@@ -103,25 +105,23 @@ func _on_logout_button_up():
 	
 
 
-
-
-func _on_updateUser_button_up():
-	var updatedInfo = {"name": "studentUpdated", "characterId": 7}
+static func updateUser(updatedInfo):
 	var user_collection : FirestoreCollection = Firebase.Firestore.collection("User")
-	var update_task : FirestoreTask = user_collection.update(currUser.userId, updatedInfo)
+	var update_task : FirestoreTask = user_collection.update(Globals.currUser.userId, updatedInfo)
 	var doc : FirestoreDocument = yield(update_task, "task_finished")
 	var res = doc.doc_fields
 	res["userId"] = doc.doc_name
-	currUser = res
-	print(currUser)
+	Globals.currUser = res
+	print(Globals.currUser)
 	return res
+
+func _on_updateUser_button_up():
+	var updatedInfo = {"name": "studentUpdated", "characterId": 7}
+	updateUser(updatedInfo)
 	pass # Replace with function body.
 
 
-
-
-func _on_getUser_button_up():
-	var id = "abbl6nQirTNVlCBERONJw3cNDd32"
+static func getUser(id):
 	var user_collection : FirestoreCollection = Firebase.Firestore.collection("User")
 	user_collection.get(id)
 	var doc : FirestoreDocument = yield(user_collection, "get_document")
@@ -129,4 +129,17 @@ func _on_getUser_button_up():
 	res["userId"] = doc.doc_name
 	print(res)
 	return res
+
+
+func _on_getUser_button_up():
+	var id = "abbl6nQirTNVlCBERONJw3cNDd32"
+	getUser(id)
+	pass # Replace with function body.
+	
+
+
+
+
+func _on_getCurrUser_button_up():
+	print(Globals.currUser)
 	pass # Replace with function body.

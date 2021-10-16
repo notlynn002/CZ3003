@@ -4,6 +4,8 @@ extends CanvasLayer
 var character
 var chosen_tower
 var classID
+var lastLevelAttempted
+
 export (PackedScene) var King
 export (PackedScene) var Archer
 export (PackedScene) var Huntress

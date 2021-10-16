@@ -7,7 +7,6 @@ var student_name
 var email
 var password
 var classIndex
-var currUser
 var profileDetails
 
 func init(sName, emailAddr, pw, idx):
@@ -42,7 +41,8 @@ func _on_MuteButton_pressed():
 
 
 func _on_RegisterButton_pressed():
-	signup(email, password)
+	var pd = {"character": character, "classID": classIndex, "name": student_name, "role": "student"}
+	signup(email, password, pd)
 	var homepage = preload("res://Game Play/StudentHomePage.tscn").instance()
 	get_tree().get_root().add_child(homepage)
 	get_tree().get_root().remove_child(self)
@@ -66,7 +66,8 @@ func _on_KingButton_pressed():
 	$SelectedCharacterLabel.text = character
 	
 ########## ALL THE BACKEND FUNCTIONS ############
-func signup(email, password):
+func signup(email, password, pd):
+	profileDetails =pd
 	Firebase.Auth.signup_with_email_and_password(email, password)
 
 func _on_FirebaseAuth_signup_succeeded(auth_info):
@@ -81,8 +82,14 @@ func createProfile(auth_info):
 	var addedUser : FirestoreDocument = yield(add_user_task, "task_finished")
 	var res = addedUser.doc_fields
 	res["userId"] = addedUser.doc_name
-	currUser = res
+	Globals.currUser = res
 	return res
+
+func on_login_failed(error_code, message):
+	Globals.currUser = null
+	profileDetails = null
+	print("error code: " + str(error_code))
+	print("message: " + str(message))
 	
 
 	
