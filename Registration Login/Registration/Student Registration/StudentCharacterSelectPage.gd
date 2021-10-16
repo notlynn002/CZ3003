@@ -85,11 +85,6 @@ func createProfile(auth_info):
 	Globals.currUser = res
 	return res
 
-func on_login_failed(error_code, message):
-	Globals.currUser = null
-	profileDetails = null
-	print("error code: " + str(error_code))
-	print("message: " + str(message))
 	
 
 	
