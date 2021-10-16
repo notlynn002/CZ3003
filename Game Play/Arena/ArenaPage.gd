@@ -1,12 +1,12 @@
 extends CanvasLayer
 
 # Declare member variables here. Examples:
-var questionList
 var studentID
 var id
 var arenaType
 var duration
 var character
+var questions
 
 export (PackedScene) var King
 export (PackedScene) var Archer
@@ -23,6 +23,12 @@ func init(stuID, arenaID, type):
 
 # Called when the node enters the scene tree for the first time.
 func _ready(): 
+	$Popup.hide()
+	
+	# reset score & attempt
+	Globals.score = 0
+	Globals.attempt = []
+	
 	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
 	# get student's selected character from db
 	character = "king" # set as king for now
@@ -50,50 +56,46 @@ func _ready():
 		samurai.position.x = 344
 		samurai.position.y = 856
 		add_child(samurai) # add samurai to scene
-		
-		
-	# get list of qns from backend
-	# get duration & convert to seconds
-	# $Timer.set_wait_time(duration)
+	
+	if arenaType == 'challenge':
+		var challenge = yield(getChallengeByID(id), "completed")
+		questions = challenge['questionList']
+		duration = 3600
+	elif arenaType == 'quiz':
+		var quiz = yield(get_quiz(id), "completed")
+		questions = quiz['questions']
+		duration = quiz['levelDuration']
+		var maxAttempts = quiz['attemptNo']
+		var currAttempts = yield(check_max_attempt_reached(Globals.currUser.userID, id), "completed")
+		if currAttempts >= maxAttempts:
+			$Popup.show()
+			
+	$Timer.set_wait_time(duration)
 	$Timer.start()
 	$TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Timer.time_left / 60), int($Timer.time_left) % 60]
 	
-	if arenaType == 'challenge':
-		pass # get challenge by id
-		 # get questions array
-	elif arenaType == 'quiz':
-		var quiz = yield(get_quiz(id), "completed")
-		var questions = quiz['questions']
-	
-	# loop through qnList
-	# for each qn, get qn details from backend
-		# instance QuestionComponent
-		# instance 4 AnswerComponent
-		# save player's score in a global var
-		
-	# example to test implementation
-	for i in 3:
+	for i in range(questions.size()):
 		print(i)
 		var qn = Question.instance()
-		qn.init(str(i+1), 'this is a qn')
+		qn.init(str(i+1), questions[i]['questionBody'])
 		
 		var ans1 = Answer.instance()
-		ans1.init('option 1', true)
+		ans1.init(questions[i]['questionID'], questions[i]['questionOptions'][0], true)
 		ans1.position.x = 60
 		ans1.position.y = 450
 		
 		var ans2 = Answer.instance()
-		ans2.init('option 2', false)
+		ans2.init(questions[i]['questionID'], questions[i]['questionOptions'][1], false)
 		ans2.position.x = 550
 		ans2.position.y = 450
 		
 		var ans3 = Answer.instance()
-		ans3.init('option 3', false)
+		ans3.init(questions[i]['questionID'], questions[i]['questionOptions'][2], false)
 		ans3.position.x = 1030
 		ans3.position.y = 450
 		
 		var ans4 = Answer.instance()
-		ans4.init('option 4', false)
+		ans4.init(questions[i]['questionID'], questions[i]['questionOptions'][3], false)
 		ans4.position.x = 1550
 		ans4.position.y = 450
 		
@@ -112,10 +114,14 @@ func _ready():
 	# check type & see if is quiz or challenge
 	# save score and time to corresponsing db
 	# navigate to home page
-	
-	print(str(Globals.score))
-	
-	
+	if arenaType == 'quiz':
+		var attempt_record = {}
+		for i in range(Globals.attempt.size()):
+			attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
+			
+		submit_quiz_attempt(Globals.currUser.userID, id, time_left, attempt_record)
+	elif arenaType == 'challenge':
+		updateChallengeResult(id, Globals.score, time_left, Globals.currUser.userID)
 	
 	
 # warning-ignore:unused_argument
@@ -124,10 +130,22 @@ func _process(delta):
 	
 	# terminate game when time's up
 	if $Timer.time_left <= 0:
-		pass
-		# check type & see if is quiz or challenge
-		# save score and time to corresponsing db
-		# navigate back to home page
+		if arenaType == 'quiz':
+			var attempt_record = {}
+			for i in range(Globals.attempt.size()):
+				attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
+				
+			submit_quiz_attempt(Globals.currUser.userID, id, 0, attempt_record)
+		elif arenaType == 'challenge':
+			updateChallengeResult(id, Globals.score, 0, Globals.currUser.userID)
+			
+func _on_CloseButton_pressed():
+	var root = get_tree().root
+	var homePage = load("res://Game Play/StudentHomePage.tscn").instance()
+	root.add_child(homePage)
+	self.queue_free()
+	get_node('/root/ArenaPage').queue_free()
+
 
 ######## BACKEND FUNCTIONS ###########
 static func get_quiz(quiz_level_id: String) -> Dictionary:
@@ -197,3 +215,137 @@ static func _query_quiz_questions(quiz_level_id: String) -> Array:
 	var task: FirestoreTask = Firebase.Firestore.query(query)
 	var question_docs: Array = yield(task, "task_finished")
 	return question_docs
+
+static func _get_quiz_attempt_doc(student_id: String, quiz_level_id: String) -> FirestoreDocument:
+	""" Get the document for a quiz attempt.
+	
+	Args:
+		student_id (String): Student's user ID.
+		quiz_leve_id (String): Quiz's level ID.
+	
+	Returns:
+		FirestoreDocument: The quiz attempt document.
+		
+	"""
+	var query: FirestoreQuery = FirestoreQuery.new()
+	query.from("Quiz_Attempt", false)
+	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id, FirestoreQuery.OPERATOR.AND)
+	query.where("quizID", FirestoreQuery.OPERATOR.EQUAL, quiz_level_id)
+	var task: FirestoreTask = Firebase.Firestore.query(query)
+	var docs = yield(task, "task_finished")
+	if docs:
+		return docs[0]
+	else:
+		return null
+	
+static func submit_quiz_attempt(student_id: String, quiz_level_id: String, total_time: int, question_attempts: Dictionary):
+	""" Write a student's quiz attempts to the database.
+	
+	If the student has not attempted the quiz before, the student's first attempt will be written to the database.
+	If the student has attempted the quiz before, the attempt number count in the student's quiz attempt will be incremented.
+	
+	Args:
+		student_id (String): Student's user ID.
+		quiz_leve_id (String): Quiz's level ID.
+		total_time (int): Time taken as total seconds.
+		question_attempt (Dictionary): The question attempts as key-value pairs in a Dictionary.
+			Key (String): Quiz question ID.
+			Value (bool): true if the student got the question correct, false otherwise.
+	
+	"""
+	# get quiz attempt
+	var doc = yield(_get_quiz_attempt_doc(student_id, quiz_level_id), "completed")
+	
+	var coll: FirestoreCollection = Firebase.Firestore.collection("Quiz_Attempt")
+	var task
+	
+	# quiz attempt exists, increment attempt number
+	if doc:
+		var attempt_no: int = doc.doc_fields["attemptNo"]
+		attempt_no += 1
+		task = coll.update(doc.doc_name, {"attemptNo": attempt_no})
+		
+	
+	# quiz attempt does not exsits, create new attempt
+	else:
+		var attempt_id: String = "%s-%s" % [student_id, quiz_level_id]
+		var attempt: Dictionary = {
+			"studentID": student_id,
+			"quizID": quiz_level_id,
+			"duration": total_time,
+			"questionAttempts": question_attempts,
+			"attemptNo": 1
+		}
+		task = coll.add(attempt_id, attempt)
+	
+	yield(task, "task_finished")
+
+		
+static func check_max_attempt_reached(student_id: String, quiz_level_id: String) -> bool:
+	""" Check whether a student has reached the maximum allowed attempts for a quiz.
+	
+	Args:
+		student_id (String): Student's user ID.
+		quiz_leve_id (String): Quiz's level ID.
+	
+	Returns:
+		bool/null: True if the student has reached the maximum allowed attempts.
+			False if the student has not reached the maximum allowed attempts.
+			Null if there is no such quiz in the database.
+		
+	"""
+	# get quiz settings
+	var coll: FirestoreCollection = Firebase.Firestore.collection("Level")
+	var task: FirestoreTask = coll.get(quiz_level_id)
+	var doc = yield(task, "task_finished")
+	if not doc is FirestoreDocument:
+		return null
+	var max_attempt = doc.doc_fields["attemptNo"]
+	
+	doc = yield(_get_quiz_attempt_doc(student_id, quiz_level_id), "completed")
+	# At least one attempt has been made
+	if doc:
+		var attempt_no = doc.doc_fields["attemptNo"]
+		if attempt_no < max_attempt:
+			return false
+		else:
+			return true
+	else:
+		return false
+
+func getChallengeByID(challengeID):
+	var collection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
+	collection.get(challengeID)	
+	var challenge : FirestoreDocument = yield(collection, "get_document")
+	var result = challenge.doc_fields
+	print(result)
+	return result
+	
+# Updates the result for a challenge. 
+func updateChallengeResult(challengeId, score, time, userId):
+	var challenge = yield(getChallengeByID(challengeId), 'completed')
+	
+	var task: FirestoreTask
+	var collection : FirestoreCollection;
+	# Update record for challenger
+	if userId == challenge['challengerID']:
+		collection = Firebase.Firestore.collection('Challenge')
+		task = collection.update(challengeId, {'challengerScore': score, 'challengerTime' : time})
+	# Update record for challengee
+	else:
+		# Search challengee record using challengeID - Obtain the challengee_record id.
+		var query : FirestoreQuery = FirestoreQuery.new()
+		query.from('Challengee_Record')
+		query.where('challengeID', FirestoreQuery.OPERATOR.EQUAL, challengeId)
+		#query.where('challengeeID', FirestoreQuery.OPERATOR.EQUAL, userId)
+	
+		var query_task : FirestoreTask = Firebase.Firestore.query(query)
+		var challengeeRecord = yield(query_task, 'task_finished')
+		#get the recordId out
+		var recordId = challengeeRecord[0].doc_name
+		# Update the challengee record
+		collection = Firebase.Firestore.collection('Challengee_Record')
+		task = collection.update(recordId, {'challengeeScore': score, 'challengeeTime' : time, 'challengeStatus': 'completed'})
+		
+	yield(task, 'task_finished')
+	print('Record Updated!')

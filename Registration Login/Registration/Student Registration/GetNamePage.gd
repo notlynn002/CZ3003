@@ -25,6 +25,7 @@ func _ready():
 
 func _on_ContinueButton_pressed():
 	# navigate to character selectiom page
+	student_name = $Input.text
 	var characterPage = preload("res://Registration Login/Registration/Student Registration/StudentCharacterSelectPage.tscn").instance()
 	characterPage.init(student_name, email, password, classIndex)
 	get_tree().get_root().add_child(characterPage)

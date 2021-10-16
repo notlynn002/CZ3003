@@ -19,12 +19,16 @@ func _ready():
 
 func _on_MailButton_pressed():
 	print("button pressed")
-	if type == 'quiz' or type == 'challenge':
+	if type == 'quiz':
 		$Popup/Label.text = 'start ' + type + ' now?'
 		$Popup.show()
 	elif type == 'win' or type == 'lose':
 		# get challenge result from db
 		# navigate to challenge results page
+		pass
+	elif type == 'challenge':
+		# get challenge by id
+		# navigate to challenge notif page where they can accept or decline
 		pass
 	elif type == 'decline':
 		pass

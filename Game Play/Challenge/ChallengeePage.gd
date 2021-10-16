@@ -38,11 +38,16 @@ func _on_MuteButton_pressed():
 
 
 func _on_ChallengeButton_pressed():
-	var challenge_questions = yield(getRandomQuestionId(selectedTopic), 'completed')
-	print(challenge_questions)
-	print(Globals.get('selectedChallengees'))
-	# navigate to challenge page
+	print(selectedTopic)
+	var challengeID = yield(createChallenge(selectedTopic, Globals.currUser.userID, Globals.selectedChallengees), "completed")
+	var root = get_tree().root
+	var arenaPage = preload('res://Game Play/Arena/ArenaPage.tscn').instance()
+	arenaPage.init(Globals.currUser.userID, challengeID, 'challenge')
+	root.add_child(arenaPage)
+	self.queue_free()
+	
 
+##### BACKEND FUNCTIONS #####
 func get_towerid_by_topic(topic):
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Tower')
@@ -50,6 +55,7 @@ func get_towerid_by_topic(topic):
 
 	var query_task : FirestoreTask = Firebase.Firestore.query(query)
 	var towerId = yield(query_task, 'task_finished')
+	#print(towerId)
 	var result = towerId[0].doc_name
 	return result
 	
@@ -77,7 +83,7 @@ func get_qns_from_levelIds(levelIds):
 	for qn in result:
 		qnIds.append(qn.doc_name)
 	return qnIds
-		
+
 # Returns a list of 10 question Id that belongs to that topic
 func getRandomQuestionId(topic):
 	var towerId = yield(get_towerid_by_topic(topic), 'completed')
@@ -97,3 +103,30 @@ func getRandomQuestionId(topic):
 	for i in random:
 		randomed_qn_ids.append(questionIds[i])
 	return randomed_qn_ids
+
+
+# Initial creation of challenge. Takes in the challenge topic, challenger_id and challengee_id
+func createChallenge(topic, challenger_id, challengee_id):
+	var challenge_questions = yield(getRandomQuestionId(topic), 'completed')
+	
+	var challengeDetails = {
+		'questionList' : challenge_questions,
+		'challengerID' : challenger_id,
+		'challengeeID' : challengee_id
+	}
+	
+	var task: FirestoreTask
+	var collection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
+	
+	task = collection.add("", challengeDetails)
+	var challengeID = yield(task, "task_finished")
+	challengeID = challengeID.doc_name
+	
+	var challengee_collection : FirestoreCollection = Firebase.Firestore.collection('Challengee_Record')
+	
+	# Create Challengee Records for each of the challengees
+	for challengee in challengee_id:
+		var add_challengee_record : FirestoreTask = challengee_collection.add("", {"challengeID" : challengeID, "challengeStatus": 'sent', "challengeeID":challengee})
+		yield(add_challengee_record, "task_finished")
+	
+	return challengeID
