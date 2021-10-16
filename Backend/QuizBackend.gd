@@ -273,6 +273,103 @@ static func get_quizzes_by_class(class_id: String) -> Array:
 	quizzes.sort_custom(QuizSorter, "sort_chronological")
 	return quizzes
 	
+
+static func _get_quiz_attempt_doc(student_id: String, quiz_level_id: String) -> FirestoreDocument:
+	""" Get the document for a quiz attempt.
+	
+	Args:
+		student_id (String): Student's user ID.
+		quiz_leve_id (String): Quiz's level ID.
+	
+	Returns:
+		FirestoreDocument: The quiz attempt document.
+		
+	"""
+	var query: FirestoreQuery = FirestoreQuery.new()
+	query.from("Quiz_Attempt", false)
+	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id, FirestoreQuery.OPERATOR.AND)
+	query.where("quizID", FirestoreQuery.OPERATOR.EQUAL, quiz_level_id)
+	var task: FirestoreTask = Firebase.Firestore.query(query)
+	var docs = yield(task, "task_finished")
+	if docs:
+		return docs[0]
+	else:
+		return null
+	
+	
+static func submit_quiz_attempt(student_id: String, quiz_level_id: String, question_attempts: Dictionary):
+	""" Write a student's quiz attempts to the database.
+	
+	If the student has not attempted the quiz before, the student's first attempt will be written to the database.
+	If the student has attempted the quiz before, the attempt number count in the student's quiz attempt will be incremented.
+	
+	Args:
+		student_id (String): Student's user ID.
+		quiz_leve_id (String): Quiz's level ID.
+		question_attempt (Dictionary): The question attempts as key-value pairs in a Dictionary.
+			Key (String): Quiz question ID.
+			Value (bool): true if the student got the question correct, false otherwise.
+	
+	"""
+	# get quiz attempt
+	var doc = yield(_get_quiz_attempt_doc(student_id, quiz_level_id), "completed")
+	
+	var coll: FirestoreCollection = Firebase.Firestore.collection("Quiz_Attempt")
+	var task
+	
+	# quiz attempt exists, increment attempt number
+	if doc:
+		var attempt_no: int = doc.doc_fields["attemptNo"]
+		attempt_no += 1
+		task = coll.update(doc.doc_name, {"attemptNo": attempt_no})
+		
+	
+	# quiz attempt does not exsits, create new attempt
+	else:
+		var attempt_id: String = "%s-%s" % [student_id, quiz_level_id]
+		var attempt: Dictionary = {
+			"studentID": student_id,
+			"quizID": quiz_level_id,
+			"questionAttempts": question_attempts,
+			"attemptNo": 1
+		}
+		task = coll.add(attempt_id, attempt)
+	
+	yield(task, "task_finished")
+
+		
+static func check_max_attempt_reached(student_id: String, quiz_level_id: String) -> bool:
+	""" Check whether a student has reached the maximum allowed attempts for a quiz.
+	
+	Args:
+		student_id (String): Student's user ID.
+		quiz_leve_id (String): Quiz's level ID.
+	
+	Returns:
+		bool/null: True if the student has reached the maximum allowed attempts.
+			False if the student has not reached the maximum allowed attempts.
+			Null if there is no such quiz in the database.
+		
+	"""
+	# get quiz settings
+	var coll: FirestoreCollection = Firebase.Firestore.collection("Level")
+	var task: FirestoreTask = coll.get(quiz_level_id)
+	var doc = yield(task, "task_finished")
+	if not doc is FirestoreDocument:
+		return null
+	var max_attempt = doc.doc_fields["attemptNo"]
+	
+	doc = yield(_get_quiz_attempt_doc(student_id, quiz_level_id), "completed")
+	# At least one attempt has been made
+	if doc:
+		var attempt_no = doc.doc_fields["attemptNo"]
+		if attempt_no < max_attempt:
+			return false
+		else:
+			return true
+	else:
+		return false
+	
 	
 static func update_quiz(quiz_level_id: String, quiz: Dictionary):
 	# Check quiz for invalid fields
@@ -314,7 +411,8 @@ static func update_quiz(quiz_level_id: String, quiz: Dictionary):
 
 
 func _on_test_button_up():
-	var output = yield(get_quiz_ids_by_class("test-class-2"), "completed")
+	#var output = yield(submit_quiz_attempt("student1", "quiz-hard-test-:(", {"qn1": true, "qn2": false}), "completed")
+	var output = yield(check_max_attempt_reached("student1", "a"), "completed")
 	print(output)
 
 
