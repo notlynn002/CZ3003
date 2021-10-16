@@ -197,16 +197,26 @@ func _on_Reject_Challenge_button_up():
 #------------ Get Challenge Result ----------------
 	
 func getChallengeResult(challengeID, challengeeID):
+	
+	var user_collection : FirestoreCollection = Firebase.Firestore.collection('User')
+	
 	# Get challenger data
 	var challenger_collection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
 	challenger_collection.get(challengeID)
 	var challengerRecord = yield(challenger_collection, 'get_document')
 	challengerRecord = challengerRecord.doc_fields
+	
 	#print(challengerRecord)
-	var challenger_score = challengerRecord['challengerScore']
-	var challenger_time = challengerRecord['challengerTime']
 	
+	user_collection.get(challengerRecord['challengerID'])
+	var challengerDetails = yield(user_collection, 'get_document')
+	challengerDetails = challengerDetails.doc_fields
 	
+	var challenger = {
+		'name' : challengerDetails.name,
+		'score' : challengerRecord.challengerScore,
+		'time' : challengerRecord.challengerTime
+	}
 	
 	# Get challengee data
 	var challengee_query : FirestoreQuery = FirestoreQuery.new()
@@ -215,23 +225,66 @@ func getChallengeResult(challengeID, challengeeID):
 	var challengee_query_task : FirestoreTask = Firebase.Firestore.query(challengee_query)
 	var challengeeRecord = yield(challengee_query_task, "task_finished")
 	challengeeRecord = challengeeRecord[0].doc_fields
-	#print(challengeeRecord)
-	var challengee_score = challengeeRecord['challengeeScore']
-	var challengee_Time = challengeeRecord['challengeTime']
 	
+	user_collection.get(challengeeID)
+	var challengeeDetails = yield(user_collection, 'get_document')
+	challengeeDetails = challengeeDetails.doc_fields
+	
+	var challengee = {
+		'name' : challengeeDetails.name,
+		'score' : challengeeRecord.challengeeScore,
+		'time' : challengeeRecord.challengeeTime
+	}
+	
+	var result = {}
 	# Compare the 2 results.
 	# Person with higher score wins
 	# If same score, the person with lower time wins
-	if (challengee_score > challenger_score):
+	if (challengee['score'] > challenger['score']):
 		# Challengee win
-		pass
-	elif (challengee_score < challenger_score):
+		result['winnerName'] = challengee['name']
+		result['loserName'] = challenger['name']
+		result['winnerId'] = challengeeID
+		result['loserId'] = challengerRecord['challengerID']
+		result['winnerTime'] = challengee['time']
+		result['loserTime'] = challenger['time']
+		result['winnerScore'] = challengee['score']
+		result['loserScore'] = challengee['score']
+	elif (challengee['score'] < challenger['score']):
 		# Challenger win
-		pass
+		result['winnerName'] = challenger['name']
+		result['loserName'] = challengee['name']
+		result['winnerId'] = challengerRecord['challengerID']
+		result['loserId'] = challengeeID
+		result['winnerTime'] = challenger['time']
+		result['loserTime'] = challengee['time']
+		result['winnerScore'] = challengee['score']
+		result['loserScore'] = challengee['score']
 	else:
 		# Score tie
 		# Check time
-		pass
+		if (challengee['time'] < challenger['time']):
+			# Challengee wins
+			result['winnerName'] = challengee['name']
+			result['loserName'] = challenger['name']
+			result['winnerId'] = challengeeID
+			result['loserId'] = challengerRecord['challengerID']
+			result['winnerTime'] = challengee['time']
+			result['loserTime'] = challenger['time']
+			result['winnerScore'] = challengee['score']
+			result['loserScore'] = challengee['score']
+		else:
+			# Challenger wins
+			result['winnerName'] = challenger['name']
+			result['loserName'] = challengee['name']
+			result['winnerId'] = challengerRecord['challengerID']
+			result['loserId'] = challengeeID
+			result['winnerTime'] = challenger['time']
+			result['loserTime'] = challengee['time']
+			result['winnerScore'] = challengee['score']
+			result['loserScore'] = challengee['score']
+	print(result)
+	return result
 	
 
 func _on_Get_Challenge_Result_button_up():
