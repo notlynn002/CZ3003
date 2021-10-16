@@ -23,7 +23,7 @@ extends Reference
 
 ## Emitted when a request is completed. The request can be successful or not successful: if not, an [code]error[/code] Dictionary will be passed as a result.
 ## @arg-types Variant
-signal task_finished(result)
+signal task_finished(task)
 ## Emitted when a [code]add(document)[/code] request on a [class FirebaseCollection] is successfully completed. [code]error()[/code] signal will be emitted otherwise.
 ## @arg-types FirestoreDocument
 signal add_document(doc)
@@ -64,9 +64,10 @@ var action : int = -1 setget set_action
 
 ## A variable, temporary holding the result of the request.
 var data
-
+var error : Dictionary
+var document : FirestoreDocument
 ## Whether the data came from cache.
-var from_cache : bool = true
+var from_cache : bool = false
 
 var _response_headers : PoolStringArray = PoolStringArray()
 var _response_code : int = 0
@@ -99,13 +100,13 @@ func _on_request_completed(result : int, response_code : int, headers : PoolStri
 		bod = JSON.parse(body.get_string_from_utf8()).result
 	
 	var offline: bool = typeof(bod) == TYPE_NIL
-	var error: bool = bod is Dictionary and bod.has("error") and response_code != HTTPClient.RESPONSE_OK
+	var failed: bool = bod is Dictionary and bod.has("error") and response_code != HTTPClient.RESPONSE_OK
 	from_cache = offline
 	
 	Firebase.Firestore._set_offline(offline)
 	
 	var cache_path : String = Firebase._config["cacheLocation"]
-	if not cache_path.empty() and not error and Firebase.Firestore.persistence_enabled:
+	if not cache_path.empty() and not failed and Firebase.Firestore.persistence_enabled:
 		var encrypt_key: String = Firebase.Firestore._encrypt_key
 		var full_path : String
 		var url_segment : String
@@ -117,13 +118,14 @@ func _on_request_completed(result : int, response_code : int, headers : PoolStri
 				url_segment = JSON.print(data.query)
 				full_path = cache_path
 			_:
-				url_segment = data
+				url_segment = to_json(data)
 				full_path = _get_doc_file(cache_path, url_segment, encrypt_key)
 		bod = _handle_cache(offline, data, encrypt_key, full_path, bod)
 		if not bod.empty() and offline:
 			response_code = HTTPClient.RESPONSE_OK
 	
 	if response_code == HTTPClient.RESPONSE_OK:
+		data = bod
 		match action:
 			Task.TASK_POST:
 				data = FirestoreDocument.new(bod)
@@ -135,7 +137,6 @@ func _on_request_completed(result : int, response_code : int, headers : PoolStri
 				data = FirestoreDocument.new(bod)
 				emit_signal("update_document", data)
 			Task.TASK_DELETE:
-				data = null
 				emit_signal("delete_document")
 			Task.TASK_QUERY:
 				data = []
@@ -151,19 +152,22 @@ func _on_request_completed(result : int, response_code : int, headers : PoolStri
 					if bod.has("nextPageToken"):
 						data.append(bod.nextPageToken)
 				emit_signal("listed_documents", data)
+				
+		emit_signal("task_finished", data)
+		
 	else:
 		match action:
 			Task.TASK_LIST:
-				data = bod[0].error
-				emit_signal("task_list_error", data.code, data.status, data.message)
+				error = bod[0].error
+				emit_signal("task_list_error", error.code, error.status, error.message)
 			Task.TASK_QUERY:
-				data = bod[0].error
-				emit_signal("task_query_error", data.code, data.status, data.message)
+				error = bod[0].error
+				emit_signal("task_query_error", error.code, error.status, error.message)
 			_:
-				data = bod.error
-				emit_signal("task_error", data.code, data.status, data.message)
-	
-	emit_signal("task_finished", data)
+				error = bod.error
+				emit_signal("task_error", error.code, error.status, error.message)
+		
+		emit_signal("task_finished", self)
 
 
 func set_action(value : int) -> void:
