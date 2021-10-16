@@ -297,7 +297,7 @@ static func _get_quiz_attempt_doc(student_id: String, quiz_level_id: String) -> 
 		return null
 	
 	
-static func submit_quiz_attempt(student_id: String, quiz_level_id: String, question_attempts: Dictionary):
+static func submit_quiz_attempt(student_id: String, quiz_level_id: String, total_time: int, question_attempts: Dictionary):
 	""" Write a student's quiz attempts to the database.
 	
 	If the student has not attempted the quiz before, the student's first attempt will be written to the database.
@@ -306,6 +306,7 @@ static func submit_quiz_attempt(student_id: String, quiz_level_id: String, quest
 	Args:
 		student_id (String): Student's user ID.
 		quiz_leve_id (String): Quiz's level ID.
+		total_time (int): Time taken as total seconds.
 		question_attempt (Dictionary): The question attempts as key-value pairs in a Dictionary.
 			Key (String): Quiz question ID.
 			Value (bool): true if the student got the question correct, false otherwise.
@@ -330,6 +331,7 @@ static func submit_quiz_attempt(student_id: String, quiz_level_id: String, quest
 		var attempt: Dictionary = {
 			"studentID": student_id,
 			"quizID": quiz_level_id,
+			"duration": total_time,
 			"questionAttempts": question_attempts,
 			"attemptNo": 1
 		}
