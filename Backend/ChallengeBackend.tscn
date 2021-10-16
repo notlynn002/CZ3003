@@ -46,7 +46,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Get Challenge Result" type="Button" parent="."]
+margin_left = 145.0
+margin_top = 532.0
+margin_right = 688.0
+margin_bottom = 580.0
+text = "Get Challenge Result"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Get Challenge by Id" type="Button" parent="."]
+margin_left = 141.0
+margin_top = 628.0
+margin_right = 686.0
+margin_bottom = 676.0
+text = "Get Challenge by ID"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="button_up" from="Get 10 Random Qns" to="." method="_on_Get_10_Random_Qns_button_up"]
 [connection signal="button_up" from="Create Challenge" to="." method="_on_Create_Challenge_button_up"]
 [connection signal="button_up" from="Reject Challenge" to="." method="_on_Reject_Challenge_button_up"]
 [connection signal="button_up" from="Update Challenge Result" to="." method="_on_Update_Challenge_Result_button_up"]
+[connection signal="button_up" from="Get Challenge Result" to="." method="_on_Get_Challenge_Result_button_up"]
+[connection signal="button_up" from="Get Challenge by Id" to="." method="_on_Get_Challenge_by_Id_button_up"]

@@ -5,6 +5,18 @@ extends CanvasLayer
 func _ready():
 	pass # Replace with function body.
 
+func getChallengeByID(challengeID):
+	var collection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
+	collection.get(challengeID)	
+	var challenge :FirestoreDocument = yield(collection, "get_document")
+	print(challenge)
+	
+
+func _on_Get_Challenge_by_Id_button_up():
+	var challengeId = 'KdsBS2748cPpgyxkP532'
+	getChallengeByID(challengeId)
+
+
 # ------------ Get Random questions and Create Challenge --------------------
 
 func get_towerid_by_topic(topic):
@@ -114,13 +126,13 @@ func updateChallengeResult(challengeId, score, time, role, userId):
 	# Update record for challenger
 	if role == 'challenger':
 		collection = Firebase.Firestore.collection('Challenge')
-		task = collection.update(challengeId, {'challengerScore': score, 'challengertime' : time})
+		task = collection.update(challengeId, {'challengerScore': score, 'challengerTime' : time})
 	# Update record for challengee
 	else:
 		# Search challengee record using challengeID - Obtain the challengee_record id.
 		var query : FirestoreQuery = FirestoreQuery.new()
 		query.from('Challengee_Record')
-		query.where('challengeID', FirestoreQuery.OPERATOR.EQUAL, challengeId)
+		query.where('challengeID', FirestoreQuery.OPERATOR.EQUAL, challengeId, FirestoreQuery.OPERATOR.AND)
 		query.where('challengeeID', FirestoreQuery.OPERATOR.EQUAL, userId)
 	
 		var query_task : FirestoreTask = Firebase.Firestore.query(query)
@@ -129,32 +141,32 @@ func updateChallengeResult(challengeId, score, time, role, userId):
 		var recordId = challengeeRecord[0].doc_name
 		# Update the challengee record
 		collection = Firebase.Firestore.collection('Challengee_Record')
-		task = collection.update(recordId, {'challengeeScore': score, 'challengeetime' : time, 'challengeStatus': 'completed'})
+		task = collection.update(recordId, {'challengeeScore': score, 'challengeeTime' : time, 'challengeStatus': 'completed'})
 		
 	yield(task, 'task_finished')
 	print('Record Updated!')
 
 func _on_Update_Challenge_Result_button_up():
-	var challengeId = ' KdsBS2748cPpgyxkP532'
-	var challengeeId = 'P8zkYTNczGZcwLMnkbQBJsscBNp1'
+	var challengeId = 'KdsBS2748cPpgyxkP532'
+	var challengeeId = 'XKwVQ9EqJ7xjEhHoPr0A'
 	var score = 2
-	var time = 1
-	var role = 'challengee'
+	var time = 180
+	var role = 'challenger'
 	updateChallengeResult(challengeId, score, time, role, challengeeId)
 
 
 #------------ Reject Challenge----------------
-func reject_challenge(challengeId, challengeeid):
+func rejectChallenge(challengeId, challengeeID):
 	var collection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
 	collection.get(challengeId)	
 	var challenge :FirestoreDocument = yield(collection, "get_document")
 	
 	# Get all challengeeIds for challenge and remove the denoted challengeeid
-	var challengeeId = challenge.doc_fields.challengeeID
+	var challengeeIds = challenge.doc_fields.challengeeID
 	
 	var updated_challengeeId = []
-	for id in challengeeId:
-		if id != challengeeid:
+	for id in challengeeIds:
+		if id != challengeeID:
 			updated_challengeeId.append(id)
 	
 	#Update to firestore
@@ -162,10 +174,68 @@ func reject_challenge(challengeId, challengeeid):
 	task = collection.update(challengeId, {'challengeeID': updated_challengeeId})
 	yield(task, "task_finished")
 	
+	#Update challengee record into declined
+	var query : FirestoreQuery = FirestoreQuery.new()
+	query.from('Challengee_Record')
+	query.where('challengeID', FirestoreQuery.OPERATOR.EQUAL, challengeId, FirestoreQuery.OPERATOR.AND)
+	query.where('challengeeID', FirestoreQuery.OPERATOR.EQUAL, challengeeID)
+	var query_task : FirestoreTask = Firebase.Firestore.query(query)
+	var challengeeRecord = yield(query_task, 'task_finished')
+	challengeeRecord = challengeeRecord[0].doc_name
+	
+	var challengee_collection : FirestoreCollection = Firebase.Firestore.collection('Challengee_Record')
+	var update_task : FirestoreTask =challengee_collection.update(challengeeRecord, {"challengeStatus" : "declined"})
+	yield(update_task, 'task_finished')
 
 func _on_Reject_Challenge_button_up():
-	var challengeId = 'NqHewZ5mStJaco9dECqT'
+	var challengeId = 'KdsBS2748cPpgyxkP532'
 	var challengeeId = 'P8zkYTNczGZcwLMnkbQBJsscBNp1'
-	reject_challenge(challengeId, challengeeId)
+	rejectChallenge(challengeId, challengeeId)
 	
 	
+#------------ Get Challenge Result ----------------
+	
+func getChallengeResult(challengeID, challengeeID):
+	# Get challenger data
+	var challenger_collection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
+	challenger_collection.get(challengeID)
+	var challengerRecord = yield(challenger_collection, 'get_document')
+	challengerRecord = challengerRecord.doc_fields
+	#print(challengerRecord)
+	var challenger_score = challengerRecord['challengerScore']
+	var challenger_time = challengerRecord['challengerTime']
+	
+	
+	
+	# Get challengee data
+	var challengee_query : FirestoreQuery = FirestoreQuery.new()
+	challengee_query.from('Challengee_Record')
+	challengee_query.where('challengeeID', FirestoreQuery.OPERATOR.EQUAL, challengeeID)
+	var challengee_query_task : FirestoreTask = Firebase.Firestore.query(challengee_query)
+	var challengeeRecord = yield(challengee_query_task, "task_finished")
+	challengeeRecord = challengeeRecord[0].doc_fields
+	#print(challengeeRecord)
+	var challengee_score = challengeeRecord['challengeeScore']
+	var challengee_Time = challengeeRecord['challengeTime']
+	
+	# Compare the 2 results.
+	# Person with higher score wins
+	# If same score, the person with lower time wins
+	if (challengee_score > challenger_score):
+		# Challengee win
+		pass
+	elif (challengee_score < challenger_score):
+		# Challenger win
+		pass
+	else:
+		# Score tie
+		# Check time
+		pass
+	
+
+func _on_Get_Challenge_Result_button_up():
+	var challengeId = 'KdsBS2748cPpgyxkP532'
+	var challengeeId = 'XKwVQ9EqJ7xjEhHoPr0A'
+	getChallengeResult(challengeId, challengeeId)
+
+
