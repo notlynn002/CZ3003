@@ -8,10 +8,11 @@ func _ready():
 func getChallengeByID(challengeID):
 	var collection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
 	collection.get(challengeID)	
-	var challenge :FirestoreDocument = yield(collection, "get_document")
-	print(challenge)
+	var challenge : FirestoreDocument = yield(collection, "get_document")
+	var result = challenge.doc_fields
+	print(result)
+	return result
 	
-
 func _on_Get_Challenge_by_Id_button_up():
 	var challengeId = 'KdsBS2748cPpgyxkP532'
 	getChallengeByID(challengeId)
