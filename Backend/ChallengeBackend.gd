@@ -10,7 +10,6 @@ func getChallengeByID(challengeID):
 	collection.get(challengeID)	
 	var challenge : FirestoreDocument = yield(collection, "get_document")
 	var result = challenge.doc_fields
-	print(result)
 	return result
 	
 func _on_Get_Challenge_by_Id_button_up():
@@ -121,11 +120,13 @@ func _on_Create_Challenge_button_up():
 
 
 # Updates the result for a challenge. 
-func updateChallengeResult(challengeId, score, time, role, userId):
+func updateChallengeResult(challengeId, score, time, userId):
+	var challenge = yield(getChallengeByID(challengeId), 'completed')
+	
 	var task: FirestoreTask
 	var collection : FirestoreCollection;
 	# Update record for challenger
-	if role == 'challenger':
+	if userId == challenge['challengerID']:
 		collection = Firebase.Firestore.collection('Challenge')
 		task = collection.update(challengeId, {'challengerScore': score, 'challengerTime' : time})
 	# Update record for challengee
@@ -133,8 +134,8 @@ func updateChallengeResult(challengeId, score, time, role, userId):
 		# Search challengee record using challengeID - Obtain the challengee_record id.
 		var query : FirestoreQuery = FirestoreQuery.new()
 		query.from('Challengee_Record')
-		query.where('challengeID', FirestoreQuery.OPERATOR.EQUAL, challengeId, FirestoreQuery.OPERATOR.AND)
-		query.where('challengeeID', FirestoreQuery.OPERATOR.EQUAL, userId)
+		query.where('challengeID', FirestoreQuery.OPERATOR.EQUAL, challengeId)
+		#query.where('challengeeID', FirestoreQuery.OPERATOR.EQUAL, userId)
 	
 		var query_task : FirestoreTask = Firebase.Firestore.query(query)
 		var challengeeRecord = yield(query_task, 'task_finished')
@@ -149,11 +150,10 @@ func updateChallengeResult(challengeId, score, time, role, userId):
 
 func _on_Update_Challenge_Result_button_up():
 	var challengeId = 'KdsBS2748cPpgyxkP532'
-	var challengeeId = 'XKwVQ9EqJ7xjEhHoPr0A'
-	var score = 2
-	var time = 180
-	var role = 'challenger'
-	updateChallengeResult(challengeId, score, time, role, challengeeId)
+	var userId = 'P8zkYTNczGZcwLMnkbQBJsscBNp1'
+	var score = 3
+	var time = 170
+	updateChallengeResult(challengeId, score, time, userId)
 
 
 #------------ Reject Challenge----------------
@@ -283,7 +283,7 @@ func getChallengeResult(challengeID, challengeeID):
 			result['loserTime'] = challengee['time']
 			result['winnerScore'] = challengee['score']
 			result['loserScore'] = challengee['score']
-	print(result)
+	#print(result)
 	return result
 	
 
