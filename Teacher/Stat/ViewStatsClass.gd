@@ -1,27 +1,172 @@
 extends CanvasLayer
 
-
+### TO DO: STATS PER LEVEL ###
 # Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var toweridx = 0
+var towerName
+var level = 0
+var	classidx = 0
+var classID
+var className
+var viewByOption
+var teacherid = "dummyteacher1"
+
+var classStatsArray
+onready var statsTree = $StatsTree
+var root 
+var dummyCheck = 1
 
 
+var tower_name_id_dict
+var classes_dict
+var tower_classes_dict = {}
+
+var statsBackend = preload("res://Backend/StatsBackend.tscn").instance()
+var classBackend = preload("res://Backend/ClassBackend.tscn").instance()
+# remove classbackend preload after testing
+var dummyData = [{"avg_score":"0", "avg_time":"0", "max_level":"1", "student_name":"studentUpdated"}, 
+{"avg_score":"0", "avg_time":"0", "max_level":"2", "student_name":"lin sw"}, 
+{"avg_score":"2", "avg_time":"416.5", "max_level":"10", "student_name":"TestStudent007"}]
+			
+func init(tid, cbe, tnid, cd):
+	teacherid = tid
+	classBackend = cbe
+	tower_name_id_dict = tnid 
+	classes_dict = cd
+	
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	statsTreeInit()	
+	$AvgLabel.hide()
+	# print(yield(classBackend.get_classes(teacherid), "completed"))
+	# var get_classes_list = yield(classBackend.get_classes(teacherid), "completed")
+	
+	### query these before reaching the stats page? load time is slow ###
+	
+	classes_dict = yield(statsBackend.get_class_ids_and_names(teacherid), "completed")
+	print(classes_dict)
+	classOptionPopulate(classes_dict)
+	
+	tower_name_id_dict = yield(statsBackend.get_tower_ids_and_names(), "completed")
+	print(tower_name_id_dict)
+	towerOptionPopulate(tower_name_id_dict)
+	
+	### experimental preload ### tower_name_id_dict instead of hardcode
+	for x in {"Numbers Tower":"numbers-tower"}:
+		for y in classes_dict:
+			#print(x,y)
+			tower_classes_dict["%s %s"%[x, y]] = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[x], [classes_dict[y]]), "completed")
+	$Loading.hide()
+#	print(tower_classes_dict["Numbers Tower dummyClass"])
+	
+			
+#	classStatsArray = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[towerName], classID), "completed")
+	
+#	var stud_name_id_dict = yield(statsBackend.get_student_ids_and_names([className]), "completed")
+#	print(stud_name_id_dict)
 
+func statsTreeInit():
+	root = statsTree.create_item()
+	
+func classOptionPopulate(c_dict):
+	$ViewClass.add_item("All")
+	for x in c_dict:
+		$ViewClass.add_item(x)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-
+func towerOptionPopulate(tnid):
+	for x in tnid:
+		$ViewTower.add_item(x)
+				
+func statsUpdate():
+		if viewByOption == 1 and towerName and className:	
+#			classStatsArray = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[towerName], classID), "completed")
+			var currentSelection = tower_classes_dict["%s %s"%[towerName, className]]
+			if dummyCheck:
+				currentSelection.push_front({"avg_score":"dummy", "avg_time":"dummy", "max_level":"dummy", "student_name":"dummy"})
+				dummyCheck = 0
+				
+			statsTree.clear()
+			addStats(currentSelection)
+			
+	
 func _on_ViewByOptionbutton_item_selected(index):
+	viewByOption = index
+	
 	if index == 2:
 		var root = get_tree().root
 		var createViewStatsStudentPage = preload("res://Teacher/Stat/ViewStatsStudent.tscn").instance()
+		createViewStatsStudentPage.init(toweridx, level, classidx, tower_name_id_dict, classes_dict)
 		root.add_child(createViewStatsStudentPage)
+	else:
+		statsUpdate()
 
+func _on_ViewTower_item_selected(index):
+	toweridx = index
+	towerName = $ViewTower.get_item_text(index)
+	statsUpdate()
+	#print(yield(statsBackend._get_boss_level_ids_and_names(tower_name_id_dict[towerName]), "completed"))
+	
+func _on_ViewLevel_pressed():
+	pass
+
+func _on_ViewLevel_item_selected(index):
+	level = index
+
+func _on_ViewClass_item_selected(index):
+	### all function not fully tested, db doesnt have more than one class with attempts ###
+	if index == 1:
+		var dummyArr = []
+		###ignore the class - and all options ###
+		for x in range(2, $ViewClass.get_item_count()):	
+			dummyArr.append($ViewClass.get_item_text(x))
+		className = "All"
+		classID = dummyArr
+	else:
+		classidx = index
+		className = $ViewClass.get_item_text(index)
+		classID = [classes_dict[className]]
+	
+	statsUpdate()
 
 func _on_BackButton_pressed():
 	self.queue_free()
+
+### data processing ###
+### [{ avg_score, avg_time, max_level, student_name }] ###
+
+func addStats(data:Array):	
+	
+	for i in range(len(data)):
+		var newRow = statsTree.create_item(root)
+		newRow.set_text(0, str(data[i]["student_name"]))
+		newRow.set_text(1, str(data[i]["max_level"]))
+		newRow.set_text(2, str(data[i]["avg_score"]))
+		newRow.set_text(3, str(data[i]["avg_time"]))
+	
+	getAvgStats(data)
+
+func getAvgStats(data:Array):
+	var avgScore = 0
+	var avgTime = 0
+	var avgLvl = 0
+		
+	for i in range(len(data)):
+		avgScore += int(data[i]["avg_score"])
+		avgTime += int(data[i]["avg_time"])
+		avgLvl += int(data[i]["max_level"])
+	
+	### super bad fix for the dummydata row ###
+	avgScore /= float(len(data)-1)
+	avgTime /= float(len(data)-1)
+	avgLvl /= float(len(data)-1)
+	$AvgLabel/AvgScoreLabel.text = "%.2f"%avgScore
+	$AvgLabel/AvgTimeLabel.text = "%.2f"%avgTime
+	$AvgLabel/AvgLevelLabel.text = "%.2f"%avgLvl
+	
+	$AvgLabel.show()
+	
+	
+	
+### [{avg_score:0, avg_time:0, max_level:1, student_name:studentUpdated},
+###	 {avg_score:0, avg_time:0, max_level:2, student_name:lin sw},
+###	 {avg_score:2, avg_time:416.5, max_level:10, student_name:TestStudent007}]

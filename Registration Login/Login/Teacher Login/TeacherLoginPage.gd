@@ -10,6 +10,7 @@ var password
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$MuteButton.hide() # dont show sound off icon until it is pressed
+	$Popup.hide()
 	Firebase.Auth.connect("login_succeeded", self, "_on_FirebaseAuth_login_succeeded")
 	Firebase.Auth.connect("login_failed", self, "_on_login_failed")
 
@@ -48,6 +49,7 @@ func _on_login_failed(error_code, message):
 
 	print("error code: " + str(error_code))
 	print("message: " + str(message))
+	$Popup.show()
 
 
 func login(email, password, role):
@@ -81,3 +83,7 @@ func _on_FirebaseAuth_login_succeeded(auth_info):
 		
 	# change scene
 
+
+
+func _on_CloseButton_pressed():
+	$Popup.hide()

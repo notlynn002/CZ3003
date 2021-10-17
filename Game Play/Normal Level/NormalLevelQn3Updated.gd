@@ -6,6 +6,8 @@ var cIsCorrect = false
 var dIsCorrect = false
 var ansCorrect = false
 
+var currentUser
+
 var correctAnsPos
 var correctAns
 var solution
@@ -14,6 +16,7 @@ var explanation
 var questionBank
 var levelId
 var qnId
+var attempts: Array
 var submitAttempts: Dictionary
 var qnDescription: Dictionary
 
@@ -25,6 +28,8 @@ func _ready():
 	$Qn3/AnsWrongMsg.hide()
 	$Qn3/AnsButton.hide()
 	$Explanation.hide()
+	
+	currentUser = Globals.currUser['userId']
 	
 	var question = GlobalArray.question
 	var qnBody = question["questionBody"]
@@ -93,10 +98,12 @@ func _on_A_pressed():
 	submitAttempts = {
 		"correct": ansCorrect,
 		"duration": 60,
-		"questionId": qnId
+		"questionID": qnId
 	}
 	$NormalLvlDoorOpen.show()
 	print(submitAttempts)
+	attempts.append(submitAttempts)
+	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 #	towerBackend.submit_attempt()
 
 func _on_B_pressed():
@@ -109,10 +116,12 @@ func _on_B_pressed():
 	submitAttempts = {
 		"correct": ansCorrect,
 		"duration": 60,
-		"questionId": qnId
+		"questionID": qnId
 	}
 	$NormalLvlDoorOpen.show()
 	print(submitAttempts)
+	attempts.append(submitAttempts)
+	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 #	towerBackend.submit_attempt()
 		
 func _on_C_pressed():
@@ -125,10 +134,12 @@ func _on_C_pressed():
 	submitAttempts = {
 		"correct": ansCorrect,
 		"duration": 60,
-		"questionId": qnId
+		"questionID": qnId
 	}
 	$NormalLvlDoorOpen.show()
 	print(submitAttempts)
+	attempts.append(submitAttempts)
+	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 #	towerBackend.submit_attempt()
 
 func _on_D_pressed():
@@ -141,10 +152,12 @@ func _on_D_pressed():
 	submitAttempts = {
 		"correct": ansCorrect,
 		"duration": 60,
-		"questionId": qnId
+		"questionID": qnId
 	}
 	$NormalLvlDoorOpen.show()
 	print(submitAttempts)
+	attempts.append(submitAttempts)
+	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 #	towerBackend.submit_attempt()
 		
 func _on_ExplanationButton_pressed():

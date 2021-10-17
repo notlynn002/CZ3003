@@ -5,6 +5,8 @@ var prevscene
 var clearlvl
 var clearedLvl
 
+var currentUser
+
 var lastLvlAttempted
 var correcNo: Array
 var nowAtLevel
@@ -23,39 +25,38 @@ func _ready():
 	$lvl1Stars/star1.hide()
 	$lvl1Stars/star2.hide()
 	$lvl1Stars/star3.hide()
-	#$lvl2Stars.hide()
-	var i = 1
+	$lvl2Stars/star1.hide()
+	$lvl2Stars/star2.hide()
+	$lvl2Stars/star3.hide()
+
+	currentUser = Globals.currUser['userId']
+	print(currentUser)
 	if GlobalArray.nowAtTower == "Numbers":
-		#lastLvlAttempted = yield(towerBackend.get_last_level_attempted("HjgDICIEdI4btnow8RP6", "numbers-tower"), "completed")
-		lastLvlAttempted = 2
-		#correctNo = yield(towerBackend.get_correct_No("HjgDICIEdI4btnow8RP6", "numbers-tower"), "completed")
-		#correcNo = [1]
-	
+		lastLvlAttempted = yield(towerBackend.get_last_level_attempted(currentUser, "numbers-tower"), "completed")
+		print(lastLvlAttempted)
+		#lastLvlAttempted = 0
+	elif GlobalArray.nowAtTower == "Fraction":
+		lastLvlAttempted = yield(towerBackend.get_last_level_attempted(currentUser, "fraction-tower"), "completed")
+	elif GlobalArray.nowAtTower == "Ratio":
+		lastLvlAttempted = yield(towerBackend.get_last_level_attempted(currentUser, "ratio-tower"), "completed")
+		
 	#open the door for levels attempted
-	while i <= lastLvlAttempted:
-		var closedDoor = get_node("Door" + String(i))
-		closedDoor.hide()
-		i += 1
-	#lock the unattempted doors
-	var j = lastLvlAttempted + 2
-	while j <= 25:
-		var lockedDoor = get_node("Door" + String(j))
-		lockedDoor.disabled = true
-		j += 1
+	_door_Manager(lastLvlAttempted)
+#	while i <= lastLvlAttempted:
+#		var closedDoor = get_node("Door" + String(i))
+#		closedDoor.hide()
+#		i += 1
+#	#lock the unattempted doors
+#	var j = lastLvlAttempted + 2
+#	while j <= 25:
+#		var lockedDoor = get_node("Door" + String(j))
+#		lockedDoor.disabled = true
+#		j += 1
 	#shows the stars
-	#_star_Manager(correcNo)
-	correcNo = [2]
-	print(len(correcNo))
-	var k = 0
-	var showStars
-	while k < len(correcNo):
-		showStars = correcNo[k]
-		var locNode = "lvl" + String(k+1) + "Stars/" + "star" + String(showStars)
-		print(locNode)
-		#stars = get_node("lvl1Stars/1star")
-		var stars = get_node(locNode)
-		stars.show()
-		k += 1
+	correcNo = yield(towerBackend.get_correct_for_tower_by_student(currentUser, GlobalArray.nowAtTower), "completed")
+	print("correctNo:", correcNo)
+	#correcNo = [2,3]
+	_star_Manager(correcNo)
 	
 func init(nowAtTower):
 	clearlvl = clearedLvl
@@ -73,8 +74,8 @@ func _on_NormalLevelDoor_pressed():
 	GlobalArray.playerPosition = currentLoc
 	
 	#get the current level
-	#nowAtLevel = yield(towerBackend.get_last_level_attempted("HjgDICIEdI4btnow8RP6", "numbers-tower"), "completed") + 1
-	nowAtLevel = 3 #need to change
+	nowAtLevel = yield(towerBackend.get_last_level_attempted(currentUser, "numbers-tower"), "completed")#+1
+	#nowAtLevel = 3 #need to change
 	if nowAtLevel < 10:
 		strNowAtLevel = "0" + String(nowAtLevel)
 	else:
@@ -121,18 +122,30 @@ func _on_BossLevelDoor_pressed():
 	bossLvl.init(qnOfLevel)
 	get_tree().change_scene("res://Game Play/Boss Level/BossLevel.tscn")
 
+func _door_Manager(lastLvlAttempted):#1
+	var i = 1
+	#0
+	while i <= lastLvlAttempted:
+		var closedDoor = get_node("Door" + String(i))
+		closedDoor.hide()
+		i += 1
+	#lock the unattempted doors
+	var j = lastLvlAttempted + 2
+	while j <= 25:
+		var lockedDoor = get_node("Door" + String(j))
+		lockedDoor.disabled = true
+		j += 1
+
 func _star_Manager(ansArray):
-	print("here")
 	correcNo = ansArray
-	print(correcNo)
-	var i = 0
+	print(len(correcNo))
+	var k = 0
 	var showStars
-	while i < len(correcNo):
-		print("while loop")
-		showStars = correcNo[i]
-		var locNode = "lvl" + String(i+1) + "Stars/" + String(showStars) + "star"
+	while k < len(correcNo):
+		showStars = correcNo[k]
+		var locNode = "lvl" + String(k+1) + "Stars/" + "star" + String(showStars)
 		print(locNode)
 		#stars = get_node("lvl1Stars/1star")
 		var stars = get_node(locNode)
 		stars.show()
-		i += 1
+		k += 1

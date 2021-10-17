@@ -38,3 +38,7 @@ func _on_MuteButton_pressed():
 	# starts playing background music
 	$SoundButton.show() # display sound on icon
 	
+
+
+func _on_CloseButton_pressed():
+	pass # Replace with function body.

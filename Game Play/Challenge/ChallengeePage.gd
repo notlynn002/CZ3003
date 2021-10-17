@@ -39,10 +39,11 @@ func _on_MuteButton_pressed():
 
 func _on_ChallengeButton_pressed():
 	print(selectedTopic)
-	var challengeID = yield(createChallenge(selectedTopic, Globals.currUser.userID, Globals.selectedChallengees), "completed")
+	print(Globals.currUser.userId)
+	var challengeID = yield(createChallenge(selectedTopic, Globals.currUser.userId, Globals.selectedChallengees), "completed")
 	var root = get_tree().root
 	var arenaPage = preload('res://Game Play/Arena/ArenaPage.tscn').instance()
-	arenaPage.init(Globals.currUser.userID, challengeID, 'challenge')
+	arenaPage.init(Globals.currUser.userId, challengeID, 'challenge')
 	root.add_child(arenaPage)
 	self.queue_free()
 	
