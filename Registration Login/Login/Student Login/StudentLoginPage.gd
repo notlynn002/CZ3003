@@ -80,4 +80,4 @@ func _on_FirebaseAuth_login_succeeded(auth_info):
 
 
 func _on_CloseButton_pressed():
-	self.queue_free()
+	$Popup.hide()

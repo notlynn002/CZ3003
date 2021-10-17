@@ -37,7 +37,7 @@ func _on_MailButton_pressed():
 func _on_YesButton_pressed():
 	var root = get_tree().root
 	var arenaPage = preload('res://Game Play/Arena/ArenaPage.tscn').instance()
-	arenaPage.init(Globals.studentID, id, type)
+	arenaPage.init(Globals.currUser.userId, 'quiz-test', type)
 	root.add_child(arenaPage)
 	self.queue_free()
 

@@ -19,6 +19,7 @@ func init(sName, emailAddr, pw, idx):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$MuteButton.hide() # dont show sound off icon until it is pressed
+	$Popup.hide()
 	Firebase.Auth.connect("signup_succeeded", self, "_on_FirebaseAuth_signup_succeeded")
 	Firebase.Auth.connect("signup_failed", self, "_on_login_failed")
 
@@ -92,6 +93,8 @@ func _on_login_failed(error_code, message):
 	profileDetails = null
 	print("error code: " + str(error_code))
 	print("message: " + str(message))
+	$Popup/Label.text = str(message)
+	$Popup.show()
 	
 
 	
@@ -106,3 +109,7 @@ func _on_login_failed(error_code, message):
 
 
 
+
+
+func _on_CloseButton_pressed():
+	$Popup.hide()

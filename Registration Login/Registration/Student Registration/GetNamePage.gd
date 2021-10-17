@@ -29,8 +29,8 @@ func _on_ContinueButton_pressed():
 	var characterPage = preload("res://Registration Login/Registration/Student Registration/StudentCharacterSelectPage.tscn").instance()
 	characterPage.init(student_name, email, password, classIndex)
 	get_tree().get_root().add_child(characterPage)
-	get_node("/root/GetNamePage").queue_free()
-	get_node("/root/StudentRegistrationPage").queue_free()
+#	get_node("/root/GetNamePage").queue_free()
+#	get_node("/root/StudentRegistrationPage").queue_free()
 
 func _on_BackButton_pressed():
 	self.queue_free()

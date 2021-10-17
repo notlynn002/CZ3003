@@ -16,7 +16,7 @@ func _ready():
 	$CollisionShape2D/AnsButton/Answer.text = answer
 
 func _on_AnsButton_pressed():
-	if answer == correctAns:
+	if correctAns:
 		Globals.score += 1
 		var try = [questionID, true]
 		Globals.attempt.append(try)

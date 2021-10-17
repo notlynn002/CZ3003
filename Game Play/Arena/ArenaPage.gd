@@ -65,16 +65,16 @@ func _ready():
 		var quiz = yield(get_quiz(id), "completed")
 		questions = quiz['questions']
 		duration = quiz['levelDuration']
-		var maxAttempts = quiz['attemptNo']
-		var currAttempts = yield(check_max_attempt_reached(Globals.currUser.userID, id), "completed")
-		if currAttempts >= maxAttempts:
-			$Popup.show()
+		var currAttempts = yield(check_max_attempt_reached(Globals.currUser.userId, id), "completed") # this fxn is not working
+#		if currAttempts:
+#			$Popup.show() 
 			
 	$Timer.set_wait_time(duration)
 	$Timer.start()
 	$TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Timer.time_left / 60), int($Timer.time_left) % 60]
-	
+	print(questions)
 	for i in range(questions.size()):
+#		var question = 	yield(getQuestion(questions[i]), 'completed')
 		print(i)
 		var qn = Question.instance()
 		qn.init(str(i+1), questions[i]['questionBody'])
@@ -107,7 +107,7 @@ func _ready():
 		
 		yield(Coroutines.await_any_signal([ans1, "answered", ans2, "answered", ans3, "answered", ans4, "answered"]), "completed")
 		
-	
+	print("exited for loop")
 	# when done with for loop
 	# get remaining time
 	var time_left = $Timer.time_left
@@ -119,10 +119,15 @@ func _ready():
 		for i in range(Globals.attempt.size()):
 			attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
 			
-		submit_quiz_attempt(Globals.currUser.userID, id, time_left, attempt_record)
+		submit_quiz_attempt(Globals.currUser.userId, id, time_left, attempt_record)
 	elif arenaType == 'challenge':
-		updateChallengeResult(id, Globals.score, time_left, Globals.currUser.userID)
+		updateChallengeResult(id, Globals.score, time_left, Globals.currUser.userId)
+		
+	# can display score before navigating back
 	
+	var homePage = load('res://Game Play/StudentHomePage.tscn').instance()
+	get_tree().root.add_child(homePage)
+	self.queue_free()
 	
 # warning-ignore:unused_argument
 func _process(delta):
@@ -135,9 +140,9 @@ func _process(delta):
 			for i in range(Globals.attempt.size()):
 				attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
 				
-			submit_quiz_attempt(Globals.currUser.userID, id, 0, attempt_record)
+			submit_quiz_attempt(Globals.currUser.userId, id, 0, attempt_record)
 		elif arenaType == 'challenge':
-			updateChallengeResult(id, Globals.score, 0, Globals.currUser.userID)
+			updateChallengeResult(id, Globals.score, 0, Globals.currUser.userId)
 			
 func _on_CloseButton_pressed():
 	var root = get_tree().root
