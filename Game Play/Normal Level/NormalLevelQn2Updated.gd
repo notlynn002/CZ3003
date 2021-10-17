@@ -6,6 +6,8 @@ var cIsCorrect = false
 var dIsCorrect = false
 var ansCorrect = false
 
+var currentUser
+
 var correctAnsPos
 var correctAns
 var solution
@@ -14,6 +16,7 @@ var explanation
 var questionBank
 var levelId
 var qnId
+var attempts: Array
 var submitAttempts: Dictionary
 var qnDescription: Dictionary
 
@@ -27,6 +30,8 @@ func _ready():
 	$Qn2/NextButton.hide()
 	$Qn2/AnsButton.hide()
 	$Explanation.hide()
+	
+	currentUser = Globals.currUser['userId']
 	
 	var question = GlobalArray.question
 	var qnBody = question["questionBody"]
@@ -71,20 +76,6 @@ func init():
 #	qnDescription = qnBank[1]
 #	GlobalArray.question = qnDescription
 	
-	#var qnBody = qnDescription["questionBody"]
-	#print(qnBody)
-	
-#Checking Qn1
-#func _on_Correct_pressed():
-#	$Qn1/AnsCorrectMsg.show()
-#	$Qn1/AnsButton.show()
-#	$Qn1/NextButton.show()
-#
-#func _on_Wrong_pressed():
-#	$Qn1/AnsWrongMsg.show()
-#	$Qn1/AnsButton.show()
-#	$Qn1/NextButton.show()
-	
 func _on_A_pressed():
 	if aIsCorrect:
 		$Qn2/AnsCorrectMsg.show()
@@ -96,10 +87,11 @@ func _on_A_pressed():
 	submitAttempts = {
 		"correct": ansCorrect,
 		"duration": 60,
-		"questionId": qnId
+		"questionID": qnId
 	}
 	print(submitAttempts)
-#	towerBackend.submit_attempt()
+	attempts.append(submitAttempts)
+	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 
 func _on_B_pressed():
 	if bIsCorrect:
@@ -112,10 +104,11 @@ func _on_B_pressed():
 	submitAttempts = {
 		"correct": ansCorrect,
 		"duration": 60,
-		"questionId": qnId
+		"questionID": qnId
 	}
 	print(submitAttempts)
-#	towerBackend.submit_attempt()
+	attempts.append(submitAttempts)
+	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 		
 func _on_C_pressed():
 	if cIsCorrect:
@@ -128,10 +121,11 @@ func _on_C_pressed():
 	submitAttempts = {
 		"correct": ansCorrect,
 		"duration": 60,
-		"questionId": qnId
+		"questionID": qnId
 	}
 	print(submitAttempts)
-#	towerBackend.submit_attempt()
+	attempts.append(submitAttempts)
+	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 
 func _on_D_pressed():
 	if dIsCorrect:
@@ -144,10 +138,11 @@ func _on_D_pressed():
 	submitAttempts = {
 		"correct": ansCorrect,
 		"duration": 60,
-		"questionId": qnId
+		"questionID": qnId
 	}
 	print(submitAttempts)
-#	towerBackend.submit_attempt()
+	attempts.append(submitAttempts)
+	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 		
 func _on_ExplanationButton_pressed():
 	$Explanation.show()

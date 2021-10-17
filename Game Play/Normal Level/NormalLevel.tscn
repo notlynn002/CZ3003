@@ -750,6 +750,150 @@ position = Vector2( 99.1255, 431.334 )
 scale = Vector2( 0.354829, 0.354829 )
 texture = ExtResource( 20 )
 
+[node name="lvl3Stars" type="StaticBody2D" parent="."]
+position = Vector2( 528.698, -2.11893 )
+
+[node name="star1" type="Sprite" parent="lvl3Stars"]
+position = Vector2( 96.4229, 422.865 )
+scale = Vector2( 0.190724, 0.215185 )
+texture = ExtResource( 18 )
+
+[node name="star2" type="Sprite" parent="lvl3Stars"]
+position = Vector2( 99.9467, 427.016 )
+scale = Vector2( 0.397995, 0.397995 )
+texture = ExtResource( 19 )
+
+[node name="star3" type="Sprite" parent="lvl3Stars"]
+position = Vector2( 99.1255, 431.334 )
+scale = Vector2( 0.354829, 0.354829 )
+texture = ExtResource( 20 )
+
+[node name="lvl4Stars" type="StaticBody2D" parent="."]
+position = Vector2( 793.564, 4.23785 )
+
+[node name="star1" type="Sprite" parent="lvl4Stars"]
+position = Vector2( 96.4229, 422.865 )
+scale = Vector2( 0.190724, 0.215185 )
+texture = ExtResource( 18 )
+
+[node name="star2" type="Sprite" parent="lvl4Stars"]
+position = Vector2( 99.9467, 427.016 )
+scale = Vector2( 0.397995, 0.397995 )
+texture = ExtResource( 19 )
+
+[node name="star3" type="Sprite" parent="lvl4Stars"]
+position = Vector2( 99.1255, 431.334 )
+scale = Vector2( 0.354829, 0.354829 )
+texture = ExtResource( 20 )
+
+[node name="lvl5Stars" type="StaticBody2D" parent="."]
+position = Vector2( 1088.1, 23.3082 )
+
+[node name="star1" type="Sprite" parent="lvl5Stars"]
+position = Vector2( 96.4229, 422.865 )
+scale = Vector2( 0.190724, 0.215185 )
+texture = ExtResource( 18 )
+
+[node name="star2" type="Sprite" parent="lvl5Stars"]
+position = Vector2( 99.9467, 427.016 )
+scale = Vector2( 0.397995, 0.397995 )
+texture = ExtResource( 19 )
+
+[node name="star3" type="Sprite" parent="lvl5Stars"]
+position = Vector2( 99.1255, 431.334 )
+scale = Vector2( 0.354829, 0.354829 )
+texture = ExtResource( 20 )
+
+[node name="lvl6Stars" type="StaticBody2D" parent="."]
+position = Vector2( 1465.26, -591.181 )
+
+[node name="star1" type="Sprite" parent="lvl6Stars"]
+position = Vector2( 96.4229, 422.865 )
+scale = Vector2( 0.190724, 0.215185 )
+texture = ExtResource( 18 )
+
+[node name="star2" type="Sprite" parent="lvl6Stars"]
+position = Vector2( 99.9467, 427.016 )
+scale = Vector2( 0.397995, 0.397995 )
+texture = ExtResource( 19 )
+
+[node name="star3" type="Sprite" parent="lvl6Stars"]
+position = Vector2( 99.1255, 431.334 )
+scale = Vector2( 0.354829, 0.354829 )
+texture = ExtResource( 20 )
+
+[node name="lvl7Stars" type="StaticBody2D" parent="."]
+position = Vector2( 1215.23, -595.418 )
+
+[node name="star1" type="Sprite" parent="lvl7Stars"]
+position = Vector2( 96.4229, 422.865 )
+scale = Vector2( 0.190724, 0.215185 )
+texture = ExtResource( 18 )
+
+[node name="star2" type="Sprite" parent="lvl7Stars"]
+position = Vector2( 99.9467, 427.016 )
+scale = Vector2( 0.397995, 0.397995 )
+texture = ExtResource( 19 )
+
+[node name="star3" type="Sprite" parent="lvl7Stars"]
+position = Vector2( 99.1255, 431.334 )
+scale = Vector2( 0.354829, 0.354829 )
+texture = ExtResource( 20 )
+
+[node name="lvl8Stars" type="StaticBody2D" parent="."]
+position = Vector2( 933.413, -597.537 )
+
+[node name="star1" type="Sprite" parent="lvl8Stars"]
+position = Vector2( 96.4229, 422.865 )
+scale = Vector2( 0.190724, 0.215185 )
+texture = ExtResource( 18 )
+
+[node name="star2" type="Sprite" parent="lvl8Stars"]
+position = Vector2( 99.9467, 427.016 )
+scale = Vector2( 0.397995, 0.397995 )
+texture = ExtResource( 19 )
+
+[node name="star3" type="Sprite" parent="lvl8Stars"]
+position = Vector2( 99.1255, 431.334 )
+scale = Vector2( 0.354829, 0.354829 )
+texture = ExtResource( 20 )
+
+[node name="lvl9Stars" type="StaticBody2D" parent="."]
+position = Vector2( 664.31, -599.656 )
+
+[node name="star1" type="Sprite" parent="lvl9Stars"]
+position = Vector2( 96.4229, 422.865 )
+scale = Vector2( 0.190724, 0.215185 )
+texture = ExtResource( 18 )
+
+[node name="star2" type="Sprite" parent="lvl9Stars"]
+position = Vector2( 99.9467, 427.016 )
+scale = Vector2( 0.397995, 0.397995 )
+texture = ExtResource( 19 )
+
+[node name="star3" type="Sprite" parent="lvl9Stars"]
+position = Vector2( 99.1255, 431.334 )
+scale = Vector2( 0.354829, 0.354829 )
+texture = ExtResource( 20 )
+
+[node name="lvl10Stars" type="StaticBody2D" parent="."]
+position = Vector2( 414.276, -603.894 )
+
+[node name="star1" type="Sprite" parent="lvl10Stars"]
+position = Vector2( 96.4229, 422.865 )
+scale = Vector2( 0.190724, 0.215185 )
+texture = ExtResource( 18 )
+
+[node name="star2" type="Sprite" parent="lvl10Stars"]
+position = Vector2( 99.9467, 427.016 )
+scale = Vector2( 0.397995, 0.397995 )
+texture = ExtResource( 19 )
+
+[node name="star3" type="Sprite" parent="lvl10Stars"]
+position = Vector2( 99.1255, 431.334 )
+scale = Vector2( 0.354829, 0.354829 )
+texture = ExtResource( 20 )
+
 [connection signal="pressed" from="Door1" to="." method="_on_NormalLevelDoor_pressed"]
 [connection signal="pressed" from="Door2" to="." method="_on_NormalLevelDoor_pressed"]
 [connection signal="pressed" from="Door3" to="." method="_on_NormalLevelDoor_pressed"]
