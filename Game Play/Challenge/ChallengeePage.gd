@@ -7,7 +7,7 @@ var classID
 
 func init(class_id, topic):
 	classID = class_id
-	selectedTopic = topic
+	selectedTopic = topic.to_lower()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

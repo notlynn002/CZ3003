@@ -60,7 +60,7 @@ func _ready():
 	if arenaType == 'challenge':
 		var challenge = yield(getChallengeByID(id), "completed")
 		questions = challenge['questionList']
-		duration = 3600
+		duration = 600
 	elif arenaType == 'quiz':
 		var quiz = yield(get_quiz(id), "completed")
 		questions = quiz['questions']
