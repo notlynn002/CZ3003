@@ -7,18 +7,35 @@ var toweridx = 0
 var level = 0
 var	classidx = 0
 
-func init(twr, lvl, cName):
+var tower_name_id_dict
+var classes_dict
+
+func init(twr, lvl, cName, tnid, cd):
 	toweridx = twr
 	level = lvl
 	classidx = cName
+	tower_name_id_dict = tnid
+	classes_dict = cd
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print(toweridx, level, classidx)
+	classOptionPopulate(classes_dict)
+	towerOptionPopulate(tower_name_id_dict)
+	
 	$ViewLevel.select(level)
 	$ViewClass.select(classidx)
 	$ViewTower.select(toweridx)
-	pass
+	
+
+func classOptionPopulate(c_dict):
+	$ViewClass.add_item("All")
+	for x in c_dict:
+		$ViewClass.add_item(x)
+
+func towerOptionPopulate(tnid):
+	for x in tnid:
+		$ViewTower.add_item(x)
 
 func _on_StudentOptionbutton_item_selected(index):
 	student = index

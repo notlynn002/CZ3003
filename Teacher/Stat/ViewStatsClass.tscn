@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Teacher/leveloption.tres" type="Theme" id=1]
 [ext_resource path="res://sprites/background/teacher homepage bg.png" type="Texture" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://Teacher/Stat/View Stats.tres" type="StyleBox" id=6]
 [ext_resource path="res://Teacher/Stat/ViewStatsClass.gd" type="Script" id=7]
 [ext_resource path="res://Teacher/Stat/pressed.tres" type="StyleBox" id=8]
+[ext_resource path="res://PixulBrush.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://Teacher/PixulBrush.tres" type="DynamicFont" id=10]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 3 )
@@ -15,6 +17,28 @@ region_rect = Rect2( 0, 0, 522, 351 )
 
 [sub_resource type="Theme" id=2]
 TexturedRect/styles/ = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 32
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 32
+font_data = ExtResource( 9 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+
+[sub_resource type="DynamicFont" id=8]
+size = 64
+font_data = ExtResource( 9 )
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource( 7 )
@@ -50,9 +74,9 @@ __meta__ = {
 
 [node name="StatsTree" type="Tree" parent="."]
 margin_left = 144.0
-margin_top = 424.0
+margin_top = 504.0
 margin_right = 1784.0
-margin_bottom = 952.0
+margin_bottom = 864.0
 theme = ExtResource( 4 )
 columns = 4
 hide_folding = true
@@ -60,6 +84,90 @@ hide_root = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TimeLabel" type="Label" parent="."]
+margin_left = 1378.0
+margin_top = 426.0
+margin_right = 1754.0
+margin_bottom = 478.0
+rect_pivot_offset = Vector2( -1360, -240 )
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Avg. Time Taken"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreLabel" type="Label" parent="."]
+margin_left = 968.0
+margin_top = 424.0
+margin_right = 1212.0
+margin_bottom = 476.0
+rect_pivot_offset = Vector2( -1360, -240 )
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Avg. Score"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelLabel" type="Label" parent="."]
+margin_left = 555.0
+margin_top = 427.0
+margin_right = 795.0
+margin_bottom = 479.0
+rect_pivot_offset = Vector2( -856, -184 )
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Max Level"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StudentLabel" type="Label" parent="."]
+margin_left = 149.0
+margin_top = 426.0
+margin_right = 389.0
+margin_bottom = 478.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Student"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AvgLabel" type="Label" parent="."]
+margin_left = 147.0
+margin_top = 896.0
+margin_right = 347.0
+margin_bottom = 948.0
+custom_fonts/font = ExtResource( 10 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Average"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AvgLevelLabel" type="Label" parent="AvgLabel"]
+margin_left = 408.0
+margin_right = 632.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+
+[node name="AvgScoreLabel" type="Label" parent="AvgLabel"]
+margin_left = 816.0
+margin_right = 1064.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+
+[node name="AvgTimeLabel" type="Label" parent="AvgLabel"]
+margin_left = 1224.0
+margin_right = 1456.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 
 [node name="ViewByOptionbutton" type="OptionButton" parent="."]
 anchor_left = 0.5
@@ -169,6 +277,21 @@ clip_text = true
 align = 1
 items = [ "Tower -", null, true, 0, null ]
 selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Loading" type="RichTextLabel" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+custom_styles/normal = SubResource( 7 )
+custom_fonts/normal_font = SubResource( 8 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "																		
+																		
+																		
+																		
+																												LOADING"
 __meta__ = {
 "_edit_use_anchors_": false
 }

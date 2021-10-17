@@ -32,16 +32,16 @@ border_width_bottom = 5
 border_color = Color( 0, 0, 0, 1 )
 border_blend = true
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.917647, 0.831373, 0.666667, 1 )
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=10]
 size = 32
 font_data = ExtResource( 1 )
 
 [resource]
 resource_local_to_scene = true
-default_font = SubResource( 9 )
+default_font = SubResource( 10 )
 Button/colors/font_color = Color( 0, 0, 0, 1 )
 Button/colors/font_color_disabled = Color( 0, 0, 0, 0.2 )
 Button/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
@@ -201,7 +201,7 @@ Tree/icons/checked = null
 Tree/icons/select_arrow = null
 Tree/icons/unchecked = null
 Tree/icons/updown = null
-Tree/styles/bg = SubResource( 10 )
+Tree/styles/bg = SubResource( 9 )
 Tree/styles/bg_focus = null
 Tree/styles/button_pressed = null
 Tree/styles/cursor = null

@@ -126,7 +126,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 text = "Class -"
 align = 1
-items = [ "Class -", null, true, 0, null, "Class 5D", null, false, 1, null, "Class 5E", null, false, 2, null ]
+items = [ "Class -", null, true, 0, null ]
 selected = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -151,7 +151,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 text = "Tower -"
 align = 1
-items = [ "Tower -", null, true, 0, null, "Tower 1", null, false, 1, null, "Tower 2", null, false, 2, null, "Tower 3", null, false, 3, null ]
+items = [ "Tower -", null, true, 0, null ]
 selected = 0
 __meta__ = {
 "_edit_use_anchors_": false
