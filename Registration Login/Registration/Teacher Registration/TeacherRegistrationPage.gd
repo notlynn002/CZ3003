@@ -13,7 +13,7 @@ func _ready():
 	$MuteButton.hide() # dont show sound off icon until it is pressed
 	$NoMatchLabel.hide()
 	Firebase.Auth.connect("signup_succeeded", self, "_on_FirebaseAuth_signup_succeeded")
-	Firebase.Auth.connect("signup_failed", self, "on_login_failed")
+	Firebase.Auth.connect("signup_failed", self, "_on_login_failed")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -73,7 +73,7 @@ func createProfile(auth_info):
 	Globals.currUser = res
 	get_tree().change_scene("res://Teacher/TeacherHomePage.tscn")
 	
-func on_login_failed(error_code, message):
+func _on_login_failed(error_code, message):
 	Globals.currUser = null
 	profileDetails = null
 	print("error code: " + str(error_code))

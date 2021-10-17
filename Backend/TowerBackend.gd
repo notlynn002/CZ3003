@@ -456,7 +456,7 @@ static func get_leaderboard(towerID):
 			student_dict[studentID]["highestLevel"] = max(student_dict[studentID].highestLevel, level)
 				
 		else:
-			var user = yield(AuthBackend.getUser(attempt.studentID), "completed")
+			var user = yield(ProfileBackend.getUser(attempt.studentID), "completed")
 			
 			if user != null:
 				if attempt.correct:

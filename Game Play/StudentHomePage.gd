@@ -18,6 +18,11 @@ func _ready():
 	$MuteButton.hide() # dont show sound off icon until it is pressed
 	$PopupMenu.hide() # dont showpopup until one of the castle is pressed
 	# get student's selected character from db
+	print("printing from student homepage")
+	print(Globals.currUser)
+	print(Globals.currUser.userId)
+	var character = yield(ProfileBackend.getCharacter(Globals.currUser.userId), "completed")
+	print(character)
 	character = "king" # set as king for now
 	if character == "king":
 		var king = King.instance() # create an instance of king object
