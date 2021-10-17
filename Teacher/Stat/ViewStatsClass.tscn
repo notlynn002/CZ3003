@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
+[ext_resource path="res://Teacher/leveloption.tres" type="Theme" id=1]
 [ext_resource path="res://sprites/background/teacher homepage bg.png" type="Texture" id=2]
 [ext_resource path="res://sprites/buttons or icons/biscuit popup.png" type="Texture" id=3]
 [ext_resource path="res://Teacher/mytheme.tres" type="Theme" id=4]
 [ext_resource path="res://Teacher/Stat/View Stats hover.tres" type="StyleBox" id=5]
 [ext_resource path="res://Teacher/Stat/View Stats.tres" type="StyleBox" id=6]
 [ext_resource path="res://Teacher/Stat/ViewStatsClass.gd" type="Script" id=7]
+[ext_resource path="res://Teacher/Stat/pressed.tres" type="StyleBox" id=8]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 3 )
@@ -24,6 +26,7 @@ texture = ExtResource( 2 )
 expand = true
 stretch_mode = 1
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -45,6 +48,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="StatsTree" type="Tree" parent="."]
+margin_left = 144.0
+margin_top = 424.0
+margin_right = 1784.0
+margin_bottom = 952.0
+theme = ExtResource( 4 )
+columns = 4
+hide_folding = true
+hide_root = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ViewByOptionbutton" type="OptionButton" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -56,7 +72,7 @@ margin_right = -32.0
 margin_bottom = -132.0
 theme = ExtResource( 4 )
 custom_styles/hover = ExtResource( 5 )
-custom_styles/pressed = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 8 )
 custom_styles/normal = ExtResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
@@ -76,7 +92,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = 416.0
 margin_top = -276.0
-margin_right = 832.0
+margin_right = 848.0
 margin_bottom = -148.0
 theme = ExtResource( 4 )
 text = "Back"
@@ -91,9 +107,9 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = 416.0
 margin_top = -420.0
-margin_right = 832.0
+margin_right = 848.0
 margin_bottom = -292.0
-theme = ExtResource( 4 )
+theme = ExtResource( 1 )
 custom_styles/hover = ExtResource( 5 )
 custom_styles/pressed = ExtResource( 5 )
 custom_styles/normal = ExtResource( 6 )
@@ -102,7 +118,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 text = "Level -"
 align = 1
-items = [ "Level -", null, true, 0, null, "Level 1", null, false, 1, null, "Level 2", null, false, 2, null, "Level 3", null, false, 3, null ]
+items = [ "Level -", null, true, 0, null, "Level 1", null, false, 1, null, "Level 2", null, false, 2, null, "Level 3", null, false, 3, null, "Item 4", null, false, 4, null, "Item 5", null, false, 5, null, "Item 6", null, false, 6, null, "Item 7", null, false, 7, null, "Item 8", null, false, 8, null, "Item 9", null, false, 9, null, "Item 10", null, false, 10, null, "Item 11", null, false, 11, null, "Item 12", null, false, 12, null, "Item 13", null, false, 13, null, "Item 14", null, false, 14, null, "Item 15", null, false, 15, null, "Item 16", null, false, 16, null, "Item 17", null, false, 17, null, "Item 18", null, false, 18, null, "Item 19", null, false, 19, null, "Item 20", null, false, 20, null, "Item 21", null, false, 21, null, "Item 22", null, false, 22, null, "Item 23", null, false, 23, null, "Item 24", null, false, 24, null ]
 selected = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -113,7 +129,7 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -16.0
+margin_left = -32.0
 margin_top = -276.0
 margin_right = 400.0
 margin_bottom = -148.0
@@ -126,7 +142,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 text = "Class -"
 align = 1
-items = [ "Class -", null, true, 0, null, "Class 5D", null, false, 1, null, "Class 5E", null, false, 2, null ]
+items = [ "Class -", null, true, 0, null ]
 selected = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -137,7 +153,7 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -16.0
+margin_left = -32.0
 margin_top = -420.0
 margin_right = 400.0
 margin_bottom = -292.0
@@ -149,8 +165,9 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 text = "Tower -"
+clip_text = true
 align = 1
-items = [ "Tower -", null, true, 0, null, "Tower 1", null, false, 1, null, "Tower 2", null, false, 2, null, "Tower 3", null, false, 3, null ]
+items = [ "Tower -", null, true, 0, null ]
 selected = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -158,3 +175,7 @@ __meta__ = {
 
 [connection signal="item_selected" from="ViewByOptionbutton" to="." method="_on_ViewByOptionbutton_item_selected"]
 [connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="item_selected" from="ViewLevel" to="." method="_on_ViewLevel_item_selected"]
+[connection signal="pressed" from="ViewLevel" to="." method="_on_ViewLevel_pressed"]
+[connection signal="item_selected" from="ViewClass" to="." method="_on_ViewClass_item_selected"]
+[connection signal="item_selected" from="ViewTower" to="." method="_on_ViewTower_item_selected"]

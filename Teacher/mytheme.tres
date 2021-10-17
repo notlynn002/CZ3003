@@ -1,5 +1,6 @@
-[gd_resource type="Theme" load_steps=11 format=2]
+[gd_resource type="Theme" load_steps=15 format=2]
 
+[ext_resource path="res://Teacher/PixulBrush.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Teacher/Stat/View Stats.tres" type="StyleBox" id=2]
 [ext_resource path="res://Teacher/Stat/View Stats hover.tres" type="StyleBox" id=3]
 [ext_resource path="res://Teacher/Stat/pressed.tres" type="StyleBox" id=4]
@@ -9,24 +10,38 @@
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.823529, 0.705882, 0.584314, 1 )
 
-[sub_resource type="ImageTexture" id=3]
+[sub_resource type="DynamicFont" id=3]
+size = 24
+extra_spacing_top = 6
+extra_spacing_bottom = 6
+font_data = ExtResource( 1 )
 
 [sub_resource type="ImageTexture" id=4]
 
 [sub_resource type="ImageTexture" id=5]
 
-[sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 0.917647, 0.831373, 0.666667, 1 )
+[sub_resource type="ImageTexture" id=6]
 
 [sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.917647, 0.831373, 0.666667, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.917647, 0.831373, 0.666667, 1 )
 border_width_top = 5
 border_width_bottom = 5
 border_color = Color( 0, 0, 0, 1 )
 border_blend = true
 
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.917647, 0.831373, 0.666667, 1 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 32
+font_data = ExtResource( 1 )
+
 [resource]
 resource_local_to_scene = true
+default_font = SubResource( 9 )
 Button/colors/font_color = Color( 0, 0, 0, 1 )
 Button/colors/font_color_disabled = Color( 0, 0, 0, 0.2 )
 Button/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
@@ -93,12 +108,12 @@ PopupMenu/colors/font_color_accel = Color( 0.7, 0.7, 0.7, 0.8 )
 PopupMenu/colors/font_color_disabled = Color( 0.4, 0.4, 0.4, 0.8 )
 PopupMenu/colors/font_color_hover = Color( 0.88, 0.88, 0.88, 1 )
 PopupMenu/colors/font_color_separator = Color( 0.88, 0.88, 0.88, 1 )
-PopupMenu/constants/hseparation = 10
-PopupMenu/constants/vseparation = 6
-PopupMenu/fonts/font = null
-PopupMenu/icons/checked = SubResource( 3 )
-PopupMenu/icons/radio_checked = SubResource( 4 )
-PopupMenu/icons/radio_unchecked = SubResource( 5 )
+PopupMenu/constants/hseparation = 8
+PopupMenu/constants/vseparation = 1
+PopupMenu/fonts/font = SubResource( 3 )
+PopupMenu/icons/checked = SubResource( 4 )
+PopupMenu/icons/radio_checked = SubResource( 5 )
+PopupMenu/icons/radio_unchecked = SubResource( 6 )
 PopupMenu/icons/submenu = null
 PopupMenu/icons/unchecked = null
 PopupMenu/styles/hover = ExtResource( 3 )
@@ -123,7 +138,7 @@ RichTextLabel/fonts/italics_font = null
 RichTextLabel/fonts/mono_font = null
 RichTextLabel/fonts/normal_font = null
 RichTextLabel/styles/focus = null
-RichTextLabel/styles/normal = SubResource( 6 )
+RichTextLabel/styles/normal = SubResource( 7 )
 TextEdit/colors/background_color = Color( 0, 0, 0, 0 )
 TextEdit/colors/bookmark_color = Color( 0.08, 0.49, 0.98, 1 )
 TextEdit/colors/brace_mismatch_color = Color( 1, 0.2, 0.2, 1 )
@@ -161,5 +176,41 @@ TextEdit/icons/space = null
 TextEdit/icons/tab = null
 TextEdit/styles/completion = null
 TextEdit/styles/focus = null
-TextEdit/styles/normal = SubResource( 7 )
+TextEdit/styles/normal = SubResource( 8 )
 TextEdit/styles/read_only = null
+Tree/colors/custom_button_font_highlight = Color( 0.94, 0.94, 0.94, 1 )
+Tree/colors/drop_position_color = Color( 1, 0.3, 0.2, 1 )
+Tree/colors/font_color = Color( 0, 0, 0, 1 )
+Tree/colors/font_color_selected = Color( 0, 0, 0, 1 )
+Tree/colors/guide_color = Color( 0, 0, 0, 0.1 )
+Tree/colors/relationship_line_color = Color( 0.27, 0.27, 0.27, 1 )
+Tree/colors/title_button_color = Color( 0.88, 0.88, 0.88, 1 )
+Tree/constants/button_margin = 4
+Tree/constants/draw_guides = 1
+Tree/constants/draw_relationship_lines = 0
+Tree/constants/hseparation = 4
+Tree/constants/item_margin = 12
+Tree/constants/scroll_border = 4
+Tree/constants/scroll_speed = 12
+Tree/constants/vseparation = 4
+Tree/fonts/font = null
+Tree/fonts/title_button_font = null
+Tree/icons/arrow = null
+Tree/icons/arrow_collapsed = null
+Tree/icons/checked = null
+Tree/icons/select_arrow = null
+Tree/icons/unchecked = null
+Tree/icons/updown = null
+Tree/styles/bg = SubResource( 10 )
+Tree/styles/bg_focus = null
+Tree/styles/button_pressed = null
+Tree/styles/cursor = null
+Tree/styles/cursor_unfocused = null
+Tree/styles/custom_button = null
+Tree/styles/custom_button_hover = null
+Tree/styles/custom_button_pressed = null
+Tree/styles/selected = null
+Tree/styles/selected_focus = null
+Tree/styles/title_button_hover = null
+Tree/styles/title_button_normal = null
+Tree/styles/title_button_pressed = null
