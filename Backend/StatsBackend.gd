@@ -401,14 +401,121 @@ static func get_level_stats_by_student(level_id: String, student_id: String) -> 
 	return stats
 	
 
+
+static func get_quiz_stats_by_class(quiz_level_id: String, class_ids: Array) -> Array:
+	""" Get quiz stats for each student in a few classes.
+	
+	Args:
+		quiz_level_id (String): Quiz's level ID.
+		class_id (Array[String]): Class IDs.
+		
+	Returns:
+		Array[Dictionary]: An Array of student stats as Dictionaries. The Dictionary has the following keys:
+			"name" (String): Student's name.
+			"time" (int/String): Total time student took to complete the quiz.
+				If the student has attempted the quiz, this value is an int representing the time as total seconds.
+				If the student has not attempted the quiz, this value is "-".
+			"qn_attempts" (Array[Dictionary]): An Array of question attempts as Dictionaries. Each Dictionary has the following keys:
+				"qn_content" (String): The quiz question content.
+				"correct" (String): Whether the student got the question correct.
+					If the student got the question correct, this value is "Correct".
+					If the student got the question wrong, this value is "Wrong".
+					If the student did not attempt the question, this value is "-".
+	
+	"""
+	# get sutdent info
+	var student_info: Dictionary = yield(get_student_ids_and_names(class_ids), "completed")
+	
+	# get quiz question docs
+	var qn_docs: Array = yield(QuizBackend._query_quiz_questions(quiz_level_id), "completed")
+	
+	# get quiz attempt docs
+	var query: FirestoreQuery = FirestoreQuery.new()
+	query.from("Quiz_Attempt", false)
+	query.where("studentID", FirestoreQuery.OPERATOR.IN, student_info.values(), FirestoreQuery.OPERATOR.AND)
+	query.where("quizID", FirestoreQuery.OPERATOR.EQUAL, quiz_level_id)
+	var task: FirestoreTask = Firebase.Firestore.query(query)
+	var attempt_docs: Array = yield(task, "task_finished")
+	
+	var stats: Array = []
+	
+	# get stats for students who have attempted the quiz
+	for student_name in student_info.keys():
+		var student_stats: Dictionary = yield(get_quiz_stats_by_student(quiz_level_id, student_info[student_name]), "completed")
+		# add student name to stats
+		student_stats["name"] = student_name
+		stats.append(student_stats)
+	
+	return stats
+
+
+static func get_quiz_stats_by_student(quiz_level_id: String, student_id: String) -> Dictionary:
+	""" Get quiz stats for a student.
+	
+	Args:
+		quiz_level_id (String): Quiz's level ID.
+		student_id (String): Student's user ID.
+		
+	Returns:
+		Dictionary: The fomatted student stats. The Dictionary has the following keys:
+			"time" (int/String): Total time student took to complete the quiz.
+				If the student has attempted the quiz, this value is an int representing the time as total seconds.
+				If the student has not attempted the quiz, this value is "-".
+			"qn_attempts" (Array[Dictionary]): An Array of question attempts as Dictionaries. Each Dictionary has the following keys:
+				"qn_content" (String): The quiz question content.
+				"correct" (String): Whether the student got the question correct.
+					If the student got the question correct, this value is "Correct".
+					If the student got the question wrong, this value is "Wrong".
+					If the student did not attempt the question, this value is "-".
+	
+	"""
+	# get quiz questions
+	var qn_docs: Array = yield(QuizBackend._query_quiz_questions(quiz_level_id), "completed")
+	
+	# query quiz document
+	var attempt_doc = yield(QuizBackend._get_quiz_attempt_doc(student_id, quiz_level_id), "completed")
+	
+	var stats: Dictionary = {}
+	var qns_stats = []
+	
+	# quiz was attempted
+	if attempt_doc is FirestoreDocument:
+		stats["time"] = attempt_doc.doc_fields["duration"]
+		var qn_attempts: Dictionary = attempt_doc.doc_fields["questionAttempts"]
+		for qn_doc in qn_docs:
+			var qn_attempt = qn_attempts.get(qn_doc.doc_name)
+			var qn_stats_dict: Dictionary
+			# question was attempted
+			if qn_attempt != null:
+				qn_stats_dict = {
+					"qn_content": qn_doc.doc_fields["questionBody"],
+					"correct": "Correct" if qn_attempt else "Wrong"
+				}
+			# question was not attempted
+			else:
+				qn_stats_dict = {
+					"qn_content": qn_doc.doc_fields["questionBody"],
+					"correct": "-"
+				}
+			qns_stats.append(qn_stats_dict)
+	# quiz was not attempted
+	else:
+		stats["time"] = "-"
+		for qn_doc in qn_docs:
+			var qn_stats_dict = {
+				"qn_content": qn_doc.doc_fields["questionBody"],
+				"correct": "-"
+			}
+			qns_stats.append(qn_stats_dict)
+	
+	stats["qn_attempts"] = qns_stats
+	
+	return stats
+
+
 func _on_test_button_up():
-	"""
-	var query = FirestoreQuery.new().from("Question_Attempt").where("studentID", FirestoreQuery.OPERATOR.EQUAL, "student1", FirestoreQuery.OPERATOR.AND).where("questionID", FirestoreQuery.OPERATOR.EQUAL, "question1")
-	var task = Firebase.Firestore.query(query)
-	var output = yield(task, "task_finished")
-	"""
-	#var output = yield(_query_questions_by_level("numbers-10"), "completed")
-	var output = yield(get_level_stats_by_student("iZKcmDRrSdc0zn8vU6ZnxaEpPGH2", "numbers-10"), "completed")
+	#var output = yield(get_quiz_stats_by_student("quiz-hard-test-:(", "student1"), "completed")
+	var output = yield(get_quiz_stats_by_class("quiz-hard-test-:(", ["dummyClass"]), "completed")
 	print(output)
 
 
