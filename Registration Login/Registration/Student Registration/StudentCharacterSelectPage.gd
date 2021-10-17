@@ -20,7 +20,7 @@ func init(sName, emailAddr, pw, idx):
 func _ready():
 	$MuteButton.hide() # dont show sound off icon until it is pressed
 	Firebase.Auth.connect("signup_succeeded", self, "_on_FirebaseAuth_signup_succeeded")
-	Firebase.Auth.connect("signup_failed", self, "on_login_failed")
+	Firebase.Auth.connect("signup_failed", self, "_on_login_failed")
 
 
 func _on_BackButton_pressed():
@@ -86,6 +86,12 @@ func createProfile(auth_info):
 	var homepage = preload("res://Game Play/StudentHomePage.tscn").instance()
 	get_tree().get_root().add_child(homepage)
 	get_tree().get_root().remove_child(self)
+	
+func _on_login_failed(error_code, message):
+	Globals.currUser = null
+	profileDetails = null
+	print("error code: " + str(error_code))
+	print("message: " + str(message))
 	
 
 	

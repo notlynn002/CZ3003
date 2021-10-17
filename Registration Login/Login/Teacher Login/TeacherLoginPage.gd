@@ -43,7 +43,7 @@ func _on_LoginButton_pressed():
 	
 	
 ###### ALL THE BACKEND FUNCTIONS ######
-func on_login_failed(error_code, message):
+func _on_login_failed(error_code, message):
 	Globals.currUser = null
 
 	print("error code: " + str(error_code))
@@ -57,7 +57,7 @@ func login(email, password, role):
 	query.where('email', FirestoreQuery.OPERATOR.EQUAL, email)
 	var query_task :FirestoreTask = Firebase.Firestore.query(query)
 	var result : Array = yield(query_task, 'task_finished')
-	print(result)
+	
 	if result == []:
 		print("No account found with this email")
 	elif result[0].doc_fields.role != role:
@@ -76,7 +76,7 @@ func _on_FirebaseAuth_login_succeeded(auth_info):
 	if auth_info.localid != "bKVRE45BXPY2R8RhochyJlefPW92":
 		print("login succcess!")
 		Firebase.Auth.save_auth(auth_info)
-		print(Globals.currUser)
+		
 		get_tree().change_scene("res://Teacher/TeacherHomePage.tscn")
 		
 	# change scene

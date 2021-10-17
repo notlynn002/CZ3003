@@ -36,7 +36,8 @@ func _on_LoginButton_pressed():
 	
 	
 ######## ALL BACKEND FUNCTIONS #########
-func on_login_failed(error_code, message):
+func _on_login_failed(error_code, message):
+	print("dd")
 	Globals.currUser = null
 	print("error code: " + str(error_code))
 	print("message: " + str(message))
@@ -50,16 +51,18 @@ func login(email, password, role):
 	query.where('email', FirestoreQuery.OPERATOR.EQUAL, email)
 	var query_task :FirestoreTask = Firebase.Firestore.query(query)
 	var result : Array = yield(query_task, 'task_finished')
-	print(result)
+
 	if result == []:
 		print("No account found with this email")
+		$Popup.show()
 	elif result[0].doc_fields.role != role:
 		print("you are not authorised to log in as a "+ role)
+		$Popup.show()
 	else:
 		var res = result[0].doc_fields
 		res["userId"] = result[0].doc_name
 		Globals.currUser = res
-		
+			
 		Firebase.Auth.login_with_email_and_password(email, password)
 	
 
@@ -69,7 +72,7 @@ func _on_FirebaseAuth_login_succeeded(auth_info):
 	if auth_info.localid != "bKVRE45BXPY2R8RhochyJlefPW92":
 		print("login succcess!")
 		Firebase.Auth.save_auth(auth_info)
-		print(Globals.currUser)
+		
 		get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
 		
 	# change scene
