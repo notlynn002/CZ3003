@@ -291,7 +291,7 @@ func game_ended(condition):
 	$Question/AnsMsg.hide()
 	$Question/NextButton.hide()
 	$Question/NextText.hide()
-	#towerBackend.submit_attempt(currentUser, attempts)
+	towerBackend.submit_attempt(currentUser, attempts)
 	if condition == "success":
 		$Question/EndBossMsg.show()
 		$Question/EndBossMsg/EndBossText.text = "You have passed the boss level!"

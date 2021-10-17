@@ -101,8 +101,8 @@ func _on_BossLevelDoor_pressed():
 	GlobalArray.playerPosition = currentLoc
 	
 	#get the current level
-	#nowAtLevel = yield(towerBackend.get_last_level_attempted("HjgDICIEdI4btnow8RP6", "numbers-tower"), "completed") + 1
-	nowAtLevel = 5 #need to change
+	nowAtLevel = yield(towerBackend.get_last_level_attempted(currentUser, "numbers-tower"), "completed")#+ 1
+	#nowAtLevel = 5 #need to change
 	if nowAtLevel < 10:
 		strNowAtLevel = "0" + String(nowAtLevel)
 	else:
