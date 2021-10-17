@@ -76,6 +76,31 @@ static func get_last_level_attempted(student_id: String, tower_id: String) -> in
 	return prev_level_no
 	
 	
+static func _query_level_attempts(student_id: String, level_id: String, type: String, correct: bool = false) -> Array:
+	# Get question ids of question in level
+	var query = FirestoreQuery.new()
+	query.from("Question", false)
+	query.where("levelID", FirestoreQuery.OPERATOR.EQUAL, level_id)
+	var task: FirestoreTask = Firebase.Firestore.query(query)
+	var question_docs: Array = yield(task, "task_finished") # Array<FirestoreDocument>
+	var question_ids: Array = []
+	for doc in question_docs:
+		question_ids.append(doc.doc_name)
+	
+	# Query question attempt documents
+	query = FirestoreQuery.new()
+	query.from("Question_Attempt")
+	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id, FirestoreQuery.OPERATOR.AND)
+	query.where("questionID", FirestoreQuery.OPERATOR.IN, question_ids, FirestoreQuery.OPERATOR.AND)
+	if correct:
+		query.where("type", FirestoreQuery.OPERATOR.EQUAL, type, FirestoreQuery.OPERATOR.AND)
+		query.where("correct", FirestoreQuery.OPERATOR.EQUAL, true)
+	else:
+		query.where("type", FirestoreQuery.OPERATOR.EQUAL, type)
+	task = Firebase.Firestore.query(query)
+	return yield(task, "task_finished")
+
+	
 static func get_level_attempt(student_id: String, level_id: String, type: String) -> Array:
 	""" Gets the level question attempts for a student.
 	
@@ -97,27 +122,15 @@ static func get_level_attempt(student_id: String, level_id: String, type: String
 		ERR_INVALID_PARAMETER: If there are no attempts for the specific student_id, level_id and best values.
 	
 	"""
-	# Get question ids of question in level
-	var query = FirestoreQuery.new()
-	query.from("Question", false)
-	query.where("levelID", FirestoreQuery.OPERATOR.EQUAL, level_id)
-	var task: FirestoreTask = Firebase.Firestore.query(query)
-	var question_docs: Array = yield(task, "task_finished") # Array<FirestoreDocument>
-	if not question_docs:
-		Error.raise_invalid_parameter_error("'%s' is not a valid level ID" % level_id)
+	# Query question attempt documents
+	var attempt_docs = yield(_query_level_attempts(student_id, level_id, type), "completed")
+
+	# Get question attempt fields
+	var attempts: Array = []
+	for doc in attempt_docs:
+		attempts.append(doc.doc_fields)
 	
-	# Query question attempts
-	var question_attempt
-	var question_attempts: Array = []
-	for question_doc in question_docs:
-		var question_id: String = question_doc.doc_name
-		question_attempt = yield(_get_question_attempt(student_id, question_id, type), "completed")
-		if (question_attempt is int):
-			Error.raise_invalid_parameter_error("Either 'student_id' or 'type' has an invalid value")
-			continue
-		question_attempts.append(question_attempt)
-	
-	return question_attempts
+	return attempts	
 	
 	
 static func _get_question_attempt(student_id: String, question_id: String,  type: String) -> Dictionary:
@@ -334,6 +347,32 @@ static func submit_attempt(student_id: String, question_attempts: Array):
 			yield(_update_best_attempts(student_id, question_attempts), "completed")
 
 
+static func get_correct_for_tower_by_student(student_id: String, tower_id: String):
+	""" Get the number of questions that a student got correct for each level in a tower.
+	
+	Args:
+		student_id (String): Student's user ID.
+		tower_id (String): Tower ID.
+		
+	Returns:
+		Array[int]: Each int in the Array represents the number of questions a student got correct of a particular level.
+			The numbers of correct questions are ordered according to level number. Only 
+		
+	"""
+	# get level ids
+	var level_ids: Array = yield(get_level_for_tower(tower_id), "completed")	
+	
+	# get attempts
+	var correct_nos: Array = []
+	for level_id in level_ids:
+		# count number of correct for level
+		var attempt_docs: Array = yield(_query_level_attempts(student_id, level_id, "best", true), "completed")
+		var correct_no: int = attempt_docs.size()
+		correct_nos.append(correct_no)
+	
+	return correct_nos
+
+
 func _on_Get_level_attempt_button_up():
 	var output = yield(get_level_attempt("test-student1", "numbers-01", "first"), "completed")
 	print(output)
@@ -350,15 +389,11 @@ func _on_sumbit_attempt_button_up():
 
 
 func _on_test_button_button_up():
-	var student_id1 = "test-student1"
-	var student_id2 = "test-student2"
-	var query = FirestoreQuery.new()
-	query.from("Question_Attempt", false)
-	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id1, FirestoreQuery.OPERATOR.AND)
-	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id2)
-	var task = Firebase.Firestore.query(query)
-	var docs = yield(task, "task_finished")
-	print(docs)
+	print(OS.get_datetime())
+	var output = yield(get_correct_for_tower_by_student("iZKcmDRrSdc0zn8vU6ZnxaEpPGH2", "numbers-tower"), "completed")
+	print(OS.get_datetime())
+	print(output)
+	
 
 func _on_login_button_up():
 	Firebase.Auth.login_with_email_and_password("test@maildrop.cc", "password")
