@@ -7,8 +7,8 @@
 [ext_resource path="res://sprites/buttons or icons/rectangular popup.png" type="Texture" id=5]
 [ext_resource path="res://Game Play/Normal Level/TowerBricks.tscn" type="PackedScene" id=6]
 [ext_resource path="res://sprites/buttons or icons/rectangular button.png" type="Texture" id=7]
-[ext_resource path="res://sprites/tower/star.png" type="Texture" id=8]
-[ext_resource path="res://sprites/buttons or icons/x button.png" type="Texture" id=9]
+[ext_resource path="res://sprites/buttons or icons/explanation button.png" type="Texture" id=8]
+[ext_resource path="res://sprites/buttons or icons/retry button.png" type="Texture" id=9]
 [ext_resource path="res://sprites/buttons or icons/back button.png" type="Texture" id=10]
 [ext_resource path="res://Player/King.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Game Play/Boss Level/HeartBar.tscn" type="PackedScene" id=12]
@@ -34,10 +34,11 @@ extents = Vector2( 111.389, 127.707 )
 script = ExtResource( 2 )
 
 [node name="TowerBackground" type="TextureRect" parent="."]
+margin_left = -1.49829
 margin_top = 2.0
-margin_right = 1919.0
+margin_right = 1917.5
 margin_bottom = 1082.0
-rect_pivot_offset = Vector2( -575.656, 335.255 )
+rect_pivot_offset = Vector2( 660.767, 391.28 )
 texture = ExtResource( 1 )
 expand = true
 __meta__ = {
@@ -149,14 +150,28 @@ __meta__ = {
 }
 
 [node name="QnNum" type="Label" parent="Question"]
-margin_left = 116.454
-margin_top = 48.6818
-margin_right = 461.454
-margin_bottom = 114.682
+margin_left = 109.0
+margin_top = 32.0034
+margin_right = 408.0
+margin_bottom = 91.0034
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QnBody" type="Label" parent="Question"]
+margin_left = 119.003
+margin_top = 91.5118
+margin_right = 1447.0
+margin_bottom = 228.512
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 align = 1
 valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -165,48 +180,112 @@ __meta__ = {
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="Correct" type="TextureButton" parent="Question/Options"]
-margin_left = 923.495
-margin_top = 291.04
-margin_right = 1087.49
-margin_bottom = 378.04
+[node name="OptionA" type="TextureButton" parent="Question/Options"]
+margin_left = 163.0
+margin_top = 312.0
+margin_right = 358.0
+margin_bottom = 402.0
+rect_pivot_offset = Vector2( 152.141, 45 )
 texture_normal = ExtResource( 7 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Wrong1" type="TextureButton" parent="Question/Options"]
-margin_left = 289.288
-margin_top = 307.592
-margin_right = 368.288
-margin_bottom = 379.592
-texture_normal = ExtResource( 9 )
+[node name="OptionAText" type="Label" parent="Question/Options/OptionA"]
+margin_left = 22.0
+margin_top = 18.0
+margin_right = 173.0
+margin_bottom = 77.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Wrong2" type="TextureButton" parent="Question/Options"]
-margin_left = 639.838
-margin_top = 304.084
-margin_right = 718.838
-margin_bottom = 376.084
-texture_normal = ExtResource( 9 )
+[node name="OptionB" type="TextureButton" parent="Question/Options"]
+margin_left = 503.116
+margin_top = 312.0
+margin_right = 698.116
+margin_bottom = 402.0
+rect_pivot_offset = Vector2( 152.141, 45 )
+texture_normal = ExtResource( 7 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Wrong3" type="TextureButton" parent="Question/Options"]
-margin_left = 1285.47
-margin_top = 308.664
-margin_right = 1364.47
-margin_bottom = 380.664
-texture_normal = ExtResource( 9 )
+[node name="OptionBText" type="Label" parent="Question/Options/OptionB"]
+margin_left = 22.0
+margin_top = 18.0
+margin_right = 173.0
+margin_bottom = 77.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionC" type="TextureButton" parent="Question/Options"]
+margin_left = 846.228
+margin_top = 312.0
+margin_right = 1041.23
+margin_bottom = 402.0
+rect_pivot_offset = Vector2( 152.141, 45 )
+texture_normal = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionCText" type="Label" parent="Question/Options/OptionC"]
+margin_left = 22.0
+margin_top = 18.0
+margin_right = 173.0
+margin_bottom = 77.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionD" type="TextureButton" parent="Question/Options"]
+margin_left = 1190.54
+margin_top = 312.0
+margin_right = 1385.54
+margin_bottom = 402.0
+rect_pivot_offset = Vector2( 152.141, 45 )
+texture_normal = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionDText" type="Label" parent="Question/Options/OptionD"]
+margin_left = 22.0
+margin_top = 18.0
+margin_right = 173.0
+margin_bottom = 77.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="AnsMsg" type="TextureButton" parent="Question"]
-visible = false
 margin_left = 592.184
 margin_top = 442.409
 margin_right = 1059.18
@@ -217,7 +296,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnsMsgLabel" type="Label" parent="Question/AnsMsg"]
+[node name="AnsMsgText" type="Label" parent="Question/AnsMsg"]
 margin_left = 64.3181
 margin_top = 33.5457
 margin_right = 409.318
@@ -241,25 +320,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EndBossLabel" type="Label" parent="Question/EndBossMsg"]
-margin_left = 69.3635
-margin_top = 55.4089
-margin_right = 414.363
-margin_bottom = 121.409
+[node name="EndBossText" type="Label" parent="Question/EndBossMsg"]
+margin_left = 52.0
+margin_top = 56.0
+margin_right = 625.0
+margin_bottom = 122.0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 align = 1
 valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="NextButton" type="TextureButton" parent="Question"]
 pause_mode = 2
+visible = false
 margin_left = 863.361
-margin_top = 701.238
+margin_top = 656.238
 margin_right = 954.361
-margin_bottom = 774.238
+margin_bottom = 729.238
 rect_rotation = -180.0
 texture_normal = ExtResource( 10 )
 expand = true
@@ -267,14 +348,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="NextText" type="Label" parent="Question"]
+visible = false
+margin_left = 750.177
+margin_top = 650.235
+margin_right = 901.177
+margin_bottom = 709.235
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Next"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="AnsButton" type="TextureButton" parent="Question"]
 pause_mode = 2
-margin_left = 774.587
-margin_top = 621.299
-margin_right = 858.587
-margin_bottom = 706.299
+margin_left = 787.587
+margin_top = 610.299
+margin_right = 871.587
+margin_bottom = 695.299
 texture_normal = ExtResource( 8 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnsText" type="Label" parent="Question"]
+margin_left = 755.686
+margin_top = 678.191
+margin_right = 906.686
+margin_bottom = 737.191
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Solution"
+align = 1
+valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -307,6 +419,7 @@ __meta__ = {
 }
 
 [node name="BossLvlSolution" type="TextureButton" parent="."]
+visible = false
 margin_left = 165.5
 margin_top = 32.6818
 margin_right = 1715.5
@@ -317,22 +430,44 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BossSolutionLabel" type="Label" parent="BossLvlSolution"]
-margin_left = 575.3
-margin_top = 247.794
-margin_right = 920.299
-margin_bottom = 313.794
-custom_fonts/font = SubResource( 2 )
+[node name="BossSolutionText" type="Label" parent="BossLvlSolution"]
+margin_left = 124.0
+margin_top = 101.0
+margin_right = 1431.0
+margin_bottom = 510.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 align = 1
 valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Msg" type="Label" parent="BossLvlSolution"]
+margin_left = 114.0
+margin_top = 93.0
+margin_right = 554.0
+margin_bottom = 232.0
+rect_scale = Vector2( 3, 3 )
+valign = 1
+autowrap = true
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="monster_alive" type="Sprite" parent="."]
+position = Vector2( 1519.6, 836.195 )
+scale = Vector2( 0.312369, 0.311663 )
+texture = ExtResource( 16 )
+
+[node name="monster_dead" type="Sprite" parent="."]
+position = Vector2( 1520.6, 898.195 )
+scale = Vector2( 0.363333, 0.221153 )
+texture = ExtResource( 17 )
+
 [node name="GameOver" type="ColorRect" parent="."]
 pause_mode = 2
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.82837
@@ -345,7 +480,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GameOverLabel" type="Label" parent="GameOver"]
+[node name="GameOverText" type="Label" parent="GameOver"]
 pause_mode = 2
 anchor_left = 0.5
 anchor_top = 0.5
@@ -375,7 +510,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="QuitLabel" type="Label" parent="GameOver/QuitButton"]
+[node name="QuitText" type="Label" parent="GameOver/QuitButton"]
 pause_mode = 2
 anchor_left = 0.5
 anchor_top = 0.5
@@ -400,21 +535,21 @@ margin_left = 859.0
 margin_top = 601.0
 margin_right = 941.0
 margin_bottom = 682.0
-texture_normal = ExtResource( 10 )
+texture_normal = ExtResource( 9 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RetryLabel" type="Label" parent="GameOver/RetryButton"]
+[node name="RetryText" type="Label" parent="GameOver/RetryButton"]
 pause_mode = 2
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -60.9979
+margin_left = -67.4962
 margin_top = 46.7384
-margin_right = 70.0021
+margin_right = 63.5038
 margin_bottom = 85.7384
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -425,20 +560,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="monster_alive" type="Sprite" parent="."]
-position = Vector2( 1519.6, 836.195 )
-scale = Vector2( 0.312369, 0.311663 )
-texture = ExtResource( 16 )
-
-[node name="monster_dead" type="Sprite" parent="."]
-position = Vector2( 1520.6, 898.195 )
-scale = Vector2( 0.363333, 0.221153 )
-texture = ExtResource( 17 )
-
-[connection signal="pressed" from="Question/Options/Correct" to="." method="_on_Correct_pressed"]
-[connection signal="pressed" from="Question/Options/Wrong1" to="." method="_on_Wrong_pressed"]
-[connection signal="pressed" from="Question/Options/Wrong2" to="." method="_on_Wrong_pressed"]
-[connection signal="pressed" from="Question/Options/Wrong3" to="." method="_on_Wrong_pressed"]
+[connection signal="pressed" from="Question/Options/OptionA" to="." method="_on_OptionA_pressed"]
+[connection signal="pressed" from="Question/Options/OptionB" to="." method="_on_OptionB_pressed"]
+[connection signal="pressed" from="Question/Options/OptionC" to="." method="_on_OptionC_pressed"]
+[connection signal="pressed" from="Question/Options/OptionD" to="." method="_on_OptionD_pressed"]
 [connection signal="pressed" from="Question/NextButton" to="." method="_on_NextButton_pressed"]
 [connection signal="pressed" from="Question/AnsButton" to="." method="_on_AnsButton_pressed"]
 [connection signal="pressed" from="BossLvlDoorOpen" to="." method="_on_BossLvlDoorOpen_pressed"]

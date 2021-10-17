@@ -17,6 +17,7 @@ var qnOfLevel: Array
 var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 var normalLvlQn1 = preload("res://Game Play/Normal Level/NormalLevelQn1.tscn").instance()
 var normalLvlQn2 = preload("res://Game Play/Normal Level/NormalLevelQn2Updated.tscn").instance()
+var bossLvl = preload("res://Game Play/Boss Level/BossLevel.tscn").instance()
 
 func _ready():
 	$lvl1Stars/star1.hide()
@@ -97,8 +98,28 @@ func _on_BossLevelDoor_pressed():
 	var currentLoc
 	currentLoc = get_node("King").get_position()
 	GlobalArray.playerPosition = currentLoc
-	if GlobalArray.L1Door4:
-		get_tree().change_scene("res://Game Play/Boss Level/BossLevel.tscn")
+	
+	#get the current level
+	#nowAtLevel = yield(towerBackend.get_last_level_attempted("HjgDICIEdI4btnow8RP6", "numbers-tower"), "completed") + 1
+	nowAtLevel = 5 #need to change
+	if nowAtLevel < 10:
+		strNowAtLevel = "0" + String(nowAtLevel)
+	else:
+		strNowAtLevel = String(nowAtLevel)		
+	
+	#load qn from database
+	if GlobalArray.nowAtTower == "Numbers":
+		qnInDataBase = "numbers-" + strNowAtLevel
+	elif GlobalArray.nowAtTower == "Fraction":
+		qnInDataBase = "fraction-" + strNowAtLevel
+	elif GlobalArray.nowAtTower == "Ratio":
+		qnInDataBase = "ratio-" + strNowAtLevel
+	
+	#update & load the next scene 
+	qnOfLevel = yield(TowerBackend.get_questions_by_level(qnInDataBase),"completed")
+	GlobalArray.questionBank = qnOfLevel
+	bossLvl.init(qnOfLevel)
+	get_tree().change_scene("res://Game Play/Boss Level/BossLevel.tscn")
 
 func _star_Manager(ansArray):
 	print("here")
