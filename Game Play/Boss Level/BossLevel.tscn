@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=1]
 [ext_resource path="res://Game Play/Boss Level/BossLevel.gd" type="Script" id=2]
@@ -12,11 +12,19 @@
 [ext_resource path="res://sprites/buttons or icons/back button.png" type="Texture" id=10]
 [ext_resource path="res://Player/King.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Game Play/Boss Level/HeartBar.tscn" type="PackedScene" id=12]
-[ext_resource path="res://sprites/tower/closed  boss level door.png" type="Texture" id=13]
-[ext_resource path="res://sprites/tower/open boss level door.png" type="Texture" id=14]
+[ext_resource path="res://Game Play/Boss Level/BossLevelDoorOpen.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Game Play/Boss Level/BossLevelDoorClosed.tscn" type="PackedScene" id=14]
 [ext_resource path="res://sprites/buttons or icons/home icon.png" type="Texture" id=15]
 [ext_resource path="res://sprites/character/monster/monster_alive.png" type="Texture" id=16]
 [ext_resource path="res://sprites/character/monster/monster_dead.png" type="Texture" id=17]
+[ext_resource path="res://Player/Samurai.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Player/Archer.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Player/Huntress.tscn" type="PackedScene" id=20]
+[ext_resource path="res://sprites/buttons or icons/qn2 button.png" type="Texture" id=21]
+[ext_resource path="res://sprites/buttons or icons/qn3 button.png" type="Texture" id=22]
+[ext_resource path="res://sprites/buttons or icons/qn1 button.png" type="Texture" id=23]
+[ext_resource path="res://sprites/buttons or icons/qn4 button.png" type="Texture" id=24]
+[ext_resource path="res://sprites/buttons or icons/qn5 button.png" type="Texture" id=25]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31.4409, 144.539 )
@@ -27,16 +35,17 @@ size = 24
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 111.389, 127.707 )
-
 [node name="BossLevel" type="CanvasLayer"]
 script = ExtResource( 2 )
+King = ExtResource( 11 )
+Archer = ExtResource( 19 )
+Huntress = ExtResource( 20 )
+Samurai = ExtResource( 18 )
 
 [node name="TowerBackground" type="TextureRect" parent="."]
-margin_left = -1.49829
+margin_left = 1.07288e-06
 margin_top = 2.0
-margin_right = 1917.5
+margin_right = 1919.0
 margin_bottom = 1082.0
 rect_pivot_offset = Vector2( 660.767, 391.28 )
 texture = ExtResource( 1 )
@@ -89,7 +98,7 @@ position = Vector2( 1838.09, 954.826 )
 
 [node name="Barrier1" type="StaticBody2D" parent="TowerBackground"]
 pause_mode = 2
-position = Vector2( 1450.72, 337.887 )
+position = Vector2( 1684.71, 337.887 )
 
 [node name="Sprite" type="Sprite" parent="TowerBackground/Barrier1"]
 pause_mode = 2
@@ -104,7 +113,7 @@ shape = SubResource( 1 )
 
 [node name="Barrier2" type="StaticBody2D" parent="TowerBackground"]
 pause_mode = 2
-position = Vector2( 1450.72, 337.887 )
+position = Vector2( 1684.71, 337.887 )
 
 [node name="Sprite" type="Sprite" parent="TowerBackground/Barrier2"]
 pause_mode = 2
@@ -117,9 +126,20 @@ pause_mode = 2
 position = Vector2( -958.424, 438.513 )
 shape = SubResource( 1 )
 
-[node name="King" parent="." instance=ExtResource( 11 )]
+[node name="Barrier3" type="StaticBody2D" parent="TowerBackground"]
 pause_mode = 2
-position = Vector2( 545.232, 841.167 )
+position = Vector2( 807.083, 698.858 )
+
+[node name="Sprite" type="Sprite" parent="TowerBackground/Barrier3"]
+pause_mode = 2
+position = Vector2( -824.171, 447.085 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TowerBackground/Barrier3"]
+pause_mode = 2
+position = Vector2( -5.60803, 50.741 )
+rotation = 1.5708
+shape = SubResource( 1 )
 
 [node name="Timer" type="Label" parent="."]
 margin_left = 1674.0
@@ -133,9 +153,9 @@ __meta__ = {
 }
 
 [node name="HealthBar" parent="." instance=ExtResource( 12 )]
-margin_left = 485.728
+margin_left = 719.721
 margin_top = 679.182
-margin_right = 650.728
+margin_right = 884.721
 margin_bottom = 734.182
 
 [node name="Question" type="TextureRect" parent="."]
@@ -310,6 +330,7 @@ __meta__ = {
 }
 
 [node name="EndBossMsg" type="TextureButton" parent="Question"]
+visible = false
 margin_left = 482.273
 margin_top = 421.0
 margin_right = 1156.27
@@ -336,7 +357,6 @@ __meta__ = {
 
 [node name="NextButton" type="TextureButton" parent="Question"]
 pause_mode = 2
-visible = false
 margin_left = 863.361
 margin_top = 656.238
 margin_right = 954.361
@@ -349,7 +369,6 @@ __meta__ = {
 }
 
 [node name="NextText" type="Label" parent="Question"]
-visible = false
 margin_left = 750.177
 margin_top = 650.235
 margin_right = 901.177
@@ -366,6 +385,7 @@ __meta__ = {
 
 [node name="AnsButton" type="TextureButton" parent="Question"]
 pause_mode = 2
+visible = false
 margin_left = 787.587
 margin_top = 610.299
 margin_right = 871.587
@@ -377,6 +397,7 @@ __meta__ = {
 }
 
 [node name="AnsText" type="Label" parent="Question"]
+visible = false
 margin_left = 755.686
 margin_top = 678.191
 margin_right = 906.686
@@ -391,38 +412,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BossLvlDoorClosed" type="StaticBody2D" parent="."]
-pause_mode = 2
+[node name="BossLvlDoorClosed" parent="." instance=ExtResource( 14 )]
 position = Vector2( 1726.86, 826.163 )
-scale = Vector2( 0.7, 0.7 )
 
-[node name="Sprite" type="Sprite" parent="BossLvlDoorClosed"]
-pause_mode = 2
-position = Vector2( -26.9391, -20.8457 )
-texture = ExtResource( 13 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BossLvlDoorClosed"]
-pause_mode = 2
-position = Vector2( -18.9211, -30.4668 )
-shape = SubResource( 3 )
-
-[node name="BossLvlDoorOpen" type="TextureButton" parent="."]
-pause_mode = 2
-margin_left = 1602.0
-margin_top = 698.0
-margin_right = 1810.0
-margin_bottom = 936.0
-texture_normal = ExtResource( 14 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="BossLvlDoorOpen" parent="." instance=ExtResource( 13 )]
+position = Vector2( 1723.86, 829.163 )
 
 [node name="BossLvlSolution" type="TextureButton" parent="."]
-visible = false
-margin_left = 165.5
+margin_left = 166.13
 margin_top = 32.6818
-margin_right = 1715.5
+margin_right = 1716.13
 margin_bottom = 634.682
 texture_normal = ExtResource( 7 )
 expand = true
@@ -430,24 +429,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BossSolutionText" type="Label" parent="BossLvlSolution"]
-margin_left = 124.0
-margin_top = 101.0
-margin_right = 1431.0
-margin_bottom = 510.0
+[node name="QnNumExplanation" type="Label" parent="BossLvlSolution"]
+margin_left = 579.0
+margin_top = 97.0
+margin_right = 983.0
+margin_bottom = 156.0
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
-align = 1
 valign = 1
-autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Msg" type="Label" parent="BossLvlSolution"]
-margin_left = 114.0
-margin_top = 93.0
-margin_right = 554.0
-margin_bottom = 232.0
+[node name="BossSolutionText" type="Label" parent="BossLvlSolution"]
+margin_left = 122.0
+margin_top = 104.0
+margin_right = 560.0
+margin_bottom = 223.0
 rect_scale = Vector2( 3, 3 )
 valign = 1
 autowrap = true
@@ -456,18 +454,59 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Qn1Explanation" type="TextureButton" parent="BossLvlSolution"]
+margin_left = 248.498
+margin_top = 476.089
+margin_right = 548.498
+margin_bottom = 816.089
+rect_scale = Vector2( 0.2, 0.2 )
+texture_normal = ExtResource( 23 )
+
+[node name="Qn2Explanation" type="TextureButton" parent="BossLvlSolution"]
+margin_left = 326.498
+margin_top = 471.089
+margin_right = 626.498
+margin_bottom = 856.089
+rect_scale = Vector2( 0.2, 0.2 )
+texture_normal = ExtResource( 21 )
+
+[node name="Qn3Explanation" type="TextureButton" parent="BossLvlSolution"]
+margin_left = 393.498
+margin_top = 471.089
+margin_right = 693.498
+margin_bottom = 835.089
+rect_scale = Vector2( 0.2, 0.2 )
+texture_normal = ExtResource( 22 )
+
+[node name="Qn4Explanation" type="TextureButton" parent="BossLvlSolution"]
+margin_left = 459.498
+margin_top = 466.089
+margin_right = 759.498
+margin_bottom = 858.089
+rect_scale = Vector2( 0.2, 0.2 )
+texture_normal = ExtResource( 24 )
+
+[node name="Qn5Explanation" type="TextureButton" parent="BossLvlSolution"]
+margin_left = 527.498
+margin_top = 471.089
+margin_right = 827.498
+margin_bottom = 856.089
+rect_scale = Vector2( 0.2, 0.2 )
+texture_normal = ExtResource( 25 )
+
 [node name="monster_alive" type="Sprite" parent="."]
-position = Vector2( 1519.6, 836.195 )
+position = Vector2( 958.135, 842.188 )
 scale = Vector2( 0.312369, 0.311663 )
 texture = ExtResource( 16 )
 
 [node name="monster_dead" type="Sprite" parent="."]
-position = Vector2( 1520.6, 898.195 )
+position = Vector2( 959.135, 886.208 )
 scale = Vector2( 0.363333, 0.221153 )
 texture = ExtResource( 17 )
 
 [node name="GameOver" type="ColorRect" parent="."]
 pause_mode = 2
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.82837
@@ -566,6 +605,10 @@ __meta__ = {
 [connection signal="pressed" from="Question/Options/OptionD" to="." method="_on_OptionD_pressed"]
 [connection signal="pressed" from="Question/NextButton" to="." method="_on_NextButton_pressed"]
 [connection signal="pressed" from="Question/AnsButton" to="." method="_on_AnsButton_pressed"]
-[connection signal="pressed" from="BossLvlDoorOpen" to="." method="_on_BossLvlDoorOpen_pressed"]
+[connection signal="pressed" from="BossLvlSolution/Qn1Explanation" to="." method="_on_Qn1Explanation_pressed"]
+[connection signal="pressed" from="BossLvlSolution/Qn2Explanation" to="." method="_on_Qn2Explanation_pressed"]
+[connection signal="pressed" from="BossLvlSolution/Qn3Explanation" to="." method="_on_Qn3Explanation_pressed"]
+[connection signal="pressed" from="BossLvlSolution/Qn4Explanation" to="." method="_on_Qn4Explanation_pressed"]
+[connection signal="pressed" from="BossLvlSolution/Qn5Explanation" to="." method="_on_Qn5Explanation_pressed"]
 [connection signal="pressed" from="GameOver/QuitButton" to="." method="_on_QuitButton_pressed"]
 [connection signal="pressed" from="GameOver/RetryButton" to="." method="_on_RetryButton_pressed"]
