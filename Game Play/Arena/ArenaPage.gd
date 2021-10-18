@@ -8,6 +8,8 @@ var duration
 var character
 var questions
 
+var timer_started: bool = false
+
 
 export (PackedScene) var King
 export (PackedScene) var Archer
@@ -67,11 +69,12 @@ func _ready():
 		questions = quiz['questions']
 		duration = quiz['levelDuration']
 		var currAttempts = yield(QuizBackend.check_max_attempt_reached(Globals.currUser.userId, id), "completed") # this fxn is not working
-#		if currAttempts:
-#			$Popup.show() 
+		if currAttempts:
+			$Popup.show() 
 			
 	$Timer.set_wait_time(duration)
 	$Timer.start()
+	timer_started = true
 	$TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Timer.time_left / 60), int($Timer.time_left) % 60]
 	print(questions)
 	for i in range(questions.size()):
@@ -136,7 +139,7 @@ func _process(delta):
 	$TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Timer.time_left / 60), int($Timer.time_left) % 60]
 	
 	# terminate game when time's up
-	if $Timer.time_left <= 0:
+	if timer_started and ($Timer.time_left <= 0):
 		if arenaType == 'quiz':
 			var attempt_record = {}
 			for i in range(Globals.attempt.size()):
