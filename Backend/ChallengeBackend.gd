@@ -50,42 +50,50 @@ func get_qns_from_levelIds(levelIds):
 	
 	var query_task : FirestoreTask = Firebase.Firestore.query(query)
 	var result = yield(query_task, 'task_finished')
-	var qnIds = []
-	for qn in result:
-		qnIds.append(qn.doc_name)
-	return qnIds
+	var questions = []
+	for question in result:
+		question = question.doc_fields
+		var q = {
+			'questionBody' : question.questionBody,
+			'questionExplanation' : question.questionExplanation,
+			'questionOptions' : question.questionOptions,
+			'questionSoln' : question.questionSoln
+		}
+		questions.append(q)
+	#print(questions)
+	return questions
 
 # Returns a list of 10 question Id that belongs to that topic
-func getRandomQuestionId(topic):
+func getRandomQuestions(topic):
 	var towerId = yield(get_towerid_by_topic(topic), 'completed')
 	var levelIds = yield(get_levelIds_of_tower(towerId), 'completed')
-	var questionIds = yield(get_qns_from_levelIds(levelIds), 'completed')
+	var questions = yield(get_qns_from_levelIds(levelIds), 'completed')
 	
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var random = []
 	while(len(random)< 10):
-		var number = rng.randi_range(0, len(questionIds)-1)
+		var number = rng.randi_range(0, len(questions)-1)
 		if (number in random):
 			pass
 		else:
 			random.append(number)
-	var randomed_qn_ids = [] 
+	var randomed_qns = [] 
 	for i in random:
-		randomed_qn_ids.append(questionIds[i])
-	return randomed_qn_ids
+		randomed_qns.append(questions[i])
+	return randomed_qns
 
 #Pass in topic name
 func _on_Get_10_Random_Qns_button_up():
 	var topic = 'numbers' # Example topic name
 	
-	var challenge_questions = yield(getRandomQuestionId(topic), 'completed')
-	print(challenge_questions)
+	var challenge_questions = yield(getRandomQuestions(topic), 'completed')
+	#print(challenge_questions)
 
 
 # Initial creation of challenge. Takes in the challenge topic, challenger_id and challengee_id
 func createChallenge(topic, challenger_id, challengee_id):
-	var challenge_questions = yield(getRandomQuestionId(topic), 'completed')
+	var challenge_questions = yield(getRandomQuestions(topic), 'completed')
 	
 	var challengeDetails = {
 		'questionList' : challenge_questions,
@@ -98,7 +106,8 @@ func createChallenge(topic, challenger_id, challengee_id):
 	
 	task = collection.add("", challengeDetails)
 	var challengeID = yield(task, "task_finished")
-	challengeID = challengeID.doc_name
+	print(challengeID)
+	#challengeID = challengeID.doc_name
 	
 	var challengee_collection : FirestoreCollection = Firebase.Firestore.collection('Challengee_Record')
 	
