@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/calendar_button/scripts/calendar_buttons.gd"
 }, {
+"base": "CanvasLayer",
+"class": "ChallengeBackend",
+"language": "GDScript",
+"path": "res://Backend/ChallengeBackend.gd"
+}, {
 "base": "Control",
 "class": "ClassBackend",
 "language": "GDScript",
@@ -234,6 +239,7 @@ _global_script_class_icons={
 "AuthBackend": "",
 "Calendar": "",
 "CalendarButtons": "",
+"ChallengeBackend": "",
 "ClassBackend": "",
 "ClassDocItem": "",
 "ConstantDocItem": "",

@@ -25,6 +25,7 @@ func _on_ContinueButton_pressed():
 	password = $PasswordInput.text
 	cfm_password = $ConfirmPasswordInput.text
 	email = $EmailInput.text
+	print(classIndex)
 	
 	if password == cfm_password:
 		# navigate to character selectiom page
