@@ -264,11 +264,14 @@ static func _check_first_attempt_exists(student_id: String, question_id: String)
 	Returns:
 		bool: True if student has attempted the question, false otherwise.
 	"""
-	var collection: FirestoreCollection = Firebase.Firestore.collection("Question_Attempt")
-	var attempt_id: String = "%s-%s-first" % [student_id, question_id]
-	var task = collection.get(attempt_id)
+	var query: FirestoreQuery = FirestoreQuery.new()
+	query.from("Question_Attempt")
+	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id, FirestoreQuery.OPERATOR.AND)
+	query.where("questionID", FirestoreQuery.OPERATOR.EQUAL, question_id, FirestoreQuery.OPERATOR.AND)
+	query.where("type", FirestoreQuery.OPERATOR.EQUAL, "first")
+	var task = Firebase.Firestore.query(query)
 	var result = yield(task, "task_finished")
-	if result is FirestoreDocument:
+	if result:
 		return true
 	else:
 		return false
@@ -285,16 +288,19 @@ static func _check_is_best_attempt(old_best_attempts: Array, new_best_attempts: 
 		bool: True if the new attempts are better than the existing ones, false otherwise.
 		
 	"""
-	# Calculate scores and timings
+	# Calculate old score and timing
 	var old_score: int = 0
-	var new_score: int = 0
 	var old_timing: int = 0
+	for attempt in old_best_attempts:
+		old_score += int(attempt["correct"])
+		old_timing += attempt["duration"]
+	
+	# calculate new score and timing
+	var new_score: int = 0
 	var new_timing: int = 0
-	for i in range(old_best_attempts.size()):
-		old_score += int(old_best_attempts[i]["correct"])
-		new_score += int(new_best_attempts[i]["correct"])
-		old_timing += old_best_attempts[i]["duration"]
-		new_timing += new_best_attempts[i]["duration"]
+	for attempt in new_best_attempts:
+		new_score += int(attempt["correct"])
+		new_timing += attempt["duration"]
 	
 	# Determine if new attempts are better than old attempts
 	if old_score > new_score:
@@ -365,10 +371,24 @@ static func get_correct_for_tower_by_student(student_id: String, tower_id: Strin
 	# get attempts
 	var correct_nos: Array = []
 	for level_id in level_ids:
+		var attempt_docs: Array = yield(_query_level_attempts(student_id, level_id, "best"), "completed")
+		
+		# if reached highest level attempted, break out of loop
+		if not attempt_docs:
+			break
+		
+		level_ids.erase(level_id)
+		
 		# count number of correct for level
-		var attempt_docs: Array = yield(_query_level_attempts(student_id, level_id, "best", true), "completed")
-		var correct_no: int = attempt_docs.size()
+		var correct_no: int = 0
+		for attempt_doc in attempt_docs:
+			if attempt_doc.doc_fields["correct"]:
+				correct_no += 1
 		correct_nos.append(correct_no)
+	
+	# add zeros for non-attempted levels
+	for level_id in level_ids:
+		correct_nos.append(0)
 	
 	return correct_nos
 
@@ -379,10 +399,10 @@ func _on_Get_level_attempt_button_up():
 
 
 func _on_sumbit_attempt_button_up():
-	var attempt1: Dictionary = {"questionID": "numbers-02-1", "duration": 340, "correct": true}
-	var attempt2: Dictionary = {"questionID": "numbers-02-2", "duration": 102, "correct": true}
-	var attempt3: Dictionary = {"questionID": "numbers-02-3", "duration": 100, "correct": true}
-	var output = submit_attempt("XKwVQ9EqJ7xjEhHoPr0A", [attempt1, attempt2, attempt3])
+	var attempt1: Dictionary = {"questionID": "numbers-04-1", "duration": 100, "correct": true}
+	var attempt2: Dictionary = {"questionID": "numbers-04-2", "duration": 102, "correct": true}
+	var attempt3: Dictionary = {"questionID": "numbers-04-3", "duration": 100, "correct": true}
+	var output = submit_attempt("NjKMDRdI7Ih9SF3TDxr1zRimtZH2", [attempt1, attempt2, attempt3])
 	yield(output, "completed")
 	print("submit_attempts() completed")
 
@@ -390,9 +410,9 @@ func _on_sumbit_attempt_button_up():
 
 func _on_test_button_button_up():
 	print(OS.get_datetime())
-	var output = yield(get_correct_for_tower_by_student("iZKcmDRrSdc0zn8vU6ZnxaEpPGH2", "numbers-tower"), "completed")
-	print(OS.get_datetime())
+	var output = yield(get_correct_for_tower_by_student("XKwVQ9EqJ7xjEhHoPr0A", "numbers-tower"), "completed")
 	print(output)
+	print(OS.get_datetime())
 	
 
 func _on_login_button_up():
