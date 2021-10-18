@@ -393,6 +393,69 @@ static func get_correct_for_tower_by_student(student_id: String, tower_id: Strin
 	return correct_nos
 
 
+static func get_level_display_info(student_id: String, tower_id: String) -> Dictionary:
+	""" Get the data needed for the level selection page.
+	
+	Args:
+		student_id (String): Student's user ID.
+		tower_id (String): Tower ID.
+		
+	Returns:
+		Dictionary: The data needed for the page. The dictionary includes:
+			"last_level" (int): the last level attempted by the student in the tower
+			"correct_nos" (Array[int]): Array of ints representing the number of questions that the student got correct for each level.
+	
+	"""
+	# get number of levels
+	var query: FirestoreQuery = FirestoreQuery.new()
+	query.from("Level")
+	query.where("towerID", FirestoreQuery.OPERATOR.EQUAL, tower_id)
+	query.order_by("level")
+	var task: FirestoreTask = Firebase.Firestore.query(query)
+	var docs: Array = yield(task, "task_finished")
+	var total_levels: int = docs.size()
+	
+	# get attempt docs
+	query = FirestoreQuery.new()
+	query.from("Question_Attempt", false)
+	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id, FirestoreQuery.OPERATOR.AND)
+	query.where("towerID", FirestoreQuery.OPERATOR.EQUAL, tower_id, FirestoreQuery.OPERATOR.AND)
+	query.where("type", FirestoreQuery.OPERATOR.EQUAL, "best")
+	task = Firebase.Firestore.query(query)
+	docs = yield(task, "task_finished")
+	
+	var curr_level: int = 1
+	var curr_score: int = 0
+	var correct_nos: Array = []
+	for doc in docs:
+		var qn_id: String = doc.doc_fields["questionID"]
+		var level_no: int = int(qn_id.substr(qn_id.length()-4, 2))
+		
+		# still on the same level, increment score
+		if curr_level == level_no:
+			curr_score += int(doc.doc_fields["correct"])
+		
+		# on a new level, store previous score and change curr_level
+		else:
+			# store previous score
+			correct_nos.append(curr_score)
+			# restart score
+			curr_score = int(doc.doc_fields["correct"])
+			# chane curr_level to new level
+			curr_level = level_no
+	correct_nos.append(curr_score)
+	
+	# append zeros to correct_nos for levels that were not attempted
+	for i in range(curr_level, total_levels):
+		correct_nos.append(0)
+	
+	# return last level attempted and list of correct numbers
+	return {
+		"last_level": curr_level,
+		"correct_nos": correct_nos
+	}
+
+
 func _on_Get_level_attempt_button_up():
 	var output = yield(get_level_attempt("test-student1", "numbers-01", "first"), "completed")
 	print(output)
@@ -410,7 +473,7 @@ func _on_sumbit_attempt_button_up():
 
 func _on_test_button_button_up():
 	print(OS.get_datetime())
-	var output = yield(get_correct_for_tower_by_student("XKwVQ9EqJ7xjEhHoPr0A", "numbers-tower"), "completed")
+	var output = yield(get_level_display_info("NjKMDRdI7Ih9SF3TDxr1zRimtZH2", "numbers-tower"), "completed")
 	print(output)
 	print(OS.get_datetime())
 	
