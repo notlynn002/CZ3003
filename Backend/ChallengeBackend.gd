@@ -1,11 +1,13 @@
 extends CanvasLayer
 
+class_name ChallengeBackend
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
-func getChallengeByID(challengeID):
+static func getChallengeByID(challengeID):
 	var collection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
 	collection.get(challengeID)	
 	var challenge : FirestoreDocument = yield(collection, "get_document")
@@ -19,7 +21,7 @@ func _on_Get_Challenge_by_Id_button_up():
 
 # ------------ Get Random questions and Create Challenge --------------------
 
-func get_towerid_by_topic(topic):
+static func get_towerid_by_topic(topic):
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Tower')
 	query.where('topic', FirestoreQuery.OPERATOR.EQUAL, topic)
@@ -30,7 +32,7 @@ func get_towerid_by_topic(topic):
 	var result = towerId[0].doc_name
 	return result
 	
-func get_levelIds_of_tower(towerId):
+static func get_levelIds_of_tower(towerId):
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Level')
 	query.where('towerID', FirestoreQuery.OPERATOR.EQUAL, towerId)
@@ -43,7 +45,7 @@ func get_levelIds_of_tower(towerId):
 	return levelIds
 
 
-func get_qns_from_levelIds(levelIds):
+static func get_qns_from_levelIds(levelIds):
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Question')
 	query.where('levelID', FirestoreQuery.OPERATOR.IN, levelIds)
@@ -64,7 +66,7 @@ func get_qns_from_levelIds(levelIds):
 	return questions
 
 # Returns a list of 10 question Id that belongs to that topic
-func getRandomQuestions(topic):
+static func getRandomQuestions(topic):
 	var towerId = yield(get_towerid_by_topic(topic), 'completed')
 	var levelIds = yield(get_levelIds_of_tower(towerId), 'completed')
 	var questions = yield(get_qns_from_levelIds(levelIds), 'completed')
@@ -92,7 +94,7 @@ func _on_Get_10_Random_Qns_button_up():
 
 
 # Initial creation of challenge. Takes in the challenge topic, challenger_id and challengee_id
-func createChallenge(topic, challenger_id, challengee_id):
+static func createChallenge(topic, challenger_id, challengee_id):
 	var challenge_questions = yield(getRandomQuestions(topic), 'completed')
 	
 	var challengeDetails = {
@@ -129,7 +131,7 @@ func _on_Create_Challenge_button_up():
 
 
 # Updates the result for a challenge. 
-func updateChallengeResult(challengeId, score, time, userId):
+static func updateChallengeResult(challengeId, score, time, userId):
 	var challenge = yield(getChallengeByID(challengeId), 'completed')
 	
 	var task: FirestoreTask
@@ -166,7 +168,7 @@ func _on_Update_Challenge_Result_button_up():
 
 
 #------------ Reject Challenge----------------
-func rejectChallenge(challengeId, challengeeID):
+static func rejectChallenge(challengeId, challengeeID):
 	var collection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
 	collection.get(challengeId)	
 	var challenge :FirestoreDocument = yield(collection, "get_document")
@@ -205,7 +207,7 @@ func _on_Reject_Challenge_button_up():
 	
 #------------ Get Challenge Result ----------------
 	
-func getChallengeResult(challengeID, challengeeID):
+static func getChallengeResult(challengeID, challengeeID):
 	
 	var user_collection : FirestoreCollection = Firebase.Firestore.collection('User')
 	
