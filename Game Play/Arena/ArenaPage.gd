@@ -80,22 +80,22 @@ func _ready():
 		qn.init(str(i+1), questions[i]['questionBody'])
 		
 		var ans1 = Answer.instance()
-		ans1.init(questions[i]['questionID'], questions[i]['questionOptions'][0], true)
+		ans1.init(questions[i]['questionID'], questions[i]['questionOptions'][0], questions[i]['questionSoln'])
 		ans1.position.x = 60
 		ans1.position.y = 450
 		
 		var ans2 = Answer.instance()
-		ans2.init(questions[i]['questionID'], questions[i]['questionOptions'][1], false)
+		ans2.init(questions[i]['questionID'], questions[i]['questionOptions'][1], questions[i]['questionSoln'])
 		ans2.position.x = 550
 		ans2.position.y = 450
 		
 		var ans3 = Answer.instance()
-		ans3.init(questions[i]['questionID'], questions[i]['questionOptions'][2], false)
+		ans3.init(questions[i]['questionID'], questions[i]['questionOptions'][2], questions[i]['questionSoln'])
 		ans3.position.x = 1030
 		ans3.position.y = 450
 		
 		var ans4 = Answer.instance()
-		ans4.init(questions[i]['questionID'], questions[i]['questionOptions'][3], false)
+		ans4.init(questions[i]['questionID'], questions[i]['questionOptions'][3], questions[i]['questionSoln'])
 		ans4.position.x = 1550
 		ans4.position.y = 450
 		
@@ -118,6 +118,8 @@ func _ready():
 		var attempt_record = {}
 		for i in range(Globals.attempt.size()):
 			attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
+			
+		print(attempt_record)
 			
 		submit_quiz_attempt(Globals.currUser.userId, id, time_left, attempt_record)
 	elif arenaType == 'challenge':

@@ -39,6 +39,3 @@ func _on_MuteButton_pressed():
 	$SoundButton.show() # display sound on icon
 	
 
-
-func _on_CloseButton_pressed():
-	pass # Replace with function body.
