@@ -25,9 +25,9 @@ static func get_notification_for_user(user_id):
 	
 
 func _on_Get_Notifications_for_User_button_up():
-	var userID = 'HjgDICIEdI4btnow8RP6'
+	var userID = 'XKwVQ9EqJ7xjEhHoPr0A'
 	var all_notifications = yield(get_notification_for_user(userID), 'completed')
-	#print(all_notifications)
+	print(all_notifications)
 
 # For sending notifications to students when new quiz is created
 static func send_quiz_notification_to_students(classId, quizId):
@@ -37,28 +37,26 @@ static func send_quiz_notification_to_students(classId, quizId):
 	classQuery.where('classId', FirestoreQuery.OPERATOR.EQUAL, classId)
 	var task : FirestoreTask = Firebase.Firestore.query(classQuery)
 	var studentList = yield(task, 'task_finished')
-	print(studentList)
 	
 	var studentIDs = []
-	#for student in studentList:
-	#	studentIDs.append(student.doc_name)
-	#print(studentIDs)
-		
+	for student in studentList:
+		studentIDs.append(student.doc_name)
+	
 	var notification = {
 		'message' : 'You have been assigned a new quiz!',
 		'notificationType' : 'new quiz',
-		'creationDateTime' : OS.get_datetime() # gets current datetime in datetime dict format 
-		
+		'creationDateTime' : OS.get_datetime(), # gets current datetime in datetime dict format 
+		'dataID' : quizId
 	}
-	#Need find out how quiz is stored. Do we store the LevelId as dataID?
 	
-	#var task: FirestoreTask
-	#var collection : FirestoreCollection = Firebase.Firestore.collection('Notification')
+	for student in studentIDs:
+		var notificationTask : FirestoreTask
+		var notificationCollection : FirestoreCollection = Firebase.Firestore.collection('Notification')
+		notification['receiverID'] = student
+		notificationTask = notificationCollection.add("", notification)
+		yield(notificationTask, "task_finished")
 	
-	#for studentId in studentIdList:
-	#	notification['receiverID'] = studentId
-	#	task = collection.add("", notification)
-	#	yield(task, "task_finished")
+	print('Notifications sent to students!')
 
 func _on_New_Quiz_Notification_button_up():
 	var classId = 'dummyClass'
