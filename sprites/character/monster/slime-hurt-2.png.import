@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/slime-hurt-2.png-e58b63ba08e04bda4b821520bc53f9e2.stex"
+path="res://.import/slime-hurt-2.png-264451d7be1e5ba43ca790857d599f9b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/monster/slime-hurt-2.png"
-dest_files=[ "res://.import/slime-hurt-2.png-e58b63ba08e04bda4b821520bc53f9e2.stex" ]
+source_file="res://sprites/character/monster/slime-hurt-2.png"
+dest_files=[ "res://.import/slime-hurt-2.png-264451d7be1e5ba43ca790857d599f9b.stex" ]
 
 [params]
 

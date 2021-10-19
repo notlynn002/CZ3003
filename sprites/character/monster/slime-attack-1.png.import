@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/slime-attack-1.png-24117edc9ccfad0f1ebfd0e2e092c080.stex"
+path="res://.import/slime-attack-1.png-e35a3e8d4c710d0783b623e007f8acdd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/monster/slime-attack-1.png"
-dest_files=[ "res://.import/slime-attack-1.png-24117edc9ccfad0f1ebfd0e2e092c080.stex" ]
+source_file="res://sprites/character/monster/slime-attack-1.png"
+dest_files=[ "res://.import/slime-attack-1.png-e35a3e8d4c710d0783b623e007f8acdd.stex" ]
 
 [params]
 

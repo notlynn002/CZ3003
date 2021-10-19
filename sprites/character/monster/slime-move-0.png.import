@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/slime-move-0.png-6b3a3f136d5fb13b09c02844729afad4.stex"
+path="res://.import/slime-move-0.png-7dce8eeca2df212ba4bd3a9cc38a9781.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/monster/slime-move-0.png"
-dest_files=[ "res://.import/slime-move-0.png-6b3a3f136d5fb13b09c02844729afad4.stex" ]
+source_file="res://sprites/character/monster/slime-move-0.png"
+dest_files=[ "res://.import/slime-move-0.png-7dce8eeca2df212ba4bd3a9cc38a9781.stex" ]
 
 [params]
 

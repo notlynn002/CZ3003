@@ -2,7 +2,6 @@ extends CanvasLayer
 
 class_name ChallengeBackend
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -108,14 +107,19 @@ static func createChallenge(topic, challenger_id, challengee_id):
 	
 	task = collection.add("", challengeDetails)
 	var challengeID = yield(task, "task_finished")
-	print(challengeID)
-	#challengeID = challengeID.doc_name
+	challengeID = challengeID.doc_name
 	
 	var challengee_collection : FirestoreCollection = Firebase.Firestore.collection('Challengee_Record')
 	
+	var challengee_record ={
+			"challengeID" : challengeID, 
+			"challengeStatus": 'sent', 
+		}
 	# Create Challengee Records for each of the challengees
 	for challengee in challengee_id:
-		var add_challengee_record : FirestoreTask = challengee_collection.add("", {"challengeID" : challengeID, "challengeStatus": 'sent', "challengeeID":challengee})
+		challengee_record["challengeeID"] = challengee
+		
+		var add_challengee_record : FirestoreTask = challengee_collection.add("", challengee_record)
 		yield(add_challengee_record, "task_finished")
 	
 	return challengeID
@@ -123,11 +127,12 @@ static func createChallenge(topic, challenger_id, challengee_id):
 func _on_Create_Challenge_button_up():
 	# Example inputs
 	var topic = 'numbers' 
-	var challenger_id = 'XKwVQ9EqJ7xjEhHoPr0A'
-	var challengee_id = ['P8zkYTNczGZcwLMnkbQBJsscBNp1']
+	var challenger_id = '6IJC8LDr4KeEHHzyZi9iypVpnga2'
+	var challengee_id = ['XKwVQ9EqJ7xjEhHoPr0A']
 	
 	# Calling of function
-	yield(createChallenge(topic, challenger_id, challengee_id), 'completed')
+	var challengeId = yield(createChallenge(topic, challenger_id, challengee_id), 'completed')
+	print(challengeId)
 
 
 # Updates the result for a challenge. 
@@ -160,11 +165,13 @@ static func updateChallengeResult(challengeId, score, time, userId):
 	print('Record Updated!')
 
 func _on_Update_Challenge_Result_button_up():
-	var challengeId = 'KdsBS2748cPpgyxkP532'
-	var userId = 'P8zkYTNczGZcwLMnkbQBJsscBNp1'
-	var score = 3
-	var time = 170
-	updateChallengeResult(challengeId, score, time, userId)
+	var challengeId = 'b4JIPytaqNSsDVukEUEi'
+	var challengerId = '6IJC8LDr4KeEHHzyZi9iypVpnga2'
+	var challengeeId = 'XKwVQ9EqJ7xjEhHoPr0A'
+	var score = 6
+	var time = 150
+	
+	updateChallengeResult(challengeId, score, time, challengerId)
 
 
 #------------ Reject Challenge----------------
