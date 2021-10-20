@@ -42,18 +42,52 @@ func _on_Filter_for_Challenge_Notifications_button_up():
 	var challengeNotifications = filterChallengeNotification(all_notifications)
 	print(challengeNotifications)
 	
-# For sending notifications to students when new quiz is created
-static func send_quiz_notification_to_students(classId, quizId):
-	# Get all students in a class
+static func getStudentsFromClass(classId):
 	var classQuery : FirestoreQuery = FirestoreQuery.new()
 	classQuery.from('User')
 	classQuery.where('classId', FirestoreQuery.OPERATOR.EQUAL, classId)
 	var task : FirestoreTask = Firebase.Firestore.query(classQuery)
 	var studentList = yield(task, 'task_finished')
 	
-	var studentIDs = []
+	var final_students = []
+	
 	for student in studentList:
-		studentIDs.append(student.doc_name)
+		var info = {
+			'studentId' : student.doc_name,
+			'studentName' : student.doc_fields.name
+		}
+		final_students.append(info)
+	
+	return final_students
+	
+func _on_Get_Students_of_Class_button_up():
+	var classId = 'dummyClass'
+	var students = yield(getStudentsFromClass(classId), 'completed')
+	print(students)
+	
+static func getUserClassmates(userId):
+	var userCollection : FirestoreCollection = Firebase.Firestore.collection('User')
+	userCollection.get(userId)
+	var user : FirestoreDocument = yield(userCollection, 'get_document')
+	
+	var userClass = user.doc_fields.classId
+	
+	var students = yield(getStudentsFromClass(userClass), 'completed')
+	var classmates = []
+	for student in students:
+		if (student.studentId != userId):
+			classmates.append(student)
+	return classmates
+	
+func _on_Get_Classmate_of_User_button_up():
+	var uid = 'P8zkYTNczGZcwLMnkbQBJsscBNp1'
+	var classmates = yield(getUserClassmates(uid), 'completed')
+	print(classmates)
+	
+# For sending notifications to students when new quiz is created
+static func send_quiz_notification_to_students(classId, quizId):
+	# Get all students in a class
+	var studentList = yield(getStudentsFromClass(classId), 'completed')
 	
 	var notification = {
 		'message' : 'You have been assigned a new quiz!',
@@ -62,10 +96,10 @@ static func send_quiz_notification_to_students(classId, quizId):
 		'dataID' : quizId
 	}
 	
-	for student in studentIDs:
+	for student in studentList:
 		var notificationTask : FirestoreTask
 		var notificationCollection : FirestoreCollection = Firebase.Firestore.collection('Notification')
-		notification['receiverID'] = student
+		notification['receiverID'] = student.studentId
 		notificationTask = notificationCollection.add("", notification)
 		yield(notificationTask, "task_finished")
 	
@@ -207,5 +241,9 @@ static func sendChallengeNotification(challengeID):
 func _on_Send_challenge_notification_button_up():
 	var challengeId = 'b4JIPytaqNSsDVukEUEi'
 	sendChallengeNotification(challengeId)
+
+
+
+
 
 
