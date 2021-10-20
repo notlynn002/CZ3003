@@ -137,7 +137,8 @@ static func send_challenge_completed_notification(challengeID, challengeeId):
 		'receiverID' : challengerID,
 		'dataID' : {
 			'challengeID' : challengeID,
-			'challengeeID' : challengeeId
+			'challengeeID' : challengeeId,
+			'challengerID' : challengerID
 		}
 	}
 	
