@@ -29,7 +29,7 @@ func init(stuID, arenaID, type):
 # Called when the node enters the scene tree for the first time.
 func _ready(): 
 	$ScorePopup.hide()
-	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
+#	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
 	
 	if arenaType == 'challenge':
 		challenge = yield(ChallengeBackend.getChallengeByID(id), "completed")
@@ -83,7 +83,7 @@ func _ready():
 	$Background/Timer.start()
 	timer_started = true
 	$Background/TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Background/Timer.time_left / 60), int($Background/Timer.time_left) % 60]
-	print(questions)
+	
 	for i in range(questions.size()):
 		var qn = Question.instance()
 		qn.init(str(i+1), questions[i]['questionBody'])
@@ -127,24 +127,29 @@ func _ready():
 	var time_left = $Background/Timer.time_left
 	var time_taken = int((duration-time_left))
 	$Background/Timer.stop()
-	# check type & see if is quiz or challenge
-	# save score and time to corresponsing db
-	# navigate to home page
-	if arenaType == 'quiz':
-		var attempt_record = {}
-		for i in range(Globals.attempt.size()):
-			attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
-		yield(QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, time_taken, attempt_record), "completed")
-		print(attempt_record)
-
-	elif arenaType == 'challenge':
-		print(time_taken)
-		# can display score before navigating back
-		ChallengeBackend.updateChallengeResult(id, Globals.score, time_taken, Globals.currUser.userId)
 	
 	$ScorePopup/ScoreLabel.text = 'Score: ' + str(Globals.score) + '/' + str(len(questions))
 	$ScorePopup/TimeLabel.text = 'Timing: ' + "%d:%02d" % [floor((duration-time_left) / 60), int((duration-time_left)) % 60]
 	$ScorePopup.show()
+	
+	# check type & see if is quiz or challenge
+	# save score and time to corresponsing db
+	# navigate to home page
+	if not attempt_submitted:
+		if arenaType == 'quiz':
+			
+			var attempt_record = {}
+			for i in range(Globals.attempt.size()):
+				attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
+			QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, time_taken, attempt_record)
+			attempt_submitted = true
+	#		print(attempt_record)
+
+		elif arenaType == 'challenge':
+			print("time_taken: " + str(time_taken))
+			# can display score before navigating back
+			ChallengeBackend.updateChallengeResult(id, Globals.score, time_taken, Globals.currUser.userId)
+			attempt_submitted = true
 	
 	
 # warning-ignore:unused_argument

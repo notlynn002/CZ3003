@@ -151,9 +151,12 @@ func _on_PublishNowButton_pressed():
 	quizName = $QuizNameInput.text
 	var duration = quizDurationHour*3600 + quizDurationMin*60
 	var qns = Globals.get('quizQuestions')
-	yield(QuizBackend.create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns), "completed")
+	var quizID = yield(QuizBackend.create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns), "completed")
 	print("publish now")
 	print(qns)
+	print(selectedClasses)
+	for c in selectedClasses:
+		NotificationsBackend.send_quiz_notification_to_students(c, quizID)
 	self.queue_free()
 	get_node('/root/QuizCreationPage').queue_free()
 
@@ -171,8 +174,9 @@ func _on_ScheduleButton_pressed():
 	print(publishingDateTime)
 	print(qns)
 	var quizID = yield(QuizBackend.create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns), "completed")
-	for c in range(selectedClasses.size()):
-		NotificationsBackend.send_quiz_notification_to_students(selectedClasses[c], quizID)
+	print(selectedClasses)
+	for c in selectedClasses:
+		NotificationsBackend.send_quiz_notification_to_students(c, quizID)
 	self.queue_free()
 	get_node('/root/QuizCreationPage').queue_free()
 

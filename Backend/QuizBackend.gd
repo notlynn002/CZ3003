@@ -340,6 +340,7 @@ static func submit_quiz_attempt(student_id: String, quiz_level_id: String, total
 		task = coll.add(attempt_id, attempt)
 	
 	yield(task, "task_finished")
+	print("quiz result submitted!")
 
 		
 static func check_max_attempt_reached(student_id: String, quiz_level_id: String) -> bool:
