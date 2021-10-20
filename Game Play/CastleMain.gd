@@ -19,7 +19,7 @@ var qnOfLevel: Array
 var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 var normalLvlQn1 = preload("res://Game Play/Normal Level/NormalLevelQn1.tscn").instance()
 var normalLvlQn2 = preload("res://Game Play/Normal Level/NormalLevelQn2Updated.tscn").instance()
-var bossLvl = load("res://Game Play/Boss Level/BossLevel.tscn").instance()
+var bossLvl = preload("res://Game Play/Boss Level/BossLevel.tscn").instance()
 
 func _ready():
 	$lvl1Stars/star1.hide()

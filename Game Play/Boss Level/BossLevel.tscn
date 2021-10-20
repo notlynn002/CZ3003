@@ -15,8 +15,8 @@
 [ext_resource path="res://Game Play/Boss Level/BossLevelDoorOpen.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Game Play/Boss Level/BossLevelDoorClosed.tscn" type="PackedScene" id=14]
 [ext_resource path="res://sprites/buttons or icons/home icon.png" type="Texture" id=15]
-[ext_resource path="res://sprites/character/monster/monster_alive.png" type="Texture" id=16]
-[ext_resource path="res://sprites/character/monster/monster_dead.png" type="Texture" id=17]
+[ext_resource path="res://sprites/character/monster/slime-idle-0.png" type="Texture" id=16]
+[ext_resource path="res://sprites/character/monster/slime-die-3.png" type="Texture" id=17]
 [ext_resource path="res://Player/Samurai.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Player/Archer.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Player/Huntress.tscn" type="PackedScene" id=20]
@@ -493,6 +493,9 @@ margin_right = 827.498
 margin_bottom = 856.089
 rect_scale = Vector2( 0.2, 0.2 )
 texture_normal = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="monster_alive" type="Sprite" parent="."]
 position = Vector2( 958.135, 842.188 )
@@ -506,6 +509,7 @@ texture = ExtResource( 17 )
 
 [node name="GameOver" type="ColorRect" parent="."]
 pause_mode = 2
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.82837
