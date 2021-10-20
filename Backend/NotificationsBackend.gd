@@ -135,7 +135,10 @@ static func send_challenge_completed_notification(challengeID, challengeeId):
 		'notificationType' : 'completed challenge',
 		'creationDateTime' : OS.get_datetime(), # gets current datetime in datetime dict format
 		'receiverID' : challengerID,
-		'dataID' : challengeID
+		'dataID' : {
+			'challengeID' : challengeID,
+			'challengeeID' : challengeeId
+		}
 	}
 	
 	var challengeResult = yield(ChallengeBackend.getChallengeResult(challengeID, challengeeId), 'completed')
