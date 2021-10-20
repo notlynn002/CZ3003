@@ -1,4 +1,5 @@
 extends CanvasLayer
+signal exceeded
 
 # Declare member variables here. Examples:
 var studentID
@@ -7,7 +8,8 @@ var arenaType
 var duration
 var character
 var questions
-
+var challenge
+var quiz
 var timer_started: bool = false
 
 
@@ -26,15 +28,30 @@ func init(stuID, arenaID, type):
 
 # Called when the node enters the scene tree for the first time.
 func _ready(): 
-	$Popup.hide()
+	$ScorePopup.hide()
+	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
+	
+	if arenaType == 'challenge':
+		challenge = yield(ChallengeBackend.getChallengeByID(id), "completed")
+		$Loading.hide()
+		questions = challenge['questionList']
+		duration = 600
+	elif arenaType == 'quiz':
+		quiz = yield(QuizBackend.get_quiz(id), "completed")
+		questions = quiz['questions']
+		duration = quiz['levelDuration']
+		$Loading.hide()
+#		var currAttempts = yield(QuizBackend.check_max_attempt_reached(Globals.currUser.userId, id), "completed") # this fxn is not working
+#		if currAttempts:
+#			$Popup.show() 
+#			$Game.hide()
 	
 	# reset score & attempt
 	Globals.score = 0
 	Globals.attempt = []
-	
-	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
+
 	# get student's selected character from db
-	character = "king" # set as king for now
+	character = yield(ProfileBackend.getCharacter(Globals.currUser.userId), "completed")
 	if character == "king":
 		var king = King.instance() # create an instance of king object
 		# initialise starting position on map
@@ -60,25 +77,14 @@ func _ready():
 		samurai.position.y = 856
 		add_child(samurai) # add samurai to scene
 	
-	if arenaType == 'challenge':
-		var challenge = yield(ChallengeBackend.getChallengeByID(id), "completed")
-		questions = challenge['questionList']
-		duration = 600
-	elif arenaType == 'quiz':
-		var quiz = yield(QuizBackend.get_quiz(id), "completed")
-		questions = quiz['questions']
-		duration = quiz['levelDuration']
-		var currAttempts = yield(QuizBackend.check_max_attempt_reached(Globals.currUser.userId, id), "completed") # this fxn is not working
-		if currAttempts:
-			$Popup.show() 
-			
-	$Timer.set_wait_time(duration)
-	$Timer.start()
+	
+				
+	$Background/Timer.set_wait_time(duration)
+	$Background/Timer.start()
 	timer_started = true
-	$TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Timer.time_left / 60), int($Timer.time_left) % 60]
+	$Background/TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Background/Timer.time_left / 60), int($Background/Timer.time_left) % 60]
 	print(questions)
 	for i in range(questions.size()):
-#		var question = 	yield(getQuestion(questions[i]), 'completed')
 		print(i)
 		var qn = Question.instance()
 		qn.init(str(i+1), questions[i]['questionBody'])
@@ -111,10 +117,10 @@ func _ready():
 		
 		yield(Coroutines.await_any_signal([ans1, "answered", ans2, "answered", ans3, "answered", ans4, "answered"]), "completed")
 		
-	print("exited for loop")
 	# when done with for loop
 	# get remaining time
-	var time_left = $Timer.time_left
+	$Background/Timer.stop()
+	var time_left = $Background/Timer.time_left
 	# check type & see if is quiz or challenge
 	# save score and time to corresponsing db
 	# navigate to home page
@@ -129,17 +135,16 @@ func _ready():
 		ChallengeBackend.updateChallengeResult(id, Globals.score, time_left, Globals.currUser.userId)
 		
 	# can display score before navigating back
-	
-	var homePage = load('res://Game Play/StudentHomePage.tscn').instance()
-	get_tree().root.add_child(homePage)
-	self.queue_free()
+	$ScorePopup/ScoreLabel.text = 'Score: ' + str(Globals.score) + '/' + str(len(questions))
+	$ScorePopup/TimeLabel.text = 'Timing: ' + "%d:%02d" % [floor(time_left / 60), int(time_left) % 60]
+	$ScorePopup.show()
 	
 # warning-ignore:unused_argument
 func _process(delta):
-	$TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Timer.time_left / 60), int($Timer.time_left) % 60]
+	$Background/TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Background/Timer.time_left / 60), int($Background/Timer.time_left) % 60]
 	
 	# terminate game when time's up
-	if timer_started and ($Timer.time_left <= 0):
+	if timer_started and ($Background/Timer.time_left <= 0):
 		if arenaType == 'quiz':
 			var attempt_record = {}
 			for i in range(Globals.attempt.size()):
@@ -153,5 +158,14 @@ func _on_CloseButton_pressed():
 	var root = get_tree().root
 	var homePage = load("res://Game Play/StudentHomePage.tscn").instance()
 	root.add_child(homePage)
+	self.queue_free()
+	get_node('/root/ArenaPage').queue_free()
+
+	
+	
+
+
+func _on_CloseScorePopupButton_pressed():
+	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
 	self.queue_free()
 	get_node('/root/ArenaPage').queue_free()

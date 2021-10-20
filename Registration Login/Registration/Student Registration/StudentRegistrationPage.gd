@@ -5,7 +5,7 @@ extends CanvasLayer
 var email
 var password
 var cfm_password
-var classIndex
+var selectedClass = 'Class-A'
 
 
 # Called when the node enters the scene tree for the first time.
@@ -25,12 +25,11 @@ func _on_ContinueButton_pressed():
 	password = $PasswordInput.text
 	cfm_password = $ConfirmPasswordInput.text
 	email = $EmailInput.text
-	print(classIndex)
 	
 	if password == cfm_password:
 		# navigate to character selectiom page
 		var namePage = preload("res://Registration Login/Registration/Student Registration/GetNamePage.tscn").instance()
-		namePage.init(email, password, classIndex)
+		namePage.init(email, password, selectedClass)
 		get_tree().root.add_child(namePage)
 	else:
 		$NoMatchLabel.show()
@@ -53,4 +52,11 @@ func _on_MuteButton_pressed():
 
 
 func _on_ClassDropdownButton_item_selected(index):
-	classIndex = index
+	if index == 0:
+		selectedClass = 'Class-A'
+	elif index == 1:
+		selectedClass = 'Class-B'
+	elif index == 2:
+		selectedClass = 'Class-C'
+	elif index == 3:
+		selectedClass = 'Class-D'

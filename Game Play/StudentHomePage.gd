@@ -21,9 +21,8 @@ func _ready():
 	print("printing from student homepage")
 	print(Globals.currUser)
 	print(Globals.currUser.userId)
-	var character = yield(ProfileBackend.getCharacter(Globals.currUser.userId), "completed")
+	character = yield(ProfileBackend.getCharacter(Globals.currUser.userId), "completed")
 	print(character)
-	character = "king" # set as king for now
 	if character == "king":
 		var king = King.instance() # create an instance of king object
 		# initialise starting position on map

@@ -29,7 +29,7 @@ func _on_Get_Notifications_for_User_button_up():
 	var all_notifications = yield(get_notification_for_user(userID), 'completed')
 	print(all_notifications)
 
-func filterChallengeNotification(allNotifications):
+static func filterChallengeNotification(allNotifications):
 	var challengeNotifications = []
 	for notification in allNotifications:
 		if (notification.notificationType != "new quiz"):
