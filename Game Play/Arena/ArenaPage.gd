@@ -135,12 +135,12 @@ func _ready():
 		var attempt_record = {}
 		for i in range(Globals.attempt.size()):
 			attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
-		QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, time_taken, attempt_record)
+		yield(QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, time_taken, attempt_record), "completed")
 		print(attempt_record)
 
 	elif arenaType == 'challenge':
 		print(time_taken)
-		ChallengeBackend.updateChallengeResult(id, Globals.score, time_taken, Globals.currUser.userId)
+		yield(ChallengeBackend.updateChallengeResult(id, Globals.score, time_taken, Globals.currUser.userId), "completed")
 		
 	# can display score before navigating back
 	$ScorePopup/ScoreLabel.text = 'Score: ' + str(Globals.score) + '/' + str(len(questions))
@@ -158,9 +158,9 @@ func _process(delta):
 			for i in range(Globals.attempt.size()):
 				attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
 				
-			QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, 0, attempt_record)
+			yield(QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, 0, attempt_record), "completed")
 		elif arenaType == 'challenge':
-			ChallengeBackend.updateChallengeResult(id, Globals.score, 0, Globals.currUser.userId)
+			yield(ChallengeBackend.updateChallengeResult(id, Globals.score, 0, Globals.currUser.userId), "completed")
 		attempt_submitted = true
 			
 func _on_CloseButton_pressed():
