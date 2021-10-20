@@ -45,7 +45,7 @@ func _on_AcceptButton_pressed():
 
 
 func _on_DeclineButton_pressed():
-	ChallengeBackend.send_challenge_declined_notification(id, Globals.currUser.userId)
+	NotificationsBackend.send_challenge_declined_notification(id, Globals.currUser.userId)
 	self.queue_free() # stop displaying this notification
 	
 

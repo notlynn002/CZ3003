@@ -21,6 +21,8 @@ func _ready():
 		var sb = StudentButton.instance()
 		sb.init(classmates[i]['studentId'], classmates[i]['studentName'])
 		$NoticePopup/ScrollContainer/VBoxContainer.add_child(sb)
+	
+	$Loading.hide()
 
 func _on_BackButton_pressed():
 	get_tree().change_scene("res://Game Play/Challenge/ChallengeTopicPage.tscn")
@@ -41,6 +43,7 @@ func _on_MuteButton_pressed():
 func _on_ChallengeButton_pressed():
 	print(selectedTopic)
 	print(Globals.currUser.userId)
+	$Loading.show()
 	var challengeID = yield(ChallengeBackend.createChallenge(selectedTopic, Globals.currUser.userId, Globals.selectedChallengees), "completed")
 	NotificationsBackend.sendChallengeNotification(challengeID)
 	var root = get_tree().root

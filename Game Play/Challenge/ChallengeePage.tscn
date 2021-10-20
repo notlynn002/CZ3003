@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://sprites/buttons or icons/sound on icon.png" type="Texture" id=1]
 [ext_resource path="res://sprites/buttons or icons/sound off icon.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://Game Play/Challenge/StudentNameButton.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Game Play/Challenge/ChallengeePage.gd" type="Script" id=9]
+[ext_resource path="res://PixulBrush.ttf" type="DynamicFontData" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -17,6 +18,12 @@ font_data = ExtResource( 7 )
 [sub_resource type="DynamicFont" id=2]
 size = 36
 font_data = ExtResource( 7 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+
+[sub_resource type="DynamicFont" id=4]
+size = 64
+font_data = ExtResource( 10 )
 
 [node name="ChallengeePage" type="CanvasLayer"]
 script = ExtResource( 9 )
@@ -131,6 +138,21 @@ custom_fonts/font = SubResource( 2 )
 text = " "
 align = 1
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Loading" type="RichTextLabel" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+custom_styles/normal = SubResource( 3 )
+custom_fonts/normal_font = SubResource( 4 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "																		
+																		
+																		
+																		
+																												LOADING"
 __meta__ = {
 "_edit_use_anchors_": false
 }
