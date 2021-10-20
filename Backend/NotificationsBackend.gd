@@ -45,7 +45,7 @@ func _on_Filter_for_Challenge_Notifications_button_up():
 static func getStudentsFromClass(classId):
 	var classQuery : FirestoreQuery = FirestoreQuery.new()
 	classQuery.from('User')
-	classQuery.where('classId', FirestoreQuery.OPERATOR.EQUAL, classId)
+	classQuery.where('classID', FirestoreQuery.OPERATOR.EQUAL, classId)
 	var task : FirestoreTask = Firebase.Firestore.query(classQuery)
 	var studentList = yield(task, 'task_finished')
 	
@@ -64,7 +64,7 @@ static func getStudentsFromClass(classId):
 	return final_students
 	
 func _on_Get_Students_of_Class_button_up():
-	var classId = 'dummyClass'
+	var classId = 'Class-A'
 	var students = yield(getStudentsFromClass(classId), 'completed')
 	print(students)
 	
@@ -73,17 +73,21 @@ static func getUserClassmates(userId):
 	userCollection.get(userId)
 	var user : FirestoreDocument = yield(userCollection, 'get_document')
 	
-	var userClass = user.doc_fields.classId
+	var userClass = user.doc_fields.classID
 	
 	var students = yield(getStudentsFromClass(userClass), 'completed')
 	var classmates = []
+	
+	if len(students) == 0:
+		return classmates
+		
 	for student in students:
 		if (student.studentId != userId):
 			classmates.append(student)
 	return classmates
 	
 func _on_Get_Classmate_of_User_button_up():
-	var uid = 'P8zkYTNczGZcwLMnkbQBJsscBNp1'
+	var uid = '91dha8uiSGcOp9ai7XOThsed0j13'
 	var classmates = yield(getUserClassmates(uid), 'completed')
 	print(classmates)
 	
