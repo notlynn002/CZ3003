@@ -16,10 +16,10 @@ __meta__ = {
 }
 
 [node name="New Quiz Notification" type="Button" parent="."]
-margin_left = 101.0
-margin_top = 218.0
-margin_right = 813.0
-margin_bottom = 343.0
+margin_left = 102.905
+margin_top = 216.095
+margin_right = 814.905
+margin_bottom = 341.095
 text = "New Quiz Notification"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -47,10 +47,20 @@ __meta__ = {
 
 [node name="Send challenge notification" type="Button" parent="."]
 margin_left = 105.0
-margin_top = 647.2
-margin_right = 812.0
-margin_bottom = 722.2
+margin_top = 647.0
+margin_right = 827.0
+margin_bottom = 722.0
 text = "Send Challenge Notification"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Filter for Challenge Notifications" type="Button" parent="."]
+margin_left = 102.304
+margin_top = 771.699
+margin_right = 816.304
+margin_bottom = 847.699
+text = "Filter for Challenge Notifications"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -60,3 +70,4 @@ __meta__ = {
 [connection signal="button_up" from="Send challenge completed notification" to="." method="_on_Send_challenge_completed_notification_button_up"]
 [connection signal="button_up" from="Send challenge declined notification2" to="." method="_on_Send_challenge_declined_notification2_button_up"]
 [connection signal="button_up" from="Send challenge notification" to="." method="_on_Send_challenge_notification_button_up"]
+[connection signal="button_up" from="Filter for Challenge Notifications" to="." method="_on_Filter_for_Challenge_Notifications_button_up"]

@@ -29,6 +29,19 @@ func _on_Get_Notifications_for_User_button_up():
 	var all_notifications = yield(get_notification_for_user(userID), 'completed')
 	print(all_notifications)
 
+func filterChallengeNotification(allNotifications):
+	var challengeNotifications = []
+	for notification in allNotifications:
+		if (notification.notificationType != "new quiz"):
+			challengeNotifications.append(notification)
+	return challengeNotifications
+	
+func _on_Filter_for_Challenge_Notifications_button_up():
+	var userID = 'XKwVQ9EqJ7xjEhHoPr0A'
+	var all_notifications = yield(get_notification_for_user(userID), 'completed')
+	var challengeNotifications = filterChallengeNotification(all_notifications)
+	print(challengeNotifications)
+	
 # For sending notifications to students when new quiz is created
 static func send_quiz_notification_to_students(classId, quizId):
 	# Get all students in a class
@@ -64,7 +77,6 @@ func _on_New_Quiz_Notification_button_up():
 	send_quiz_notification_to_students(classId, quizId)
 
 
-# Check creation date time datastructure - same as quiz
 # When challenge has been completed by challengee, send challenge completed notification back to challenger
 static func send_challenge_completed_notification(challengeID, challengeeId):
 	# Obtain challenger ID
@@ -145,7 +157,6 @@ static func send_challenge_declined_notification(challengeID, challengeeId):
 	print('Challenge declined')
 	
 	# Update challengee's notification to 'declined challenge'
-		# Update challengee notification to 'completed challenge'
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Notification')
 	query.where("receiverID", FirestoreQuery.OPERATOR.EQUAL, challengeeId, FirestoreQuery.OPERATOR.AND)
@@ -196,3 +207,5 @@ static func sendChallengeNotification(challengeID):
 func _on_Send_challenge_notification_button_up():
 	var challengeId = 'b4JIPytaqNSsDVukEUEi'
 	sendChallengeNotification(challengeId)
+
+
