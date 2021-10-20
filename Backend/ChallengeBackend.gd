@@ -53,12 +53,11 @@ static func get_qns_from_levelIds(levelIds):
 	var result = yield(query_task, 'task_finished')
 	var questions = []
 	for question in result:
-		question = question.doc_fields
 		var q = {
-			'questionBody' : question.questionBody,
-			'questionExplanation' : question.questionExplanation,
-			'questionOptions' : question.questionOptions,
-			'questionSoln' : question.questionSoln
+			'questionBody' : question.doc_fields.questionBody,
+			'questionOptions' : question.doc_fields.questionOptions,
+			'questionSoln' : question.doc_fields.questionSoln,
+			'questionID' : question.doc_name
 		}
 		questions.append(q)
 	#print(questions)
@@ -89,7 +88,7 @@ func _on_Get_10_Random_Qns_button_up():
 	var topic = 'numbers' # Example topic name
 	
 	var challenge_questions = yield(getRandomQuestions(topic), 'completed')
-	#print(challenge_questions)
+	print(challenge_questions)
 
 
 # Initial creation of challenge. Takes in the challenge topic, challenger_id and challengee_id
