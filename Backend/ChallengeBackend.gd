@@ -275,7 +275,7 @@ static func getChallengeResult(challengeID, challengeeID):
 		result['loserId'] = challengeeID
 		result['winnerTime'] = challenger['time']
 		result['loserTime'] = challengee['time']
-		result['winnerScore'] = challengee['score']
+		result['winnerScore'] = challenger['score']
 		result['loserScore'] = challengee['score']
 	else:
 		# Score tie
@@ -298,15 +298,16 @@ static func getChallengeResult(challengeID, challengeeID):
 			result['loserId'] = challengeeID
 			result['winnerTime'] = challenger['time']
 			result['loserTime'] = challengee['time']
-			result['winnerScore'] = challengee['score']
+			result['winnerScore'] = challenger['score']
 			result['loserScore'] = challengee['score']
 	#print(result)
 	return result
 	
 
 func _on_Get_Challenge_Result_button_up():
-	var challengeId = 'KdsBS2748cPpgyxkP532'
-	var challengeeId = 'XKwVQ9EqJ7xjEhHoPr0A'
-	getChallengeResult(challengeId, challengeeId)
-
+	var challengeId = '0rYVBTX4yqIgw7GPwtM7'
+	var challengeeId = 'O4yPXvUZCDaLN0gx2gQsMbPC76o2'
+	var result = yield(getChallengeResult(challengeId, challengeeId), 'completed')
+	print(result)
+	
 
