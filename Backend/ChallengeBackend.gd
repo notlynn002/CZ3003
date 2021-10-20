@@ -241,6 +241,7 @@ static func getChallengeResult(challengeID, challengeeID):
 	challengee_query.where('challengeeID', FirestoreQuery.OPERATOR.EQUAL, challengeeID)
 	var challengee_query_task : FirestoreTask = Firebase.Firestore.query(challengee_query)
 	var challengeeRecord = yield(challengee_query_task, "task_finished")
+	print(challengeeRecord)
 	challengeeRecord = challengeeRecord[0].doc_fields
 	
 	user_collection.get(challengeeID)

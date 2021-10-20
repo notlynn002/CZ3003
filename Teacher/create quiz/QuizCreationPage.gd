@@ -170,7 +170,9 @@ func _on_ScheduleButton_pressed():
 	print(quizAttempts)
 	print(publishingDateTime)
 	print(qns)
-	yield(QuizBackend.create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns), "completed")
+	var quizID = yield(QuizBackend.create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns), "completed")
+	for c in range(selectedClasses.size()):
+		NotificationsBackend.send_quiz_notification_to_students(selectedClasses[c], quizID)
 	self.queue_free()
 	get_node('/root/QuizCreationPage').queue_free()
 

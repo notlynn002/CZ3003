@@ -23,13 +23,20 @@ func _on_MailButton_pressed():
 		$Popup/Label.text = 'start ' + type + ' now?'
 		$Popup.show()
 	elif type == 'completed challenge':
-		# get challenge result from db
-		var challenge_result = yield(ChallengeBackend.getChallengeResult(id, Globals.currUser.userId), "completed")
-		var resultsPage = preload("res://Game Play/Challenge/ChallengeResultsPage.tscn").instance()
-		resultsPage.init(challenge_result['winnerName'], challenge_result['loserName'], challenge_result['winnerScore'], challenge_result['loserScore'], challenge_result['winnerTime'], challenge_result['loserTime'])
-		get_tree().get_root().add(resultsPage)
-		self.queue_free()
-		pass
+		# if current logged in user is the challenger
+		if id['challengerID'] == Globals.currUser.userId:
+			var challenge_result = yield(ChallengeBackend.getChallengeResult(id['challengeID'], id['challengeeID']), "completed")
+			var resultsPage = preload("res://Game Play/Challenge/ChallengeResultsPage.tscn").instance()
+			resultsPage.init(challenge_result['winnerName'], challenge_result['loserName'], challenge_result['winnerScore'], challenge_result['loserScore'], challenge_result['winnerTime'], challenge_result['loserTime'])
+			get_tree().get_root().add_child(resultsPage)
+			self.queue_free()
+		else:
+			# get challenge result from db
+			var challenge_result = yield(ChallengeBackend.getChallengeResult(id['challengeID'], Globals.currUser.userId), "completed")
+			var resultsPage = preload("res://Game Play/Challenge/ChallengeResultsPage.tscn").instance()
+			resultsPage.init(challenge_result['winnerName'], challenge_result['loserName'], challenge_result['winnerScore'], challenge_result['loserScore'], challenge_result['winnerTime'], challenge_result['loserTime'])
+			get_tree().get_root().add(resultsPage)
+			self.queue_free()
 	elif type == 'received challenge':
 		# get challenge by id
 		var challenge = yield(ChallengeBackend.getChallengeByID(id), "completed")

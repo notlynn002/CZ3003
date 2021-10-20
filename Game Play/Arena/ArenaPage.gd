@@ -85,7 +85,6 @@ func _ready():
 	$Background/TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Background/Timer.time_left / 60), int($Background/Timer.time_left) % 60]
 	print(questions)
 	for i in range(questions.size()):
-		print(i)
 		var qn = Question.instance()
 		qn.init(str(i+1), questions[i]['questionBody'])
 		
@@ -140,12 +139,13 @@ func _ready():
 
 	elif arenaType == 'challenge':
 		print(time_taken)
-		yield(ChallengeBackend.updateChallengeResult(id, Globals.score, time_taken, Globals.currUser.userId), "completed")
-		
-	# can display score before navigating back
+		# can display score before navigating back
+		ChallengeBackend.updateChallengeResult(id, Globals.score, time_taken, Globals.currUser.userId)
+	
 	$ScorePopup/ScoreLabel.text = 'Score: ' + str(Globals.score) + '/' + str(len(questions))
 	$ScorePopup/TimeLabel.text = 'Timing: ' + "%d:%02d" % [floor((duration-time_left) / 60), int((duration-time_left)) % 60]
 	$ScorePopup.show()
+	
 	
 # warning-ignore:unused_argument
 func _process(delta):
