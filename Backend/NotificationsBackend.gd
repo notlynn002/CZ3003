@@ -163,13 +163,27 @@ static func send_challenge_completed_notification(challengeID, challengeeId):
 	var challengeeNotification = yield(query_task, "task_finished")
 	var notificationId = challengeeNotification[0].doc_name
 
-	var updateNotification : FirestoreTask = notificationCollection.update(notificationId, {'notificationType':"completed challenge"})
+	var notificationUpdate = {
+		'notificationType':"completed challenge",
+	}
+	
+	userCollection.get(challengerID)
+	var challenger = yield(userCollection, 'get_document')
+	var challengerName = challenger.doc_fields.name
+	#if challengee wins
+	if(challengeResult['winnerId'] == user.doc_name):
+		notificationUpdate['message'] =  "You hav won " + challengerName + " in a challenge!"
+	else:
+		notificationUpdate['message'] = 'You have lost ' + challengerName + " in a challenge!"
+	
+	print(notificationUpdate)
+	var updateNotification : FirestoreTask = notificationCollection.update(notificationId, notificationUpdate)
 	yield(updateNotification, 'task_finished')
 	print('Notification sent!')
 	
 func _on_Send_challenge_completed_notification_button_up():
-	var challengeId = "b4JIPytaqNSsDVukEUEi"
-	var challengeeId = 'XKwVQ9EqJ7xjEhHoPr0A'
+	var challengeId = "0rYVBTX4yqIgw7GPwtM7"
+	var challengeeId = 'O4yPXvUZCDaLN0gx2gQsMbPC76o2'
 	send_challenge_completed_notification(challengeId, challengeeId)
 
 # When challenge is declined, send notification  to challenger
@@ -231,7 +245,7 @@ static func sendChallengeNotification(challengeID):
 	
 	#Create notification and send notifications to challengees
 	var notification ={
-		'message' : challengerName + 'has issued you a new challenge!',
+		'message' : challengerName + ' has issued you a new challenge!',
 		'notificationType' : 'received challenge',
 		'dataID' : challengeID,
 		'creationDateTime' : OS.get_datetime()
