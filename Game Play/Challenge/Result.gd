@@ -20,8 +20,8 @@ func _ready():
 		$Trophy.hide()
 		
 	$NameLabel.text = playerName
-	$ScoreLabel.text = "Score: " + score
-	$TimeLabel.text = "Time taken: " + time
+	$ScoreLabel.text = "Score: " + str(score) + '/10'
+	$TimeLabel.text = 'Time taken: ' + "%d:%02d" % [floor(time / 60), int(time) % 60]
 	
 
 

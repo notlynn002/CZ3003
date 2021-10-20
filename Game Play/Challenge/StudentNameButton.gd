@@ -7,7 +7,7 @@ var selected = false
 var studentIndex
 
 
-func init(sName, sIndex):
+func init(sIndex, sName):
 	studentName = sName
 	studentIndex = sIndex
 	

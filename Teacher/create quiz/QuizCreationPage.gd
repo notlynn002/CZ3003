@@ -151,7 +151,7 @@ func _on_PublishNowButton_pressed():
 	quizName = $QuizNameInput.text
 	var duration = quizDurationHour*3600 + quizDurationMin*60
 	var qns = Globals.get('quizQuestions')
-	yield(create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns), "completed")
+	yield(QuizBackend.create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns), "completed")
 	print("publish now")
 	print(qns)
 	self.queue_free()
@@ -170,7 +170,7 @@ func _on_ScheduleButton_pressed():
 	print(quizAttempts)
 	print(publishingDateTime)
 	print(qns)
-	yield(create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns), "completed")
+	yield(QuizBackend.create_quiz(quizTopic, selectedClasses, quizName, duration, quizAttempts, publishingDateTime, qns), "completed")
 	self.queue_free()
 	get_node('/root/QuizCreationPage').queue_free()
 
@@ -183,99 +183,20 @@ func _on_CloseButton_pressed():
 	self.queue_free()
 
 
-func _on_4FCheckBox_pressed():
-	selectedClasses.append('4F')
 
 
-func _on_4GCheckBox_pressed():
-	selectedClasses.append('4G')
+
+func _on_ClassA_pressed():
+	selectedClasses.append('Class-A')
 
 
-##### BACKEND FUNCTION #######
-func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: String, max_time: int, no_of_tries: int, publishing_date, questions: Array):
-	"""Create a quiz and writes it to the database.
-	
-	Args:
-		quiz_tower_id (String): Tower ID of the quiz tower.
-		class_ids (Array[String]): List of class ID of that class that the quiz is assigned to.
-		quiz_name (String): Quiz name.
-		max_time (int): Maximum time that a student is allowed for the quiz, formatted as total seconds.
-		no_of_tries (int): Maximum number of tries that a student is allowed for the quiz.
-		publishing_date (Dictionary): Quiz publishing date in UTC time, formatted as a datetime Dictionary.
-		questions (Array[Dictionary]): Quiz questions as Dictionary objects.
-	
-	Raises:
-		ERR_INVALID_PARAMETER: If a parameter has an invalid value or if a quiz has the same name as an existing quiz (case sensitive).
-	
-	"""
-	# Create quiz dictionary
-	var quiz: Dictionary = {
-		"towerID": quiz_tower_id,
-		"levelDuration": max_time,
-		"levelType": "quiz",
-		"quizName": quiz_name,
-		"attemptNo": no_of_tries,
-		"publishingDate": publishing_date,
-		"questions": questions
-	}
+func _on_ClassB_pressed():
+	selectedClasses.append('Class-B')
 
-	# Write quiz level to Level collection
-	# Create quiz id
-	var quiz_level_id: String = "quiz-" + quiz["quizName"].replace(" ", "-")
-	# remove questions from quiz dict
-	quiz.erase("questions")
-	# write data to level collection
-	var collection: FirestoreCollection = Firebase.Firestore.collection("Level")
-	var task: FirestoreTask = collection.add(quiz_level_id, quiz)
-	var doc = yield(task, "task_finished")
-	if not doc is FirestoreDocument:
-		return Error.raise_invalid_parameter_error("'%s' is already the name of an existing quiz" % quiz["quizName"])
-	
-	# Add questions
-	var qn_data
-	var qn_options
-	collection = Firebase.Firestore.collection("Question")
-	for question in questions:
-		qn_options = [question["correctOption"], question["wrongOption1"], question["wrongOption2"], question["wrongOption3"]]
-		qn_options.shuffle()
-		qn_data = {
-			"levelID": quiz_level_id,
-			"questionBody": question["qnContent"],
-			"questionOptions": qn_options,
-			"questionSoln": question["correctOption"]
-		}
-		task = collection.add("", qn_data)
-		yield(task, "task_finished")
-	
-	# Add quiz id to class
-	# Check if class_id is valid
-	collection = Firebase.Firestore.collection("Class")
-	var quiz_list
-	for class_id in class_ids:
-		quiz_list = yield(get_quiz_ids_by_class(class_id), "completed")
-		if not quiz_list is Array:
-			Error.raise_invalid_parameter_error("'%s is not a valid class ID" % class_id)
-			continue
-		quiz_list.append(quiz_level_id)
-		task = collection.update(class_id, {"quizList": quiz_list})
-		yield(task, "task_finished")
-		
-func get_quiz_ids_by_class(class_id: String) -> Array:
-	""" Get the quiz level IDs for a class.
-	
-	Args:
-		class_id (String): Class ID.
-	
-	Returns:
-		Array[String]: The quiz level IDs as Strings.
-	
-	Raises:
-		ERR_INVALID_PARAMETER: If the class ID is invalid.
-	
-	"""
-	var collection: FirestoreCollection = Firebase.Firestore.collection("Class")
-	var task: FirestoreTask = collection.get(class_id)
-	var doc = yield(task, "task_finished")
-	if not doc is FirestoreDocument:
-		return Error.raise_invalid_parameter_error("'%s is not a valid class ID" % class_id)
-	return doc.doc_fields["quizList"]
+
+func _on_ClassC_pressed():
+	selectedClasses.append('Class-C')
+
+
+func _on_ClassD_pressed():
+	selectedClasses.append('Class-D')
