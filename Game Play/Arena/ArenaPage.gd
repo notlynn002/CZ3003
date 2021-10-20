@@ -10,7 +10,8 @@ var character
 var questions
 var challenge
 var quiz
-var timer_started: bool = false
+var timer_started: bool = false # true if timer has been started, false otherwise
+var attempt_submitted: bool = false # true if attempt for quiz/challenge has been submitted, false otherwise
 
 
 export (PackedScene) var King
@@ -144,7 +145,7 @@ func _process(delta):
 	$Background/TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Background/Timer.time_left / 60), int($Background/Timer.time_left) % 60]
 	
 	# terminate game when time's up
-	if timer_started and ($Background/Timer.time_left <= 0):
+	if timer_started and ($Background/Timer.time_left <= 0) and (not attempt_submitted):
 		if arenaType == 'quiz':
 			var attempt_record = {}
 			for i in range(Globals.attempt.size()):
@@ -153,6 +154,7 @@ func _process(delta):
 			QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, 0, attempt_record)
 		elif arenaType == 'challenge':
 			ChallengeBackend.updateChallengeResult(id, Globals.score, 0, Globals.currUser.userId)
+		attempt_submitted = true
 			
 func _on_CloseButton_pressed():
 	var root = get_tree().root
