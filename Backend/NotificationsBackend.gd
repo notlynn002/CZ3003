@@ -51,6 +51,9 @@ static func getStudentsFromClass(classId):
 	
 	var final_students = []
 	
+	if len(studentList) == 0:
+		return final_students
+		
 	for student in studentList:
 		var info = {
 			'studentId' : student.doc_name,
