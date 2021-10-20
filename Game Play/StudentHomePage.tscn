@@ -365,6 +365,7 @@ expand = true
 
 [connection signal="pressed" from="ChallengeButton" to="." method="_on_ChallengeButton_pressed"]
 [connection signal="pressed" from="MailButton" to="." method="_on_MailButton_pressed"]
+[connection signal="pressed" from="NewMailButton" to="." method="_on_NewMailButton_pressed"]
 [connection signal="pressed" from="LogoutButton" to="." method="_on_LogoutButton_pressed"]
 [connection signal="pressed" from="SoundButton" to="." method="_on_SoundButton_pressed"]
 [connection signal="pressed" from="MuteButton" to="." method="_on_MuteButton_pressed"]

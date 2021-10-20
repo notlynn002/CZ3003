@@ -17,6 +17,7 @@ var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 func _ready():
 	$MuteButton.hide() # dont show sound off icon until it is pressed
 	$PopupMenu.hide() # dont showpopup until one of the castle is pressed
+	$NewMailButton.hide()
 	
 	var notifications = yield(NotificationsBackend.get_notification_for_user(Globals.currUser.userId), "completed")
 	
@@ -129,3 +130,9 @@ func _on_ViewLeaderboardButton_pressed():
 
 func _on_CloseButton_pressed():
 	$PopupMenu.hide() # close popup menu
+
+
+func _on_NewMailButton_pressed():
+	var root = get_tree().root
+	var notifPage = preload('res://Game Play/Notification/NotificationsPage.tscn').instance()
+	root.add_child(notifPage)

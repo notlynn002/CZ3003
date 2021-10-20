@@ -37,8 +37,11 @@ func _ready():
 
 func _on_AcceptButton_pressed():
 	var arenaPage = preload("res://Game Play/Arena/ArenaPage.tscn").instance()
+	NotificationsBackend.send_challenge_completed_notification(id, Globals.currUser.userId)
 	arenaPage.init(Globals.currUser.userId, id, "challenge")
 	get_tree().get_root().add_child(arenaPage)
+	self.queue_free()
+	get_node('/root/ChallengeNotifPage').queue_free()
 
 
 func _on_DeclineButton_pressed():
