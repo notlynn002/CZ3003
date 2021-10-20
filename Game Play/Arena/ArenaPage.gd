@@ -1,5 +1,4 @@
 extends CanvasLayer
-signal exceeded
 
 # Declare member variables here. Examples:
 var studentID
@@ -118,10 +117,17 @@ func _ready():
 		
 		yield(Coroutines.await_any_signal([ans1, "answered", ans2, "answered", ans3, "answered", ans4, "answered"]), "completed")
 		
+		remove_child(qn)
+		remove_child(ans1)
+		remove_child(ans2)
+		remove_child(ans3)
+		remove_child(ans4)
+	
 	# when done with for loop
 	# get remaining time
-	$Background/Timer.stop()
 	var time_left = $Background/Timer.time_left
+	var time_taken = int((duration-time_left))
+	$Background/Timer.stop()
 	# check type & see if is quiz or challenge
 	# save score and time to corresponsing db
 	# navigate to home page
@@ -129,15 +135,16 @@ func _ready():
 		var attempt_record = {}
 		for i in range(Globals.attempt.size()):
 			attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
-		QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, time_left, attempt_record)
+		QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, time_taken, attempt_record)
 		print(attempt_record)
 
 	elif arenaType == 'challenge':
-		ChallengeBackend.updateChallengeResult(id, Globals.score, time_left, Globals.currUser.userId)
+		print(time_taken)
+		ChallengeBackend.updateChallengeResult(id, Globals.score, time_taken, Globals.currUser.userId)
 		
 	# can display score before navigating back
 	$ScorePopup/ScoreLabel.text = 'Score: ' + str(Globals.score) + '/' + str(len(questions))
-	$ScorePopup/TimeLabel.text = 'Timing: ' + "%d:%02d" % [floor(time_left / 60), int(time_left) % 60]
+	$ScorePopup/TimeLabel.text = 'Timing: ' + "%d:%02d" % [floor((duration-time_left) / 60), int((duration-time_left)) % 60]
 	$ScorePopup.show()
 	
 # warning-ignore:unused_argument

@@ -28,7 +28,7 @@ size = 64
 font_data = ExtResource( 13 )
 
 [sub_resource type="DynamicFont" id=5]
-size = 30
+size = 40
 font_data = ExtResource( 2 )
 
 [node name="ArenaPage" type="CanvasLayer"]
@@ -105,9 +105,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -447.5
+margin_left = -448.0
 margin_top = -267.0
-margin_right = 447.5
+margin_right = 448.0
 margin_bottom = 267.0
 texture = ExtResource( 14 )
 __meta__ = {
@@ -115,9 +115,9 @@ __meta__ = {
 }
 
 [node name="ScoreLabel" type="Label" parent="ScorePopup"]
-margin_left = 103.5
+margin_left = 128.0
 margin_top = 207.0
-margin_right = 439.5
+margin_right = 464.0
 margin_bottom = 256.0
 custom_fonts/font = SubResource( 5 )
 text = "Score:"
@@ -126,9 +126,9 @@ __meta__ = {
 }
 
 [node name="TimeLabel" type="Label" parent="ScorePopup"]
-margin_left = 103.5
+margin_left = 128.0
 margin_top = 269.0
-margin_right = 447.5
+margin_right = 472.0
 margin_bottom = 318.0
 custom_fonts/font = SubResource( 5 )
 text = "Score:"
@@ -137,14 +137,13 @@ __meta__ = {
 }
 
 [node name="CloseScorePopupButton" type="TextureButton" parent="ScorePopup"]
-margin_left = 727.5
-margin_top = 71.0
-margin_right = 806.5
-margin_bottom = 143.0
+margin_left = 728.0
+margin_top = 63.0
+margin_right = 807.0
+margin_bottom = 135.0
 texture_normal = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="exceeded" from="." to="." method="_on_ArenaPage_exceeded"]
 [connection signal="pressed" from="ScorePopup/CloseScorePopupButton" to="." method="_on_CloseScorePopupButton_pressed"]
