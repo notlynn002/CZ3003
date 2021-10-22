@@ -112,8 +112,9 @@ func _on_MetalCastleButton_pressed():
 	$PopupMenu/PopUpLabel.text = "Topic:    Numbers" # set label text
 	$PopupMenu.show() # display popup
 	chosen_tower = "Numbers" # update chosen tower
+	GlobalArray.nowAtTower = "Numbers"
 	var startTower = preload("res://Game Play/Normal Level/NormalLevel.tscn").instance()
-	startTower.init(chosen_tower)
+	#startTower.init(chosen_tower)
 
 
 func _on_EnterTowerButton_pressed():
