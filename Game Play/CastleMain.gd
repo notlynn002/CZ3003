@@ -71,7 +71,7 @@ func _ready():
 #		lockedDoor.disabled = true
 #		j += 1
 	#shows the stars
-	towerId = "numbers-tower"
+	#towerId = "numbers-tower"
 	#correcNo = yield(towerBackend.get_correct_for_tower_by_student(currentUser, towerId), "completed")
 	print("correctNo:", correcNo)
 	print("last lvl attempted:", lastLvlAttempted)
@@ -172,3 +172,6 @@ func _star_Manager(ansArray):
 			var stars = get_node(locNode)
 			stars.show()
 		k += 1
+
+func _block_Manager():
+	pass
