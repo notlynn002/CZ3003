@@ -7,8 +7,10 @@ var arenaType
 var duration
 var character
 var questions
-
-var timer_started: bool = false
+var challenge
+var quiz
+var timer_started: bool = false # true if timer has been started, false otherwise
+var attempt_submitted: bool = false # true if attempt for quiz/challenge has been submitted, false otherwise
 
 
 export (PackedScene) var King
@@ -26,15 +28,30 @@ func init(stuID, arenaID, type):
 
 # Called when the node enters the scene tree for the first time.
 func _ready(): 
-	$Popup.hide()
+	$ScorePopup.hide()
+#	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
+	
+	if arenaType == 'challenge':
+		challenge = yield(ChallengeBackend.getChallengeByID(id), "completed")
+		$Loading.hide()
+		questions = challenge['questionList']
+		duration = 600
+	elif arenaType == 'quiz':
+		quiz = yield(QuizBackend.get_quiz(id), "completed")
+		questions = quiz['questions']
+		duration = quiz['levelDuration']
+		$Loading.hide()
+#		var currAttempts = yield(QuizBackend.check_max_attempt_reached(Globals.currUser.userId, id), "completed") # this fxn is not working
+#		if currAttempts:
+#			$Popup.show() 
+#			$Game.hide()
 	
 	# reset score & attempt
 	Globals.score = 0
 	Globals.attempt = []
-	
-	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
+
 	# get student's selected character from db
-	character = "king" # set as king for now
+	character = yield(ProfileBackend.getCharacter(Globals.currUser.userId), "completed")
 	if character == "king":
 		var king = King.instance() # create an instance of king object
 		# initialise starting position on map
@@ -60,26 +77,14 @@ func _ready():
 		samurai.position.y = 856
 		add_child(samurai) # add samurai to scene
 	
-	if arenaType == 'challenge':
-		var challenge = yield(ChallengeBackend.getChallengeByID(id), "completed")
-		questions = challenge['questionList']
-		duration = 600
-	elif arenaType == 'quiz':
-		var quiz = yield(QuizBackend.get_quiz(id), "completed")
-		questions = quiz['questions']
-		duration = quiz['levelDuration']
-		var currAttempts = yield(QuizBackend.check_max_attempt_reached(Globals.currUser.userId, id), "completed") # this fxn is not working
-		if currAttempts:
-			$Popup.show() 
-			
-	$Timer.set_wait_time(duration)
-	$Timer.start()
+	
+				
+	$Background/Timer.set_wait_time(duration)
+	$Background/Timer.start()
 	timer_started = true
-	$TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Timer.time_left / 60), int($Timer.time_left) % 60]
-	print(questions)
+	$Background/TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Background/Timer.time_left / 60), int($Background/Timer.time_left) % 60]
+	
 	for i in range(questions.size()):
-#		var question = 	yield(getQuestion(questions[i]), 'completed')
-		print(i)
 		var qn = Question.instance()
 		qn.init(str(i+1), questions[i]['questionBody'])
 		
@@ -111,47 +116,70 @@ func _ready():
 		
 		yield(Coroutines.await_any_signal([ans1, "answered", ans2, "answered", ans3, "answered", ans4, "answered"]), "completed")
 		
-	print("exited for loop")
+		remove_child(qn)
+		remove_child(ans1)
+		remove_child(ans2)
+		remove_child(ans3)
+		remove_child(ans4)
+	
 	# when done with for loop
 	# get remaining time
-	var time_left = $Timer.time_left
+	var time_left = $Background/Timer.time_left
+	var time_taken = int((duration-time_left))
+	$Background/Timer.stop()
+	
+	$ScorePopup/ScoreLabel.text = 'Score: ' + str(Globals.score) + '/' + str(len(questions))
+	$ScorePopup/TimeLabel.text = 'Timing: ' + "%d:%02d" % [floor((duration-time_left) / 60), int((duration-time_left)) % 60]
+	$ScorePopup.show()
+	
 	# check type & see if is quiz or challenge
 	# save score and time to corresponsing db
 	# navigate to home page
-	if arenaType == 'quiz':
-		var attempt_record = {}
-		for i in range(Globals.attempt.size()):
-			attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
-		QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, time_left, attempt_record)
-		print(attempt_record)
+	if not attempt_submitted:
+		if arenaType == 'quiz':
+			
+			var attempt_record = {}
+			for i in range(Globals.attempt.size()):
+				attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
+			QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, time_taken, attempt_record)
+			attempt_submitted = true
+	#		print(attempt_record)
 
-	elif arenaType == 'challenge':
-		ChallengeBackend.updateChallengeResult(id, Globals.score, time_left, Globals.currUser.userId)
-		
-	# can display score before navigating back
+		elif arenaType == 'challenge':
+			print("time_taken: " + str(time_taken))
+			# can display score before navigating back
+			ChallengeBackend.updateChallengeResult(id, Globals.score, time_taken, Globals.currUser.userId)
+			attempt_submitted = true
 	
-	var homePage = load('res://Game Play/StudentHomePage.tscn').instance()
-	get_tree().root.add_child(homePage)
-	self.queue_free()
 	
 # warning-ignore:unused_argument
 func _process(delta):
-	$TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Timer.time_left / 60), int($Timer.time_left) % 60]
+	$Background/TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Background/Timer.time_left / 60), int($Background/Timer.time_left) % 60]
 	
 	# terminate game when time's up
-	if timer_started and ($Timer.time_left <= 0):
+	if timer_started and ($Background/Timer.time_left <= 0) and (not attempt_submitted):
 		if arenaType == 'quiz':
 			var attempt_record = {}
 			for i in range(Globals.attempt.size()):
 				attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
 				
-			QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, 0, attempt_record)
+			yield(QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, 0, attempt_record), "completed")
 		elif arenaType == 'challenge':
-			ChallengeBackend.updateChallengeResult(id, Globals.score, 0, Globals.currUser.userId)
+			yield(ChallengeBackend.updateChallengeResult(id, Globals.score, 0, Globals.currUser.userId), "completed")
+		attempt_submitted = true
 			
 func _on_CloseButton_pressed():
 	var root = get_tree().root
 	var homePage = load("res://Game Play/StudentHomePage.tscn").instance()
 	root.add_child(homePage)
+	self.queue_free()
+	get_node('/root/ArenaPage').queue_free()
+
+	
+	
+
+
+func _on_CloseScorePopupButton_pressed():
+	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
 	self.queue_free()
 	get_node('/root/ArenaPage').queue_free()

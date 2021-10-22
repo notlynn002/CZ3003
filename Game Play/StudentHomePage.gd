@@ -17,13 +17,20 @@ var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 func _ready():
 	$MuteButton.hide() # dont show sound off icon until it is pressed
 	$PopupMenu.hide() # dont showpopup until one of the castle is pressed
+	$NewMailButton.hide()
+	
+	var notifications = yield(NotificationsBackend.get_notification_for_user(Globals.currUser.userId), "completed")
+	
+	if len(notifications) > 0:
+		$NewMailButton.show()
+		$MailButton.hide()
+		
 	# get student's selected character from db
 	print("printing from student homepage")
 	print(Globals.currUser)
 	print(Globals.currUser.userId)
-	var character = yield(ProfileBackend.getCharacter(Globals.currUser.userId), "completed")
+	character = yield(ProfileBackend.getCharacter(Globals.currUser.userId), "completed")
 	print(character)
-	character = "king" # set as king for now
 	if character == "king":
 		var king = King.instance() # create an instance of king object
 		# initialise starting position on map
@@ -72,7 +79,6 @@ func _on_MuteButton_pressed():
 func _on_ChallengeButton_pressed():
 	var root = get_tree().root
 	var challengeNotif = preload("res://Game Play/Challenge/ChallengeNotifPage.tscn").instance()
-	challengeNotif.init(classID)
 	root.add_child(challengeNotif)
 
 
@@ -124,3 +130,9 @@ func _on_ViewLeaderboardButton_pressed():
 
 func _on_CloseButton_pressed():
 	$PopupMenu.hide() # close popup menu
+
+
+func _on_NewMailButton_pressed():
+	var root = get_tree().root
+	var notifPage = preload('res://Game Play/Notification/NotificationsPage.tscn').instance()
+	root.add_child(notifPage)

@@ -41,7 +41,7 @@ func _on_ChallengeButton_pressed():
 	var Root = get_tree().root
 	var challengee = preload("res://Game Play/Challenge/ChallengeePage.tscn").instance()
 	#if not topic:
-	challengee.init(classID, topic)
+	challengee.init(topic)
 	print(topic)
 	Root.add_child(challengee)
 

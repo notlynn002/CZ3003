@@ -4,24 +4,15 @@ extends Control
 # Declare member variables here. Examples:
 var notifType
 var notifMsg
-var winner
-var loser
-var winnerScore
-var loserScore
-var winnerTime
-var loserTime
+var id
 
 
 # Called when the node enters the scene tree for the first time.
-func init(nType, nMsg, win, lose, ws, ls, wt, lt):
+func init(nType, nMsg, dataID):
 	notifType = nType
 	notifMsg = nMsg
-	winner = win
-	loser = lose
-	winnerScore = ws
-	loserScore = ls
-	winnerTime = wt
-	loserTime = lt
+	id = dataID
+
 		
 	
 func position(x, y):
@@ -29,10 +20,10 @@ func position(x, y):
 
 func _ready():
 	
-	if notifType == "challenged":
+	if notifType == "received challenge":
 		$DetailsButton.hide()
 		$ShareButton.hide()
-	elif notifType == "won" or notifType == "lost":
+	elif notifType == "completed challenge":
 		$AcceptButton.hide()
 		$DeclineButton.hide()
 		
@@ -45,19 +36,24 @@ func _ready():
 
 
 func _on_AcceptButton_pressed():
-	pass # Replace with function body.
-	# navigate to challenge page (aka like normal level page, can reuse)
+	var arenaPage = preload("res://Game Play/Arena/ArenaPage.tscn").instance()
+	NotificationsBackend.send_challenge_completed_notification(id, Globals.currUser.userId)
+	arenaPage.init(Globals.currUser.userId, id, "challenge")
+	get_tree().get_root().add_child(arenaPage)
+	self.queue_free()
+	get_node('/root/ChallengeNotifPage').queue_free()
 
 
 func _on_DeclineButton_pressed():
-	# notify challenger 
+	NotificationsBackend.send_challenge_declined_notification(id, Globals.currUser.userId)
 	self.queue_free() # stop displaying this notification
 	
 
 
 func _on_DetailsButton_pressed():
+	var challenge_result = yield(ChallengeBackend.getChallengeResult(id, Globals.currUser.userId), "completed")
 	var scene = preload("res://Game Play/Challenge/ChallengeResultsPage.tscn").instance()
-	scene.init(winner, loser, winnerScore, loserScore, winnerTime, loserTime) # init root node
+	scene.init(challenge_result['winnerName'], challenge_result['loserName'], challenge_result['winnerScore'], challenge_result['loserScore'], challenge_result['winnerTime'], challenge_result['loserTime']) # init root node
 	get_tree().get_root().add_child(scene)
 
 

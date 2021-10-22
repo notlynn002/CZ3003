@@ -7,20 +7,13 @@ export (PackedScene) var Mail
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-	# get notifications from db by passing in student ID (Globals.studentID)
-	# loop through & display
 	
-	# demo
-	for i in 10:
-		if i%2 != 0:
-			var notif = Mail.instance()
-			notif.init('quiz', 'You have been assigned a quiz.', 'id')
-			$ScrollContainer/VBoxContainer.add_child(notif)
-		else:
-			var notif = Mail.instance()
-			notif.init('win', 'You beat Jason in Fraction!', 'id')
-			$ScrollContainer/VBoxContainer.add_child(notif)
+	var notifications = yield(NotificationsBackend.get_notification_for_user(Globals.currUser.userId), "completed")
+		
+	for i in range(notifications.size()):
+		var notif = Mail.instance()
+		notif.init(notifications[i]['notificationType'], notifications[i]['message'], notifications[i]['dataID'])
+		$ScrollContainer/VBoxContainer.add_child(notif)
 
 
 func _on_CloseButton_pressed():

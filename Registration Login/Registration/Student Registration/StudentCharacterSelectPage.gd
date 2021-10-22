@@ -6,14 +6,14 @@ var character
 var student_name
 var email
 var password
-var classIndex
+var selectedClass
 var profileDetails
 
 func init(sName, emailAddr, pw, idx):
 	student_name = sName
 	email = emailAddr
 	password = pw
-	classIndex = idx
+	selectedClass = idx
 
 
 # Called when the node enters the scene tree for the first time.
@@ -42,7 +42,7 @@ func _on_MuteButton_pressed():
 
 
 func _on_RegisterButton_pressed():
-	var pd = {"character": character, "classID": classIndex, "name": student_name, "role": "student"}
+	var pd = {"character": character, "classID": selectedClass, "name": student_name, "role": "student"}
 	signup(email, password, pd)
 	#var homepage = preload("res://Game Play/StudentHomePage.tscn").instance()
 	#get_tree().get_root().add_child(homepage)
@@ -86,7 +86,9 @@ func createProfile(auth_info):
 	Globals.currUser = res
 	var homepage = preload("res://Game Play/StudentHomePage.tscn").instance()
 	get_tree().get_root().add_child(homepage)
-	get_tree().get_root().remove_child(self)
+	self.queue_free()
+	get_node("/root/GetNamePage").queue_free()
+	get_node("/root/StudentRegistrationPage").queue_free()
 	
 func _on_login_failed(error_code, message):
 	Globals.currUser = null

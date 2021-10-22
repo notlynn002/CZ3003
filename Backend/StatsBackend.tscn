@@ -90,6 +90,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="get quiz stats by class" type="Button" parent="."]
+margin_left = 404.622
+margin_top = 455.191
+margin_right = 662.622
+margin_bottom = 544.191
+text = "get quiz stats by class"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="get quiz stats by student" type="Button" parent="."]
+margin_left = 399.865
+margin_top = 589.572
+margin_right = 657.865
+margin_bottom = 678.572
+text = "get quiz stats by student"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="button_up" from="test" to="." method="_on_test_button_up"]
 [connection signal="button_up" from="get class ids and names" to="." method="_on_get_class_ids_and_names_button_up"]
 [connection signal="button_up" from="get student ids and names" to="." method="_on_get_student_ids_and_names_button_up"]
@@ -98,3 +118,5 @@ __meta__ = {
 [connection signal="button_up" from="get tower stats by class" to="." method="_on_get_tower_stats_by_class_button_up"]
 [connection signal="button_up" from="get level stats by class" to="." method="_on_get_level_stats_by_class_button_up"]
 [connection signal="button_up" from="get level stats by student" to="." method="_on_get_level_stats_by_student_button_up"]
+[connection signal="button_up" from="get quiz stats by class" to="." method="_on_get_quiz_stats_by_class_button_up"]
+[connection signal="button_up" from="get quiz stats by student" to="." method="_on_get_quiz_stats_by_student_button_up"]

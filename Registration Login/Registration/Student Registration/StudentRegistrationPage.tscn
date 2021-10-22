@@ -165,17 +165,17 @@ __meta__ = {
 }
 
 [node name="ClassDropdownButton" type="OptionButton" parent="."]
-margin_left = 488.0
+margin_left = 490.245
 margin_top = 688.0
-margin_right = 976.0
+margin_right = 978.245
 margin_bottom = 772.0
 theme = SubResource( 3 )
 custom_fonts/font = SubResource( 1 )
 custom_constants/hseparation = 100
 custom_constants/arrow_margin = 20
-text = "4F"
+text = "Class A"
 align = 1
-items = [ "4F", null, false, 0, null, "4G", null, false, 1, null ]
+items = [ "Class A", null, false, 0, null, "Class B", null, false, 1, null, "Class C", null, false, 2, null, "Class D", null, false, 3, null ]
 selected = 0
 __meta__ = {
 "_edit_use_anchors_": false

@@ -18,7 +18,7 @@ func _ready():
 #	pass
 
 
-static func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: String, max_time: int, no_of_tries: int, publishing_date, questions: Array):
+static func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: String, max_time: int, no_of_tries: int, publishing_date, questions: Array) -> String:
 	"""Create a quiz and writes it to the database.
 	
 	Args:
@@ -30,8 +30,8 @@ static func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: Stri
 		publishing_date (Dictionary): Quiz publishing date in UTC time, formatted as a datetime Dictionary.
 		questions (Array[Dictionary]): Quiz questions as Dictionary objects.
 	
-	Raises:
-		ERR_INVALID_PARAMETER: If a parameter has an invalid value or if a quiz has the same name as an existing quiz (case sensitive).
+	Returns:
+		String: The quiz level ID of the new quiz.
 	
 	"""
 	# Create quiz dictionary
@@ -85,6 +85,8 @@ static func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: Stri
 		quiz_list.append(quiz_level_id)
 		task = collection.update(class_id, {"quizList": quiz_list})
 		yield(task, "task_finished")
+	
+	return quiz_level_id
 
 
 static func delete_quiz(quiz_level_id: String, class_ids: Array):
@@ -338,6 +340,7 @@ static func submit_quiz_attempt(student_id: String, quiz_level_id: String, total
 		task = coll.add(attempt_id, attempt)
 	
 	yield(task, "task_finished")
+	print("quiz result submitted!")
 
 		
 static func check_max_attempt_reached(student_id: String, quiz_level_id: String) -> bool:
