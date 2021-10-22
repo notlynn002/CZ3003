@@ -165,6 +165,7 @@ static func _add_question_attempt(question_attempt: Dictionary):
 		question_attempt (Dictionary): Question attempt data stored in a Dictionary. 
 			The Dictionary should have the following fields:
 				"questionID" (String): Question ID.
+				"towerID" (String): Tower ID.
 				"studentID" (String): Student ID.
 				"type" (String): "best" if best attempt, "first" if first attempt.
 				"correct" (bool): True if correct, false if wrong
@@ -173,8 +174,14 @@ static func _add_question_attempt(question_attempt: Dictionary):
 	Returns:
 		void
 	"""
+	# Add tower id
+	var qn_id: String = question_attempt["questionID"]
+	var tower_id: String = "%s-tower" % qn_id.substr(0, qn_id.length()-5)
+	question_attempt["towerID"] = tower_id
+	# Create attempt id
+	var attempt_id = "%s-%s-%s" % [question_attempt["studentID"], qn_id, question_attempt["type"]]
+	# write attempt to database
 	var collection: FirestoreCollection = Firebase.Firestore.collection("Question_Attempt")
-	var attempt_id = "%s-%s-%s" % [question_attempt["studentID"], question_attempt["questionID"], question_attempt["type"]]
 	var task = collection.add(attempt_id, question_attempt)
 	yield(task, "task_finished")
 	
@@ -421,39 +428,41 @@ static func get_level_display_info(student_id: String, tower_id: String) -> Dict
 	query.where("studentID", FirestoreQuery.OPERATOR.EQUAL, student_id, FirestoreQuery.OPERATOR.AND)
 	query.where("towerID", FirestoreQuery.OPERATOR.EQUAL, tower_id, FirestoreQuery.OPERATOR.AND)
 	query.where("type", FirestoreQuery.OPERATOR.EQUAL, "best")
+	query.order_by("questionID")
 	task = Firebase.Firestore.query(query)
 	docs = yield(task, "task_finished")
 	
-	var curr_level: int = 1
-	var curr_score: int = 0
+	# Initialize info
 	var correct_nos: Array = []
+	for i in range(total_levels):
+		correct_nos.append(0)
+	var info: Dictionary = {
+		"last_level": 0,
+		"correct_nos": correct_nos
+	}
+	
+	# Sort attempt docs
+	var level_attempts: Dictionary = {}
 	for doc in docs:
 		var qn_id: String = doc.doc_fields["questionID"]
 		var level_no: int = int(qn_id.substr(qn_id.length()-4, 2))
-		
-		# still on the same level, increment score
-		if curr_level == level_no:
-			curr_score += int(doc.doc_fields["correct"])
-		
-		# on a new level, store previous score and change curr_level
+		if level_attempts.has(level_no):
+			level_attempts[level_no].append(doc)
 		else:
-			# store previous score
-			correct_nos.append(curr_score)
-			# restart score
-			curr_score = int(doc.doc_fields["correct"])
-			# chane curr_level to new level
-			curr_level = level_no
-	correct_nos.append(curr_score)
+			level_attempts[level_no] = [doc]
+			
+	# get correct nos and highest level
+	for level_no in level_attempts.keys():
+		# set last level
+		info["last_level"] = level_no
+		# set number of correct in level
+		var score: int = 0
+		var attempts: Array = level_attempts[level_no]
+		for attempt in attempts:
+			score += int(attempt.doc_fields["correct"])
+		info["correct_nos"][level_no-1] = score
 	
-	# append zeros to correct_nos for levels that were not attempted
-	for i in range(curr_level, total_levels):
-		correct_nos.append(0)
-	
-	# return last level attempted and list of correct numbers
-	return {
-		"last_level": curr_level,
-		"correct_nos": correct_nos
-	}
+	return info
 
 
 func _on_Get_level_attempt_button_up():
@@ -465,17 +474,18 @@ func _on_sumbit_attempt_button_up():
 	var attempt1: Dictionary = {"questionID": "numbers-04-1", "duration": 100, "correct": true}
 	var attempt2: Dictionary = {"questionID": "numbers-04-2", "duration": 102, "correct": true}
 	var attempt3: Dictionary = {"questionID": "numbers-04-3", "duration": 100, "correct": true}
-	var output = submit_attempt("NjKMDRdI7Ih9SF3TDxr1zRimtZH2", [attempt1, attempt2, attempt3])
+	var output = submit_attempt("student1", [attempt1, attempt2, attempt3])
 	yield(output, "completed")
 	print("submit_attempts() completed")
 
 
 
 func _on_test_button_button_up():
-	print(OS.get_datetime())
-	var output = yield(get_level_display_info("NjKMDRdI7Ih9SF3TDxr1zRimtZH2", "numbers-tower"), "completed")
+	var temp = OS.get_unix_time()
+	var output = yield(get_level_display_info("hmi1bI7f5hfDsZ7Ie5P3bm90EyJ2", "numbers-tower"), "completed")
+	print("time taken: %d s" % (OS.get_unix_time()-temp))
 	print(output)
-	print(OS.get_datetime())
+	
 	
 
 func _on_login_button_up():
