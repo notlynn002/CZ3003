@@ -9,6 +9,7 @@ var currentUser
 var towerId
 
 var lastLvlAttempted
+var lvlInfo
 var correcNo: Array
 var nowAtLevel
 var strNowAtLevel
@@ -45,14 +46,18 @@ func _ready():
 	currentUser = Globals.currUser['userId']
 	print(currentUser)
 	if GlobalArray.nowAtTower == "Numbers":
-		lastLvlAttempted = yield(towerBackend.get_last_level_attempted(currentUser, "numbers-tower"), "completed")
-		print(lastLvlAttempted)
+		lvlInfo = yield(towerBackend.get_level_display_info(currentUser, "numbers-tower"), "completed")
+		print(lvlInfo)
 		#lastLvlAttempted = 0
 	elif GlobalArray.nowAtTower == "Fraction":
-		lastLvlAttempted = yield(towerBackend.get_last_level_attempted(currentUser, "fraction-tower"), "completed")
+		lvlInfo = yield(towerBackend.get_level_display_info(currentUser, "fraction-tower"), "completed")
 	elif GlobalArray.nowAtTower == "Ratio":
-		lastLvlAttempted = yield(towerBackend.get_last_level_attempted(currentUser, "ratio-tower"), "completed")
-		
+		lvlInfo = yield(towerBackend.get_level_display_info(currentUser, "ratio-tower"), "completed")
+	
+	#separate last level attempted and no of correct answers
+	lastLvlAttempted = lvlInfo["last_level"]
+	correcNo = lvlInfo["correct_nos"]
+	
 	#open the door for levels attempted
 	_door_Manager(lastLvlAttempted)
 #	while i <= lastLvlAttempted:
@@ -67,8 +72,9 @@ func _ready():
 #		j += 1
 	#shows the stars
 	towerId = "numbers-tower"
-	correcNo = yield(towerBackend.get_correct_for_tower_by_student(currentUser, towerId), "completed")
+	#correcNo = yield(towerBackend.get_correct_for_tower_by_student(currentUser, towerId), "completed")
 	print("correctNo:", correcNo)
+	print("last lvl attempted:", lastLvlAttempted)
 	#correcNo = [2,3]
 	_star_Manager(correcNo)
 	
@@ -88,8 +94,10 @@ func _on_NormalLevelDoor_pressed():
 	GlobalArray.playerPosition = currentLoc
 	
 	#get the current level
-	nowAtLevel = yield(towerBackend.get_last_level_attempted(currentUser, "numbers-tower"), "completed")#+1
+	#nowAtLevel = yield(towerBackend.get_last_level_attempted(currentUser, "numbers-tower"), "completed")#+1
 	#nowAtLevel = 3 #need to change
+	print("onNormalDoor last level attempted: ", lastLvlAttempted)
+	nowAtLevel = lastLvlAttempted + 1
 	if nowAtLevel < 10:
 		strNowAtLevel = "0" + String(nowAtLevel)
 	else:

@@ -8,6 +8,10 @@ var ansCorrect = false
 
 var currentUser
 
+var timer = 0 # To start timer
+var timeTaken
+var pauseScreen = false
+
 var correctAnsPos
 var correctAns
 var solution
@@ -87,6 +91,11 @@ func init():
 #	$Qn1/AnsWrongMsg.show()
 #	$Qn1/AnsButton.show()
 #	$Qn1/NextButton.show()
+
+func _process(delta):
+	if pauseScreen == false:
+		timer += delta
+		$Timer.text = "Timer: %ss" % stepify(timer,1)
 	
 func _on_A_pressed():
 	if aIsCorrect:
@@ -95,9 +104,12 @@ func _on_A_pressed():
 	else:
 		$Qn3/AnsWrongMsg.show()	
 	$Qn3/AnsButton.show()
+	
+	pauseScreen = true
+	timeTaken = stepify(timer,1)
 	submitAttempts = {
 		"correct": ansCorrect,
-		"duration": 60,
+		"duration": timeTaken,
 		"questionID": qnId
 	}
 	$NormalLvlDoorOpen.show()
@@ -113,9 +125,12 @@ func _on_B_pressed():
 	else:
 		$Qn3/AnsWrongMsg.show()
 	$Qn3/AnsButton.show()
+	
+	pauseScreen = true
+	timeTaken = stepify(timer,1)
 	submitAttempts = {
 		"correct": ansCorrect,
-		"duration": 60,
+		"duration": timeTaken,
 		"questionID": qnId
 	}
 	$NormalLvlDoorOpen.show()
@@ -130,9 +145,12 @@ func _on_C_pressed():
 	else:
 		$Qn3/AnsWrongMsg.show()	
 	$Qn3/AnsButton.show()
+	
+	pauseScreen = true
+	timeTaken = stepify(timer,1)
 	submitAttempts = {
 		"correct": ansCorrect,
-		"duration": 60,
+		"duration": timeTaken,
 		"questionID": qnId
 	}
 	$NormalLvlDoorOpen.show()
@@ -147,9 +165,12 @@ func _on_D_pressed():
 	else:
 		$Qn3/AnsWrongMsg.show()
 	$Qn3/AnsButton.show()
+	
+	pauseScreen = true
+	timeTaken = stepify(timer,1)
 	submitAttempts = {
 		"correct": ansCorrect,
-		"duration": 60,
+		"duration": timeTaken,
 		"questionID": qnId
 	}
 	$NormalLvlDoorOpen.show()

@@ -13,6 +13,10 @@ var explanation
 
 var currentUser
 
+var timer = 0 # To start timer
+var timeTaken
+var pauseScreen = false
+
 var levelId
 var qnId
 var questionBank: Array
@@ -78,7 +82,15 @@ func init(qnBank):
 	
 	#var qnBody = qnDescription["questionBody"]
 	#print(qnBody)
-	
+
+func _process(delta):
+	if pauseScreen == false:
+		timer += delta
+		$Timer.text = "Timer: %ss" % stepify(timer,1)
+#	elif timer <= 0:
+#		$Timer.text = "Timer: %ss" % stepify(timer,1)
+#		pauseScreen = true
+		
 func _on_A_pressed():
 	if aIsCorrect:
 		$Qn1/AnsCorrectMsg.show()
@@ -87,12 +99,16 @@ func _on_A_pressed():
 		$Qn1/AnsWrongMsg.show()	
 	$Qn1/AnsButton.show()
 	$Qn1/NextButton.show()
+	
+	pauseScreen = true
+	timeTaken = stepify(timer,1)
 	submitAttempts = {
 		"correct": ansCorrect,
-		"duration": 60,
+		"duration": timeTaken,
 		"questionID": qnId
 	}
 	print(submitAttempts)
+	print("Time taken: ", timeTaken)
 	GlobalArray.anwsers.append(submitAttempts)
 	print(GlobalArray.anwsers)
 	#yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
@@ -105,9 +121,12 @@ func _on_B_pressed():
 		$Qn1/AnsWrongMsg.show()
 	$Qn1/AnsButton.show()
 	$Qn1/NextButton.show()
+	
+	pauseScreen = true
+	timeTaken = stepify(timer,1)
 	submitAttempts = {
 		"correct": ansCorrect,
-		"duration": 60,
+		"duration": timeTaken,
 		"questionID": qnId
 	}
 	print(submitAttempts)
@@ -122,9 +141,12 @@ func _on_C_pressed():
 		$Qn1/AnsWrongMsg.show()	
 	$Qn1/AnsButton.show()
 	$Qn1/NextButton.show()
+	
+	pauseScreen = true
+	timeTaken = stepify(timer,1)
 	submitAttempts = {
 		"correct": ansCorrect,
-		"duration": 60,
+		"duration": timeTaken,
 		"questionID": qnId
 	}
 	print(submitAttempts)
@@ -139,9 +161,12 @@ func _on_D_pressed():
 		$Qn1/AnsWrongMsg.show()
 	$Qn1/AnsButton.show()
 	$Qn1/NextButton.show()
+	
+	pauseScreen = true
+	timeTaken = stepify(timer,1)
 	submitAttempts = {
 		"correct": ansCorrect,
-		"duration": 60,
+		"duration": timeTaken,
 		"questionID": qnId
 	}
 	print(submitAttempts)

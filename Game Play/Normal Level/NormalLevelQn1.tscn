@@ -284,6 +284,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Timer" type="Label" parent="."]
+margin_left = 1651.88
+margin_top = 92.3058
+margin_right = 1697.88
+margin_bottom = 116.306
+rect_scale = Vector2( 3, 3 )
+align = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="pressed" from="Qn1/NextButton" to="." method="_on_NextButton_pressed"]
 [connection signal="pressed" from="Qn1/AnsButton" to="." method="_on_ExplanationButton_pressed"]
 [connection signal="pressed" from="OptionA" to="." method="_on_A_pressed"]
