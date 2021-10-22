@@ -29,6 +29,8 @@ func init(stuID, arenaID, type):
 # Called when the node enters the scene tree for the first time.
 func _ready(): 
 	$ScorePopup.hide()
+	$MaxAttemptPopup.hide()
+	
 #	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
 	
 	if arenaType == 'challenge':
@@ -36,16 +38,21 @@ func _ready():
 		$Loading.hide()
 		questions = challenge['questionList']
 		duration = 600
+		_run_arena_levels()
 	elif arenaType == 'quiz':
 		quiz = yield(QuizBackend.get_quiz(id), "completed")
 		questions = quiz['questions']
 		duration = quiz['levelDuration']
 		$Loading.hide()
-#		var currAttempts = yield(QuizBackend.check_max_attempt_reached(Globals.currUser.userId, id), "completed") # this fxn is not working
-#		if currAttempts:
-#			$Popup.show() 
-#			$Game.hide()
+		var currAttempts = yield(QuizBackend.check_max_attempt_reached(Globals.currUser.userId, id), "completed") # this fxn is not working
+		if currAttempts:
+			$MaxAttemptPopup.show() 
+		else:
+			_run_arena_levels()
 	
+	
+
+func _run_arena_levels():
 	# reset score & attempt
 	Globals.score = 0
 	Globals.attempt = []
@@ -150,8 +157,8 @@ func _ready():
 			# can display score before navigating back
 			ChallengeBackend.updateChallengeResult(id, Globals.score, time_taken, Globals.currUser.userId)
 			attempt_submitted = true
-	
-	
+
+
 # warning-ignore:unused_argument
 func _process(delta):
 	$Background/TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Background/Timer.time_left / 60), int($Background/Timer.time_left) % 60]
