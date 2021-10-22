@@ -6,6 +6,7 @@ var clearlvl
 var clearedLvl
 
 var currentUser
+var towerId
 
 var lastLvlAttempted
 var correcNo: Array
@@ -28,6 +29,18 @@ func _ready():
 	$lvl2Stars/star1.hide()
 	$lvl2Stars/star2.hide()
 	$lvl2Stars/star3.hide()
+	$lvl3Stars/star1.hide()
+	$lvl3Stars/star2.hide()
+	$lvl3Stars/star3.hide()
+	$lvl4Stars/star1.hide()
+	$lvl4Stars/star2.hide()
+	$lvl4Stars/star3.hide()
+	$lvl5Stars/star1.hide()
+	$lvl5Stars/star2.hide()
+	$lvl5Stars/star3.hide()
+	$lvl6Stars/star1.hide()
+	$lvl6Stars/star2.hide()
+	$lvl6Stars/star3.hide()
 
 	currentUser = Globals.currUser['userId']
 	print(currentUser)
@@ -53,7 +66,8 @@ func _ready():
 #		lockedDoor.disabled = true
 #		j += 1
 	#shows the stars
-	correcNo = yield(towerBackend.get_correct_for_tower_by_student(currentUser, GlobalArray.nowAtTower), "completed")
+	towerId = "numbers-tower"
+	correcNo = yield(towerBackend.get_correct_for_tower_by_student(currentUser, towerId), "completed")
 	print("correctNo:", correcNo)
 	#correcNo = [2,3]
 	_star_Manager(correcNo)
@@ -124,7 +138,7 @@ func _on_BossLevelDoor_pressed():
 
 func _door_Manager(lastLvlAttempted):#1
 	var i = 1
-	#0
+	#open the attempted doors
 	while i <= lastLvlAttempted:
 		var closedDoor = get_node("Door" + String(i))
 		closedDoor.hide()
@@ -143,9 +157,10 @@ func _star_Manager(ansArray):
 	var showStars
 	while k < len(correcNo):
 		showStars = correcNo[k]
-		var locNode = "lvl" + String(k+1) + "Stars/" + "star" + String(showStars)
-		print(locNode)
-		#stars = get_node("lvl1Stars/1star")
-		var stars = get_node(locNode)
-		stars.show()
+		if correcNo[k] > 0:
+			var locNode = "lvl" + String(k+1) + "Stars/" + "star" + String(showStars)
+			print(locNode)
+			#stars = get_node("lvl1Stars/1star")
+			var stars = get_node(locNode)
+			stars.show()
 		k += 1

@@ -102,9 +102,9 @@ func _on_A_pressed():
 	}
 	$NormalLvlDoorOpen.show()
 	print(submitAttempts)
-	attempts.append(submitAttempts)
-	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
-#	towerBackend.submit_attempt()
+	GlobalArray.anwsers.append(submitAttempts)
+	print(GlobalArray.anwsers)
+	yield(towerBackend.submit_attempt(currentUser, GlobalArray.anwsers), "completed")
 
 func _on_B_pressed():
 	if bIsCorrect:
@@ -120,9 +120,8 @@ func _on_B_pressed():
 	}
 	$NormalLvlDoorOpen.show()
 	print(submitAttempts)
-	attempts.append(submitAttempts)
-	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
-#	towerBackend.submit_attempt()
+	GlobalArray.anwsers.append(submitAttempts)
+	yield(towerBackend.submit_attempt(currentUser, GlobalArray.anwsers), "completed")
 		
 func _on_C_pressed():
 	if cIsCorrect:
@@ -138,9 +137,8 @@ func _on_C_pressed():
 	}
 	$NormalLvlDoorOpen.show()
 	print(submitAttempts)
-	attempts.append(submitAttempts)
-	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
-#	towerBackend.submit_attempt()
+	GlobalArray.anwsers.append(submitAttempts)
+	yield(towerBackend.submit_attempt(currentUser, GlobalArray.anwsers), "completed")
 
 func _on_D_pressed():
 	if dIsCorrect:
@@ -156,9 +154,8 @@ func _on_D_pressed():
 	}
 	$NormalLvlDoorOpen.show()
 	print(submitAttempts)
-	attempts.append(submitAttempts)
-	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
-#	towerBackend.submit_attempt()
+	GlobalArray.anwsers.append(submitAttempts)
+	yield(towerBackend.submit_attempt(currentUser, GlobalArray.anwsers), "completed")
 		
 func _on_ExplanationButton_pressed():
 	$Explanation.show()

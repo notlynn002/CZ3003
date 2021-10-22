@@ -787,7 +787,7 @@ scale = Vector2( 0.354829, 0.354829 )
 texture = ExtResource( 20 )
 
 [node name="lvl5Stars" type="StaticBody2D" parent="."]
-position = Vector2( 1088.1, 23.3082 )
+position = Vector2( 1093.13, -4.41006 )
 
 [node name="star1" type="Sprite" parent="lvl5Stars"]
 position = Vector2( 96.4229, 422.865 )

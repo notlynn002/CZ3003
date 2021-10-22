@@ -24,3 +24,4 @@ var nowAtTower
 var qnBody
 var question
 var questionBank: Array
+var anwsers: Array

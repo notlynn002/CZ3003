@@ -90,8 +90,8 @@ func _on_A_pressed():
 		"questionID": qnId
 	}
 	print(submitAttempts)
-	attempts.append(submitAttempts)
-	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
+	GlobalArray.anwsers.append(submitAttempts)
+	#yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 
 func _on_B_pressed():
 	if bIsCorrect:
@@ -107,8 +107,8 @@ func _on_B_pressed():
 		"questionID": qnId
 	}
 	print(submitAttempts)
-	attempts.append(submitAttempts)
-	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
+	GlobalArray.anwsers.append(submitAttempts)
+	#yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 		
 func _on_C_pressed():
 	if cIsCorrect:
@@ -124,8 +124,8 @@ func _on_C_pressed():
 		"questionID": qnId
 	}
 	print(submitAttempts)
-	attempts.append(submitAttempts)
-	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
+	GlobalArray.anwsers.append(submitAttempts)
+	#yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 
 func _on_D_pressed():
 	if dIsCorrect:
@@ -141,8 +141,8 @@ func _on_D_pressed():
 		"questionID": qnId
 	}
 	print(submitAttempts)
-	attempts.append(submitAttempts)
-	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
+	GlobalArray.anwsers.append(submitAttempts)
+	#yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 		
 func _on_ExplanationButton_pressed():
 	$Explanation.show()

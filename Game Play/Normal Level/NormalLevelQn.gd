@@ -24,6 +24,8 @@ var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 var normalLevelQn2 = preload("res://Game Play/Normal Level/NormalLevelQn2Updated.tscn").instance()
 
 func _ready():
+	GlobalArray.anwsers = []
+	
 	$NormalLvlDoorOpen.hide()
 	$Qn1/AnsCorrectMsg.hide()
 	$Qn1/AnsWrongMsg.hide()
@@ -91,9 +93,9 @@ func _on_A_pressed():
 		"questionID": qnId
 	}
 	print(submitAttempts)
-	attempts.append(submitAttempts)
-	print(attempts)
-	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
+	GlobalArray.anwsers.append(submitAttempts)
+	print(GlobalArray.anwsers)
+	#yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 
 func _on_B_pressed():
 	if bIsCorrect:
@@ -109,8 +111,8 @@ func _on_B_pressed():
 		"questionID": qnId
 	}
 	print(submitAttempts)
-	attempts.append(submitAttempts)
-	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
+	GlobalArray.anwsers.append(submitAttempts)
+	#yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 		
 func _on_C_pressed():
 	if cIsCorrect:
@@ -126,8 +128,8 @@ func _on_C_pressed():
 		"questionID": qnId
 	}
 	print(submitAttempts)
-	attempts.append(submitAttempts)
-	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
+	GlobalArray.anwsers.append(submitAttempts)
+	#yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 
 func _on_D_pressed():
 	if dIsCorrect:
@@ -143,8 +145,8 @@ func _on_D_pressed():
 		"questionID": qnId
 	}
 	print(submitAttempts)
-	attempts.append(submitAttempts)
-	yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
+	GlobalArray.anwsers.append(submitAttempts)
+	#yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 		
 func _on_ExplanationButton_pressed():
 	$Explanation.show()
