@@ -9,9 +9,10 @@ var character
 var questions
 var challenge
 var quiz
-var timer_started: bool = false # true if timer has been started, false otherwise
+var is_challengee: bool
 var attempt_submitted: bool = false # true if attempt for quiz/challenge has been submitted, false otherwise
 
+signal attempt_signal # emitted when all necessary yield funcions have finished running
 
 export (PackedScene) var King
 export (PackedScene) var Archer
@@ -20,10 +21,11 @@ export (PackedScene) var Samurai
 export (PackedScene) var Question
 export (PackedScene) var Answer
 
-func init(stuID, arenaID, type):
+func init(stuID, arenaID, type, type_args=false):
 	id = arenaID
 	studentID = stuID
 	arenaType = type
+	is_challengee = type_args
 	
 
 # Called when the node enters the scene tree for the first time.
@@ -87,8 +89,8 @@ func _run_arena_levels():
 	
 				
 	$Background/Timer.set_wait_time(duration)
+	$Background/Timer.connect("timeout", self, "_submit_attempts")
 	$Background/Timer.start()
-	timer_started = true
 	$Background/TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Background/Timer.time_left / 60), int($Background/Timer.time_left) % 60]
 	
 	for i in range(questions.size()):
@@ -142,38 +144,37 @@ func _run_arena_levels():
 	# check type & see if is quiz or challenge
 	# save score and time to corresponsing db
 	# navigate to home page
+	_submit_attempts(time_taken)
+
+
+func _submit_attempts(time_taken=0):
 	if not attempt_submitted:
 		if arenaType == 'quiz':
 			
 			var attempt_record = {}
 			for i in range(Globals.attempt.size()):
 				attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
-			QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, time_taken, attempt_record)
-			attempt_submitted = true
+			yield(QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, time_taken, attempt_record), "completed")
 	#		print(attempt_record)
 
 		elif arenaType == 'challenge':
 			print("time_taken: " + str(time_taken))
 			# can display score before navigating back
-			ChallengeBackend.updateChallengeResult(id, Globals.score, time_taken, Globals.currUser.userId)
-			attempt_submitted = true
+			yield(ChallengeBackend.updateChallengeResult(id, Globals.score, time_taken, Globals.currUser.userId), "completed")
+			# send notification to challenger
+			
+			if is_challengee:
+				yield(NotificationsBackend.send_challenge_completed_notification(id, Globals.currUser.userId), "completed")
+			
+		attempt_submitted = true
+		emit_signal("attempt_signal")
 
 
 # warning-ignore:unused_argument
 func _process(delta):
 	$Background/TimerLabel.text = "Time left: " +  "%d:%02d" % [floor($Background/Timer.time_left / 60), int($Background/Timer.time_left) % 60]
 	
-	# terminate game when time's up
-	if timer_started and ($Background/Timer.time_left <= 0) and (not attempt_submitted):
-		if arenaType == 'quiz':
-			var attempt_record = {}
-			for i in range(Globals.attempt.size()):
-				attempt_record[Globals.attempt[i][0]] = Globals.attempt[i][1]
-				
-			yield(QuizBackend.submit_quiz_attempt(Globals.currUser.userId, id, 0, attempt_record), "completed")
-		elif arenaType == 'challenge':
-			yield(ChallengeBackend.updateChallengeResult(id, Globals.score, 0, Globals.currUser.userId), "completed")
-		attempt_submitted = true
+
 			
 func _on_CloseButton_pressed():
 	var root = get_tree().root
@@ -187,6 +188,19 @@ func _on_CloseButton_pressed():
 
 
 func _on_CloseScorePopupButton_pressed():
+	# if yield functions have not finished running, wait for them
+	if not attempt_submitted:
+		$Loading.show()
+		$Loading.raise()
+		yield(self, "attempt_signal")
+	# quit scene
+	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
+	self.queue_free()
+	get_node('/root/ArenaPage').queue_free()
+
+
+func _on_CloseMaxAttemptPopupButton_pressed():
+	# quit scene
 	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
 	self.queue_free()
 	get_node('/root/ArenaPage').queue_free()

@@ -173,7 +173,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CloseScorePopupButton" type="TextureButton" parent="MaxAttemptPopup"]
+[node name="CloseMaxAttemptPopupButton" type="TextureButton" parent="MaxAttemptPopup"]
 margin_left = 728.0
 margin_top = 63.0
 margin_right = 807.0
@@ -184,4 +184,4 @@ __meta__ = {
 }
 
 [connection signal="pressed" from="ScorePopup/CloseScorePopupButton" to="." method="_on_CloseScorePopupButton_pressed"]
-[connection signal="pressed" from="MaxAttemptPopup/CloseScorePopupButton" to="." method="_on_CloseScorePopupButton_pressed"]
+[connection signal="pressed" from="MaxAttemptPopup/CloseMaxAttemptPopupButton" to="." method="_on_CloseMaxAttemptPopupButton_pressed"]

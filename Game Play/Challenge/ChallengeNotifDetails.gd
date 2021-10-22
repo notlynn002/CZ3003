@@ -4,14 +4,22 @@ extends Control
 # Declare member variables here. Examples:
 var notifType
 var notifMsg
-var id
+var challenge_id
+var challengee_id
 
 
 # Called when the node enters the scene tree for the first time.
 func init(nType, nMsg, dataID):
 	notifType = nType
 	notifMsg = nMsg
-	id = dataID
+	# User is the challenger
+	if dataID is Dictionary:
+		challenge_id = dataID["challengeID"]
+		challengee_id = dataID["challengeeID"]
+	# User is the challengee
+	else:
+		challenge_id = dataID
+		challengee_id = Globals.currUser.userId
 
 		
 	
@@ -37,21 +45,20 @@ func _ready():
 
 func _on_AcceptButton_pressed():
 	var arenaPage = preload("res://Game Play/Arena/ArenaPage.tscn").instance()
-	NotificationsBackend.send_challenge_completed_notification(id, Globals.currUser.userId)
-	arenaPage.init(Globals.currUser.userId, id, "challenge")
+	arenaPage.init(Globals.currUser.userId, challenge_id, "challenge", true)
 	get_tree().get_root().add_child(arenaPage)
 	self.queue_free()
 	get_node('/root/ChallengeNotifPage').queue_free()
 
 
 func _on_DeclineButton_pressed():
-	NotificationsBackend.send_challenge_declined_notification(id, Globals.currUser.userId)
+	NotificationsBackend.send_challenge_declined_notification(challenge_id, Globals.currUser.userId)
 	self.queue_free() # stop displaying this notification
 	
 
 
 func _on_DetailsButton_pressed():
-	var challenge_result = yield(ChallengeBackend.getChallengeResult(id, Globals.currUser.userId), "completed")
+	var challenge_result = yield(ChallengeBackend.getChallengeResult(challenge_id, challengee_id), "completed")
 	var scene = preload("res://Game Play/Challenge/ChallengeResultsPage.tscn").instance()
 	scene.init(challenge_result['winnerName'], challenge_result['loserName'], challenge_result['winnerScore'], challenge_result['loserScore'], challenge_result['winnerTime'], challenge_result['loserTime']) # init root node
 	get_tree().get_root().add_child(scene)

@@ -145,7 +145,7 @@ static func send_challenge_completed_notification(challengeID, challengeeId):
 	var challengeResult = yield(ChallengeBackend.getChallengeResult(challengeID, challengeeId), 'completed')
 	#if challengee wins
 	if(challengeResult['winnerId'] == user.doc_name):
-		notification['message'] = challengeeName + "has won you in a challenge!"
+		notification['message'] = challengeeName + " has won you in a challenge!"
 	else:
 		notification['message'] = 'You have won ' + challengeeName + " in a challenge!"
 	
@@ -186,9 +186,9 @@ static func send_challenge_completed_notification(challengeID, challengeeId):
 	print('Notification sent!')
 	
 func _on_Send_challenge_completed_notification_button_up():
-	var challengeId = "0rYVBTX4yqIgw7GPwtM7"
-	var challengeeId = 'O4yPXvUZCDaLN0gx2gQsMbPC76o2'
-	send_challenge_completed_notification(challengeId, challengeeId)
+	var challengeId = "u7nUfVKj1Hr6OhWtJPUw"
+	var challengeeId = 'Se6NX6q628Se0JBQErC3FkxMEFH3'
+	yield(send_challenge_completed_notification(challengeId, challengeeId), "completed")
 
 # When challenge is declined, send notification  to challenger
 static func send_challenge_declined_notification(challengeID, challengeeId):
