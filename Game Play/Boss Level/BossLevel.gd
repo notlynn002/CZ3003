@@ -290,8 +290,6 @@ func game_ended(condition):
 	$Question/AnsMsg.hide()
 	$Question/NextButton.hide()
 	$Question/NextText.hide()
-	if attempts.size() > 0:
-		towerBackend.submit_attempt(currentUser, attempts)
 	if condition == "success":
 		$Question/EndBossMsg.show()
 		$Question/EndBossMsg/EndBossText.text = "You have passed the boss level!"
@@ -308,6 +306,7 @@ func game_ended(condition):
 		$BossLvlDoorOpen.show()
 		$Question/AnsButton.show()
 		$Question/AnsText.show()
+		yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 	elif condition == "failbyhealth":
 		$GameOver.show()
 		$AnimationPlayer.play("slime-attack")
