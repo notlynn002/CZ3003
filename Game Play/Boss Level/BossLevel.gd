@@ -36,7 +36,7 @@ var attempts: Array
 
 var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 
-var timer = 5.0 # To be changed to 10.0 once testing has been completed
+var timer = 10.0 # To be changed to 10.0 once testing has been completed
 var timeTaken
 var currentHealth = 3 setget update_bars
 var qnNum = 1
@@ -53,25 +53,25 @@ func _ready():
 	if character == "king":
 		var king = King.instance() # create an instance of king object
 		# initialise starting position on map
-		king.position.x = 779.225
+		king.position.x = 132.451
 		king.position.y = 841.167
 		add_child(king) # add king to scene
 	elif character == "archer":
 		var archer = Archer.instance() # create an instance of archer object
 		# initialise starting position on map
-		archer.position.x = 779.225
+		archer.position.x = 132.451
 		archer.position.y = 841.167
 		add_child(archer) # add archer to scene
 	elif character == "huntress":
 		var huntress = Huntress.instance() # create an instance of huntress object
 		# initialise starting position on map
-		huntress.position.x = 779.225
+		huntress.position.x = 132.451
 		huntress.position.y = 841.167
 		add_child(huntress) # add huntress to scene
 	elif character == "samurai":
 		var samurai = Samurai.instance() # create an instance of samurai object
 		# initialise starting position on map
-		samurai.position.x = 779.225
+		samurai.position.x = 132.451
 		samurai.position.y = 841.167
 		add_child(samurai) # add samurai to scene
 	self.currentHealth = 3
