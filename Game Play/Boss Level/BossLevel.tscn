@@ -148,14 +148,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 29 ), ExtResource( 28 ), ExtResource( 30 ), ExtResource( 17 ) ],
-"loop": true,
-"name": "die",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 34 ), ExtResource( 33 ), ExtResource( 32 ), ExtResource( 36 ), ExtResource( 35 ) ],
 "loop": true,
 "name": "attack",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 29 ), ExtResource( 28 ), ExtResource( 30 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "die",
 "speed": 5.0
 } ]
 
@@ -222,7 +222,7 @@ position = Vector2( 1838.09, 954.826 )
 
 [node name="Barrier1" type="StaticBody2D" parent="TowerBackground"]
 pause_mode = 2
-position = Vector2( 1684.71, 337.887 )
+position = Vector2( 1032.71, 337.887 )
 
 [node name="Sprite" type="Sprite" parent="TowerBackground/Barrier1"]
 pause_mode = 2
@@ -237,7 +237,7 @@ shape = SubResource( 1 )
 
 [node name="Barrier2" type="StaticBody2D" parent="TowerBackground"]
 pause_mode = 2
-position = Vector2( 1684.71, 337.887 )
+position = Vector2( 1032.71, 337.887 )
 
 [node name="Sprite" type="Sprite" parent="TowerBackground/Barrier2"]
 pause_mode = 2
@@ -252,7 +252,7 @@ shape = SubResource( 1 )
 
 [node name="Barrier3" type="StaticBody2D" parent="TowerBackground"]
 pause_mode = 2
-position = Vector2( 807.083, 698.858 )
+position = Vector2( 155.083, 698.858 )
 
 [node name="Sprite" type="Sprite" parent="TowerBackground/Barrier3"]
 pause_mode = 2
@@ -277,9 +277,9 @@ __meta__ = {
 }
 
 [node name="HealthBar" parent="." instance=ExtResource( 12 )]
-margin_left = 719.721
+margin_left = 59.721
 margin_top = 679.182
-margin_right = 884.721
+margin_right = 224.721
 margin_bottom = 734.182
 
 [node name="Question" type="TextureRect" parent="."]
@@ -724,7 +724,7 @@ anims/slime-die = SubResource( 4 )
 anims/slime-idle = SubResource( 5 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 1160, 872 )
+position = Vector2( 1515, 872 )
 scale = Vector2( 5, 4 )
 frames = SubResource( 6 )
 animation = "attack"
