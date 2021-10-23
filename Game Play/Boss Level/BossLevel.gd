@@ -36,7 +36,7 @@ var attempts: Array
 
 var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 
-var timer = 600.0 # To be changed to 600.0 once testing has been completed
+var timer = 5.0 # To be changed to 10.0 once testing has been completed
 var timeTaken
 var currentHealth = 3 setget update_bars
 var qnNum = 1
@@ -88,8 +88,7 @@ func _ready():
 	$GameOver/QuitButton/QuitText.hide()
 	$GameOver/RetryButton.hide()
 	$GameOver/RetryButton/RetryText.hide()
-	$monster_alive.show()
-	$monster_dead.hide()
+
 	
 	prepare_question(qnNum)
 	
@@ -291,7 +290,8 @@ func game_ended(condition):
 	$Question/AnsMsg.hide()
 	$Question/NextButton.hide()
 	$Question/NextText.hide()
-	towerBackend.submit_attempt(currentUser, attempts)
+	if attempts.size() > 0:
+		towerBackend.submit_attempt(currentUser, attempts)
 	if condition == "success":
 		$Question/EndBossMsg.show()
 		$Question/EndBossMsg/EndBossText.text = "You have passed the boss level!"
@@ -302,14 +302,17 @@ func game_ended(condition):
 		$TowerBackground/Barrier2/CollisionShape2D.remove_and_skip()
 		$TowerBackground/Barrier3.hide()
 		$TowerBackground/Barrier3/CollisionShape2D.remove_and_skip()
+		$AnimationPlayer.play("slime-die")
+		yield($AnimationPlayer, "animation_finished")
 		$BossLvlDoorClosed.hide()
 		$BossLvlDoorOpen.show()
-		$monster_alive.hide()
-		$monster_dead.show()
 		$Question/AnsButton.show()
 		$Question/AnsText.show()
 	elif condition == "failbyhealth":
 		$GameOver.show()
+		$AnimationPlayer.play("slime-attack")
+		yield($AnimationPlayer, "animation_finished")
+		$AnimationPlayer.play("slime-idle")
 		$GameOver/GameOverText.text = "YOU FAILED...\nYou have run out of lives"
 		$GameOver/QuitButton.show()
 		$GameOver/QuitButton/QuitText.show()
@@ -317,6 +320,9 @@ func game_ended(condition):
 		$GameOver/RetryButton/RetryText.show()
 	elif condition == "failbytime":
 		$GameOver.show()
+		$AnimationPlayer.play("slime-attack")
+		yield($AnimationPlayer, "animation_finished")
+		$AnimationPlayer.play("slime-idle")
 		$GameOver/GameOverText.text = "YOU FAILED...\nYou have run out of time"
 		$GameOver/QuitButton.show()
 		$GameOver/QuitButton/QuitText.show()
@@ -332,7 +338,7 @@ func _process(delta):
 	if timer > 0 && pauseScreen == false:
 		timer -= delta
 		$Timer.text = "Timer: %ss" % stepify(timer,1)
-	elif timer <= 0:
+	elif timer <= 0 && pauseScreen == false:
 		$Timer.text = "Timer: %ss" % stepify(timer,1)
 		game_ended("failbytime")
 		pauseScreen = true
