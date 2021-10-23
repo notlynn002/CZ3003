@@ -1,18 +1,25 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Game Play/Normal Level/NormalLevelQn3Updated.gd" type="Script" id=1]
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=2]
 [ext_resource path="res://sprites/buttons or icons/rectangular button.png" type="Texture" id=3]
 [ext_resource path="res://sprites/buttons or icons/rectangular popup.png" type="Texture" id=4]
 [ext_resource path="res://sprites/buttons or icons/x button.png" type="Texture" id=5]
-[ext_resource path="res://sprites/tower/open normal level door.png" type="Texture" id=6]
+[ext_resource path="res://Game Play/Normal Level/Qn3DoorOpen.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Player/Samurai.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Player/King.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Game Play/Normal Level/TowerBricks.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Game Play/Normal Level/NormalLvlDoorClosed.tscn" type="PackedScene" id=10]
 [ext_resource path="res://sprites/tower/star.png" type="Texture" id=11]
+[ext_resource path="res://Player/Huntress.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Player/Archer.tscn" type="PackedScene" id=13]
 
 [node name="NormalLevelQn3" type="CanvasLayer"]
 script = ExtResource( 1 )
+King = ExtResource( 8 )
+Archer = ExtResource( 13 )
+Huntress = ExtResource( 12 )
+Samurai = ExtResource( 7 )
 
 [node name="TowerBackground" type="TextureRect" parent="."]
 margin_left = -2.1189
@@ -65,9 +72,6 @@ position = Vector2( 1545.54, 954.826 )
 
 [node name="TowerBricks14" parent="TowerBackground" instance=ExtResource( 9 )]
 position = Vector2( 1838.09, 954.826 )
-
-[node name="King" parent="." instance=ExtResource( 8 )]
-position = Vector2( 35.6762, 839.58 )
 
 [node name="Qn3" type="TextureRect" parent="."]
 margin_left = 247.0
@@ -134,17 +138,6 @@ __meta__ = {
 
 [node name="NormalLvlDoorClosed" parent="." instance=ExtResource( 10 )]
 position = Vector2( 1726.86, 837.163 )
-
-[node name="NormalLvlDoorOpen" type="TextureButton" parent="."]
-margin_left = 1640.55
-margin_top = 726.917
-margin_right = 1940.55
-margin_bottom = 1060.92
-rect_scale = Vector2( 0.6, 0.6 )
-texture_normal = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="QuestionBody" type="Label" parent="."]
 margin_left = 464.0
@@ -290,8 +283,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="NormalLvlDoorOpen" parent="." instance=ExtResource( 6 )]
+position = Vector2( 1726.09, 818.949 )
+
 [connection signal="pressed" from="Qn3/AnsButton" to="." method="_on_ExplanationButton_pressed"]
-[connection signal="pressed" from="NormalLvlDoorOpen" to="." method="_on_Open_Door_pressed"]
 [connection signal="pressed" from="OptionA" to="." method="_on_A_pressed"]
 [connection signal="pressed" from="OptionB" to="." method="_on_B_pressed"]
 [connection signal="pressed" from="OptionC" to="." method="_on_C_pressed"]
