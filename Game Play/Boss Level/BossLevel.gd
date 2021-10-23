@@ -6,9 +6,6 @@ export (PackedScene) var Huntress
 export (PackedScene) var Samurai
 
 # Declare variables
-
-var has_ended = false
-
 var currentUser
 var character
 
@@ -39,7 +36,7 @@ var attempts: Array
 
 var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 
-var timer = .0 # To be changed to 10.0 once testing has been completed
+var timer = 5.0 # To be changed to 10.0 once testing has been completed
 var timeTaken
 var currentHealth = 3 setget update_bars
 var qnNum = 1
@@ -289,14 +286,12 @@ func _on_OptionD_pressed():
 			game_ended("success")
 
 func game_ended(condition):
-	if has_ended:
-		return 
-	has_ended = true
 	pauseScreen = true
 	$Question/AnsMsg.hide()
 	$Question/NextButton.hide()
 	$Question/NextText.hide()
-	towerBackend.submit_attempt(currentUser, attempts)
+	if attempts.size() > 0:
+		towerBackend.submit_attempt(currentUser, attempts)
 	if condition == "success":
 		$Question/EndBossMsg.show()
 		$Question/EndBossMsg/EndBossText.text = "You have passed the boss level!"
@@ -343,7 +338,7 @@ func _process(delta):
 	if timer > 0 && pauseScreen == false:
 		timer -= delta
 		$Timer.text = "Timer: %ss" % stepify(timer,1)
-	elif timer <= 0:
+	elif timer <= 0 && pauseScreen == false:
 		$Timer.text = "Timer: %ss" % stepify(timer,1)
 		game_ended("failbytime")
 		pauseScreen = true
