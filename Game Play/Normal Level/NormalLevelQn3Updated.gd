@@ -187,7 +187,8 @@ func _on_ExitButton_pressed():
 	
 func _on_Open_Door_pressed():
 	#var TheRoot = get_node("/root")
-	$King.remove_and_skip()
-	var NextScene = load("res://Game Play/Normal Level/NormalLevel.tscn").instance()
-	var root = get_tree().root
-	root.add_child(NextScene)
+	#$King.remove_and_skip()
+#	var NextScene = load("res://Game Play/Normal Level/NormalLevel.tscn").instance()
+#	var root = get_tree().root
+#	root.add_child(NextScene)
+	get_tree().change_scene("res://Game Play/Normal Level/NormalLevel.tscn")
