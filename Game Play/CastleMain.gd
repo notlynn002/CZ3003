@@ -24,7 +24,7 @@ var normalLvlQn2 = preload("res://Game Play/Normal Level/NormalLevelQn2Updated.t
 var bossLvl = preload("res://Game Play/Boss Level/BossLevel.tscn").instance()
 
 func _ready():
-	$lvl1Stars/star1.hide()
+	$lvl1Stars/star1.hide() 
 	$lvl1Stars/star2.hide()
 	$lvl1Stars/star3.hide()
 	$lvl2Stars/star1.hide()
@@ -77,6 +77,9 @@ func _ready():
 	print("last lvl attempted:", lastLvlAttempted)
 	#correcNo = [2,3]
 	_star_Manager(correcNo)
+	
+	for door in get_tree().get_nodes_in_group("open_doors"):
+		door.connect("pressed", self, "_which_openDoor_pressed", [door])
 	
 func init(nowAtTower):
 	clearlvl = clearedLvl
@@ -174,4 +177,37 @@ func _star_Manager(ansArray):
 		k += 1
 
 func _block_Manager():
-	pass
+	if lastLvlAttempted == 5:
+		$TowerBackground/TowerBricks22.remove_and_skip()
+		$TowerBackground/BlockBrick.remove_and_skip()
+	if lastLvlAttempted == 10:
+		$TowerBackground2/BlockBrick.remove_and_skip()
+	if lastLvlAttempted == 15:
+		$TowerBackground2/TowerBricks22.remove_and_skip()
+		$TowerBackground2/BlockBrick2.remove_and_skip()
+	if lastLvlAttempted == 20:
+		$TowerBackground3/BlockBrick.remove_and_skip()
+	
+func _which_openDoor_pressed(door):
+	var door_name = door.name
+	print(door_name)
+	var doorName = door_name[8]
+	print(doorName)
+	
+	if int(doorName) < 10:
+		strNowAtLevel = "0" + doorName		
+	
+	#load qn from database
+	if GlobalArray.nowAtTower == "Numbers":
+		qnInDataBase = "numbers-" + strNowAtLevel
+	elif GlobalArray.nowAtTower == "Fraction":
+		qnInDataBase = "fraction-" + strNowAtLevel
+	elif GlobalArray.nowAtTower == "Ratio":
+		qnInDataBase = "ratio-" + strNowAtLevel
+	
+	#update & load the next scene 
+	qnOfLevel = yield(TowerBackend.get_questions_by_level(qnInDataBase),"completed")
+	GlobalArray.questionBank = qnOfLevel
+	normalLvlQn1.init(qnOfLevel)
+	get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
+	

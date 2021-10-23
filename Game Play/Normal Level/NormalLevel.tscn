@@ -2,14 +2,13 @@
 
 [ext_resource path="res://Game Play/Normal Level/TowerStaircase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/King.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Game Play/Normal Level/TowerDoorOpen.tscn" type="PackedScene" id=3]
+[ext_resource path="res://sprites/tower/open boss level door.png" type="Texture" id=3]
 [ext_resource path="res://Game Play/Normal Level/TowerBricks.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Game Play/CastleMain.gd" type="Script" id=5]
 [ext_resource path="res://sprites/tower/brick floor.png" type="Texture" id=6]
 [ext_resource path="res://sprites/tower/closed normal level door.png" type="Texture" id=7]
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=8]
 [ext_resource path="res://sprites/tower/closed  boss level door.png" type="Texture" id=9]
-[ext_resource path="res://Game Play/Boss Level/BossLevelDoorOpen.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Game Play/Normal Level/TowerStaircaseRev.tscn" type="PackedScene" id=11]
 [ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=12]
 [ext_resource path="res://sprites/buttons or icons/sound off icon.png" type="Texture" id=13]
@@ -20,6 +19,7 @@
 [ext_resource path="res://sprites/tower/star.png" type="Texture" id=18]
 [ext_resource path="res://sprites/tower/2 stars.png" type="Texture" id=19]
 [ext_resource path="res://sprites/tower/3 stars.png" type="Texture" id=20]
+[ext_resource path="res://sprites/tower/open normal level door.png" type="Texture" id=21]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31.4409, 144.539 )
@@ -92,7 +92,7 @@ position = Vector2( 1705.57, 958.306 )
 position = Vector2( 1987.57, 962.306 )
 
 [node name="TowerBricks22" parent="TowerBackground" instance=ExtResource( 4 )]
-position = Vector2( 1629.99, 619.546 )
+position = Vector2( 1631.99, 619.546 )
 rotation = 1.5708
 
 [node name="TowerBricks24" parent="TowerBackground" instance=ExtResource( 4 )]
@@ -149,7 +149,7 @@ position = Vector2( 1218.33, 794.698 )
 position = Vector2( 1500.33, 798.698 )
 
 [node name="TowerBricks31" parent="TowerBackground2" instance=ExtResource( 4 )]
-position = Vector2( 1655.99, 458.231 )
+position = Vector2( 1671.99, 458.231 )
 rotation = 1.5708
 
 [node name="TowerBricks32" parent="TowerBackground2" instance=ExtResource( 4 )]
@@ -226,86 +226,151 @@ texture = ExtResource( 6 )
 position = Vector2( 121.813, -26.3455 )
 shape = SubResource( 1 )
 
-[node name="TowerDoor1Open" parent="." instance=ExtResource( 3 )]
-position = Vector2( 103.826, 632.396 )
+[node name="openDoor1" type="TextureButton" parent="." groups=[
+"open_doors",
+]]
+margin_left = -8.96025
+margin_top = 516.52
+margin_right = 291.04
+margin_bottom = 850.52
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 21 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TowerDoor2Open" parent="." instance=ExtResource( 3 )]
-position = Vector2( 358.738, 631.077 )
+[node name="openDoor2" type="TextureButton" parent="." groups=[
+"open_doors",
+]]
+margin_left = 262.183
+margin_top = 513.48
+margin_right = 562.183
+margin_bottom = 847.48
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 21 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TowerDoor3Open" parent="." instance=ExtResource( 3 )]
-position = Vector2( 625.942, 628.882 )
+[node name="openDoor3" type="TextureButton" parent="." groups=[
+"open_doors",
+]]
+margin_left = 522.621
+margin_top = 521.247
+margin_right = 822.621
+margin_bottom = 855.247
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 21 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TowerDoor4Open" parent="." instance=ExtResource( 3 )]
-position = Vector2( 896.989, 630.477 )
+[node name="openDoor4" type="TextureButton" parent="." groups=[
+"open_doors",
+]]
+margin_left = 800.989
+margin_top = 520.452
+margin_right = 1100.99
+margin_bottom = 854.452
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 21 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TowerDoor5Open" parent="." instance=ExtResource( 10 )]
-position = Vector2( 1195.03, 632.109 )
+[node name="openDoor5" type="TextureButton" parent="." groups=[
+"open_doors",
+]]
+margin_left = 1088.05
+margin_top = 522.697
+margin_right = 1388.05
+margin_bottom = 856.697
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TowerDoor1Open2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1182.13, -1800.37 )
+[node name="openDoor6" type="TextureButton" parent="." groups=[
+"open_doors",
+]]
+margin_left = 1483.45
+margin_top = -105.126
+margin_right = 1783.45
+margin_bottom = 228.874
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 21 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TowerDoor2Open2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 885.693, -1811.69 )
+[node name="openDoor7" type="TextureButton" parent="." groups=[
+"open_doors",
+]]
+margin_left = 1208.32
+margin_top = -103.842
+margin_right = 1508.32
+margin_bottom = 230.158
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 21 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TowerDoor3Open2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 592.354, -1805.05 )
+[node name="openDoor8" type="TextureButton" parent="." groups=[
+"open_doors",
+]]
+margin_left = 940.175
+margin_top = -104.636
+margin_right = 1240.17
+margin_bottom = 229.363
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 21 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TowerDoor4Open2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 299.065, -1806.55 )
+[node name="openDoor9" type="TextureButton" parent="." groups=[
+"open_doors",
+]]
+margin_left = 675.766
+margin_top = -107.332
+margin_right = 975.766
+margin_bottom = 226.668
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 21 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TowerDoor5Open2" parent="." instance=ExtResource( 10 )]
-position = Vector2( 1476.68, -1799.33 )
-
-[node name="TowerDoor1Open3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 653.987, -1170.7 )
-
-[node name="TowerDoor2Open3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 908.899, -1172.02 )
-
-[node name="TowerDoor3Open3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1176.1, -1174.22 )
-
-[node name="TowerDoor4Open3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1447.15, -1172.62 )
-
-[node name="TowerDoor5Open3" parent="." instance=ExtResource( 10 )]
-position = Vector2( 1726.19, -1174.99 )
-
-[node name="TowerDoor1Open4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1319.73, -597.396 )
-
-[node name="TowerDoor2Open4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1036.52, -597.705 )
-
-[node name="TowerDoor3Open4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 776.318, -600.91 )
-
-[node name="TowerDoor4Open4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 491.998, -600.304 )
-
-[node name="TowerDoor5Open4" parent="." instance=ExtResource( 10 )]
-position = Vector2( 226.821, -592.926 )
-
-[node name="TowerDoor1Open5" parent="." instance=ExtResource( 3 )]
-position = Vector2( 518.12, -0.264954 )
-
-[node name="TowerDoor2Open5" parent="." instance=ExtResource( 3 )]
-position = Vector2( 773.032, -1.58405 )
-
-[node name="TowerDoor3Open5" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1040.24, -3.77899 )
-
-[node name="TowerDoor4Open5" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1311.28, -2.18402 )
-
-[node name="TowerDoor5Open5" parent="." instance=ExtResource( 10 )]
-position = Vector2( 1579.32, 2.44794 )
+[node name="openDoor10" type="TextureButton" parent="." groups=[
+"open_doors",
+]]
+margin_left = 413.841
+margin_top = -106.819
+margin_right = 713.841
+margin_bottom = 227.181
+rect_scale = Vector2( 0.67, 0.67 )
+texture_normal = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Door1" type="TextureButton" parent="."]
-margin_left = -14.3918
-margin_top = 513.835
-margin_right = 285.608
-margin_bottom = 849.835
+margin_left = -16.9116
+margin_top = 502.716
+margin_right = 283.088
+margin_bottom = 838.716
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
@@ -313,10 +378,10 @@ __meta__ = {
 }
 
 [node name="Door2" type="TextureButton" parent="."]
-margin_left = 239.608
-margin_top = 511.836
-margin_right = 539.608
-margin_bottom = 847.836
+margin_left = 247.088
+margin_top = 505.237
+margin_right = 547.088
+margin_bottom = 841.237
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
