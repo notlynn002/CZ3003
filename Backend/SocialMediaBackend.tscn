@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Backend/SocialMediaBackend.gd" type="Script" id=1]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FB Login" type="Button" parent="."]
+margin_left = 63.0
+margin_top = 40.0
+margin_right = 224.0
+margin_bottom = 98.0
+text = "FB Login"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FB Post" type="Button" parent="."]
+margin_left = 271.0
+margin_top = 40.0
+margin_right = 427.0
+margin_bottom = 98.0
+text = "FB Post"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Twitter Login" type="Button" parent="."]
+margin_left = 66.0
+margin_top = 124.0
+margin_right = 222.0
+margin_bottom = 182.0
+text = "Twitter Login"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Twitter Post" type="Button" parent="."]
+margin_left = 278.0
+margin_top = 123.0
+margin_right = 434.0
+margin_bottom = 181.0
+text = "Twitter Post"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="button_up" from="FB Login" to="." method="_on_fb_login_button_up"]
+[connection signal="button_up" from="FB Post" to="." method="_on_fb_post_button_up"]
+[connection signal="button_up" from="Twitter Login" to="." method="_on_twitter_login_button_up"]
+[connection signal="button_up" from="Twitter Post" to="." method="_on_twitter_post_button_up"]
