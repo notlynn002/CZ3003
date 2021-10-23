@@ -6,6 +6,9 @@ export (PackedScene) var Huntress
 export (PackedScene) var Samurai
 
 # Declare variables
+
+var has_ended = false
+
 var currentUser
 var character
 
@@ -36,7 +39,7 @@ var attempts: Array
 
 var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 
-var timer = 600.0 # To be changed to 600.0 once testing has been completed
+var timer = .0 # To be changed to 10.0 once testing has been completed
 var timeTaken
 var currentHealth = 3 setget update_bars
 var qnNum = 1
@@ -88,8 +91,7 @@ func _ready():
 	$GameOver/QuitButton/QuitText.hide()
 	$GameOver/RetryButton.hide()
 	$GameOver/RetryButton/RetryText.hide()
-	$monster_alive.show()
-	$monster_dead.hide()
+
 	
 	prepare_question(qnNum)
 	
@@ -287,6 +289,9 @@ func _on_OptionD_pressed():
 			game_ended("success")
 
 func game_ended(condition):
+	if has_ended:
+		return 
+	has_ended = true
 	pauseScreen = true
 	$Question/AnsMsg.hide()
 	$Question/NextButton.hide()
@@ -302,14 +307,17 @@ func game_ended(condition):
 		$TowerBackground/Barrier2/CollisionShape2D.remove_and_skip()
 		$TowerBackground/Barrier3.hide()
 		$TowerBackground/Barrier3/CollisionShape2D.remove_and_skip()
+		$AnimationPlayer.play("slime-die")
+		yield($AnimationPlayer, "animation_finished")
 		$BossLvlDoorClosed.hide()
 		$BossLvlDoorOpen.show()
-		$monster_alive.hide()
-		$monster_dead.show()
 		$Question/AnsButton.show()
 		$Question/AnsText.show()
 	elif condition == "failbyhealth":
 		$GameOver.show()
+		$AnimationPlayer.play("slime-attack")
+		yield($AnimationPlayer, "animation_finished")
+		$AnimationPlayer.play("slime-idle")
 		$GameOver/GameOverText.text = "YOU FAILED...\nYou have run out of lives"
 		$GameOver/QuitButton.show()
 		$GameOver/QuitButton/QuitText.show()
@@ -317,6 +325,9 @@ func game_ended(condition):
 		$GameOver/RetryButton/RetryText.show()
 	elif condition == "failbytime":
 		$GameOver.show()
+		$AnimationPlayer.play("slime-attack")
+		yield($AnimationPlayer, "animation_finished")
+		$AnimationPlayer.play("slime-idle")
 		$GameOver/GameOverText.text = "YOU FAILED...\nYou have run out of time"
 		$GameOver/QuitButton.show()
 		$GameOver/QuitButton/QuitText.show()

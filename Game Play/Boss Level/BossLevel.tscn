@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=1]
 [ext_resource path="res://Game Play/Boss Level/BossLevel.gd" type="Script" id=2]
@@ -25,6 +25,17 @@
 [ext_resource path="res://sprites/buttons or icons/qn1 button.png" type="Texture" id=23]
 [ext_resource path="res://sprites/buttons or icons/qn4 button.png" type="Texture" id=24]
 [ext_resource path="res://sprites/buttons or icons/qn5 button.png" type="Texture" id=25]
+[ext_resource path="res://sprites/character/monster/slime-idle-2.png" type="Texture" id=26]
+[ext_resource path="res://sprites/character/monster/slime-idle-3.png" type="Texture" id=27]
+[ext_resource path="res://sprites/character/monster/slime-die-1.png" type="Texture" id=28]
+[ext_resource path="res://sprites/character/monster/slime-die-0.png" type="Texture" id=29]
+[ext_resource path="res://sprites/character/monster/slime-die-2.png" type="Texture" id=30]
+[ext_resource path="res://sprites/character/monster/slime-idle-1.png" type="Texture" id=31]
+[ext_resource path="res://sprites/character/monster/slime-attack-2.png" type="Texture" id=32]
+[ext_resource path="res://sprites/character/monster/slime-attack-1.png" type="Texture" id=33]
+[ext_resource path="res://sprites/character/monster/slime-attack-0.png" type="Texture" id=34]
+[ext_resource path="res://sprites/character/monster/slime-attack-4.png" type="Texture" id=35]
+[ext_resource path="res://sprites/character/monster/slime-attack-3.png" type="Texture" id=36]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31.4409, 144.539 )
@@ -34,6 +45,119 @@ resource_local_to_scene = true
 size = 24
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "slime-attack"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "attack" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimatedSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1528, 864 ), Vector2( 1160, 872 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "die" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "idle" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 16 ), ExtResource( 31 ), ExtResource( 26 ), ExtResource( 27 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 34 ), ExtResource( 33 ), ExtResource( 32 ), ExtResource( 36 ), ExtResource( 35 ) ],
+"loop": true,
+"name": "attack",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 29 ), ExtResource( 28 ), ExtResource( 30 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "die",
+"speed": 5.0
+} ]
 
 [node name="BossLevel" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -497,16 +621,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="monster_alive" type="Sprite" parent="."]
-position = Vector2( 958.135, 842.188 )
-scale = Vector2( 0.312369, 0.311663 )
-texture = ExtResource( 16 )
-
-[node name="monster_dead" type="Sprite" parent="."]
-position = Vector2( 959.135, 886.208 )
-scale = Vector2( 0.363333, 0.221153 )
-texture = ExtResource( 17 )
-
 [node name="GameOver" type="ColorRect" parent="."]
 pause_mode = 2
 visible = false
@@ -601,6 +715,20 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "slime-idle"
+playback_speed = 0.3
+anims/slime-attack = SubResource( 3 )
+anims/slime-die = SubResource( 4 )
+anims/slime-idle = SubResource( 5 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 1160, 872 )
+scale = Vector2( 5, 4 )
+frames = SubResource( 6 )
+animation = "attack"
+frame = 4
 
 [connection signal="pressed" from="Question/Options/OptionA" to="." method="_on_OptionA_pressed"]
 [connection signal="pressed" from="Question/Options/OptionB" to="." method="_on_OptionB_pressed"]
