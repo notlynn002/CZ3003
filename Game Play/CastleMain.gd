@@ -14,6 +14,8 @@ export (PackedScene) var Archer
 export (PackedScene) var Huntress
 export (PackedScene) var Samurai
 
+var player
+
 var lastLvlAttempted
 var lvlInfo
 var correcNo: Array
@@ -38,24 +40,28 @@ func _ready():
 		king.position.x = 10
 		king.position.y = 850.167
 		add_child(king) # add king to scene
+		player = king
 	elif character == "archer":
 		var archer = Archer.instance() # create an instance of archer object
 		# initialise starting position on map
 		archer.position.x = 10
 		archer.position.y = 850.167
 		add_child(archer) # add archer to scene
+		player = archer
 	elif character == "huntress":
 		var huntress = Huntress.instance() # create an instance of huntress object
 		# initialise starting position on map
 		huntress.position.x = 10
 		huntress.position.y = 850.167
 		add_child(huntress) # add huntress to scene
+		player = huntress
 	elif character == "samurai":
 		var samurai = Samurai.instance() # create an instance of samurai object
 		# initialise starting position on map
 		samurai.position.x = 10
 		samurai.position.y = 850.167
 		add_child(samurai) # add samurai to scene
+		player = samurai
 		
 	$lvl1Stars/star1.hide() 
 	$lvl1Stars/star2.hide()
@@ -144,7 +150,7 @@ func _on_NormalLevelDoor_pressed():
 
 func _on_BossLevelDoor_pressed():
 	var currentLoc
-	currentLoc = get_node("King").get_position()
+	currentLoc = player.get_position()
 	GlobalArray.playerPosition = currentLoc
 	
 	#get the current level

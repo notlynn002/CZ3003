@@ -44,6 +44,7 @@ var numOfCorrectAns = 0
 var pauseScreen = false
 var toggleSolution = false
 
+var player : KinematicBody2D = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -56,24 +57,30 @@ func _ready():
 		king.position.x = 132.451
 		king.position.y = 841.167
 		add_child(king) # add king to scene
+		player = king
 	elif character == "archer":
 		var archer = Archer.instance() # create an instance of archer object
 		# initialise starting position on map
 		archer.position.x = 132.451
 		archer.position.y = 841.167
 		add_child(archer) # add archer to scene
+		player = archer
 	elif character == "huntress":
 		var huntress = Huntress.instance() # create an instance of huntress object
 		# initialise starting position on map
 		huntress.position.x = 132.451
 		huntress.position.y = 841.167
 		add_child(huntress) # add huntress to scene
+		player = huntress
 	elif character == "samurai":
 		var samurai = Samurai.instance() # create an instance of samurai object
 		# initialise starting position on map
 		samurai.position.x = 132.451
 		samurai.position.y = 841.167
 		add_child(samurai) # add samurai to scene
+		player = samurai
+	player.set_physics_process(false)
+	$AnimationManager.set_player(player)
 	self.currentHealth = 3
 	$Question/AnsMsg.hide()
 	$Question/EndBossMsg.hide()
@@ -149,28 +156,52 @@ func init(qnBank):
 func update_bars(value):
 	currentHealth = value
 
+func correct_answer_animation():
+	$Question/Options.visible = false
+	yield($AnimationManager.action_player_attack(), "completed")
+	$Question/Options.visible = true
+
+func wrong_answer_animation():
+	$Question/Options.visible = false
+	yield($AnimationManager.action_monster_attack(), "completed")
+	$Question/Options.visible = true
+
+func player_win_animation():
+	$Question/Options.visible = false
+	yield($AnimationManager.action_player_kill_monster(), "completed")
+	$Question/Options.visible = true
+
+func player_lose_animation():
+	$Question/Options.visible = false
+	yield($AnimationManager.action_monster_kill_player(), "completed")
+	$Question/Options.visible = true
+
 func _on_OptionA_pressed():
 	if pauseScreen != true:
 		if aIsCorrect:
 			numOfCorrectAns += 1
+			pauseScreen = true
+			if numOfCorrectAns < 3:
+				yield(correct_answer_animation(), "completed")
 			$Question/AnsMsg.show()
 			$Question/AnsMsg/AnsMsgText.text = "That's correct!"
 			$Question/NextButton.show()
 			$Question/NextText.show()
-			pauseScreen = true
 			ansCorrect = true
 			qnNum += 1
 		else:
 			currentHealth -= 1
-			$HealthBar.update_health(currentHealth)
 			if currentHealth >0:
 				pauseScreen = true
+				yield(wrong_answer_animation(), "completed")
+				$HealthBar.update_health(currentHealth)
 				$Question/AnsMsg.show()
 				$Question/AnsMsg/AnsMsgText.text = "That's wrong!"
 				$Question/NextButton.show()
 				$Question/NextText.show()
 				qnNum += 1
 			else:
+				$HealthBar.update_health(currentHealth)
 				game_ended("failbyhealth")
 			
 		timeTaken = 600 - stepify(timer,1)
@@ -187,24 +218,28 @@ func _on_OptionB_pressed():
 	if pauseScreen != true:
 		if bIsCorrect:
 			numOfCorrectAns += 1
+			pauseScreen = true
+			if numOfCorrectAns < 3:
+				yield(correct_answer_animation(), "completed")
 			$Question/AnsMsg.show()
 			$Question/AnsMsg/AnsMsgText.text = "That's correct!"
 			$Question/NextButton.show()
 			$Question/NextText.show()
-			pauseScreen = true
 			ansCorrect = true
 			qnNum += 1
 		else:
 			currentHealth -= 1
-			$HealthBar.update_health(currentHealth)
 			if currentHealth >0:
 				pauseScreen = true
+				yield(wrong_answer_animation(), "completed")
+				$HealthBar.update_health(currentHealth)
 				$Question/AnsMsg.show()
 				$Question/AnsMsg/AnsMsgText.text = "That's wrong!"
 				$Question/NextButton.show()
 				$Question/NextText.show()
 				qnNum += 1
 			else:
+				$HealthBar.update_health(currentHealth)
 				game_ended("failbyhealth")
 			
 		timeTaken = 600 - stepify(timer,1)
@@ -221,24 +256,28 @@ func _on_OptionC_pressed():
 	if pauseScreen != true:
 		if cIsCorrect:
 			numOfCorrectAns += 1
+			pauseScreen = true
+			if numOfCorrectAns < 3:
+				yield(correct_answer_animation(), "completed")
 			$Question/AnsMsg.show()
 			$Question/AnsMsg/AnsMsgText.text = "That's correct!"
 			$Question/NextButton.show()
 			$Question/NextText.show()
-			pauseScreen = true
 			ansCorrect = true
 			qnNum += 1
 		else:
 			currentHealth -= 1
-			$HealthBar.update_health(currentHealth)
 			if currentHealth >0:
 				pauseScreen = true
+				yield(wrong_answer_animation(), "completed")
+				$HealthBar.update_health(currentHealth)
 				$Question/AnsMsg.show()
 				$Question/AnsMsg/AnsMsgText.text = "That's wrong!"
 				$Question/NextButton.show()
 				$Question/NextText.show()
 				qnNum += 1
 			else:
+				$HealthBar.update_health(currentHealth)
 				game_ended("failbyhealth")
 			
 		timeTaken = 600 - stepify(timer,1)
@@ -255,24 +294,28 @@ func _on_OptionD_pressed():
 	if pauseScreen != true:
 		if dIsCorrect:
 			numOfCorrectAns += 1
+			pauseScreen = true
+			if numOfCorrectAns < 3:
+				yield(correct_answer_animation(), "completed")
 			$Question/AnsMsg.show()
 			$Question/AnsMsg/AnsMsgText.text = "That's correct!"
 			$Question/NextButton.show()
 			$Question/NextText.show()
-			pauseScreen = true
 			ansCorrect = true
 			qnNum += 1
 		else:
 			currentHealth -= 1
-			$HealthBar.update_health(currentHealth)
 			if currentHealth >0:
 				pauseScreen = true
+				yield(wrong_answer_animation(), "completed")
+				$HealthBar.update_health(currentHealth)
 				$Question/AnsMsg.show()
 				$Question/AnsMsg/AnsMsgText.text = "That's wrong!"
 				$Question/NextButton.show()
 				$Question/NextText.show()
 				qnNum += 1
 			else:
+				$HealthBar.update_health(currentHealth)
 				game_ended("failbyhealth")
 			
 		timeTaken = 600 - stepify(timer,1)
@@ -290,18 +333,21 @@ func game_ended(condition):
 	$Question/AnsMsg.hide()
 	$Question/NextButton.hide()
 	$Question/NextText.hide()
+	$HealthBar.hide()
 	if condition == "success":
 		$Question/EndBossMsg.show()
 		$Question/EndBossMsg/EndBossText.text = "You have passed the boss level!"
-		$HealthBar.hide()
 		$TowerBackground/Barrier1.hide()
 		$TowerBackground/Barrier1/CollisionShape2D.remove_and_skip()
 		$TowerBackground/Barrier2.hide()
 		$TowerBackground/Barrier2/CollisionShape2D.remove_and_skip()
 		$TowerBackground/Barrier3.hide()
 		$TowerBackground/Barrier3/CollisionShape2D.remove_and_skip()
-		$AnimationPlayer.play("slime-die")
-		yield($AnimationPlayer, "animation_finished")
+		
+		yield(player_win_animation(), "completed")
+		
+#		$AnimationPlayer.play("slime-die")
+#		yield($AnimationPlayer, "animation_finished")
 		$BossLvlDoorClosed.hide()
 		$BossLvlDoorOpen.show()
 		$Question/AnsButton.show()
@@ -309,9 +355,11 @@ func game_ended(condition):
 		yield(towerBackend.submit_attempt(currentUser, attempts), "completed")
 	elif condition == "failbyhealth":
 		$GameOver.show()
-		$AnimationPlayer.play("slime-attack")
-		yield($AnimationPlayer, "animation_finished")
-		$AnimationPlayer.play("slime-idle")
+		
+		yield(player_lose_animation(), "completed")
+#		$AnimationPlayer.play("slime-attack")
+#		yield($AnimationPlayer, "animation_finished")
+#		$AnimationPlayer.play("slime-idle")
 		$GameOver/GameOverText.text = "YOU FAILED...\nYou have run out of lives"
 		$GameOver/QuitButton.show()
 		$GameOver/QuitButton/QuitText.show()
@@ -319,9 +367,11 @@ func game_ended(condition):
 		$GameOver/RetryButton/RetryText.show()
 	elif condition == "failbytime":
 		$GameOver.show()
-		$AnimationPlayer.play("slime-attack")
-		yield($AnimationPlayer, "animation_finished")
-		$AnimationPlayer.play("slime-idle")
+		
+		yield(player_lose_animation(), "completed")
+#		$AnimationPlayer.play("slime-attack")
+#		yield($AnimationPlayer, "animation_finished")
+#		$AnimationPlayer.play("slime-idle")
 		$GameOver/GameOverText.text = "YOU FAILED...\nYou have run out of time"
 		$GameOver/QuitButton.show()
 		$GameOver/QuitButton/QuitText.show()
@@ -334,6 +384,7 @@ func game_ended(condition):
 		$GameOver/RetryButton/RetryText.show()
 
 func _process(delta):
+	
 	if timer > 0 && pauseScreen == false:
 		timer -= delta
 		$Timer.text = "Timer: %ss" % stepify(timer,1)
@@ -341,6 +392,9 @@ func _process(delta):
 		$Timer.text = "Timer: %ss" % stepify(timer,1)
 		game_ended("failbytime")
 		pauseScreen = true
+	
+	$HealthBar.rect_position.x = player.get_node("AnimatedSprite").global_position.x - $HealthBar.rect_size.x*0.5
+	
 
 func _on_NextButton_pressed():
 	$Question/AnsMsg.hide()

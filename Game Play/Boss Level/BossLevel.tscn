@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=1]
 [ext_resource path="res://Game Play/Boss Level/BossLevel.gd" type="Script" id=2]
@@ -36,6 +36,15 @@
 [ext_resource path="res://sprites/character/monster/slime-attack-0.png" type="Texture" id=34]
 [ext_resource path="res://sprites/character/monster/slime-attack-4.png" type="Texture" id=35]
 [ext_resource path="res://sprites/character/monster/slime-attack-3.png" type="Texture" id=36]
+[ext_resource path="res://Game Play/Boss Level/AnimationManager.gd" type="Script" id=37]
+[ext_resource path="res://sprites/character/monster/slime-move-1.png" type="Texture" id=38]
+[ext_resource path="res://sprites/character/monster/slime-move-0.png" type="Texture" id=39]
+[ext_resource path="res://sprites/character/monster/slime-move-3.png" type="Texture" id=40]
+[ext_resource path="res://sprites/character/monster/slime-move-2.png" type="Texture" id=41]
+[ext_resource path="res://sprites/character/monster/slime-hurt-0.png" type="Texture" id=42]
+[ext_resource path="res://sprites/character/monster/slime-hurt-2.png" type="Texture" id=43]
+[ext_resource path="res://sprites/character/monster/slime-hurt-1.png" type="Texture" id=44]
+[ext_resource path="res://sprites/character/monster/slime-hurt-3.png" type="Texture" id=45]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31.4409, 144.539 )
@@ -46,102 +55,7 @@ size = 24
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
-[sub_resource type="Animation" id=3]
-resource_name = "slime-attack"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ "attack" ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("AnimatedSprite:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 1, 2, 3, 4 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("AnimatedSprite:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.4 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1528, 864 ), Vector2( 1160, 872 ) ]
-}
-
-[sub_resource type="Animation" id=4]
-length = 0.4
-tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ "die" ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("AnimatedSprite:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ 1, 2, 3 ]
-}
-
-[sub_resource type="Animation" id=5]
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ "idle" ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("AnimatedSprite:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3 ]
-}
-
-[sub_resource type="SpriteFrames" id=6]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 16 ), ExtResource( 31 ), ExtResource( 26 ), ExtResource( 27 ) ],
 "loop": true,
@@ -151,6 +65,16 @@ animations = [ {
 "frames": [ ExtResource( 34 ), ExtResource( 33 ), ExtResource( 32 ), ExtResource( 36 ), ExtResource( 35 ) ],
 "loop": true,
 "name": "attack",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 42 ), ExtResource( 44 ), ExtResource( 43 ), ExtResource( 45 ) ],
+"loop": true,
+"name": "take hit",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 39 ), ExtResource( 38 ), ExtResource( 41 ), ExtResource( 40 ) ],
+"loop": true,
+"name": "run",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 29 ), ExtResource( 28 ), ExtResource( 30 ), ExtResource( 17 ) ],
@@ -277,9 +201,9 @@ __meta__ = {
 }
 
 [node name="HealthBar" parent="." instance=ExtResource( 12 )]
-margin_left = 59.721
+margin_left = 59.457
 margin_top = 679.182
-margin_right = 224.721
+margin_right = 224.457
 margin_bottom = 734.182
 
 [node name="Question" type="TextureRect" parent="."]
@@ -716,19 +640,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "slime-idle"
-playback_speed = 0.3
-anims/slime-attack = SubResource( 3 )
-anims/slime-die = SubResource( 4 )
-anims/slime-idle = SubResource( 5 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="Monster" type="AnimatedSprite" parent="."]
 position = Vector2( 1515, 872 )
 scale = Vector2( 5, 4 )
-frames = SubResource( 6 )
-animation = "attack"
-frame = 4
+frames = SubResource( 3 )
+animation = "take hit"
+flip_h = true
+
+[node name="AnimationManager" type="Node" parent="."]
+script = ExtResource( 37 )
+player_move_speed = 384.0
+monster_move_speed = 256.0
+
+[node name="PlayerCenterPosition" type="Position2D" parent="AnimationManager"]
+position = Vector2( 832, 896 )
+
+[node name="MonsterCenterPosition" type="Position2D" parent="AnimationManager"]
+position = Vector2( 1088, 896 )
+
+[node name="Tween" type="Tween" parent="AnimationManager"]
 
 [connection signal="pressed" from="Question/Options/OptionA" to="." method="_on_OptionA_pressed"]
 [connection signal="pressed" from="Question/Options/OptionB" to="." method="_on_OptionB_pressed"]
@@ -743,3 +673,5 @@ frame = 4
 [connection signal="pressed" from="BossLvlSolution/Qn5Explanation" to="." method="_on_Qn5Explanation_pressed"]
 [connection signal="pressed" from="GameOver/QuitButton" to="." method="_on_QuitButton_pressed"]
 [connection signal="pressed" from="GameOver/RetryButton" to="." method="_on_RetryButton_pressed"]
+[connection signal="animation_finished" from="Monster" to="AnimationManager" method="_on_Monster_animation_finished"]
+[connection signal="tween_completed" from="AnimationManager/Tween" to="AnimationManager" method="_on_Tween_tween_completed"]
