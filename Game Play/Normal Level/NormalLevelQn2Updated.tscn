@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Game Play/Normal Level/NormalLevelQn2Updated.gd" type="Script" id=1]
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=2]
@@ -11,9 +11,16 @@
 [ext_resource path="res://Game Play/Normal Level/TowerBricks.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Game Play/Normal Level/NormalLvlDoorClosed.tscn" type="PackedScene" id=10]
 [ext_resource path="res://sprites/tower/star.png" type="Texture" id=11]
+[ext_resource path="res://Player/Huntress.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Player/Archer.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Player/Samurai.tscn" type="PackedScene" id=14]
 
 [node name="NormalLevelQn2" type="CanvasLayer"]
 script = ExtResource( 1 )
+King = ExtResource( 8 )
+Archer = ExtResource( 13 )
+Huntress = ExtResource( 12 )
+Samurai = ExtResource( 14 )
 
 [node name="TowerBackground" type="TextureRect" parent="."]
 margin_left = -2.1189
@@ -66,9 +73,6 @@ position = Vector2( 1545.54, 954.826 )
 
 [node name="TowerBricks14" parent="TowerBackground" instance=ExtResource( 9 )]
 position = Vector2( 1838.09, 954.826 )
-
-[node name="King" parent="." instance=ExtResource( 8 )]
-position = Vector2( 35.6762, 839.58 )
 
 [node name="Qn2" type="TextureRect" parent="."]
 margin_left = 247.0

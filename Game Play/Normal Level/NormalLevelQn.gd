@@ -12,6 +12,12 @@ var solution
 var explanation
 
 var currentUser
+var character
+
+export (PackedScene) var King
+export (PackedScene) var Archer
+export (PackedScene) var Huntress
+export (PackedScene) var Samurai
 
 var timer = 0 # To start timer
 var timeTaken
@@ -36,6 +42,32 @@ func _ready():
 	$Qn1/NextButton.hide()
 	$Qn1/AnsButton.hide()
 	$Explanation.hide()
+	
+	character = Globals.currUser['character']
+	if character == "king":
+		var king = King.instance() # create an instance of king object
+		# initialise starting position on map
+		king.position.x = 50
+		king.position.y = 841.167
+		add_child(king) # add king to scene
+	elif character == "archer":
+		var archer = Archer.instance() # create an instance of archer object
+		# initialise starting position on map
+		archer.position.x = 50
+		archer.position.y = 841.167
+		add_child(archer) # add archer to scene
+	elif character == "huntress":
+		var huntress = Huntress.instance() # create an instance of huntress object
+		# initialise starting position on map
+		huntress.position.x = 50
+		huntress.position.y = 841.167
+		add_child(huntress) # add huntress to scene
+	elif character == "samurai":
+		var samurai = Samurai.instance() # create an instance of samurai object
+		# initialise starting position on map
+		samurai.position.x = 50
+		samurai.position.y = 841.167
+		add_child(samurai) # add samurai to scene
 	
 	currentUser = Globals.currUser['userId']
 	
