@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Facebook Login Complete</title>
+    </head>
+    <body>
+        <p>Facebook Login Complete</p>
+        <script src="script.js"></script>
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
+            import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
+
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyARLqns5U0Y_FDySbHbYw6GgNyYbSKtB8I",
+                authDomain: "godotmathgame-c219e.firebaseapp.com",
+                databaseURL: "https://godotmathgame-c219e-default-rtdb.asia-southeast1.firebasedatabase.app",
+                projectId: "godotmathgame-c219e",
+                storageBucket: "godotmathgame-c219e.appspot.com",
+                messagingSenderId: "490263875506",
+                appId: "1:490263875506:web:c7ab2813222ee2aff51eab"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+
+            function writeResponse() {
+                const db = getDatabase();
+                var id = new Date().toISOString().replace(".", ":"); //iso string has a '.' which is not allowed for realtime db paths
+                var response = getAccessToken();
+                if (typeof response == "undefined") response = "login failed";
+                set(ref(db, id), {
+                    response: response
+                });
+            }
+
+            writeResponse();
+        </script>
+    </body>
+    
+</html>
