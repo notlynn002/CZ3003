@@ -61,7 +61,7 @@ static func get_student_ids_and_names(class_ids: Array) -> Dictionary:
 	for class_id in class_ids:
 		var query: FirestoreQuery = FirestoreQuery.new()
 		query.from("User", false)
-		query.where("classId", FirestoreQuery.OPERATOR.EQUAL, class_id)
+		query.where("classID", FirestoreQuery.OPERATOR.EQUAL, class_id)
 		var task: FirestoreTask = Firebase.Firestore.query(query)
 		var docs: Array = yield(task, "task_finished")
 	
@@ -550,7 +550,7 @@ func _on_get_class_ids_and_names_button_up():
 
 
 func _on_get_student_ids_and_names_button_up():
-	var output = yield(get_student_ids_and_names(["dummyClass"]), "completed")
+	var output = yield(get_student_ids_and_names(["Class-A"]), "completed")
 	print(output)
 
 
