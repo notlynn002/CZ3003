@@ -11,6 +11,9 @@ var className
 var viewByOption
 var teacherid = "dummyteacher1"
 
+var allClassesID = []
+var allClassesData = []
+
 var classStatsArray
 onready var statsTree = $StatsTree
 var root 
@@ -18,48 +21,70 @@ var dummyCheck = 1
 
 
 var tower_name_id_dict
-var classes_dict
+var classes_dict	# {Numbers Tower : numbers-tower}
 var tower_classes_dict = {}
+var classBackend
 
 var statsBackend = preload("res://Backend/StatsBackend.tscn").instance()
-var classBackend = preload("res://Backend/ClassBackend.tscn").instance()
-# remove classbackend preload after testing
-var dummyData = [{"avg_score":"0", "avg_time":"0", "max_level":"1", "student_name":"studentUpdated"}, 
-{"avg_score":"0", "avg_time":"0", "max_level":"2", "student_name":"lin sw"}, 
-{"avg_score":"2", "avg_time":"416.5", "max_level":"10", "student_name":"TestStudent007"}]
+
+
+#var dummyData = [{"avg_score":"0", "avg_time":"0", "max_level":"1", "student_name":"studentUpdated"}, 
+#{"avg_score":"0", "avg_time":"0", "max_level":"2", "student_name":"lin sw"}, 
+#{"avg_score":"2", "avg_time":"416.5", "max_level":"10", "student_name":"TestStudent007"}]
+#
+#var dummyDataB = [{"avg_score":"3", "avg_time":"2", "max_level":"3", "student_name":"stu001"}, 
+#{"avg_score":"4", "avg_time":"11", "max_level":"7", "student_name":"stu002"}, 
+#{"avg_score":"5", "avg_time":"16.5", "max_level":"12", "student_name":"stu003"}]
 			
-func init(tid, cbe, tnid, cd):
+func init(tid, cbe):
 	teacherid = tid
 	classBackend = cbe
-	tower_name_id_dict = tnid 
-	classes_dict = cd
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	statsTreeInit()	
+	
 	$AvgLabel.hide()
+	ClassBackend.get_classes(teacherid)
 	# print(yield(classBackend.get_classes(teacherid), "completed"))
 	# var get_classes_list = yield(classBackend.get_classes(teacherid), "completed")
 	
 	### query these before reaching the stats page? load time is slow ###
 	
 	classes_dict = yield(statsBackend.get_class_ids_and_names(teacherid), "completed")
-	print(classes_dict)
+	print("classes_dict: ",classes_dict)
 	classOptionPopulate(classes_dict)
+	print("allClassesID: ",allClassesID)
 	
 	tower_name_id_dict = yield(statsBackend.get_tower_ids_and_names(), "completed")
-	print(tower_name_id_dict)
+	print("tnid: ",tower_name_id_dict)
 	towerOptionPopulate(tower_name_id_dict)
 	
-	### experimental preload ### tower_name_id_dict instead of hardcode
-	for x in {"Numbers Tower":"numbers-tower"}:
-		for y in classes_dict:
-			#print(x,y)
-			tower_classes_dict["%s %s"%[x, y]] = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[x], [classes_dict[y]]), "completed")
-	$Loading.hide()
-#	print(tower_classes_dict["Numbers Tower dummyClass"])
 	
-			
+	
+	
+	### experimental preload ### tower_name_id_dict instead of hardcode
+	### below needs db to be populated 
+#	for x in {"Numbers Tower":"numbers-tower"}:
+#		tower_classes_dict["%s All"%x] = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[x], allClassesID), "completed")	
+#		for y in classes_dict:
+#			print(tower_name_id_dict[x], [classes_dict[y]])
+#			tower_classes_dict["%s %s"%[x, y]] = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[x], [classes_dict[y]]), "completed")
+#	
+	
+	## example of tower_classes_dict[0],  { Numbers Tower Class A: stats...,										
+	##										Numbers Tower Class B: stats...}
+	
+	tower_name_id_dict["Numbers Tower Class A"] = yield(statsBackend.get_tower_stats_by_class("numbers-tower", ["Class-A"]), "completed")
+	$Loading.hide()
+	
+#	tower_classes_dict={"numbers-tower Class-A": dummyData,
+#						"numbers-tower Class-B": dummyDataB}
+	
+	
+	
+
+	
 #	classStatsArray = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[towerName], classID), "completed")
 	
 #	var stud_name_id_dict = yield(statsBackend.get_student_ids_and_names([className]), "completed")
@@ -72,21 +97,33 @@ func classOptionPopulate(c_dict):
 	$ViewClass.add_item("All")
 	for x in c_dict:
 		$ViewClass.add_item(x)
+		allClassesID.append(c_dict[x])
 
 func towerOptionPopulate(tnid):
 	for x in tnid:
 		$ViewTower.add_item(x)
 				
 func statsUpdate():
-		if viewByOption == 1 and towerName and className:	
-#			classStatsArray = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[towerName], classID), "completed")
-			var currentSelection = tower_classes_dict["%s %s"%[towerName, className]]
-			if dummyCheck:
-				currentSelection.push_front({"avg_score":"dummy", "avg_time":"dummy", "max_level":"dummy", "student_name":"dummy"})
-				dummyCheck = 0
-				
-			statsTree.clear()
-			addStats(currentSelection)
+	var currentSelection
+	if viewByOption == 1 and towerName and className:	
+#		classStatsArray = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[towerName], classID), "completed")
+		### dummy row is added because first row gets cut from display, and im too bad to figure out another workaround
+		if dummyCheck:
+			currentSelection.push_front({"avg_score":"dummy", "avg_time":"dummy", "max_level":"dummy", "student_name":"dummy"})
+			dummyCheck = 0
+		
+		if className == "All":
+			currentSelection = tower_classes_dict["%s All"%towerName]
+		else:
+			currentSelection = tower_classes_dict["%s %s"%[towerName, className]]
+			
+		statsTree.clear()
+		addStats(currentSelection)	
+
+func quizData():
+	for x in classes_dict:
+		yield(StatsBackend._get_quiz_ids_and_names(classes_dict[x]),"completed")
+		
 			
 	
 func _on_ViewByOptionbutton_item_selected(index):
@@ -135,7 +172,6 @@ func _on_BackButton_pressed():
 ### [{ avg_score, avg_time, max_level, student_name }] ###
 
 func addStats(data:Array):	
-	
 	for i in range(len(data)):
 		var newRow = statsTree.create_item(root)
 		newRow.set_text(0, str(data[i]["student_name"]))

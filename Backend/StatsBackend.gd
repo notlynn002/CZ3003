@@ -61,14 +61,13 @@ static func get_student_ids_and_names(class_ids: Array) -> Dictionary:
 	for class_id in class_ids:
 		var query: FirestoreQuery = FirestoreQuery.new()
 		query.from("User", false)
-		query.where("classId", FirestoreQuery.OPERATOR.EQUAL, class_id)
+		query.where("classID", FirestoreQuery.OPERATOR.EQUAL, class_id)
 		var task: FirestoreTask = Firebase.Firestore.query(query)
 		var docs: Array = yield(task, "task_finished")
 	
 	# get student ids and names
 		for doc in docs:
 			student_info[doc.doc_fields["name"]] = doc.doc_name
-	
 	return student_info
 
 
@@ -209,7 +208,7 @@ static func get_tower_stats_by_class(tower_id: String, class_ids: Array) -> Arra
 	query.where("type", FirestoreQuery.OPERATOR.EQUAL, "first")
 	var task = Firebase.Firestore.query(query)
 	var docs = yield(task, "task_finished")
-
+	
 	# sort attempts by student
 	for doc in docs:
 		# get student id
@@ -510,14 +509,14 @@ func _on_test_button_up():
 
 func _on_get_tower_stats_by_class_button_up():
 	var temp = OS.get_unix_time()
-	var output = yield(get_tower_stats_by_class("numbers-tower", ["dummyClass"]), "completed")
+	var output = yield(get_tower_stats_by_class("numbers-tower", ["Class-A"]), "completed")
 	print("time taken: %ds" % (OS.get_unix_time()-temp))
 	print(output)
 
 
 func _on_get_level_stats_by_class_button_up():
 	var temp = OS.get_unix_time()
-	var output = yield(get_level_stats_by_class("numbers-10", ["dummyClass"]), "completed")
+	var output = yield(get_level_stats_by_class("numbers-10", ["Class-A"]), "completed")
 	print("time taken: %ds" % (OS.get_unix_time()-temp))
 	print(output)
 
@@ -550,7 +549,7 @@ func _on_get_class_ids_and_names_button_up():
 
 
 func _on_get_student_ids_and_names_button_up():
-	var output = yield(get_student_ids_and_names(["dummyClass"]), "completed")
+	var output = yield(get_student_ids_and_names(["Class-A"]), "completed")
 	print(output)
 
 
