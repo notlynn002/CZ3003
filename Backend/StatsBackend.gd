@@ -202,13 +202,22 @@ static func get_tower_stats_by_class(tower_id: String, class_ids: Array) -> Arra
 		student_attempt_info[student_info[student_name]] = attempt_info
 	
 	# get attempts
-	var query: FirestoreQuery = FirestoreQuery.new()
-	query.from("Question_Attempt", false)
-	query.where("studentID", FirestoreQuery.OPERATOR.IN, student_info.values(), FirestoreQuery.OPERATOR.AND)
-	query.where("towerID", FirestoreQuery.OPERATOR.EQUAL, tower_id, FirestoreQuery.OPERATOR.AND)
-	query.where("type", FirestoreQuery.OPERATOR.EQUAL, "first")
-	var task = Firebase.Firestore.query(query)
-	var docs = yield(task, "task_finished")
+	var docs: Array = []
+	var student_ids: Array = student_info.values()
+	# IN can only handle arrays with 10 elements or less, so split the ids into groups of 10
+	var student_no: int = student_ids.size()
+	var student_id_groups: Array = []
+	for start in range(0, student_no, 10):
+		var end = int(min(student_no, start+9))
+		student_id_groups.append(student_ids.slice(start, end))
+	for group in student_id_groups:
+		var query: FirestoreQuery = FirestoreQuery.new()
+		query.from("Question_Attempt", false)
+		query.where("studentID", FirestoreQuery.OPERATOR.IN, group, FirestoreQuery.OPERATOR.AND)
+		query.where("towerID", FirestoreQuery.OPERATOR.EQUAL, tower_id, FirestoreQuery.OPERATOR.AND)
+		query.where("type", FirestoreQuery.OPERATOR.EQUAL, "first")
+		var task = Firebase.Firestore.query(query)
+		docs.append_array(yield(task, "task_finished"))
 
 	# sort attempts by student
 	for doc in docs:
@@ -297,15 +306,23 @@ static func get_level_stats_by_class(level_id: String, class_ids: Array) -> Arra
 	
 	# get attempts
 	# only 1 IN filter can be used per query, so query all attempts in the tower and filter the data
-	var tower_id: String = "%s-tower" % level_id.substr(0, level_id.length()-3)
-	var query: FirestoreQuery = FirestoreQuery.new()
-	query.from("Question_Attempt", false)
-	query.where("studentID", FirestoreQuery.OPERATOR.IN, student_info.values(), FirestoreQuery.OPERATOR.AND)
-	query.where("towerID", FirestoreQuery.OPERATOR.EQUAL, tower_id, FirestoreQuery.OPERATOR.AND)
-	query.where("type", FirestoreQuery.OPERATOR.EQUAL, "first")
-	query.order_by("questionID")
-	var task = Firebase.Firestore.query(query)
-	var docs = yield(task, "task_finished")
+	var docs: Array = []
+	var student_ids: Array = student_info.values()
+	# IN can only handle arrays with 10 elements or less, so split the ids into groups of 10
+	var student_id_groups: Array = []
+	for start in range(0, student_no, 10):
+		var end = int(min(student_no, start+9))
+		student_id_groups.append(student_ids.slice(start, end))
+	for group in student_id_groups:
+		var tower_id: String = "%s-tower" % level_id.substr(0, level_id.length()-3)
+		var query: FirestoreQuery = FirestoreQuery.new()
+		query.from("Question_Attempt", false)
+		query.where("studentID", FirestoreQuery.OPERATOR.IN, group, FirestoreQuery.OPERATOR.AND)
+		query.where("towerID", FirestoreQuery.OPERATOR.EQUAL, tower_id, FirestoreQuery.OPERATOR.AND)
+		query.where("type", FirestoreQuery.OPERATOR.EQUAL, "first")
+		query.order_by("questionID")
+		var task = Firebase.Firestore.query(query)
+		docs.append_array(yield(task, "task_finished"))
 	
 	var qn_ids: Array = stats.keys()
 	for doc in docs:
@@ -402,12 +419,22 @@ static func get_quiz_stats_by_class(quiz_level_id: String, class_ids: Array) -> 
 	var qn_docs: Array = yield(QuizBackend._query_quiz_questions(quiz_level_id), "completed")
 	
 	# get quiz attempt docs
-	var query: FirestoreQuery = FirestoreQuery.new()
-	query.from("Quiz_Attempt", false)
-	query.where("studentID", FirestoreQuery.OPERATOR.IN, student_info.values(), FirestoreQuery.OPERATOR.AND)
-	query.where("quizID", FirestoreQuery.OPERATOR.EQUAL, quiz_level_id)
-	var task: FirestoreTask = Firebase.Firestore.query(query)
-	var attempt_docs: Array = yield(task, "task_finished")
+	# get attempts
+	var attempt_docs: Array = []
+	var student_ids: Array = student_info.values()
+	# IN can only handle arrays with 10 elements or less, so split the ids into groups of 10
+	var student_no: int = student_ids.size()
+	var student_id_groups: Array = []
+	for start in range(0, student_no, 10):
+		var end = int(min(student_no, start+9))
+		student_id_groups.append(student_ids.slice(start, end))
+	for group in student_id_groups:
+		var query: FirestoreQuery = FirestoreQuery.new()
+		query.from("Quiz_Attempt", false)
+		query.where("studentID", FirestoreQuery.OPERATOR.IN, group, FirestoreQuery.OPERATOR.AND)
+		query.where("quizID", FirestoreQuery.OPERATOR.EQUAL, quiz_level_id)
+		var task: FirestoreTask = Firebase.Firestore.query(query)
+		attempt_docs.append_array(yield(task, "task_finished"))
 	
 	# initialize stats
 	var qn_attempts: Dictionary = {}
@@ -510,14 +537,14 @@ func _on_test_button_up():
 
 func _on_get_tower_stats_by_class_button_up():
 	var temp = OS.get_unix_time()
-	var output = yield(get_tower_stats_by_class("numbers-tower", ["dummyClass"]), "completed")
+	var output = yield(get_tower_stats_by_class("numbers-tower", ["Class-A"]), "completed")
 	print("time taken: %ds" % (OS.get_unix_time()-temp))
 	print(output)
 
 
 func _on_get_level_stats_by_class_button_up():
 	var temp = OS.get_unix_time()
-	var output = yield(get_level_stats_by_class("numbers-10", ["dummyClass"]), "completed")
+	var output = yield(get_level_stats_by_class("numbers-05", ["Class-A"]), "completed")
 	print("time taken: %ds" % (OS.get_unix_time()-temp))
 	print(output)
 
@@ -531,7 +558,7 @@ func _on_get_level_stats_by_student_button_up():
 
 func _on_get_quiz_stats_by_class_button_up():
 	var temp = OS.get_unix_time()
-	var output = yield(get_quiz_stats_by_class("quiz-hard-test-:(", ["dummyClass"]), "completed")
+	var output = yield(get_quiz_stats_by_class("quiz-hard-test-:(", ["Class-A"]), "completed")
 	print("time taken: %ds" % (OS.get_unix_time()-temp))
 	for e in output:
 		print(e)
