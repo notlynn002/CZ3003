@@ -226,7 +226,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 text = "Level -"
 align = 1
-items = [ "Level -", null, true, 0, null, "Level 1", null, false, 1, null, "Level 2", null, false, 2, null, "Level 3", null, false, 3, null, "Item 4", null, false, 4, null, "Item 5", null, false, 5, null, "Item 6", null, false, 6, null, "Item 7", null, false, 7, null, "Item 8", null, false, 8, null, "Item 9", null, false, 9, null, "Item 10", null, false, 10, null, "Item 11", null, false, 11, null, "Item 12", null, false, 12, null, "Item 13", null, false, 13, null, "Item 14", null, false, 14, null, "Item 15", null, false, 15, null, "Item 16", null, false, 16, null, "Item 17", null, false, 17, null, "Item 18", null, false, 18, null, "Item 19", null, false, 19, null, "Item 20", null, false, 20, null, "Item 21", null, false, 21, null, "Item 22", null, false, 22, null, "Item 23", null, false, 23, null, "Item 24", null, false, 24, null ]
+items = [ "Level -", null, true, 0, null ]
 selected = 0
 __meta__ = {
 "_edit_use_anchors_": false

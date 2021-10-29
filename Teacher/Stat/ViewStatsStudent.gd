@@ -28,12 +28,13 @@ var tower_classes_dict = {}
 var classBackend
 var statsBackend
 
-func init(twr, lvl, cName, tnid, cd):
+func init(twr, lvl, cName, tnid, cd, tcd):
 	toweridx = twr
 	level = lvl
 	classidx = cName
 	tower_name_id_dict = tnid
 	classes_dict = cd
+	tower_classes_dict = tcd
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
