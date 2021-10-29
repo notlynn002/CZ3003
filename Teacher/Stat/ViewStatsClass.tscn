@@ -282,7 +282,6 @@ __meta__ = {
 }
 
 [node name="Loading" type="RichTextLabel" parent="."]
-visible = false
 margin_right = 1920.0
 margin_bottom = 1080.0
 custom_styles/normal = SubResource( 7 )

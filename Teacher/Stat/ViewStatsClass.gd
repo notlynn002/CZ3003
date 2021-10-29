@@ -5,6 +5,7 @@ extends CanvasLayer
 var toweridx = 0
 var towerName
 var level = 0
+var levelName
 var	classidx = 0
 var classID
 var className
@@ -20,7 +21,11 @@ onready var statsTree = $StatsTree
 var root 
 
 var quiz_name_id_dict = {}
-# qnid: { className: {quiz name: quiz id}}
+# qnid: { className: {quiz name: quiz id}}\
+var allQuizID = {}
+# { className: [ quiz-id, ...] }
+var allQuizData = []
+
 var tower_name_id_dict
 # tnid: {Fraction Tower:fraction-tower, Numbers Tower:numbers-tower, Quiz Tower:quiz-tower, Ratio Tower:ratio-tower}
 var classes_dict 
@@ -73,22 +78,30 @@ func _ready():
 	
 	classes_dict = yield(statsBackend.get_class_ids_and_names(teacherid), "completed")
 	classOptionPopulate(classes_dict)
-	quizData()
 
 	tower_name_id_dict = yield(statsBackend.get_tower_ids_and_names(), "completed")
 	towerOptionPopulate(tower_name_id_dict)
-#
+
+	for x in classes_dict:	#x == className
+		quiz_name_id_dict["%s"%x] = yield(StatsBackend._get_quiz_ids_and_names([classes_dict[x]]), "completed")
+		allQuizID["%s"%x] = []
+		for y in quiz_name_id_dict[x]:	#y == quizName
+			allQuizID["%s"%x].append(quiz_name_id_dict[x][y])
+			allQuizData.append(yield(StatsBackend.get_quiz_stats_by_class(quiz_name_id_dict[x][y] , [classes_dict[x]]), "completed"))
+			
+	print("quizhell done!")
+	print(allQuizData[0])
+	
 #	### experimental preload ### tower_name_id_dict instead of hardcode
 #	### below needs db to be populated 
 #	var temp = OS.get_unix_time()
 #	for x in tower_name_id_dict:
 #		tower_classes_dict["%s All"%x] = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[x], allClassesID), "completed")	
 #		addDummyRow(tower_classes_dict["%s All"%x])
-#		addDummyRow(tower_classes_dict["%s All"%x])
 #		for y in classes_dict:
 #			tower_classes_dict["%s %s"%[x, y]] = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[x], [classes_dict[y]]), "completed")
 #			addDummyRow(tower_classes_dict["%s %s"%[x, y]])
-#			addDummyRow(tower_classes_dict["%s %s"%[x, y]])
+	
 #	print("time taken: %ds" % (OS.get_unix_time()-temp))
 	$Loading.hide()
 	
@@ -112,17 +125,18 @@ func towerOptionPopulate(tnid):
 
 func levelOptionPopulate():
 	$ViewLevel.clear()
-	print(quiz_name_id_dict)
 	if towerName == "Quiz Tower" and className:
-		print(quiz_name_id_dict[className])
-		for x in quiz_name_id_dict[className]:
-			print(x)
+		for x in allQuizID[className]:
 			$ViewLevel.add_item(x)
-	else: 
+	elif towerName and className: 
 		for x in range(1, 26):
 			$ViewLevel.add_item("Level %d"%x)
-		
-	
+
+func quizData():
+	$Loading.show()
+	for x in allQuizID:
+		allQuizData.append(yield(StatsBackend.get_quiz_stats_by_class(x, [classes_dict[className]]), "completed"))
+	$Loading.hide()
 
 func statsUpdate():
 	var currentSelection
@@ -142,13 +156,8 @@ func statsUpdate():
 			addStats(currentSelection)	
 		else:
 			$AvgLabel.hide()
-		
+	
 
-func quizData():
-	for x in classes_dict:
-		quiz_name_id_dict["%s"%x] = yield(StatsBackend._get_quiz_ids_and_names([classes_dict[x]]), "completed")
-	print(quiz_name_id_dict)
-		
 func addDummyRow(currentSelection):
 	currentSelection.push_front({"avg_score":"dummy", "avg_time":"dummy", "max_level":"dummy", "student_name":"dummy"})
 	
@@ -171,10 +180,73 @@ func _on_ViewTower_item_selected(index):
 	#print(yield(statsBackend._get_boss_level_ids_and_names(tower_name_id_dict[towerName]), "completed"))
 	
 func _on_ViewLevel_pressed():
-	pass
+	print("\n")
+	var quizLevelResults = [["dummy", "dummy", "dummy", "dummy"]]
+	### init. with dummy data again, such joy	
+	for attempts in allQuizData[0]:
+		var quizStudentResults = []
+		
+		var results = quizMarker(attempts)
+		quizStudentResults.append(attempts["student_name"])
+		
+		if results[1] == "DNF":
+			quizStudentResults.append("DNF")
+			quizStudentResults.append(results[0])
+		else:
+			quizStudentResults.append(attempts.size())
+			quizStudentResults.append(results[0])
+			
+		quizStudentResults.append(attempts["time"])
+		quizLevelResults.append(quizStudentResults)
+	
+	print(quizLevelResults)
+	addStatsQuiz(quizLevelResults)	### untested
+# [  [ { qn_attempts: [{qn_content: , result: }, {qn_content: , result: } ], student_name: , time: } ]
+# array array(per student) dict( qn_attempts(dict) : array( dict(content, result)), student_name, time  )
+
+func addStatsQuiz(data:Array):
+	for i in range(len(data)):
+		var newRow = statsTree.create_item(root)
+		newRow.set_text(0, str(data[i][0]))
+		newRow.set_text(1, str(data[i][1]))
+		newRow.set_text(2, str(data[i][2]))
+		newRow.set_text(3, str(data[i][3]))
+
+func quizMarker(data:Dictionary):
+	var results = [0 , data.size()]
+	
+	for x in range(data.size()):
+		if data["qn_attempts"][x]["result"] == "correct":
+			results[0] += 1
+		elif data["qn_attempts"][x]["result"] == "-":
+			results[1] -= 1
+	return results
+
+func quizStatsOgraniser():	
+	var quizLevelResults = []
+	for attempts in allQuizData[0]:
+		var quizStudentResults = []
+		
+		var results = quizMarker(attempts)
+		quizStudentResults.append(attempts["student_name"])
+		
+		if results[1] == "DNF":
+			quizStudentResults.append("DNF")
+			quizStudentResults.append(results[0])
+		else:
+			quizStudentResults.append(attempts.size())
+			quizStudentResults.append(results[0])
+			
+		quizStudentResults.append(attempts["time"])
+		quizLevelResults.append(quizStudentResults)
+	
+	print(quizLevelResults)
 
 func _on_ViewLevel_item_selected(index):
 	level = index
+	levelName = $ViewLevel.get_item_text(index)
+	
+	
 
 func _on_ViewClass_item_selected(index):
 	### all function not fully tested, db doesnt have more than one class with attempts ###
@@ -200,8 +272,7 @@ func _on_BackButton_pressed():
 ### [{ avg_score, avg_time, max_level, student_name }] ###
 
 func addStats(data:Array):	
-	
-	for i in range(1, len(data)):
+	for i in range(len(data)):
 		var newRow = statsTree.create_item(root)
 		newRow.set_text(0, str(data[i]["student_name"]))
 		newRow.set_text(1, str(data[i]["max_level"]))
@@ -209,6 +280,9 @@ func addStats(data:Array):
 		newRow.set_text(3, str(data[i]["avg_time"]))
 
 	getAvgStats(data)
+
+
+		
 
 func getAvgStats(data:Array):
 	var avgScore = 0
