@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Audio/LevelMusic.gd" type="Script" id=1]
+[ext_resource path="res://sprites/buttons or icons/sound off icon.png" type="Texture" id=2]
+[ext_resource path="res://sprites/buttons or icons/sound on icon.png" type="Texture" id=3]
+[ext_resource path="res://sprites/audio/Level Music - Decisive Battle.wav" type="AudioStream" id=4]
+
+[node name="LevelMusic" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="PlayButton" type="TextureButton" parent="."]
+margin_left = 16.6098
+margin_top = 18.653
+margin_right = 142.61
+margin_bottom = 111.653
+texture_normal = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MuteButton" type="TextureButton" parent="."]
+margin_left = 12.9465
+margin_top = 9.31622
+margin_right = 170.946
+margin_bottom = 132.316
+texture_normal = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="MuteButton" to="." method="_on_MuteButton_pressed"]

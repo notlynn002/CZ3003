@@ -1,6 +1,7 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://sprites/background/student homepage bg.png" type="Texture" id=1]
+[ext_resource path="res://Audio/GenericMusic.tscn" type="PackedScene" id=2]
 [ext_resource path="res://sprites/buttons or icons/mail icon.png" type="Texture" id=3]
 [ext_resource path="res://sprites/buttons or icons/challenge icon.png" type="Texture" id=5]
 [ext_resource path="res://sprites/buttons or icons/quit icon.png" type="Texture" id=6]
@@ -325,6 +326,8 @@ margin_right = 631.0
 margin_bottom = 96.0
 texture_normal = ExtResource( 19 )
 expand = true
+
+[node name="GenericMusic" parent="." instance=ExtResource( 2 )]
 
 [connection signal="pressed" from="ChallengeButton" to="." method="_on_ChallengeButton_pressed"]
 [connection signal="pressed" from="MailButton" to="." method="_on_MailButton_pressed"]

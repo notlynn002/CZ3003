@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Challenge Music - Preparing for Battle.wav-74ff7ef9a5997941a51cb9c91d576288.sample"
+
+[deps]
+
+source_file="res://sprites/audio/Challenge Music - Preparing for Battle.wav"
+dest_files=[ "res://.import/Challenge Music - Preparing for Battle.wav-74ff7ef9a5997941a51cb9c91d576288.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
