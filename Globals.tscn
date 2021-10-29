@@ -4,3 +4,9 @@
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource( 1 )
+
+[node name="GenericMusic" type="AudioStreamPlayer2D" parent="."]
+
+[node name="ChallengeMusic" type="AudioStreamPlayer2D" parent="."]
+
+[node name="LevelMusic" type="AudioStreamPlayer2D" parent="."]

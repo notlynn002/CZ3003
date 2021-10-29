@@ -33,6 +33,7 @@ var bossLvl = preload("res://Game Play/Boss Level/BossLevel.tscn").instance()
 func _ready():
 	#load the character of the current user
 	#$King.remove_and_skip()
+	Globals.get_node('GenericMusic').play()
 	character = Globals.currUser['character']
 	if character == "king":
 		var king = King.instance() # create an instance of king object

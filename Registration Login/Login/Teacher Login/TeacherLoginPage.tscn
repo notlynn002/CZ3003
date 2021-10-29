@@ -1,11 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://sprites/buttons or icons/back button.png" type="Texture" id=2]
-[ext_resource path="res://sprites/buttons or icons/sound off icon.png" type="Texture" id=3]
 [ext_resource path="res://sprites/background/teacher register & login bg.png" type="Texture" id=4]
 [ext_resource path="res://sprites/buttons or icons/password label.png" type="Texture" id=5]
-[ext_resource path="res://sprites/buttons or icons/sound on icon.png" type="Texture" id=6]
 [ext_resource path="res://sprites/buttons or icons/email label.png" type="Texture" id=7]
 [ext_resource path="res://Registration Login/Login/Teacher Login/TeacherLoginPage.gd" type="Script" id=8]
 [ext_resource path="res://sprites/buttons or icons/login button.png" type="Texture" id=9]
@@ -61,28 +59,6 @@ margin_top = 24.0
 margin_right = 144.0
 margin_bottom = 104.0
 texture_normal = ExtResource( 2 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SoundButton" type="TextureButton" parent="."]
-margin_left = 1787.72
-margin_top = 13.8284
-margin_right = 1908.72
-margin_bottom = 107.828
-texture_normal = ExtResource( 6 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MuteButton" type="TextureButton" parent="."]
-margin_left = 1779.0
-margin_top = 6.0
-margin_right = 1923.0
-margin_bottom = 114.0
-texture_normal = ExtResource( 3 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -164,7 +140,5 @@ __meta__ = {
 }
 
 [connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
-[connection signal="pressed" from="SoundButton" to="." method="_on_SoundButton_pressed"]
-[connection signal="pressed" from="MuteButton" to="." method="_on_MuteButton_pressed"]
 [connection signal="pressed" from="LoginButton" to="." method="_on_LoginButton_pressed"]
 [connection signal="pressed" from="Popup/CloseButton" to="." method="_on_CloseButton_pressed"]
