@@ -68,7 +68,6 @@ static func get_student_ids_and_names(class_ids: Array) -> Dictionary:
 	# get student ids and names
 		for doc in docs:
 			student_info[doc.doc_fields["name"]] = doc.doc_name
-	
 	return student_info
 
 
