@@ -10,32 +10,16 @@ func init(class_id):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$MuteButton.hide()
+	Globals.get_node('ChallengeMusic').play()
+	
 	$NoticePopup/BlackFractionRibbon.hide()
 	$NoticePopup/BlackNumbersRibbon.hide()
 	$NoticePopup/BlackRatioRibbon.hide()
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 
 func _on_BackButton_pressed():
 	get_tree().change_scene("res://Game Play/Challenge/ChallengeNotifPage.tscn")
-
-
-func _on_SoundButton_pressed():
-	$SoundButton.hide() # stop displaying sound on icon
-	# stop playing background music
-	$MuteButton.show() # display sound off icon
-
-
-func _on_MuteButton_pressed():
-	$MuteButton.hide() # stop displaying sound off icon
-	# starts playing background music
-	$SoundButton.show() # display sound on icon
+	
 
 func _on_ChallengeButton_pressed():
 	var Root = get_tree().root

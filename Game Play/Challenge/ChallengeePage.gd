@@ -9,8 +9,9 @@ func init(topic):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Globals.get_node('ChallengeMusic').play()
 	Globals.get('selectedChallengees').clear()
-	$MuteButton.hide()
+	
 	$NoticePopup/TopicLabel.text = "Topic: " + selectedTopic
 	
 	var classmates = yield(NotificationsBackend.getUserClassmates(Globals.currUser.userId), "completed")
@@ -26,18 +27,6 @@ func _ready():
 
 func _on_BackButton_pressed():
 	get_tree().change_scene("res://Game Play/Challenge/ChallengeTopicPage.tscn")
-
-
-func _on_SoundButton_pressed():
-	$SoundButton.hide() # stop displaying sound on icon
-	# stop playing background music
-	$MuteButton.show() # display sound off icon
-
-
-func _on_MuteButton_pressed():
-	$MuteButton.hide() # stop displaying sound off icon
-	# starts playing background music
-	$SoundButton.show() # display sound on icon
 
 
 func _on_ChallengeButton_pressed():

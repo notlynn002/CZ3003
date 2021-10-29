@@ -1,9 +1,7 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://sprites/buttons or icons/sound on icon.png" type="Texture" id=2]
 [ext_resource path="res://sprites/buttons or icons/back button.png" type="Texture" id=3]
-[ext_resource path="res://sprites/buttons or icons/sound off icon.png" type="Texture" id=4]
 [ext_resource path="res://sprites/background/student register & login & character selection bg.png" type="Texture" id=5]
 [ext_resource path="res://sprites/buttons or icons/name label.png" type="Texture" id=6]
 [ext_resource path="res://sprites/buttons or icons/continue button.png" type="Texture" id=7]
@@ -76,28 +74,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SoundButton" type="TextureButton" parent="."]
-margin_left = 1787.72
-margin_top = 13.8284
-margin_right = 1908.72
-margin_bottom = 107.828
-texture_normal = ExtResource( 2 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MuteButton" type="TextureButton" parent="."]
-margin_left = 1779.0
-margin_top = 6.0
-margin_right = 1923.0
-margin_bottom = 114.0
-texture_normal = ExtResource( 4 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Label" type="Label" parent="."]
 margin_left = 312.0
 margin_top = 344.0
@@ -112,5 +88,3 @@ __meta__ = {
 
 [connection signal="pressed" from="ContinueButton" to="." method="_on_ContinueButton_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
-[connection signal="pressed" from="SoundButton" to="." method="_on_SoundButton_pressed"]
-[connection signal="pressed" from="MuteButton" to="." method="_on_MuteButton_pressed"]
