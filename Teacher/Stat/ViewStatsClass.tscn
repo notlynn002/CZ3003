@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Teacher/leveloption.tres" type="Theme" id=1]
 [ext_resource path="res://sprites/background/teacher homepage bg.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Teacher/Stat/pressed.tres" type="StyleBox" id=8]
 [ext_resource path="res://PixulBrush.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Teacher/PixulBrush.tres" type="DynamicFont" id=10]
+[ext_resource path="res://Teacher/PixulBrush.ttf" type="DynamicFontData" id=11]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 3 )
@@ -33,6 +34,10 @@ font_data = ExtResource( 9 )
 [sub_resource type="DynamicFont" id=6]
 size = 32
 font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 32
+font_data = ExtResource( 11 )
 
 [sub_resource type="StyleBoxFlat" id=7]
 
@@ -85,7 +90,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TimeLabel" type="Label" parent="."]
+[node name="StuStatsLabel" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimeLabel" type="Label" parent="StuStatsLabel"]
 margin_left = 1378.0
 margin_top = 426.0
 margin_right = 1754.0
@@ -98,7 +110,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="ScoreLabel" type="Label" parent="StuStatsLabel"]
 margin_left = 968.0
 margin_top = 424.0
 margin_right = 1212.0
@@ -111,7 +123,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LevelLabel" type="Label" parent="."]
+[node name="LevelLabel" type="Label" parent="StuStatsLabel"]
 margin_left = 555.0
 margin_top = 427.0
 margin_right = 795.0
@@ -124,7 +136,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StudentLabel" type="Label" parent="."]
+[node name="StudentLabel" type="Label" parent="StuStatsLabel"]
 margin_left = 149.0
 margin_top = 426.0
 margin_right = 389.0
@@ -168,6 +180,54 @@ margin_right = 1456.0
 margin_bottom = 64.0
 custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+
+[node name="ClassStatsLabel" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = SubResource( 9 )
+text = "Qn. No."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QnLabel" type="Label" parent="ClassStatsLabel"]
+margin_left = 160.0
+margin_top = 424.0
+margin_right = 328.0
+margin_bottom = 476.0
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Qn. No."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AttemptLabel" type="Label" parent="ClassStatsLabel"]
+margin_left = 552.0
+margin_top = 424.0
+margin_right = 792.0
+margin_bottom = 476.0
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Attempt %"
+
+[node name="CorrectLabel" type="Label" parent="ClassStatsLabel"]
+margin_left = 976.0
+margin_top = 424.0
+margin_right = 1204.0
+margin_bottom = 476.0
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Correct %"
+
+[node name="TimeLabel" type="Label" parent="ClassStatsLabel"]
+margin_left = 1432.0
+margin_top = 424.0
+margin_right = 1696.0
+margin_bottom = 476.0
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Time Taken"
 
 [node name="ViewByOptionbutton" type="OptionButton" parent="."]
 anchor_left = 0.5
