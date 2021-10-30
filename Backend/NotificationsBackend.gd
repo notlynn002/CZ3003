@@ -9,6 +9,25 @@ func _ready():
 # Pass in the user_id for which notifications you would like to get.
 # Returns a list of notification documents
 static func get_notification_for_user(user_id):
+	"""Get all notifications for a student user.
+	
+	Args:
+		user_id (String): User ID of the student.
+		
+	Returns:
+		Array[Dictionary]: The student's notifications as dictionaries. Each notification dictionary contains the following fields:
+			"creationDateTime" (Dictionary): The notification creation date time as a datetime dictionary.
+			"dataID" (String/Dictionary): The IDs related to the notification. This value differ depending on what the notification type is.
+				If the notification is a "completed challenge" type notification, dataID will be a Dictionary containing the following fields:
+					'challengeID' (String): Challenge ID.
+					'challengeeID' (String): User ID of the challengee.
+					'challengerID' (String): User ID of the challenger.
+				Otherwise, this value will be a String. It will be the challenge ID for challenge notifications, and quiz level ID for quiz notifications.
+			"message": (String): Notification message.
+			"notificationType" (String): Notification type. The possible values are "new quiz", "received challenge", "challenge declined" and "completed challenge".
+			"receiverID" (String): The user ID of the receiver.
+	
+	"""
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Notification')
 	query.where('receiverID', FirestoreQuery.OPERATOR.EQUAL, user_id)
@@ -30,6 +49,16 @@ func _on_Get_Notifications_for_User_button_up():
 	print(all_notifications)
 
 static func filterChallengeNotification(allNotifications):
+	"""Get the challenge notifications from an array of notifications.
+	
+	Args:
+		allNotifications (Array[Dictionary]): An array of notification dictionaries.
+		
+	Returns:
+		Array[Dictionary]: All notifications dictionaries from the array that are challenge notifcations.
+			This includes notifications with the type "received challenge", "challenge declined" and "completed challenge".
+			
+	"""
 	var challengeNotifications = []
 	for notification in allNotifications:
 		if (notification.notificationType != "new quiz"):
@@ -43,6 +72,17 @@ func _on_Filter_for_Challenge_Notifications_button_up():
 	print(challengeNotifications)
 	
 static func getStudentsFromClass(classId):
+	"""Get the user IDs and names of students in a class.
+	
+	Args:
+		classId (String): Class ID.
+		
+	Returns:
+		Array[Dictionary]: The information of students in the class. Each student information dictionary contains the following fields:
+			"studentId" (String): Student user ID.
+			"studentName" (String): Student name.
+			
+	"""
 	var classQuery : FirestoreQuery = FirestoreQuery.new()
 	classQuery.from('User')
 	classQuery.where('classID', FirestoreQuery.OPERATOR.EQUAL, classId)
@@ -69,6 +109,17 @@ func _on_Get_Students_of_Class_button_up():
 	print(students)
 	
 static func getUserClassmates(userId):
+	"""Get the user IDs and names of students who are classmates of a target student.
+	
+	Args:
+		userId (String): User ID of the target student.
+	
+	Returns:
+		Array[Dictionary]: The information of the classmates of the target student. Each classmate information dictionary contains the following fields:
+			"studentId" (String): Student user ID.
+			"studentName" (String): Student name.
+	
+	"""
 	var userCollection : FirestoreCollection = Firebase.Firestore.collection('User')
 	userCollection.get(userId)
 	var user : FirestoreDocument = yield(userCollection, 'get_document')
@@ -93,6 +144,15 @@ func _on_Get_Classmate_of_User_button_up():
 	
 # For sending notifications to students when new quiz is created
 static func send_quiz_notification_to_students(classId, quizId):
+	"""Send notifications to students in a class to alert them of a new quiz.
+	
+	The new notifications will be written into the database.
+	
+	Args:
+		classId (String): Class ID.
+		quizId (String): Quiz level ID.
+	
+	"""
 	# Get all students in a class
 	var studentList = yield(getStudentsFromClass(classId), 'completed')
 	
@@ -120,6 +180,15 @@ func _on_New_Quiz_Notification_button_up():
 
 # When challenge has been completed by challengee, send challenge completed notification back to challenger
 static func send_challenge_completed_notification(challengeID, challengeeId):
+	"""Send notifications to the challenger and challengee of a challenge after the challengee has completed it.
+	
+	The new notifications will be written into the database.
+	
+	Args:
+		challengeID (String): Challenge ID.
+		challengeeID (String): Challengee user ID.
+	
+	"""
 	# Obtain challenger ID
 	var challenge = yield(ChallengeBackend.getChallengeByID(challengeID), 'completed')
 	var challengerID = challenge['challengerID']
@@ -192,6 +261,15 @@ func _on_Send_challenge_completed_notification_button_up():
 
 # When challenge is declined, send notification  to challenger
 static func send_challenge_declined_notification(challengeID, challengeeId):
+	"""Send a notification to the challenger about the challengee declining the challenge.
+	
+	The new notification will be written into the database.
+	
+	Args:
+		challengeID (String): Challenge ID.
+		challengeeID (String): Challengee user ID.
+	
+	"""
 	var challenge = yield(ChallengeBackend.getChallengeByID(challengeID), 'completed')
 	var challengerId = challenge.challengerID
 	
@@ -235,6 +313,14 @@ func _on_Send_challenge_declined_notification2_button_up():
 	send_challenge_declined_notification(challengeId, challengeeId)
 
 static func sendChallengeNotification(challengeID):
+	"""Send notifications to challengees about a new challenge.
+	
+	The new notifications will be written into the database.
+	
+	Args:
+		challengeID (String): Challenge ID.
+	
+	"""
 	# Get challengees
 	var challengeCollection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
 	challengeCollection.get(challengeID)
