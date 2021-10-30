@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://sprites/background/challenge bg.png" type="Texture" id=1]
 [ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Game Play/Arena/QuestionComponent.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Game Play/Arena/AnswerComponent.tscn" type="PackedScene" id=10]
 [ext_resource path="res://sprites/buttons or icons/x button.png" type="Texture" id=11]
+[ext_resource path="res://Audio/ChallengeMusic.tscn" type="PackedScene" id=12]
 [ext_resource path="res://PixulBrush.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://sprites/buttons or icons/rounded rectangular popup.png" type="Texture" id=14]
 
@@ -182,6 +183,8 @@ texture_normal = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ChallengeMusic" parent="." instance=ExtResource( 12 )]
 
 [connection signal="pressed" from="ScorePopup/CloseScorePopupButton" to="." method="_on_CloseScorePopupButton_pressed"]
 [connection signal="pressed" from="MaxAttemptPopup/CloseMaxAttemptPopupButton" to="." method="_on_CloseMaxAttemptPopupButton_pressed"]

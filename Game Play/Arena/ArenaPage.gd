@@ -30,6 +30,7 @@ func init(stuID, arenaID, type, type_args=false):
 
 # Called when the node enters the scene tree for the first time.
 func _ready(): 
+	Globals.get_node('ChallengeMusic').play()
 	$ScorePopup.hide()
 	$MaxAttemptPopup.hide()
 	

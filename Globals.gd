@@ -7,3 +7,5 @@ var score = 0
 var currUser = null
 var attempt = []
 
+
+

@@ -15,7 +15,6 @@ var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$MuteButton.hide() # dont show sound off icon until it is pressed
 	$PopupMenu.hide() # dont showpopup until one of the castle is pressed
 	$NewMailButton.hide()
 	
@@ -59,27 +58,11 @@ func _ready():
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-
-func _on_SoundButton_pressed():
-	$SoundButton.hide() # stop displaying sound on icon
-	# stop playing background music
-	$MuteButton.show() # display sound off icon
-
-
-func _on_MuteButton_pressed():
-	$MuteButton.hide() # stop displaying sound off icon
-	# starts playing background music
-	$SoundButton.show() # display sound on icon
-
-
 func _on_ChallengeButton_pressed():
 	var root = get_tree().root
 	var challengeNotif = preload("res://Game Play/Challenge/ChallengeNotifPage.tscn").instance()
 	root.add_child(challengeNotif)
+	$GenericMusic/Music.stop()
 
 
 func _on_MailButton_pressed():

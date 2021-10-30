@@ -128,9 +128,9 @@ static func _get_quiz_ids_and_names(class_ids: Array) -> Dictionary:
 		class_ids (Array[String]): An Array of class IDs.
 		
 	Returns:
-		Dictionary: The student names and IDs as key-value pairs in a Dictionary.
-			Key (String): Student name.
-			Value (String): Student ID.
+		Dictionary: The quiz names and IDs as key-value pairs in a Dictionary.
+			Key (String): Quiz name.
+			Value (String): Quiz ID.
 	
 	"""
 	var collection: FirestoreCollection = Firebase.Firestore.collection("Level")

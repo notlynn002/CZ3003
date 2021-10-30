@@ -1,9 +1,8 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://sprites/background/student homepage bg.png" type="Texture" id=1]
-[ext_resource path="res://sprites/buttons or icons/sound on icon.png" type="Texture" id=2]
+[ext_resource path="res://Audio/GenericMusic.tscn" type="PackedScene" id=2]
 [ext_resource path="res://sprites/buttons or icons/mail icon.png" type="Texture" id=3]
-[ext_resource path="res://sprites/buttons or icons/sound off icon.png" type="Texture" id=4]
 [ext_resource path="res://sprites/buttons or icons/challenge icon.png" type="Texture" id=5]
 [ext_resource path="res://sprites/buttons or icons/quit icon.png" type="Texture" id=6]
 [ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=7]
@@ -81,10 +80,10 @@ position = Vector2( 911.44, 1039.4 )
 shape = SubResource( 2 )
 
 [node name="ChallengeButton" type="TextureButton" parent="."]
-margin_left = 1499.41
-margin_top = 17.0
-margin_right = 1595.41
-margin_bottom = 107.0
+margin_left = 1609.6
+margin_top = 14.2379
+margin_right = 1705.6
+margin_bottom = 104.238
 texture_normal = ExtResource( 5 )
 expand = true
 __meta__ = {
@@ -92,10 +91,10 @@ __meta__ = {
 }
 
 [node name="MailButton" type="TextureButton" parent="."]
-margin_left = 1609.76
-margin_top = 10.7621
-margin_right = 1714.76
-margin_bottom = 105.762
+margin_left = 1719.95
+margin_top = 8.0
+margin_right = 1824.95
+margin_bottom = 103.0
 texture_normal = ExtResource( 3 )
 expand = true
 __meta__ = {
@@ -103,10 +102,9 @@ __meta__ = {
 }
 
 [node name="NewMailButton" type="TextureButton" parent="."]
-margin_left = 1609.76
-margin_top = 10.7621
-margin_right = 1714.76
-margin_bottom = 105.762
+margin_left = 1705.6
+margin_right = 1842.6
+margin_bottom = 120.0
 texture_normal = ExtResource( 25 )
 expand = true
 __meta__ = {
@@ -124,33 +122,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SoundButton" type="TextureButton" parent="."]
-margin_left = 1705.08
-margin_top = 11.7095
-margin_right = 1826.08
-margin_bottom = 105.709
-texture_normal = ExtResource( 2 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MuteButton" type="TextureButton" parent="."]
-margin_left = 1702.72
-margin_top = 8.11893
-margin_right = 1846.72
-margin_bottom = 116.119
-texture_normal = ExtResource( 4 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="ChallengeLabel" type="Label" parent="."]
-margin_left = 1441.81
-margin_top = 122.762
-margin_right = 1612.81
-margin_bottom = 161.762
+margin_left = 1552.0
+margin_top = 120.0
+margin_right = 1723.0
+margin_bottom = 159.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "challenge"
@@ -160,25 +136,13 @@ __meta__ = {
 }
 
 [node name="MailLabel" type="Label" parent="."]
-margin_left = 1633.69
-margin_top = 123.254
-margin_right = 1696.69
-margin_bottom = 156.254
+margin_left = 1743.88
+margin_top = 120.492
+margin_right = 1815.88
+margin_bottom = 159.492
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "mail"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SoundLabel" type="Label" parent="."]
-margin_left = 1728.57
-margin_top = 120.779
-margin_right = 1809.57
-margin_bottom = 153.779
-custom_fonts/font = SubResource( 3 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "music"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -363,12 +327,12 @@ margin_bottom = 96.0
 texture_normal = ExtResource( 19 )
 expand = true
 
+[node name="GenericMusic" parent="." instance=ExtResource( 2 )]
+
 [connection signal="pressed" from="ChallengeButton" to="." method="_on_ChallengeButton_pressed"]
 [connection signal="pressed" from="MailButton" to="." method="_on_MailButton_pressed"]
 [connection signal="pressed" from="NewMailButton" to="." method="_on_NewMailButton_pressed"]
 [connection signal="pressed" from="LogoutButton" to="." method="_on_LogoutButton_pressed"]
-[connection signal="pressed" from="SoundButton" to="." method="_on_SoundButton_pressed"]
-[connection signal="pressed" from="MuteButton" to="." method="_on_MuteButton_pressed"]
 [connection signal="pressed" from="WoodCastleButton" to="." method="_on_WoodCastleButton_pressed"]
 [connection signal="pressed" from="CreamCastleButton" to="." method="_on_CreamCastleButton_pressed"]
 [connection signal="pressed" from="MetalCastleButton" to="." method="_on_MetalCastleButton_pressed"]

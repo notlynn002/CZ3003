@@ -11,7 +11,7 @@ var challenge_notif = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$MuteButton.hide()
+	Globals.get_node('ChallengeMusic').play()
 	
 	notifications = yield(NotificationsBackend.get_notification_for_user(Globals.currUser.userId), "completed")
 	for notification in notifications:
@@ -40,6 +40,7 @@ func _on_CreateChallengeButton_pressed():
 	var root = get_tree().root
 	var topicPg = preload("res://Game Play/Challenge/ChallengeTopicPage.tscn").instance()
 	root.add_child(topicPg)
+	$ChallengeMusic/Music.stop()
 
 
 func _on_BackButton_pressed():
@@ -48,13 +49,4 @@ func _on_BackButton_pressed():
 	self.queue_free()
 
 
-func _on_SoundButton_pressed():
-	$SoundButton.hide() # stop displaying sound on icon
-	# stop playing background music
-	$MuteButton.show() # display sound off icon
 
-
-func _on_MuteButton_pressed():
-	$MuteButton.hide() # stop displaying sound off icon
-	# starts playing background music
-	$SoundButton.show() # display sound on icon
