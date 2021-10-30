@@ -23,6 +23,14 @@ func on_login_failed(error_code, message):
 
 
 func login(email, password, role):
+	""" Allows users to login into their accounts.
+	
+	Args:
+		email (String): Account email.
+		password (String): Account password.
+		role (String): Account role. Possible role values are "student" and "teacher".
+	
+	""" 
 	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
 	var query :FirestoreQuery = FirestoreQuery.new() 
 	query.from('User')
@@ -61,6 +69,23 @@ func _on_FirebaseAuth_login_succeeded(auth_info):
 
 	
 func signup(email, password, pd):
+	""" Allows new users to create new accounts.
+	
+	Args: 
+		email (String): Account email.
+		password (String): Account password.
+		pd (Dictionary): A dictionary containing the fields of the account's user profile.
+			The profile fields will differ depending on whether the account is a student account or teacher account.
+			The profile dictionary for a student account should have the following fields:
+				"character" (String): Account character.
+				"classID" (String): Class ID of the student's class.
+				"name" (String): Student's name.
+				"role" (String):  "student"
+			The profile dictionary for a teacher account should have the following fields:
+				"name" (String): Teacher's name.
+				"role" (String):  "teacher"
+				
+	"""
 	Firebase.Auth.signup_with_email_and_password(email, password)
 	profileDetails = pd
 
@@ -70,6 +95,33 @@ func _on_FirebaseAuth_signup_succeeded(auth_info):
 	createProfile(auth_info)
 
 func createProfile(auth_info):
+	""" Create a user profile.
+	
+	Args:
+		auth_info (Dictionary): The authentication information data emitted throught the Firebase.Auth signup_succeded signal.
+			The signal is emitted when an account has been succesfully created by Firebase.Auth.
+			The dictionary contains the following fields:
+				"email" (String): Account email.
+				"password" (String): Account password.
+				"returnSecureToken": true
+		
+	Returns:
+		Dictionary: The user profile. 
+			The profile fields will differ depending on whether the account is a student account or teacher account.
+			The profile dictionary for a student account should have the following fields:
+				"userId" (String): User ID.
+				"email" (String): Account email.
+				"character" (String): Account character.
+				"classID" (String): Class ID of the student's class.
+				"name" (String): Student's name.
+				"role" (String):  "student"
+			The profile dictionary for a teacher account should have the following fields:
+				"userId" (String): User ID.
+				"email" (String): Account email.
+				"name" (String): Teacher's name.
+				"role" (String):  "teacher"
+			
+	"""
 	var user_collection : FirestoreCollection = Firebase.Firestore.collection("User")
 	profileDetails['email'] = auth_info.email
 	var add_user_task :FirestoreTask = user_collection.add(auth_info.localid, profileDetails)
@@ -92,6 +144,9 @@ func _on_s_signup_button_up():
 
 
 static func logout():
+	""" Allows users to logout of their accounts.
+	
+	"""
 	Firebase.Auth.logout()
 	Globals.currUser = null
 	print("User has logged out. current user set to" + str(Globals.currUser))

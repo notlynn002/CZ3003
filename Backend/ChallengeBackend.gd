@@ -7,6 +7,23 @@ func _ready():
 	pass # Replace with function body.
 
 static func getChallengeByID(challengeID):
+	""" Get challenge information using a challenge ID.
+	
+	Args:
+		challengeID (String): Challenge ID.
+		
+	Returns:
+		Dictionary: The challenge information. The challenge dictionary will contain the following fields:
+			"challengeeID" (Array): The user IDs of the challengees.
+			"challengerID" (String): The user ID of the challenger.
+			"questionList" (Array[Dictionary]): The challenge questions represented as dictionaries.
+				Each question dictionary will contain the following fields:
+					"questionBody" (String): Question content.
+					"questionID" (String): Question ID.
+					"questionOptions" (Array[String]): The question options as strings.
+					"questionSoln" (String): Question solution.
+			 
+	"""
 	var collection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
 	collection.get(challengeID)	
 	var challenge : FirestoreDocument = yield(collection, "get_document")
@@ -14,13 +31,23 @@ static func getChallengeByID(challengeID):
 	return result
 	
 func _on_Get_Challenge_by_Id_button_up():
-	var challengeId = 'KdsBS2748cPpgyxkP532'
-	getChallengeByID(challengeId)
+	var challengeId = '88LxsRnLsf77NDe6Cx3U'
+	var output = yield(getChallengeByID(challengeId), "completed")
+	print(output)
 
 
 # ------------ Get Random questions and Create Challenge --------------------
 
 static func get_towerid_by_topic(topic):
+	"""Get the tower ID of a game tower using the tower topic.
+	
+	Args:
+		topic (String): Tower topic.
+		
+	Returns:
+		String: The tower ID.
+	
+	"""
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Tower')
 	query.where('topic', FirestoreQuery.OPERATOR.EQUAL, topic)
@@ -32,6 +59,14 @@ static func get_towerid_by_topic(topic):
 	return result
 	
 static func get_levelIds_of_tower(towerId):
+	"""Get the level IDs of level in a game tower.
+	
+	Args:
+		towerId (String): Tower ID of the game tower.
+		
+	Returns:
+		Array[String]: The level IDs.
+	"""
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Level')
 	query.where('towerID', FirestoreQuery.OPERATOR.EQUAL, towerId)
@@ -45,6 +80,20 @@ static func get_levelIds_of_tower(towerId):
 
 
 static func get_qns_from_levelIds(levelIds):
+	"""Get information of questions in a few game levels.
+	
+	Args:
+		levelIds (Array[String]): Level IDs of the levels.
+		
+	Returns:
+		Array[Dictionary]: The questions as dictionaries. Each question dictionary contains the following fields:
+			"levelID" (String): Level ID.
+			"questionBody" (String): Question content.
+			"questionExplanation" (String): Question explanation.
+			"questionNo" (String): Question number.
+			"questionOptions" (Array[String]): The question options as strings.
+			"questionSoln" (String): Question solution.
+	"""
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Question')
 	query.where('levelID', FirestoreQuery.OPERATOR.IN, levelIds)
@@ -65,6 +114,20 @@ static func get_qns_from_levelIds(levelIds):
 
 # Returns a list of 10 question Id that belongs to that topic
 static func getRandomQuestions(topic):
+	"""Get 10 random questions from a game tower.
+	
+	Args:
+		topic (String): Tower topic.
+		
+	Returns:
+		Array[Dictionary]: The 10 questions as dictionaries. Each question dictionary contains the following fields:
+			"levelID" (String): Level ID.
+			"questionBody" (String): Question content.
+			"questionExplanation" (String): Question explanation.
+			"questionNo" (String): Question number.
+			"questionOptions" (Array[String]): The question options as strings.
+			"questionSoln" (String): Question solution.
+	"""
 	var towerId = yield(get_towerid_by_topic(topic), 'completed')
 	var levelIds = yield(get_levelIds_of_tower(towerId), 'completed')
 	var questions = yield(get_qns_from_levelIds(levelIds), 'completed')
@@ -93,6 +156,16 @@ func _on_Get_10_Random_Qns_button_up():
 
 # Initial creation of challenge. Takes in the challenge topic, challenger_id and challengee_id
 static func createChallenge(topic, challenger_id, challengee_id):
+	"""Create a new challenge.
+	
+	The challenge data will be written into the database. 
+	
+	Args:
+		topic (String): Tower topic.
+		challenger_id (String): User ID of the challenger.
+		challengee_id (Array[String]): User IDs of the challengees.
+		
+	"""
 	var challenge_questions = yield(getRandomQuestions(topic), 'completed')
 	
 	var challengeDetails = {
@@ -136,6 +209,15 @@ func _on_Create_Challenge_button_up():
 
 # Updates the result for a challenge. 
 static func updateChallengeResult(challengeId, score, time, userId):
+	"""Updates challenge data in the database to reflect a challenge participant's challenge attempt.
+	
+	Args:
+		challengeId (String): Challenge ID.
+		score (int): Participant's attempt score.
+		time (int): The time the participant took to completed the challenge as total seconds.
+		userId (String): User ID of the participant.
+		
+	"""
 	var challenge = yield(getChallengeByID(challengeId), 'completed')
 	
 	var task: FirestoreTask
@@ -175,6 +257,16 @@ func _on_Update_Challenge_Result_button_up():
 
 #------------ Reject Challenge----------------
 static func rejectChallenge(challengeId, challengeeID):
+	"""Allows a challengee to reject a challenge.
+	
+	The challenge data in the database will be updated to reflect the rejection.
+	A notification will also be sent to the challenger about the challengee declining the challenge.
+	
+	Args:
+		challengeId (String): Challenge ID.
+		challengee (String): User ID of challengee.	
+	
+	"""
 	var collection : FirestoreCollection = Firebase.Firestore.collection('Challenge')
 	collection.get(challengeId)	
 	var challenge :FirestoreDocument = yield(collection, "get_document")
@@ -214,7 +306,24 @@ func _on_Reject_Challenge_button_up():
 #------------ Get Challenge Result ----------------
 	
 static func getChallengeResult(challengeID, challengeeID):
+	"""Get the result of a completed challenge.
 	
+	Args:
+		challengeID (String): Challenge ID.
+		challengeeID (String): User ID of the challengee.
+		
+	Returns:
+		Dictionary: The challenge result. The result dictionary will contain the following fields:
+			'winnerName' (String): The name of the winner.
+			'loserName' (String): The name of the loser.
+			'winnerId' (String): The user ID of the winner.
+			'loserId' (String): The user ID of the loser.
+			'winnerTime' (int): The time the winner took to complete the challenge.
+			'loserTime' (int): The time the loser took to complete the challenge
+			'winnerScore' (int): The winner's score.
+			'loserScore' (int): The loser's score.
+			
+	"""
 	var user_collection : FirestoreCollection = Firebase.Firestore.collection('User')
 	
 	# Get challenger data

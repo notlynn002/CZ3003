@@ -7,6 +7,12 @@ func _ready():
 	Firebase.Auth.login_with_email_and_password("admin@gmail.com", "cz3003ssad")
 
 static func get_all_towers():
+	"""Get the tower IDs of all towers.
+	
+	Returns:
+		Array[String]: Tower IDs of all towers.
+		
+	"""
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Tower')
 	
@@ -24,6 +30,15 @@ func _on_Get_all_towers_button_up():
 
 
 static func get_level_for_tower(towerID):
+	"""Get level IDs  for the levels in a tower.
+	
+	Args:
+		towerID (String): Tower ID.
+		
+	Returns:
+		Array[String]: Level IDs.
+			
+	"""
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Level')
 	query.where('towerID', FirestoreQuery.OPERATOR.EQUAL, towerID)
@@ -43,6 +58,27 @@ func _on_Get_levels_for_1_tower_button_up():
 
 
 static func get_questions_by_level(levelID):
+	"""Get the questions in a level.
+	
+	Args:
+		levelID (String): Level ID.
+		
+	Returns:
+		Array[Dictioanry]: The questions as dictionaries. The fields in the question dictionaries differ depending on whether they are game tower questions or quiz questions.
+			Game tower question dictionaries contain the following fields:
+				"levelID" (String): Quiz level ID.
+				"questionBody" (String): Question content.
+				"questionExplanation" (String): Question explanation.
+				"questionNo" (int): Question number.
+				"questionOptions" (Array[String]): Question options.
+				"questionSoln" (String): Question solution.
+			Quiz question dictionaries contain the following fields:
+				"levelID" (String): Quiz level ID.
+				"questionBody" (String): Question content.
+				"questionOptions" (Array[String]): Question options.
+				"questionSoln" (String): Question solution.
+	
+	"""
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Question')
 	query.where('levelID', FirestoreQuery.OPERATOR.EQUAL, levelID)
@@ -61,21 +97,7 @@ func _on_Get_questions_by_level_button_up():
 	var qn: Array =  yield(get_questions_by_level("numbers-01"),"completed")
 	print(qn[1])
 
-	
-static func get_last_level_attempted(student_id: String, tower_id: String) -> int:
-	tower_id.erase(tower_id.find("-tower"), "-tower".length())
-	var prev_level_no: int = 1
-	var level_no: int = 1
-	var qn_id: String = "%s-%02d-1" % [tower_id, level_no]
-	var attempted: bool = yield(_check_first_attempt_exists(student_id, qn_id), "completed")
-	while attempted:
-		prev_level_no = level_no
-		level_no += 1
-		qn_id = "%s-%02d-1" % [tower_id, level_no]
-		attempted = yield(_check_first_attempt_exists(student_id, qn_id), "completed")
-	return prev_level_no
-	
-	
+		
 static func _query_level_attempts(student_id: String, level_id: String, type: String, correct: bool = false) -> Array:
 	# Get question ids of question in level
 	var query = FirestoreQuery.new()
@@ -493,13 +515,26 @@ func _on_login_button_up():
 
 
 func _on_get_last_level_attempted_button_up():
-	var output = yield(get_last_level_attempted("test-student1", "numbers-tower"), "completed")
-	print(output)
-
+	pass
 
 
 #output format - sorted list [{"name": String, "highestLevel", int, "totalCorrect" int, "timing" int}]
 static func get_leaderboard(towerID):
+	"""Get leaderboard rankings for a tower.
+	
+	Args:
+		towerID (String): Tower ID.
+		
+	Returns:
+		Array[Dictionary]: Student ranking information as dictionaries. 
+			Each ranking dictionary contains the following fields:
+				"name" (String): Student name.
+				"highestLevel" (int): Highest level student has attempted.
+				"totalCorrect" (int): Total number of questions that student got correct in attempted levels.
+				"timing" (int): Total amount of time taken to complete all attempted levels. Expressed in total seconds. 
+			The ranking dictionaries are ordered according to highest level, then total correct.
+	
+	"""
 	# get all the levelIDs of the boss levels in this tower
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Level')

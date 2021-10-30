@@ -21,7 +21,6 @@ func init(win, lose, ws, ls, wt, lt):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Globals.get_node('ChallengeMusic').play()
 	
 	var winPlayer = Result.instance()
 	winPlayer.init(winner, winnerScore, winnerTime, "winner")

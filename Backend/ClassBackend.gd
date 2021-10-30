@@ -24,10 +24,6 @@ static func create_class(teacher_id: String, class_name_: String):
 	Args:
 		teacher_id (String): Teacher ID.
 		class_name_ (String): Class name.
-	
-	Raises:
-		ERR_INVALID_PARAMETER: If class_name_ is the name of an existing class.
-	
 	"""
 	var class_id: String = class_name_.replace(" ", "-")
 	var class_fields: Dictionary = {
@@ -39,7 +35,7 @@ static func create_class(teacher_id: String, class_name_: String):
 	var task: FirestoreTask = collection.add(class_id, class_fields)
 	var doc = yield(task, "task_finished")
 	if not doc is FirestoreDocument:
-		return Error.raise_invalid_parameter_error("'%s' is already the name of an existing class." % class_name_)
+		Error.raise_invalid_parameter_error("'%s' is already the name of an existing class." % class_name_)
 
 
 static func _query_classes(teacher_id: String) -> Array:
@@ -59,15 +55,13 @@ static func get_class_ids(teacher_id: String) -> Array:
 		
 	Returns:
 		Array[String]: The class IDs as strings. The IDs are ordered according to class name.
-	
-	Raises:
-		ERR_INVALID_PARAMETER: If teacher ID is invalid or the teacher has no classes.
 		
 	"""
 	# Query class documents
 	var docs: Array = yield(_query_classes(teacher_id), "completed")
 	if docs.empty():
-		return Error.raise_invalid_parameter_error("Either '%s' is not a valid teacher ID or this teacher has no classes" % teacher_id)
+		Error.raise_invalid_parameter_error("Either '%s' is not a valid teacher ID or this teacher has no classes" % teacher_id)
+		return []
 	
 	# Extract class ids
 	var class_ids: Array = []
@@ -84,15 +78,13 @@ static func get_class_names(teacher_id: String) -> Array:
 		
 	Returns:
 		Array[String]: The class names as strings. The names are ordered in alphabetical order.
-	
-	Raises:
-		ERR_INVALID_PARAMETER: If teacher ID is invalid or the teacher has no classes.
 		
 	"""
 	# Query class documents
 	var docs: Array = yield(_query_classes(teacher_id), "completed")
 	if docs.empty():
-		return Error.raise_invalid_parameter_error("Either '%s' is not a valid teacher ID or this teacher has no classes" % teacher_id)
+		Error.raise_invalid_parameter_error("Either '%s' is not a valid teacher ID or this teacher has no classes" % teacher_id)
+		return []
 	
 	# Extract class names
 	var class_names: Array = []
@@ -122,7 +114,8 @@ static func get_classes(teacher_id: String) -> Array:
 	# Query class documents
 	var docs: Array = yield(_query_classes(teacher_id), "completed")
 	if docs.empty():
-		return Error.raise_invalid_parameter_error("Either '%s' is not a valid teacher ID or this teacher has no classes" % teacher_id)
+		Error.raise_invalid_parameter_error("Either '%s' is not a valid teacher ID or this teacher has no classes" % teacher_id)
+		return []
 	
 	# Extract class fields
 	var classes: Array = []

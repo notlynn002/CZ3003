@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
+[ext_resource path="res://Audio/ChallengeMusic.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/buttons or icons/back button.png" type="Texture" id=3]
 [ext_resource path="res://sprites/background/sky bg.png" type="Texture" id=4]
 [ext_resource path="res://sprites/buttons or icons/rounded rectangular popup.png" type="Texture" id=5]
@@ -47,10 +48,10 @@ __meta__ = {
 }
 
 [node name="BackButton" type="TextureButton" parent="."]
-margin_left = 48.0
-margin_top = 24.0
-margin_right = 144.0
-margin_bottom = 104.0
+margin_left = 54.7347
+margin_top = 136.246
+margin_right = 150.735
+margin_bottom = 216.246
 texture_normal = ExtResource( 3 )
 expand = true
 __meta__ = {
@@ -127,6 +128,8 @@ text = "
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ChallengeMusic" parent="." instance=ExtResource( 1 )]
 
 [connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="pressed" from="NoticePopup/CreateChallengeButton" to="." method="_on_CreateChallengeButton_pressed"]

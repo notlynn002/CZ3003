@@ -15,7 +15,6 @@ var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Globals.get_node('GenericMusic').play()
 	$PopupMenu.hide() # dont showpopup until one of the castle is pressed
 	$NewMailButton.hide()
 	
@@ -63,6 +62,7 @@ func _on_ChallengeButton_pressed():
 	var root = get_tree().root
 	var challengeNotif = preload("res://Game Play/Challenge/ChallengeNotifPage.tscn").instance()
 	root.add_child(challengeNotif)
+	$GenericMusic/Music.stop()
 
 
 func _on_MailButton_pressed():

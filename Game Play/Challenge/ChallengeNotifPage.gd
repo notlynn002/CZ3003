@@ -40,6 +40,7 @@ func _on_CreateChallengeButton_pressed():
 	var root = get_tree().root
 	var topicPg = preload("res://Game Play/Challenge/ChallengeTopicPage.tscn").instance()
 	root.add_child(topicPg)
+	$ChallengeMusic/Music.stop()
 
 
 func _on_BackButton_pressed():

@@ -28,7 +28,12 @@ static func create_quiz(quiz_tower_id: String, class_ids: Array, quiz_name: Stri
 		max_time (int): Maximum time that a student is allowed for the quiz, formatted as total seconds.
 		no_of_tries (int): Maximum number of tries that a student is allowed for the quiz.
 		publishing_date (Dictionary): Quiz publishing date in UTC time, formatted as a datetime Dictionary.
-		questions (Array[Dictionary]): Quiz questions as Dictionary objects.
+		questions (Array[Dictionary]): Quiz questions as Dictionary objects. Each question dictionary should contain the following fields:
+			"qnContent" (String): Question content.
+			"correctOption" (String): Question's correct option.
+			"wrongOption1" (String): A wrong option.
+			"wrongOption2" (String): A wrong option.
+			"wrongOption3" (String): A wrong option.
 	
 	Returns:
 		String: The quiz level ID of the new quiz.
@@ -96,16 +101,13 @@ static func delete_quiz(quiz_level_id: String, class_ids: Array):
 		quiz_level_id (String): Level ID of the quiz
 		class_ids (Array[String]): List of class ID of the class that the quiz was assigned to
 	
-	Raises:
-		ERR_INVALID_PARAMETER: If the quiz level ID is invalid, the class ID is invalid, or the class does not contaion the quiz.
-	
 	"""
 	# Check if quiz level ID is valid
 	var collection: FirestoreCollection = Firebase.Firestore.collection("Level")
 	var task: FirestoreTask = collection.get(quiz_level_id)
 	var doc = yield(task, "task_finished")
 	if not doc is FirestoreDocument:
-		return Error.raise_invalid_parameter_error("'%s' is not a valid quiz level ID" % quiz_level_id)
+		Error.raise_invalid_parameter_error("'%s' is not a valid quiz level ID" % quiz_level_id)
 		
 	# Update class quiz list
 	var quiz_list
@@ -182,9 +184,6 @@ static func get_quiz(quiz_level_id: String) -> Dictionary:
 						questionOptions (Array[String]): Question options.
 						questionSoln (String): Question solution.
 						questionExplanation (String): Question explanation.
-	
-	Raises:
-		ERR_INVALID_PARAMETER: If quiz level ID is invalid.
 		
 	"""
 	var quiz: Dictionary
@@ -194,7 +193,8 @@ static func get_quiz(quiz_level_id: String) -> Dictionary:
 	var task: FirestoreTask = collection.get(quiz_level_id)
 	var level_doc = yield(task, "task_finished")
 	if not level_doc is FirestoreDocument:
-		return Error.raise_invalid_parameter_error("'%s' is not a valid quiz level ID" % quiz_level_id)
+		Error.raise_invalid_parameter_error("'%s' is not a valid quiz level ID" % quiz_level_id)
+		return {}
 	quiz = level_doc.doc_fields
 	
 	# Get quiz question data
@@ -219,15 +219,13 @@ static func get_quiz_ids_by_class(class_id: String) -> Array:
 	Returns:
 		Array[String]: The quiz level IDs as Strings.
 	
-	Raises:
-		ERR_INVALID_PARAMETER: If the class ID is invalid.
-	
 	"""
 	var collection: FirestoreCollection = Firebase.Firestore.collection("Class")
 	var task: FirestoreTask = collection.get(class_id)
 	var doc = yield(task, "task_finished")
 	if not doc is FirestoreDocument:
-		return Error.raise_invalid_parameter_error("'%s is not a valid class ID" % class_id)
+		Error.raise_invalid_parameter_error("'%s is not a valid class ID" % class_id)
+		return []
 	return doc.doc_fields["quizList"]
 
 
@@ -255,15 +253,10 @@ static func get_quizzes_by_class(class_id: String) -> Array:
 						questionOptions (Array[String]): Question options.
 						questionSoln (String): Question solution.
 						questionExplanation (String): Question explanation.
-	
-	Raises:
-		ERR_INVALID_PARAMETER: If class ID is invalid.
 		
 	"""
 	# Get quiz IDs for the class
 	var quiz_ids = yield(get_quiz_ids_by_class(class_id), "completed")
-	if not quiz_ids is Array:
-		return Error.raise_invalid_parameter_error("'%s is not a valid class ID" % class_id)
 	
 	# Get quizzes
 	var quiz: Dictionary
@@ -307,7 +300,7 @@ static func submit_quiz_attempt(student_id: String, quiz_level_id: String, total
 	
 	Args:
 		student_id (String): Student's user ID.
-		quiz_leve_id (String): Quiz's level ID.
+		quiz_level_id (String): Quiz's level ID.
 		total_time (int): Time taken as total seconds.
 		question_attempt (Dictionary): The question attempts as key-value pairs in a Dictionary.
 			Key (String): Quiz question ID.
@@ -375,7 +368,7 @@ static func check_max_attempt_reached(student_id: String, quiz_level_id: String)
 	else:
 		return false
 	
-	
+"""
 static func update_quiz(quiz_level_id: String, quiz: Dictionary):
 	# Check quiz for invalid fields
 	#if Error.check_quiz(quiz, false) != OK:
@@ -413,6 +406,7 @@ static func update_quiz(quiz_level_id: String, quiz: Dictionary):
 	for old_question_id in old_question_ids:
 		task = collection.delete(old_question_id)
 		yield(task, "task_finished")
+"""
 
 
 func _on_test_button_up():
@@ -454,7 +448,7 @@ func _on_get_quizzes_by_class_button_up():
 		print()
 	print("done")
 
-
+"""
 func _on_update_quiz_button_up():
 	var quiz_id = "quiz-quiz-1"
 	var quiz = yield(get_quiz(quiz_id), "completed")
@@ -465,3 +459,4 @@ func _on_update_quiz_button_up():
 	quiz["questions"] = questions
 	yield(update_quiz(quiz_id, quiz), "completed")
 	print("update done")
+"""

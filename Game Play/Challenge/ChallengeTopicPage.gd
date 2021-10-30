@@ -28,6 +28,7 @@ func _on_ChallengeButton_pressed():
 	challengee.init(topic)
 	print(topic)
 	Root.add_child(challengee)
+	$ChallengeMusic/Music.stop()
 
 
 func _on_RatioRibbon_pressed():
