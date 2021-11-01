@@ -147,6 +147,7 @@ func _on_NormalLevelDoor_pressed():
 	qnOfLevel = yield(TowerBackend.get_questions_by_level(qnInDataBase),"completed")
 	GlobalArray.questionBank = qnOfLevel
 	normalLvlQn1.init(qnOfLevel)
+	$LevelMusic/Music.stop()
 	get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
 
 func _on_BossLevelDoor_pressed():
@@ -257,3 +258,8 @@ func _hide_Stars(star):
 	var nowHideStar = get_node(starToHide)
 	print(nowHideStar)
 #	nowHideStar.hide()
+
+
+func _on_BackButton_pressed():
+	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
+	pass # Replace with function body.

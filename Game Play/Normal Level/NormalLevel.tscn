@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Game Play/Normal Level/TowerStaircase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/King.tscn" type="PackedScene" id=2]
@@ -12,10 +12,9 @@
 [ext_resource path="res://Player/Samurai.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Game Play/Normal Level/TowerStaircaseRev.tscn" type="PackedScene" id=11]
 [ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=12]
-[ext_resource path="res://Audio/GenericMusic.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Audio/LevelMusic.tscn" type="PackedScene" id=13]
 [ext_resource path="res://sprites/buttons or icons/quit icon.png" type="Texture" id=14]
-[ext_resource path="res://sprites/buttons or icons/challenge icon.png" type="Texture" id=15]
-[ext_resource path="res://sprites/buttons or icons/mail icon.png" type="Texture" id=17]
+[ext_resource path="res://sprites/buttons or icons/back button.png" type="Texture" id=15]
 [ext_resource path="res://sprites/tower/star.png" type="Texture" id=18]
 [ext_resource path="res://sprites/tower/2 stars.png" type="Texture" id=19]
 [ext_resource path="res://sprites/tower/3 stars.png" type="Texture" id=20]
@@ -672,28 +671,6 @@ shape = SubResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ChallengeButton" type="TextureButton" parent="CanvasLayer"]
-margin_left = 1595.69
-margin_top = 11.3368
-margin_right = 1691.69
-margin_bottom = 101.337
-texture_normal = ExtResource( 15 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MailButton" type="TextureButton" parent="CanvasLayer"]
-margin_left = 1706.04
-margin_top = 5.09886
-margin_right = 1811.04
-margin_bottom = 100.099
-texture_normal = ExtResource( 17 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="LogoutButton" type="TextureButton" parent="CanvasLayer"]
 margin_left = 1813.9
 margin_top = 10.2245
@@ -701,31 +678,6 @@ margin_right = 1895.9
 margin_bottom = 90.2245
 texture_normal = ExtResource( 14 )
 expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ChallengeLabel" type="Label" parent="CanvasLayer"]
-margin_left = 1538.09
-margin_top = 117.099
-margin_right = 1709.09
-margin_bottom = 156.099
-custom_fonts/font = SubResource( 3 )
-custom_colors/font_color = Color( 0.984314, 0.980392, 0.980392, 1 )
-text = "challenge"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MailLabel" type="Label" parent="CanvasLayer"]
-margin_left = 1729.97
-margin_top = 117.591
-margin_right = 1801.97
-margin_bottom = 156.591
-custom_fonts/font = SubResource( 3 )
-custom_colors/font_color = Color( 0.984314, 0.980392, 0.980392, 1 )
-text = "mail"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -738,6 +690,29 @@ margin_bottom = 155.004
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.972549, 0.964706, 0.964706, 1 )
 text = "quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton" type="TextureButton" parent="CanvasLayer"]
+margin_left = 1722.25
+margin_top = 12.5305
+margin_right = 1786.25
+margin_bottom = 93.5305
+texture_normal = ExtResource( 15 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackLabel" type="Label" parent="CanvasLayer"]
+margin_left = 1708.27
+margin_top = 116.004
+margin_right = 1777.27
+margin_bottom = 155.004
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.972549, 0.964706, 0.964706, 1 )
+text = "back"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1031,7 +1006,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GenericMusic" parent="." instance=ExtResource( 13 )]
+[node name="LevelMusic" parent="." instance=ExtResource( 13 )]
 
 [connection signal="pressed" from="Door1" to="." method="_on_NormalLevelDoor_pressed"]
 [connection signal="pressed" from="Door2" to="." method="_on_NormalLevelDoor_pressed"]
@@ -1058,3 +1033,4 @@ __meta__ = {
 [connection signal="pressed" from="Door23" to="." method="_on_Door3_pressed"]
 [connection signal="pressed" from="Door24" to="." method="_on_Door4_pressed"]
 [connection signal="pressed" from="Door25" to="." method="_on_Door5_pressed"]
+[connection signal="pressed" from="CanvasLayer/BackButton" to="." method="_on_BackButton_pressed"]

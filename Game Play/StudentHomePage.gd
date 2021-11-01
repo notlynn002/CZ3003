@@ -103,6 +103,7 @@ func _on_MetalCastleButton_pressed():
 
 func _on_EnterTowerButton_pressed():
 	get_tree().change_scene("res://Game Play/Normal Level/NormalLevel.tscn")
+	$GenericMusic/Music.stop()
 	 # Replace with function body.
 	# navigate to inside tower
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Game Play/Normal Level/NormalLevelQn3Updated.gd" type="Script" id=1]
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=2]
@@ -13,6 +13,9 @@
 [ext_resource path="res://sprites/tower/star.png" type="Texture" id=11]
 [ext_resource path="res://Player/Huntress.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Player/Archer.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Audio/WinMusic.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Audio/LevelMusic.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Audio/LoseMusic.tscn" type="PackedScene" id=16]
 
 [node name="NormalLevelQn3" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -285,6 +288,12 @@ __meta__ = {
 
 [node name="NormalLvlDoorOpen" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1726.09, 818.949 )
+
+[node name="LevelMusic" parent="." instance=ExtResource( 15 )]
+
+[node name="WinMusic" parent="." instance=ExtResource( 14 )]
+
+[node name="LoseMusic" parent="." instance=ExtResource( 16 )]
 
 [connection signal="pressed" from="Qn3/AnsButton" to="." method="_on_ExplanationButton_pressed"]
 [connection signal="pressed" from="OptionA" to="." method="_on_A_pressed"]

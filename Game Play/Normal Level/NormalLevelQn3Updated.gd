@@ -33,6 +33,19 @@ var qnDescription: Dictionary
 var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 
 func _ready():
+	$NormalLvlDoorOpen.hide()
+	$Qn3/AnsCorrectMsg.hide()
+	$Qn3/AnsWrongMsg.hide()
+	$Qn3/AnsButton.hide()
+	$Explanation.hide()
+	
+	$WinMusic/Music.stream_paused = true
+	$WinMusic/MuteButton.hide()
+	$WinMusic/PlayButton.hide()
+	
+	$LoseMusic/Music.stream_paused = true
+	$LoseMusic/MuteButton.hide()
+	$LoseMusic/PlayButton.hide()
 	
 	character = Globals.currUser['character']
 	if character == "king":
@@ -59,11 +72,6 @@ func _ready():
 		samurai.position.x = 50
 		samurai.position.y = 841.167
 		add_child(samurai) # add samurai to scene
-	$NormalLvlDoorOpen.hide()
-	$Qn3/AnsCorrectMsg.hide()
-	$Qn3/AnsWrongMsg.hide()
-	$Qn3/AnsButton.hide()
-	$Explanation.hide()
 	
 	currentUser = Globals.currUser['userId']
 	
@@ -130,11 +138,18 @@ func _process(delta):
 		$Timer.text = "Timer: %ss" % stepify(timer,1)
 	
 func _on_A_pressed():
+	$LevelMusic/Music.stop()
+	$LevelMusic/MuteButton.hide()
+	$LevelMusic/PlayButton.hide()
 	if aIsCorrect:
 		$Qn3/AnsCorrectMsg.show()
 		ansCorrect = true
+		$WinMusic/PlayButton.show()
+		$WinMusic/Music.stream_paused = false
 	else:
-		$Qn3/AnsWrongMsg.show()	
+		$Qn3/AnsWrongMsg.show()
+		$LoseMusic/PlayButton.show()
+		$LoseMusic/Music.stream_paused = false	
 	$Qn3/AnsButton.show()
 	
 	pauseScreen = true
@@ -151,11 +166,18 @@ func _on_A_pressed():
 	yield(towerBackend.submit_attempt(currentUser, GlobalArray.anwsers), "completed")
 
 func _on_B_pressed():
+	$LevelMusic/Music.stop()
+	$LevelMusic/MuteButton.hide()
+	$LevelMusic/PlayButton.hide()
 	if bIsCorrect:
 		$Qn3/AnsCorrectMsg.show()
 		ansCorrect = true
+		$WinMusic/PlayButton.show()
+		$WinMusic/Music.stream_paused = false
 	else:
 		$Qn3/AnsWrongMsg.show()
+		$LoseMusic/PlayButton.show()
+		$LoseMusic/Music.stream_paused = false
 	$Qn3/AnsButton.show()
 	
 	pauseScreen = true
@@ -171,11 +193,18 @@ func _on_B_pressed():
 	yield(towerBackend.submit_attempt(currentUser, GlobalArray.anwsers), "completed")
 		
 func _on_C_pressed():
+	$LevelMusic/Music.stop()
+	$LevelMusic/MuteButton.hide()
+	$LevelMusic/PlayButton.hide()
 	if cIsCorrect:
 		$Qn3/AnsCorrectMsg.show()
 		ansCorrect = true
+		$WinMusic/PlayButton.show()
+		$WinMusic/Music.stream_paused = false
 	else:
-		$Qn3/AnsWrongMsg.show()	
+		$Qn3/AnsWrongMsg.show()
+		$LoseMusic/PlayButton.show()
+		$LoseMusic/Music.stream_paused = false
 	$Qn3/AnsButton.show()
 	
 	pauseScreen = true
@@ -191,11 +220,18 @@ func _on_C_pressed():
 	yield(towerBackend.submit_attempt(currentUser, GlobalArray.anwsers), "completed")
 
 func _on_D_pressed():
+	$LevelMusic/Music.stop()
+	$LevelMusic/MuteButton.hide()
+	$LevelMusic/PlayButton.hide()
 	if dIsCorrect:
 		$Qn3/AnsCorrectMsg.show()
 		ansCorrect = true
+		$WinMusic/PlayButton.show()
+		$WinMusic/Music.stream_paused = false
 	else:
 		$Qn3/AnsWrongMsg.show()
+		$LoseMusic/PlayButton.show()
+		$LoseMusic/Music.stream_paused = false
 	$Qn3/AnsButton.show()
 	
 	pauseScreen = true
