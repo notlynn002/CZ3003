@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Backend/SocialMediaBackend.gd" type="Script" id=1]
+[ext_resource path="res://sprites/buttons or icons/fb icon.png" type="Texture" id=2]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -52,7 +53,18 @@ __meta__ = {
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
+[node name="FBShare" type="TextureButton" parent="."]
+margin_left = 848.0
+margin_top = 304.0
+margin_right = 938.0
+margin_bottom = 394.0
+texture_normal = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="button_up" from="FB Login" to="." method="_on_fb_login_button_up"]
 [connection signal="button_up" from="FB Post" to="." method="_on_fb_post_button_up"]
 [connection signal="button_up" from="Twitter Login" to="." method="_on_twitter_login_button_up"]
 [connection signal="button_up" from="Twitter Post" to="." method="_on_twitter_post_button_up"]
+[connection signal="pressed" from="FBShare" to="." method="_on_FBShare_pressed"]

@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://sprites/background/leaderboard bg.png" type="Texture" id=1]
+[ext_resource path="res://sprites/buttons or icons/twitter icon.png" type="Texture" id=2]
 [ext_resource path="res://sprites/buttons or icons/x button.png" type="Texture" id=3]
+[ext_resource path="res://sprites/buttons or icons/fb icon.png" type="Texture" id=4]
 [ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://sprites/tower/trophy.png" type="Texture" id=6]
 [ext_resource path="res://sprites/buttons or icons/home icon.png" type="Texture" id=7]
@@ -106,6 +108,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="FacebookButton" type="TextureButton" parent="."]
+margin_left = 233.0
+margin_top = 49.102
+margin_right = 357.0
+margin_bottom = 173.102
+texture_normal = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TwitterButton" type="TextureButton" parent="."]
+margin_left = 1584.0
+margin_top = 48.0
+margin_right = 1708.0
+margin_bottom = 167.0
+texture_normal = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_left = 232.0
 margin_top = 336.0
@@ -120,3 +144,5 @@ custom_constants/separation = 100
 
 [connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="pressed" from="HomeButton" to="." method="_on_HomeButton_pressed"]
+[connection signal="pressed" from="FacebookButton" to="." method="_on_FacebookButton_pressed"]
+[connection signal="pressed" from="TwitterButton" to="." method="_on_TwitterButton_pressed"]

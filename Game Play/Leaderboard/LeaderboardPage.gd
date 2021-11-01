@@ -112,3 +112,11 @@ static func get_leaderboard(towerID):
 	rankings.sort_custom(LeaderboardSorter, "sort_rankings_order")
 	
 	return rankings
+
+
+func _on_FacebookButton_pressed():
+	pass # Replace with function body.
+
+
+func _on_TwitterButton_pressed():
+	pass # Replace with function body.

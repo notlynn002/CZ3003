@@ -20,8 +20,9 @@ func _ready():
 	
 	var notifications = yield(NotificationsBackend.get_notification_for_user(Globals.currUser.userId), "completed")
 	
-	if len(notifications) > 0:
+	if len(notifications) > 0 and Globals.count < 1:
 		$NewMailButton.show()
+		Globals.count += 1
 		$MailButton.hide()
 		
 	# get student's selected character from db
