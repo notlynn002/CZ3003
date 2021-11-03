@@ -200,9 +200,3 @@ func _on_ClassB_pressed():
 	selectedClasses.append('Class-B')
 
 
-func _on_ClassC_pressed():
-	selectedClasses.append('Class-C')
-
-
-func _on_ClassD_pressed():
-	selectedClasses.append('Class-D')
