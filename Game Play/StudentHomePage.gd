@@ -77,6 +77,7 @@ func _on_LogoutButton_pressed():
 	# save state and log out
 	# navigate to start page
 	get_tree().change_scene("res://Registration Login/StartPage.tscn")
+	self.queue_free()
 
 
 func _on_CreamCastleButton_pressed():
@@ -104,6 +105,7 @@ func _on_MetalCastleButton_pressed():
 func _on_EnterTowerButton_pressed():
 	get_tree().change_scene("res://Game Play/Normal Level/NormalLevel.tscn")
 	$GenericMusic/Music.stop()
+	self.queue_free()
 	 # Replace with function body.
 	# navigate to inside tower
 
