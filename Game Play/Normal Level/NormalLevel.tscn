@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Game Play/Normal Level/TowerStaircase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/King.tscn" type="PackedScene" id=2]
@@ -31,6 +31,10 @@ extents = Vector2( 31.4409, 144.539 )
 resource_local_to_scene = true
 size = 24
 outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 12 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 25
 font_data = ExtResource( 12 )
 
 [node name="NormalLevel" type="Node2D"]
@@ -395,9 +399,9 @@ __meta__ = {
 
 [node name="Door3" type="TextureButton" parent="."]
 margin_left = 511.727
-margin_top = 511.836
+margin_top = 516.593
 margin_right = 811.727
-margin_bottom = 847.836
+margin_bottom = 852.593
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
@@ -438,10 +442,10 @@ __meta__ = {
 }
 
 [node name="Door7" type="TextureButton" parent="."]
-margin_left = 1197.44
-margin_top = -115.364
-margin_right = 1497.44
-margin_bottom = 220.636
+margin_left = 1195.06
+margin_top = -112.986
+margin_right = 1495.06
+margin_bottom = 223.014
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
 __meta__ = {
@@ -719,17 +723,23 @@ __meta__ = {
 
 [node name="lvl1Stars" type="StaticBody2D" parent="."]
 
-[node name="star1" type="Sprite" parent="lvl1Stars"]
+[node name="star1" type="Sprite" parent="lvl1Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 98.7044, 425.89 )
 scale = Vector2( 0.186388, 0.186388 )
 texture = ExtResource( 18 )
 
-[node name="star2" type="Sprite" parent="lvl1Stars"]
+[node name="star2" type="Sprite" parent="lvl1Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.9467, 427.016 )
 scale = Vector2( 0.397995, 0.397995 )
 texture = ExtResource( 19 )
 
-[node name="star3" type="Sprite" parent="lvl1Stars"]
+[node name="star3" type="Sprite" parent="lvl1Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.1255, 431.334 )
 scale = Vector2( 0.354829, 0.354829 )
 texture = ExtResource( 20 )
@@ -737,17 +747,23 @@ texture = ExtResource( 20 )
 [node name="lvl2Stars" type="StaticBody2D" parent="."]
 position = Vector2( 249, 0 )
 
-[node name="star1" type="Sprite" parent="lvl2Stars"]
+[node name="star1" type="Sprite" parent="lvl2Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 96.4229, 422.865 )
 scale = Vector2( 0.190724, 0.215185 )
 texture = ExtResource( 18 )
 
-[node name="star2" type="Sprite" parent="lvl2Stars"]
+[node name="star2" type="Sprite" parent="lvl2Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.9467, 427.016 )
 scale = Vector2( 0.397995, 0.397995 )
 texture = ExtResource( 19 )
 
-[node name="star3" type="Sprite" parent="lvl2Stars"]
+[node name="star3" type="Sprite" parent="lvl2Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.1255, 431.334 )
 scale = Vector2( 0.354829, 0.354829 )
 texture = ExtResource( 20 )
@@ -755,17 +771,23 @@ texture = ExtResource( 20 )
 [node name="lvl3Stars" type="StaticBody2D" parent="."]
 position = Vector2( 528.698, -2.11893 )
 
-[node name="star1" type="Sprite" parent="lvl3Stars"]
+[node name="star1" type="Sprite" parent="lvl3Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 96.4229, 422.865 )
 scale = Vector2( 0.190724, 0.215185 )
 texture = ExtResource( 18 )
 
-[node name="star2" type="Sprite" parent="lvl3Stars"]
+[node name="star2" type="Sprite" parent="lvl3Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.9467, 427.016 )
 scale = Vector2( 0.397995, 0.397995 )
 texture = ExtResource( 19 )
 
-[node name="star3" type="Sprite" parent="lvl3Stars"]
+[node name="star3" type="Sprite" parent="lvl3Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.1255, 431.334 )
 scale = Vector2( 0.354829, 0.354829 )
 texture = ExtResource( 20 )
@@ -773,17 +795,23 @@ texture = ExtResource( 20 )
 [node name="lvl4Stars" type="StaticBody2D" parent="."]
 position = Vector2( 793.564, 4.23785 )
 
-[node name="star1" type="Sprite" parent="lvl4Stars"]
+[node name="star1" type="Sprite" parent="lvl4Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 96.4229, 422.865 )
 scale = Vector2( 0.190724, 0.215185 )
 texture = ExtResource( 18 )
 
-[node name="star2" type="Sprite" parent="lvl4Stars"]
+[node name="star2" type="Sprite" parent="lvl4Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.9467, 427.016 )
 scale = Vector2( 0.397995, 0.397995 )
 texture = ExtResource( 19 )
 
-[node name="star3" type="Sprite" parent="lvl4Stars"]
+[node name="star3" type="Sprite" parent="lvl4Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.1255, 431.334 )
 scale = Vector2( 0.354829, 0.354829 )
 texture = ExtResource( 20 )
@@ -791,17 +819,23 @@ texture = ExtResource( 20 )
 [node name="lvl5Stars" type="StaticBody2D" parent="."]
 position = Vector2( 1093.13, -4.41006 )
 
-[node name="star1" type="Sprite" parent="lvl5Stars"]
+[node name="star1" type="Sprite" parent="lvl5Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 96.4229, 422.865 )
 scale = Vector2( 0.190724, 0.215185 )
 texture = ExtResource( 18 )
 
-[node name="star2" type="Sprite" parent="lvl5Stars"]
+[node name="star2" type="Sprite" parent="lvl5Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.9467, 427.016 )
 scale = Vector2( 0.397995, 0.397995 )
 texture = ExtResource( 19 )
 
-[node name="star3" type="Sprite" parent="lvl5Stars"]
+[node name="star3" type="Sprite" parent="lvl5Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.1255, 431.334 )
 scale = Vector2( 0.354829, 0.354829 )
 texture = ExtResource( 20 )
@@ -809,17 +843,23 @@ texture = ExtResource( 20 )
 [node name="lvl6Stars" type="StaticBody2D" parent="."]
 position = Vector2( 1465.26, -591.181 )
 
-[node name="star1" type="Sprite" parent="lvl6Stars"]
+[node name="star1" type="Sprite" parent="lvl6Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 96.4229, 422.865 )
 scale = Vector2( 0.190724, 0.215185 )
 texture = ExtResource( 18 )
 
-[node name="star2" type="Sprite" parent="lvl6Stars"]
+[node name="star2" type="Sprite" parent="lvl6Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.9467, 427.016 )
 scale = Vector2( 0.397995, 0.397995 )
 texture = ExtResource( 19 )
 
-[node name="star3" type="Sprite" parent="lvl6Stars"]
+[node name="star3" type="Sprite" parent="lvl6Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.1255, 431.334 )
 scale = Vector2( 0.354829, 0.354829 )
 texture = ExtResource( 20 )
@@ -827,17 +867,23 @@ texture = ExtResource( 20 )
 [node name="lvl7Stars" type="StaticBody2D" parent="."]
 position = Vector2( 1215.23, -595.418 )
 
-[node name="star1" type="Sprite" parent="lvl7Stars"]
+[node name="star1" type="Sprite" parent="lvl7Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 96.4229, 422.865 )
 scale = Vector2( 0.190724, 0.215185 )
 texture = ExtResource( 18 )
 
-[node name="star2" type="Sprite" parent="lvl7Stars"]
+[node name="star2" type="Sprite" parent="lvl7Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.9467, 427.016 )
 scale = Vector2( 0.397995, 0.397995 )
 texture = ExtResource( 19 )
 
-[node name="star3" type="Sprite" parent="lvl7Stars"]
+[node name="star3" type="Sprite" parent="lvl7Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.1255, 431.334 )
 scale = Vector2( 0.354829, 0.354829 )
 texture = ExtResource( 20 )
@@ -845,17 +891,23 @@ texture = ExtResource( 20 )
 [node name="lvl8Stars" type="StaticBody2D" parent="."]
 position = Vector2( 933.413, -597.537 )
 
-[node name="star1" type="Sprite" parent="lvl8Stars"]
+[node name="star1" type="Sprite" parent="lvl8Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 96.4229, 422.865 )
 scale = Vector2( 0.190724, 0.215185 )
 texture = ExtResource( 18 )
 
-[node name="star2" type="Sprite" parent="lvl8Stars"]
+[node name="star2" type="Sprite" parent="lvl8Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.9467, 427.016 )
 scale = Vector2( 0.397995, 0.397995 )
 texture = ExtResource( 19 )
 
-[node name="star3" type="Sprite" parent="lvl8Stars"]
+[node name="star3" type="Sprite" parent="lvl8Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.1255, 431.334 )
 scale = Vector2( 0.354829, 0.354829 )
 texture = ExtResource( 20 )
@@ -863,17 +915,23 @@ texture = ExtResource( 20 )
 [node name="lvl9Stars" type="StaticBody2D" parent="."]
 position = Vector2( 664.31, -599.656 )
 
-[node name="star1" type="Sprite" parent="lvl9Stars"]
+[node name="star1" type="Sprite" parent="lvl9Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 96.4229, 422.865 )
 scale = Vector2( 0.190724, 0.215185 )
 texture = ExtResource( 18 )
 
-[node name="star2" type="Sprite" parent="lvl9Stars"]
+[node name="star2" type="Sprite" parent="lvl9Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.9467, 427.016 )
 scale = Vector2( 0.397995, 0.397995 )
 texture = ExtResource( 19 )
 
-[node name="star3" type="Sprite" parent="lvl9Stars"]
+[node name="star3" type="Sprite" parent="lvl9Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.1255, 431.334 )
 scale = Vector2( 0.354829, 0.354829 )
 texture = ExtResource( 20 )
@@ -881,17 +939,23 @@ texture = ExtResource( 20 )
 [node name="lvl10Stars" type="StaticBody2D" parent="."]
 position = Vector2( 414.276, -603.894 )
 
-[node name="star1" type="Sprite" parent="lvl10Stars"]
+[node name="star1" type="Sprite" parent="lvl10Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 96.4229, 422.865 )
 scale = Vector2( 0.190724, 0.215185 )
 texture = ExtResource( 18 )
 
-[node name="star2" type="Sprite" parent="lvl10Stars"]
+[node name="star2" type="Sprite" parent="lvl10Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.9467, 427.016 )
 scale = Vector2( 0.397995, 0.397995 )
 texture = ExtResource( 19 )
 
-[node name="star3" type="Sprite" parent="lvl10Stars"]
+[node name="star3" type="Sprite" parent="lvl10Stars" groups=[
+"hide_stars",
+]]
 position = Vector2( 99.1255, 431.334 )
 scale = Vector2( 0.354829, 0.354829 )
 texture = ExtResource( 20 )
@@ -901,7 +965,7 @@ margin_left = 81.5555
 margin_top = 743.354
 margin_right = 121.556
 margin_bottom = 757.354
-rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 4 )
 text = "1"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -912,7 +976,7 @@ margin_left = 353.698
 margin_top = 745.873
 margin_right = 393.698
 margin_bottom = 759.873
-rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 4 )
 text = "2"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -923,7 +987,7 @@ margin_left = 623.322
 margin_top = 748.393
 margin_right = 663.322
 margin_bottom = 762.393
-rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 4 )
 text = "3"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -934,7 +998,7 @@ margin_left = 885.385
 margin_top = 750.913
 margin_right = 925.385
 margin_bottom = 764.913
-rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 4 )
 text = "4"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -945,7 +1009,7 @@ margin_left = 1175.17
 margin_top = 750.913
 margin_right = 1215.17
 margin_bottom = 764.913
-rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 4 )
 text = "5"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -956,7 +1020,7 @@ margin_left = 1545.58
 margin_top = 120.952
 margin_right = 1585.58
 margin_bottom = 134.952
-rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 4 )
 text = "6"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -967,7 +1031,7 @@ margin_left = 1301.16
 margin_top = 118.433
 margin_right = 1341.16
 margin_bottom = 132.433
-rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 4 )
 text = "7"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -978,7 +1042,7 @@ margin_left = 1026.5
 margin_top = 120.952
 margin_right = 1066.5
 margin_bottom = 134.952
-rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 4 )
 text = "8"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -989,7 +1053,7 @@ margin_left = 749.314
 margin_top = 123.472
 margin_right = 789.314
 margin_bottom = 137.472
-rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 4 )
 text = "9"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1000,7 +1064,7 @@ margin_left = 494.651
 margin_top = 121.433
 margin_right = 534.651
 margin_bottom = 135.433
-rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 4 )
 text = "10"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1013,11 +1077,11 @@ __meta__ = {
 [connection signal="pressed" from="Door3" to="." method="_on_NormalLevelDoor_pressed"]
 [connection signal="pressed" from="Door4" to="." method="_on_NormalLevelDoor_pressed"]
 [connection signal="pressed" from="Door5" to="." method="_on_BossLevelDoor_pressed"]
-[connection signal="pressed" from="Door6" to="." method="_on_Door1_pressed"]
-[connection signal="pressed" from="Door7" to="." method="_on_Door2_pressed"]
-[connection signal="pressed" from="Door8" to="." method="_on_Door3_pressed"]
-[connection signal="pressed" from="Door9" to="." method="_on_Door4_pressed"]
-[connection signal="pressed" from="Door10" to="." method="_on_Door5_pressed"]
+[connection signal="pressed" from="Door6" to="." method="_on_NormalLevelDoor_pressed"]
+[connection signal="pressed" from="Door7" to="." method="_on_NormalLevelDoor_pressed"]
+[connection signal="pressed" from="Door8" to="." method="_on_NormalLevelDoor_pressed"]
+[connection signal="pressed" from="Door9" to="." method="_on_NormalLevelDoor_pressed"]
+[connection signal="pressed" from="Door10" to="." method="_on_BossLevelDoor_pressed"]
 [connection signal="pressed" from="Door11" to="." method="_on_Door1_pressed"]
 [connection signal="pressed" from="Door12" to="." method="_on_Door2_pressed"]
 [connection signal="pressed" from="Door13" to="." method="_on_Door3_pressed"]
