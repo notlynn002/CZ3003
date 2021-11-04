@@ -11,7 +11,7 @@ func init(towerName):
 
 	
 func repeat_space(count:int):
-	print(count)
+	
 	var _str = " "
 	for i in range(count):
 		_str += " "
@@ -22,7 +22,7 @@ func _ready():
 	$TowerNameLabel.text = tower 
 	Globals.get_node('GenericMusic').play()
 	
-	var results =TowerBackend.get_leaderboard(tower.to_lower()+'-tower')
+	var results =yield(TowerBackend.get_leaderboard(tower.to_lower()+'-tower'), "completed")
 	
 	
 	# load from db
