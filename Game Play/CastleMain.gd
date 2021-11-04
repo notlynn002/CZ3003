@@ -64,24 +64,12 @@ func _ready():
 		add_child(samurai) # add samurai to scene
 		player = samurai
 		
-	$lvl1Stars/star1.hide() 
-	$lvl1Stars/star2.hide()
-	$lvl1Stars/star3.hide()
-	$lvl2Stars/star1.hide()
-	$lvl2Stars/star2.hide()
-	$lvl2Stars/star3.hide()
-	$lvl3Stars/star1.hide()
-	$lvl3Stars/star2.hide()
-	$lvl3Stars/star3.hide()
-	$lvl4Stars/star1.hide()
-	$lvl4Stars/star2.hide()
-	$lvl4Stars/star3.hide()
-	$lvl5Stars/star1.hide()
-	$lvl5Stars/star2.hide()
-	$lvl5Stars/star3.hide()
-	$lvl6Stars/star1.hide()
-	$lvl6Stars/star2.hide()
-	$lvl6Stars/star3.hide()
+	for i in range(1,11):
+		for j in range (1,4):
+			var hideStar = "lvl" + String(i) + "Stars/" + "star" + String(j)
+			print("hiding star: ", hideStar)
+			var nowHideStar = get_node(hideStar)
+			nowHideStar.hide()
 
 	currentUser = Globals.currUser['userId']
 	print(currentUser)
@@ -106,9 +94,6 @@ func _ready():
 	
 	for door in get_tree().get_nodes_in_group("open_doors"):
 		door.connect("pressed", self, "_which_openDoor_pressed", [door])
-		
-#	for star in get_tree().get_nodes_in_group("hideStars"):
-#		star.connect("pressed", self, "_hide_Stars", [star])
 	
 func init(nowAtTower):
 	clearlvl = clearedLvl
@@ -196,6 +181,7 @@ func _door_Manager(lastLvlAttempted):#1
 		i += 1
 	#lock the unattempted doors
 	var j = lastLvlAttempted + 2
+	print("j: ", j)
 	while j <= 25:
 		var lockedDoor = get_node("Door" + String(j))
 		lockedDoor.disabled = true
@@ -212,29 +198,29 @@ func _star_Manager(ansArray):
 		showStars = correcNo[k]
 		if correcNo[k] > 0:
 			var locNode = "lvl" + String(k+1) + "Stars/" + "star" + String(showStars)
-			print(locNode)
+			#print(locNode)
 			#stars = get_node("lvl1Stars/1star")
 			var stars = get_node(locNode)
 			stars.show()
 		k += 1
 
 func _block_Manager():
-	if lastLvlAttempted == 5 && correcNo[4] == 3:
+	if lastLvlAttempted >= 5 && correcNo[4] == 3:
 		$TowerBackground/TowerBricks22.remove_and_skip()
 		$TowerBackground/BlockBrick.remove_and_skip()
-	if lastLvlAttempted == 10 && correcNo[9] == 3:
+	if lastLvlAttempted >= 10 && correcNo[9] == 3:
 		$TowerBackground2/BlockBrick.remove_and_skip()
-	if lastLvlAttempted == 15: #&& correcNo[14] == 3:
+	if lastLvlAttempted >= 15: #&& correcNo[14] == 3:
 		$TowerBackground2/TowerBricks22.remove_and_skip()
 		$TowerBackground2/BlockBrick2.remove_and_skip()
-	if lastLvlAttempted == 20: #&& correcNo[19] == 3:
+	if lastLvlAttempted >= 20: #&& correcNo[19] == 3:
 		$TowerBackground3/BlockBrick.remove_and_skip()
 	
 func _which_openDoor_pressed(door):
 	var door_name = door.name
-	print(door_name)
+	print("door_name: ", door_name)
 	var doorName = door_name[8]
-	print(doorName)
+	print("doorName:", doorName)
 	
 	if int(doorName) < 10:
 		strNowAtLevel = "0" + doorName		
@@ -251,15 +237,15 @@ func _which_openDoor_pressed(door):
 	qnOfLevel = yield(TowerBackend.get_questions_by_level(qnInDataBase),"completed")
 	GlobalArray.questionBank = qnOfLevel
 	normalLvlQn1.init(qnOfLevel)
-	get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
-	
-func _hide_Stars(star):
-	var starToHide = star.name
-	var nowHideStar = get_node(starToHide)
-	print(nowHideStar)
-#	nowHideStar.hide()
-
+	if int(doorName) % 5 == 0: 
+		get_tree().change_scene("res://Game Play/Boss Level/BossLevel.tscn")
+	else:
+		get_tree().change_scene("res://Game Play/Normal Level/NormalLevelQn1.tscn")
 
 func _on_BackButton_pressed():
 	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
 	pass # Replace with function body.
+
+func _on_LogoutButton_pressed():
+	get_tree().change_scene("res://Registration Login/StartPage.tscn")
+	self.queue_free()

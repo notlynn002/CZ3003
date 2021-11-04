@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Game Play/Normal Level/NormalLevelQn2Updated.gd" type="Script" id=1]
 [ext_resource path="res://sprites/tower/internal tower tiles bg.png" type="Texture" id=2]
@@ -17,6 +17,23 @@
 [ext_resource path="res://Audio/WinMusic.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Audio/LevelMusic.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Audio/LoseMusic.tscn" type="PackedScene" id=17]
+[ext_resource path="res://sprites/font/PixulBrush.ttf" type="DynamicFontData" id=18]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 18 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 45
+font_data = ExtResource( 18 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 25
+font_data = ExtResource( 18 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+font_data = ExtResource( 18 )
 
 [node name="NormalLevelQn2" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -100,11 +117,11 @@ __meta__ = {
 }
 
 [node name="Msg" type="Label" parent="Qn2/AnsCorrectMsg"]
-margin_left = 61.4489
-margin_top = 33.9029
-margin_right = 129.449
-margin_bottom = 47.9029
-rect_scale = Vector2( 5, 5 )
+margin_left = 111.0
+margin_top = 41.0
+margin_right = 396.0
+margin_bottom = 100.0
+custom_fonts/font = SubResource( 1 )
 text = "You Got It!"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -122,12 +139,15 @@ __meta__ = {
 }
 
 [node name="Msg" type="Label" parent="Qn2/AnsWrongMsg"]
-margin_left = 127.135
-margin_top = 31.7839
-margin_right = 167.135
-margin_bottom = 45.7839
-rect_scale = Vector2( 5, 5 )
+margin_left = 167.409
+margin_top = 40.9797
+margin_right = 299.409
+margin_bottom = 92.9797
+custom_fonts/font = SubResource( 1 )
 text = "Oops!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="NextButton" type="TextureButton" parent="Qn2"]
 margin_left = 877.531
@@ -161,9 +181,9 @@ position = Vector2( 1730.84, 824.846 )
 [node name="QuestionBody" type="Label" parent="."]
 margin_left = 464.0
 margin_top = 60.0
-margin_right = 669.0
-margin_bottom = 91.0
-rect_scale = Vector2( 5, 5 )
+margin_right = 1452.0
+margin_bottom = 211.0
+custom_fonts/font = SubResource( 2 )
 text = "
 "
 align = 3
@@ -213,11 +233,11 @@ __meta__ = {
 }
 
 [node name="A" type="Label" parent="."]
-margin_left = 455.476
-margin_top = 297.476
-margin_right = 470.476
-margin_bottom = 328.476
-rect_scale = Vector2( 5, 3 )
+margin_left = 455.0
+margin_top = 297.0
+margin_right = 470.0
+margin_bottom = 328.0
+custom_fonts/font = SubResource( 2 )
 text = "
 "
 __meta__ = {
@@ -229,7 +249,7 @@ margin_left = 733.104
 margin_top = 293.844
 margin_right = 748.104
 margin_bottom = 324.844
-rect_scale = Vector2( 5, 3 )
+custom_fonts/font = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -239,7 +259,7 @@ margin_left = 1025.52
 margin_top = 290.963
 margin_right = 1040.52
 margin_bottom = 321.963
-rect_scale = Vector2( 5, 3 )
+custom_fonts/font = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -249,7 +269,7 @@ margin_left = 1292.28
 margin_top = 288.524
 margin_right = 1307.28
 margin_bottom = 319.524
-rect_scale = Vector2( 5, 3 )
+custom_fonts/font = SubResource( 2 )
 valign = 3
 __meta__ = {
 "_edit_use_anchors_": false
@@ -268,11 +288,11 @@ __meta__ = {
 }
 
 [node name="Msg" type="Label" parent="Explanation"]
-margin_left = 116.541
-margin_top = 61.4489
-margin_right = 441.541
-margin_bottom = 177.449
-rect_scale = Vector2( 3, 3 )
+margin_left = 117.0
+margin_top = 61.0
+margin_right = 1080.0
+margin_bottom = 402.0
+custom_fonts/font = SubResource( 3 )
 valign = 1
 autowrap = true
 clip_text = true
@@ -295,8 +315,8 @@ __meta__ = {
 margin_left = 1651.88
 margin_top = 92.3058
 margin_right = 1697.88
-margin_bottom = 116.306
-rect_scale = Vector2( 3, 3 )
+margin_bottom = 144.306
+custom_fonts/font = SubResource( 4 )
 align = 3
 __meta__ = {
 "_edit_use_anchors_": false
