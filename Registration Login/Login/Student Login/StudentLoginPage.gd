@@ -24,12 +24,10 @@ func _on_LoginButton_pressed():
 	
 ######## ALL BACKEND FUNCTIONS #########
 func _on_login_failed(error_code, message):
-	print("No account found with this email")
-	
-	print("dd")
 	Globals.currUser = null
 	print("error code: " + str(error_code))
 	print("message: " + str(message))
+	$Popup/Label.text = "Oops! Something went wrong. \n" + str(error_code) + ": "+str(message).split("_").join(" ").capitalize()
 	$Popup.show()
 
 
@@ -46,6 +44,7 @@ func _on_FirebaseAuth_login_succeeded(auth_info):
 	
 	if result[0].doc_fields.role != "student":
 		print("you are not authorised to log in as a student")
+		$Popup/Label.text = "you are not authorised to log in as a student"
 		$Popup.show()
 	else:
 		var res = result[0].doc_fields
