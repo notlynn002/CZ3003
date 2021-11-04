@@ -104,6 +104,8 @@ func _on_MetalCastleButton_pressed():
 
 func _on_EnterTowerButton_pressed():
 	get_tree().change_scene("res://Game Play/Normal Level/NormalLevel.tscn")
+#	var norm_level = preload("res://Game Play/Normal Level/NormalLevel.tscn").instance()
+#	get_tree().root.add_child(norm_level)
 	$GenericMusic/Music.stop()
 	self.queue_free()
 	 # Replace with function body.

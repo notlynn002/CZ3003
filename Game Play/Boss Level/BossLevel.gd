@@ -36,7 +36,7 @@ var attempts: Array
 
 var towerBackend = preload("res://Backend/TowerBackend.tscn").instance()
 
-var timer = 10.0 # To be changed to 10.0 once testing has been completed
+var timer = 600.0 # To be changed to 10.0 once testing has been completed
 var timeTaken
 var currentHealth = 3 setget update_bars
 var qnNum = 1
@@ -407,6 +407,7 @@ func _on_NextButton_pressed():
 
 func _on_QuitButton_pressed():
 	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
+	get_node('/root/NormalLevel.tscn').queue_free()
 
 func _on_RetryButton_pressed():
 	get_tree().reload_current_scene()

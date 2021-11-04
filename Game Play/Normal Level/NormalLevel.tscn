@@ -1033,4 +1033,5 @@ __meta__ = {
 [connection signal="pressed" from="Door23" to="." method="_on_Door3_pressed"]
 [connection signal="pressed" from="Door24" to="." method="_on_Door4_pressed"]
 [connection signal="pressed" from="Door25" to="." method="_on_Door5_pressed"]
+[connection signal="pressed" from="CanvasLayer/LogoutButton" to="." method="_on_LogoutButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/BackButton" to="." method="_on_BackButton_pressed"]

@@ -262,4 +262,9 @@ func _hide_Stars(star):
 
 func _on_BackButton_pressed():
 	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
-	pass # Replace with function body.
+	self.queue_free()
+
+
+func _on_LogoutButton_pressed():
+	get_tree().change_scene("res://Registration Login/StartPage.tscn")
+	self.queue_free()

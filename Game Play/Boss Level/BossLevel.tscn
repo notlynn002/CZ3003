@@ -72,14 +72,14 @@ animations = [ {
 "name": "take hit",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 39 ), ExtResource( 38 ), ExtResource( 41 ), ExtResource( 40 ) ],
-"loop": true,
-"name": "run",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 29 ), ExtResource( 28 ), ExtResource( 30 ), ExtResource( 17 ) ],
 "loop": true,
 "name": "die",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 39 ), ExtResource( 38 ), ExtResource( 41 ), ExtResource( 40 ) ],
+"loop": true,
+"name": "run",
 "speed": 5.0
 } ]
 
