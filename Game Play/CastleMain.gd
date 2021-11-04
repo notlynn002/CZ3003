@@ -244,7 +244,12 @@ func _which_openDoor_pressed(door):
 
 func _on_BackButton_pressed():
 	get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
+<<<<<<< HEAD
 	pass # Replace with function body.
+=======
+	self.queue_free()
+
+>>>>>>> 7f57dc0f831b442a6bbc811408fb86fd59c57f0b
 
 func _on_LogoutButton_pressed():
 	get_tree().change_scene("res://Registration Login/StartPage.tscn")
