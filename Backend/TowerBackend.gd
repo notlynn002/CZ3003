@@ -536,6 +536,7 @@ static func get_leaderboard(towerID):
 	
 	"""
 	# get all the levelIDs of the boss levels in this tower
+
 	var query : FirestoreQuery = FirestoreQuery.new()
 	query.from('Level')
 	query.where('towerID', FirestoreQuery.OPERATOR.EQUAL, towerID, FirestoreQuery.OPERATOR.AND)
@@ -568,7 +569,7 @@ static func get_leaderboard(towerID):
 			for att in qn_attempts:
 				attempts.append(att.doc_fields)
 			
-	#print(attempts)
+	print(attempts)
 	
 	var student_dict = {}
 	# {name: , totalCorrect: , timing , highestLevel: }
@@ -601,10 +602,14 @@ static func get_leaderboard(towerID):
 	#rankings.append({"name": "star", "highestLevel": 10, "totalCorrect": 5, "timing": 200})
 	
 	rankings.sort_custom(LeaderboardSorter, "sort_rankings_order")
-	
+	print(rankings)
 	return rankings
 	
-
+static func get_leaderboard_test(towerID):
+	var rankings = [{"highestLevel":5, "name":"jr", "timing":1781, "totalCorrect":3}, {"highestLevel":5, "name":"Jacob", "timing":42, "totalCorrect":3}]
+	rankings.sort_custom(LeaderboardSorter, "sort_rankings_order")
+	#print(rankings)
+	return rankings
 	
 
 
