@@ -41,6 +41,7 @@ var timeTaken
 var currentHealth = 3 setget update_bars
 var qnNum = 1
 var numOfCorrectAns = 0
+var numOfAnsweredQuestions = 0
 var pauseScreen = false
 var toggleSolution = false
 
@@ -49,7 +50,7 @@ var player : KinematicBody2D = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	currentUser = Globals.currUser['userId']
-	# get student's selected character from db
+	# get student's selected character from db 
 	character = Globals.currUser['character']
 	if character == "king":
 		var king = King.instance() # create an instance of king object
@@ -178,10 +179,11 @@ func player_lose_animation():
 
 func _on_OptionA_pressed():
 	if pauseScreen != true:
+		numOfAnsweredQuestions += 1
 		if aIsCorrect:
 			numOfCorrectAns += 1
 			pauseScreen = true
-			if numOfCorrectAns < 3:
+			if numOfAnsweredQuestions < 5:
 				yield(correct_answer_animation(), "completed")
 			$Question/AnsMsg.show()
 			$Question/AnsMsg/AnsMsgText.text = "That's correct!"
@@ -211,15 +213,16 @@ func _on_OptionA_pressed():
 			"questionID": qnId
 		}
 		attempts.append(submitAttempts)
-		if numOfCorrectAns >= 3 && timer > 0:
+		if numOfCorrectAns >= 3 && timer > 0 && numOfAnsweredQuestions == 5:
 			game_ended("success")
 
 func _on_OptionB_pressed():
 	if pauseScreen != true:
+		numOfAnsweredQuestions += 1
 		if bIsCorrect:
 			numOfCorrectAns += 1
 			pauseScreen = true
-			if numOfCorrectAns < 3:
+			if numOfAnsweredQuestions < 5:
 				yield(correct_answer_animation(), "completed")
 			$Question/AnsMsg.show()
 			$Question/AnsMsg/AnsMsgText.text = "That's correct!"
@@ -249,15 +252,16 @@ func _on_OptionB_pressed():
 			"questionID": qnId
 		}
 		attempts.append(submitAttempts)
-		if numOfCorrectAns >= 3 && timer > 0:
+		if numOfCorrectAns >= 3 && timer > 0 && numOfAnsweredQuestions == 5:
 			game_ended("success")
 
 func _on_OptionC_pressed():
 	if pauseScreen != true:
+		numOfAnsweredQuestions += 1
 		if cIsCorrect:
 			numOfCorrectAns += 1
 			pauseScreen = true
-			if numOfCorrectAns < 3:
+			if numOfAnsweredQuestions < 5:
 				yield(correct_answer_animation(), "completed")
 			$Question/AnsMsg.show()
 			$Question/AnsMsg/AnsMsgText.text = "That's correct!"
@@ -287,15 +291,16 @@ func _on_OptionC_pressed():
 			"questionID": qnId
 		}
 		attempts.append(submitAttempts)
-		if numOfCorrectAns >= 3 && timer > 0:
+		if numOfCorrectAns >= 3 && timer > 0 && numOfAnsweredQuestions == 5:
 			game_ended("success")
 
 func _on_OptionD_pressed():
 	if pauseScreen != true:
+		numOfAnsweredQuestions += 1
 		if dIsCorrect:
 			numOfCorrectAns += 1
 			pauseScreen = true
-			if numOfCorrectAns < 3:
+			if numOfAnsweredQuestions < 5:
 				yield(correct_answer_animation(), "completed")
 			$Question/AnsMsg.show()
 			$Question/AnsMsg/AnsMsgText.text = "That's correct!"
@@ -325,7 +330,7 @@ func _on_OptionD_pressed():
 			"questionID": qnId
 		}
 		attempts.append(submitAttempts)
-		if numOfCorrectAns >= 3 && timer > 0:
+		if numOfCorrectAns >= 3 && timer > 0 && numOfAnsweredQuestions == 5:
 			game_ended("success")
 
 func game_ended(condition):
@@ -387,9 +392,11 @@ func _process(delta):
 	
 	if timer > 0 && pauseScreen == false:
 		timer -= delta
-		$Timer.text = "Timer: %ss" % stepify(timer,1)
+		var time = int(timer)
+		$Timer.text = "Timer: %02d:%02d" % [time/60, time%60]
 	elif timer <= 0 && pauseScreen == false:
-		$Timer.text = "Timer: %ss" % stepify(timer,1)
+		var time = int(timer)
+		$Timer.text = "Timer: %02d:%02d" % [time/60, time%60]
 		game_ended("failbytime")
 		pauseScreen = true
 	

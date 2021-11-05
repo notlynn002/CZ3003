@@ -57,9 +57,14 @@ font_data = ExtResource( 4 )
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ ExtResource( 16 ), ExtResource( 31 ), ExtResource( 26 ), ExtResource( 27 ) ],
+"frames": [ ExtResource( 34 ), ExtResource( 33 ), ExtResource( 32 ), ExtResource( 36 ), ExtResource( 35 ) ],
 "loop": true,
-"name": "idle",
+"name": "attack",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 29 ), ExtResource( 28 ), ExtResource( 30 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "die",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 42 ), ExtResource( 44 ), ExtResource( 43 ), ExtResource( 45 ) ],
@@ -72,14 +77,9 @@ animations = [ {
 "name": "run",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 34 ), ExtResource( 33 ), ExtResource( 32 ), ExtResource( 36 ), ExtResource( 35 ) ],
+"frames": [ ExtResource( 16 ), ExtResource( 31 ), ExtResource( 26 ), ExtResource( 27 ) ],
 "loop": true,
-"name": "attack",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 29 ), ExtResource( 28 ), ExtResource( 30 ), ExtResource( 17 ) ],
-"loop": true,
-"name": "die",
+"name": "idle",
 "speed": 5.0
 } ]
 

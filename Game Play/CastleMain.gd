@@ -107,7 +107,7 @@ func init(nowAtTower):
 		
 func _on_NormalLevelDoor_pressed():
 	var currentLoc
-	currentLoc = get_node("King").get_position()
+	currentLoc = player.get_position()
 	GlobalArray.playerPosition = currentLoc
 	
 	#get the current level

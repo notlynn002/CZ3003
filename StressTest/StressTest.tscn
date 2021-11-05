@@ -1,0 +1,127 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://StressTest/StressTest.gd" type="Script" id=2]
+
+[node name="StressTest" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.1, 0.1, 0.1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SideBar" type="PanelContainer" parent="HBoxContainer"]
+margin_right = 188.0
+margin_bottom = 1080.0
+
+[node name="Controls" type="VBoxContainer" parent="HBoxContainer/SideBar"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 181.0
+margin_bottom = 1073.0
+
+[node name="Iterations" type="HBoxContainer" parent="HBoxContainer/SideBar/Controls"]
+margin_right = 174.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="HBoxContainer/SideBar/Controls/Iterations"]
+margin_top = 5.0
+margin_right = 96.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "Iteration Count"
+align = 2
+
+[node name="Value" type="SpinBox" parent="HBoxContainer/SideBar/Controls/Iterations"]
+margin_left = 100.0
+margin_right = 174.0
+margin_bottom = 24.0
+min_value = 1.0
+max_value = 1000.0
+value = 1.0
+
+[node name="Users" type="HBoxContainer" parent="HBoxContainer/SideBar/Controls"]
+margin_top = 28.0
+margin_right = 174.0
+margin_bottom = 52.0
+
+[node name="Label" type="Label" parent="HBoxContainer/SideBar/Controls/Users"]
+margin_top = 5.0
+margin_right = 96.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "User Count"
+align = 2
+
+[node name="Value" type="SpinBox" parent="HBoxContainer/SideBar/Controls/Users"]
+margin_left = 100.0
+margin_right = 174.0
+margin_bottom = 24.0
+min_value = 1.0
+max_value = 1000.0
+value = 1.0
+
+[node name="StartButton" type="Button" parent="HBoxContainer/SideBar/Controls"]
+margin_top = 56.0
+margin_right = 174.0
+margin_bottom = 76.0
+text = "Start"
+
+[node name="ExportButton" type="Button" parent="HBoxContainer/SideBar/Controls"]
+margin_top = 80.0
+margin_right = 174.0
+margin_bottom = 100.0
+disabled = true
+text = "Export..."
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+margin_left = 192.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="UserViews" type="GridContainer" parent="HBoxContainer/ScrollContainer"]
+margin_right = 1728.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 6
+
+[node name="FileDialog" type="FileDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -300.0
+margin_top = -200.0
+margin_right = 300.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 400, 140 )
+popup_exclusive = true
+resizable = true
+dialog_hide_on_ok = true
+access = 2
+filters = PoolStringArray( "*.csv" )
+current_dir = "/Users/parthtaneja/Desktop/MATH4FUN/CZ3003"
+current_path = "/Users/parthtaneja/Desktop/MATH4FUN/CZ3003/"
+
+[connection signal="pressed" from="HBoxContainer/SideBar/Controls/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/SideBar/Controls/ExportButton" to="." method="_on_ExportButton_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
