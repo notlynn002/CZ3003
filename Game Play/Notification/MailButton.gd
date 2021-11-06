@@ -43,6 +43,7 @@ func _on_MailButton_pressed():
 		var challengeNotifPage = preload("res://Game Play/Challenge/ChallengeNotifPage.tscn").instance()
 		get_tree().get_root().add_child(challengeNotifPage)
 		self.queue_free()
+		get_node('/root/StudentHomePage').queue_free()
 	elif type == 'challenge declined':
 		pass
 

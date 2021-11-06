@@ -65,7 +65,7 @@ func _on_FirebaseAuth_login_succeeded(auth_info):
 			print("login succcess!")
 			Firebase.Auth.save_auth(auth_info)
 			
-			get_tree().change_scene("res://Game Play/StudentHomePage.tscn")
+			get_tree().change_scene("res://Teacher/TeacherHomePage.tscn")
 
 
 func _on_CloseButton_pressed():

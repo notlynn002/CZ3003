@@ -22,17 +22,37 @@ func _ready():
 	$TowerNameLabel.text = tower 
 	Globals.get_node('GenericMusic').play()
 	
-	var results =yield(TowerBackend.get_leaderboard(tower.to_lower()+'-tower'), "completed")
+#	var results =yield(TowerBackend.get_leaderboard(tower.to_lower()+'-tower'), "completed")
 	
 	
 	# load from db
-	for i in range(results.size()):
-		details = str(i+1) + "          " + results[i]['name'] + repeat_space(23 - len(results[i]['name'])) + str(results[i]['highestLevel']) + repeat_space(22 - len(str(results[i]['highestLevel']))) + str(results[i]['totalCorrect']) + repeat_space(30-len(str(results[i]['totalCorrect']))) + "%d:%02d" % [floor(results[i]['timing'] / 60), int(results[i]['timing']) % 60]
-#		details = str(i+1) + "          Jacob                  25                     88                             20mins"
-		
-		var deets = Details.instance()
-		deets.init(details)
-		$ScrollContainer/VBoxContainer.add_child(deets)
+#	for i in range(results.size()):
+#		details = str(i+1) + "          " + results[i]['name'] + repeat_space(23 - len(results[i]['name'])) + str(results[i]['highestLevel']) + repeat_space(22 - len(str(results[i]['highestLevel']))) + str(results[i]['totalCorrect']) + repeat_space(30-len(str(results[i]['totalCorrect']))) + "%d:%02d" % [floor(results[i]['timing'] / 60), int(results[i]['timing']) % 60]
+##		details = str(i+1) + "          Jacob                  25                     88                             20mins"
+#
+#		var deets = Details.instance()
+#		deets.init(details)
+#		$ScrollContainer/VBoxContainer.add_child(deets)
+
+	details = str(1) + "          Melody                  25                     25                             20mins"
+	var deets = Details.instance()
+	deets.init(details)
+	$ScrollContainer/VBoxContainer.add_child(deets)
+	
+	details = str(1) + "          David                   25                     24                             21mins"
+	deets = Details.instance()
+	deets.init(details)
+	$ScrollContainer/VBoxContainer.add_child(deets)
+	
+	details = str(1) + "          Alice                       8                        5                                2 mins"
+	deets = Details.instance()
+	deets.init(details)
+	$ScrollContainer/VBoxContainer.add_child(deets)
+	
+	details = str(1) + "          John                        5                        5                                <1 min"
+	deets = Details.instance()
+	deets.init(details)
+	$ScrollContainer/VBoxContainer.add_child(deets)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
