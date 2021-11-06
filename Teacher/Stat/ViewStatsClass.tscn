@@ -181,11 +181,46 @@ margin_bottom = 64.0
 custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 
+[node name="AvgLabelStu" type="Label" parent="."]
+margin_left = 147.0
+margin_top = 896.0
+margin_right = 347.0
+margin_bottom = 948.0
+custom_fonts/font = ExtResource( 10 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Average"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AvgAttemptLabel" type="Label" parent="AvgLabelStu"]
+margin_left = 408.0
+margin_right = 632.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AvgCorrectLabel" type="Label" parent="AvgLabelStu"]
+margin_left = 816.0
+margin_right = 1064.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+
+[node name="AvgTimeLabelStu" type="Label" parent="AvgLabelStu"]
+margin_left = 1224.0
+margin_right = 1456.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+
 [node name="ClassStatsLabel" type="Label" parent="."]
 margin_right = 40.0
 margin_bottom = 14.0
 custom_fonts/font = SubResource( 7 )
-text = "Qn. No."
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -360,6 +395,5 @@ __meta__ = {
 [connection signal="item_selected" from="ViewByOptionbutton" to="." method="_on_ViewByOptionbutton_item_selected"]
 [connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="item_selected" from="ViewLevel" to="." method="_on_ViewLevel_item_selected"]
-[connection signal="pressed" from="ViewLevel" to="." method="_on_ViewLevel_pressed"]
 [connection signal="item_selected" from="ViewClass" to="." method="_on_ViewClass_item_selected"]
 [connection signal="item_selected" from="ViewTower" to="." method="_on_ViewTower_item_selected"]

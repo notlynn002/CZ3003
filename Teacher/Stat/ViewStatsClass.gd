@@ -52,7 +52,6 @@ var tower_classes_dict = {}
 #
 
 # Numbers Tower Class C:[], Numbers Tower Class D:[...], Numbers Tower dummyClass:[...]}
-
 var classBackend
 var statsBackend = preload("res://Backend/StatsBackend.tscn").instance()
 
@@ -74,6 +73,7 @@ func _ready():
 	statsTreeInit()	
 	
 	$AvgLabel.visible = false
+	$AvgLabelStu.visible = false
 	$StuStatsLabel.visible = false
 	$ClassStatsLabel.visible = false
 	ClassBackend.get_classes(teacherid)
@@ -89,14 +89,14 @@ func _ready():
 	for x in tower_name_id_dict:
 		if tower_name_id_dict[x] != "quiz-tower":
 			level_name_id_dict["%s"%x] = (yield(statsBackend.get_level_ids_and_names(tower_name_id_dict[x]), "completed"))
-
+	level_name_id_dict["Quiz Tower"] = {}
+		
 	for x in classes_dict:
 		for y in level_name_id_dict:
 			for z in range(level_name_id_dict[y].size()):
 				allLevelStats["%s %s"%[x, level_name_id_dict[y].values()[z]]] = yield(statsBackend.get_level_stats_by_class(level_name_id_dict[y].values()[z], [classes_dict[x]]), "completed")
-		
+	
 	var temp = OS.get_unix_time()
-	print(temp)
 	
 	for x in classes_dict:	#x == className
 		quiz_classname_id_dict["%s"%x] = yield(StatsBackend._get_quiz_ids_and_names([classes_dict[x]]), "completed")
@@ -139,13 +139,13 @@ func towerOptionPopulate(tnid):
 func levelOptionPopulate():
 	$ViewLevel.clear()
 	if towerName == "Quiz Tower" and className:
-		print(len(allQuizID[className]))
 		if len(allQuizID[className]) == 0:
 			$ViewLevel.add_item("No quizzes")
 			$StatsTree.hide()
 		else:
 			for x in quiz_classname_id_dict[className]:
 				$ViewLevel.add_item(x)
+			levelName = $ViewLevel.text
 			$StatsTree.show()
 	elif towerName and className: 
 		for x in level_name_id_dict[towerName]:
@@ -157,35 +157,47 @@ func levelOptionPopulate():
 func statsUpdate():
 	var currentSelection
 	### Array of student stats ###
-	
-	if viewByOption == 1 and towerName and className:	
-#		classStatsArray = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[towerName], classID), "completed")
+	if $AvgLabel.visible == true:
+		$AvgLabel.hide()
+	elif $AvgLabelStu.visible == true:
+		$AvgLabelStu.hide()
+	if viewByOption == 1 and towerName and className and levelName:	
 		### dummy row is added because first row gets cut from display, and im too bad to figure out another workaround
-		if towerName == "Quiz Tower" and className:
+		if towerName == "Quiz Tower":
 			quizSelected()
 			return
-		
 		if towerName != "Quiz Tower" and className == "All":
 			currentSelection = tower_classes_dict["%s All"%towerName]
-		elif towerName != "Quiz Tower" and className:
+		elif towerName != "Quiz Tower":
 			currentSelection = tower_classes_dict["%s %s"%[towerName, className]]
+			
 		statsTree.clear()
 		## 2 dummy rows used. FIX THIS if I figure out a better display output!!!
+		print(len(currentSelection))
 		if len(currentSelection) > 1:
 			addStats(currentSelection)	
-		else:
-			$AvgLabel.hide()
 	
+	elif viewByOption == 2 and towerName and className and levelName:
+		var lvl = allLevelStats["%s %s"%[className, level_name_id_dict[towerName][levelName]]]
+		var dummyRow = {"qn_no":"dummy", "attempt_percent":"dummy", "correct_percent":"dummy", "avg_time":"dummy"}
+		if str(lvl[0]["qn_no"]) != "dummy":
+			lvl.push_front(dummyRow)
+		$StatsTree.clear()
+		addStatsStu(lvl)
+
 
 func addDummyRow(currentSelection):
 	currentSelection.push_front({"avg_score":"dummy", "avg_time":"dummy", "max_level":"dummy", "student_name":"dummy"})
 	
 func _on_ViewByOptionbutton_item_selected(index):
 	viewByOption = index
-	
+	$StatsTree.clear()
 	if index == 2:
-		pass
-		#DO STUDENT FUNCTIONS HERE
+		if $StuStatsLabel.visible == true:	
+			$StuStatsLabel.hide()
+		if $AvgLabel.visible == true:
+			$AvgLabel.hide()
+		statsUpdate()
 	else:
 		statsUpdate()
 
@@ -195,16 +207,9 @@ func _on_ViewTower_item_selected(index):
 	levelOptionPopulate()
 	statsUpdate()
 	#print(yield(statsBackend._get_boss_level_ids_and_names(tower_name_id_dict[towerName]), "completed"))
-	
-func _on_ViewLevel_pressed():
-	print(level_name_id_dict[towerName][levelName])
-	var lvl = allLevelStats["%s %s"%[className, level_name_id_dict[towerName][levelName]]]
-	$StatsTree.clear()
-	addStatsLevel(lvl)
+
 # [  [ { qn_attempts: [{qn_content: , result: }, {qn_content: , result: } ], student_name: , time: } ]
 # array array(per student) dict( qn_attempts(dict) : array( dict(content, result)), student_name, time  )
-
-
 
 func quizMarker(data:Dictionary):
 	### No actual way to get full question count for quiz for now 
@@ -225,16 +230,15 @@ func quizSelected():
 		quizStats.append(attempt)
 		
 	$StatsTree.clear()
-	print(len(quizStats))
 	if len(quizStats) > 1:
 		addStatsQuiz(quizStats)
 
 func _on_ViewLevel_item_selected(index):
 	level = index
 	levelName = $ViewLevel.get_item_text(index)
+	
 	statsUpdate()
 		
-	
 func _on_ViewClass_item_selected(index):
 	### all function not fully tested, db doesnt have more than one class with attempts ###
 	if index == 1:
@@ -272,6 +276,7 @@ func addStats(data:Array):
 	getAvgStats(data)
 
 func addStatsQuiz(data:Array):
+	
 	for i in range(len(data)):
 		var newRow = statsTree.create_item(root)
 		newRow.set_text(0, str(data[i]["student_name"]))
@@ -279,17 +284,20 @@ func addStatsQuiz(data:Array):
 		newRow.set_text(2, str(data[i]["marks"][0]))
 		newRow.set_text(3, str(data[i]["time"]))
 
-func addStatsLevel(data:Array):
+func addStatsStu(data:Array):
 	if $StuStatsLabel.visible == true:
 		$StuStatsLabel.hide()
 	$ClassStatsLabel.show()
+	
 	for i in range(len(data)):
 		var newRow = statsTree.create_item(root)
 		newRow.set_text(0, str(data[i]["qn_no"]))
 		newRow.set_text(1, str(data[i]["attempt_percent"]))
 		newRow.set_text(2, str(data[i]["correct_percent"]))
 		newRow.set_text(3, str(data[i]["avg_time"]))
-		
+	
+	getAvgStatsStudent(data)
+	
 func getAvgStats(data:Array):
 	var avgScore = 0
 	var avgTime = 0
@@ -310,9 +318,26 @@ func getAvgStats(data:Array):
 	
 	$AvgLabel.show()
 
+func getAvgStatsStudent(data:Array):
+	var avgAttempt = 0
+	var avgTime = 0
+	var avgCorrect = 0
+		
+	for i in range(len(data)):
+		avgAttempt += int(data[i]["attempt_percent"])
+		avgTime += int(data[i]["avg_time"])
+		avgCorrect += int(data[i]["correct_percent"])
 	
+	### super bad fix for the dummydata row ###
+	avgAttempt /= float(len(data)-1)
+	avgTime /= float(len(data)-1)
+	avgCorrect /= float(len(data)-1)
 	
+	$AvgLabelStu/AvgAttemptLabel.text = "%.2f"%avgAttempt
+	$AvgLabelStu/AvgTimeLabelStu.text = "%.2f"%avgTime
+	$AvgLabelStu/AvgCorrectLabel.text = "%.2f"%avgCorrect
 	
+	$AvgLabelStu.show()
 ### [{avg_score:0, avg_time:0, max_level:1, student_name:studentUpdated},
 ###	 {avg_score:0, avg_time:0, max_level:2, student_name:lin sw},
 ###	 {avg_score:2, avg_time:416.5, max_level:10, student_name:TestStudent007}]
