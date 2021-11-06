@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-### FULL FUNCTIONAL, NEEDS REORGANISATION TO WORK ###
 # Declare member variables here. Examples:
 var toweridx = 0
 var towerName
@@ -81,8 +80,6 @@ func _ready():
 	# print(yield(classBackend.get_classes(teacherid), "completed"))
 	# var get_classes_list = yield(classBackend.get_classes(teacherid), "completed")
 	
-	### query these before reaching the stats page? load time is slow ###
-	
 	classes_dict = yield(statsBackend.get_class_ids_and_names(teacherid), "completed")
 	classOptionPopulate(classes_dict)
 
@@ -92,31 +89,31 @@ func _ready():
 	for x in tower_name_id_dict:
 		if tower_name_id_dict[x] != "quiz-tower":
 			level_name_id_dict["%s"%x] = (yield(statsBackend.get_level_ids_and_names(tower_name_id_dict[x]), "completed"))
-	
+
 	for x in classes_dict:
 		for y in level_name_id_dict:
 			for z in range(level_name_id_dict[y].size()):
 				allLevelStats["%s %s"%[x, level_name_id_dict[y].values()[z]]] = yield(statsBackend.get_level_stats_by_class(level_name_id_dict[y].values()[z], [classes_dict[x]]), "completed")
+		
+	var temp = OS.get_unix_time()
+	print(temp)
 	
-	if towerName and className and levelName:
-		levelStats()
-#	var temp = OS.get_unix_time()
-#	for x in classes_dict:	#x == className
-#		quiz_classname_id_dict["%s"%x] = yield(StatsBackend._get_quiz_ids_and_names([classes_dict[x]]), "completed")
-#		allQuizID["%s"%x] = []
-#		for y in quiz_classname_id_dict[x]:	#y == quizName
-#			allQuizID["%s"%x].append(quiz_classname_id_dict[x][y])
-#			allQuizData["%s %s"%[x, y]] = (yield(StatsBackend.get_quiz_stats_by_class(quiz_classname_id_dict[x][y] , [classes_dict[x]]), "completed"))
-#
-#	print("quizhell done!")
-#	for x in tower_name_id_dict:
-#		tower_classes_dict["%s All"%x] = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[x], allClassesID), "completed")	
-#		addDummyRow(tower_classes_dict["%s All"%x])
-#		for y in classes_dict:
-#			tower_classes_dict["%s %s"%[x, y]] = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[x], [classes_dict[y]]), "completed")
-#			addDummyRow(tower_classes_dict["%s %s"%[x, y]])
-	
-#	print("time taken: %ds" % (OS.get_unix_time()-temp))
+	for x in classes_dict:	#x == className
+		quiz_classname_id_dict["%s"%x] = yield(StatsBackend._get_quiz_ids_and_names([classes_dict[x]]), "completed")
+		allQuizID["%s"%x] = []
+		for y in quiz_classname_id_dict[x]:	#y == quizName
+			allQuizID["%s"%x].append(quiz_classname_id_dict[x][y])
+			allQuizData["%s %s"%[x, y]] = (yield(StatsBackend.get_quiz_stats_by_class(quiz_classname_id_dict[x][y] , [classes_dict[x]]), "completed"))
+
+	print("quizhell done!")
+	for x in tower_name_id_dict:
+		tower_classes_dict["%s All"%x] = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[x], allClassesID), "completed")	
+		addDummyRow(tower_classes_dict["%s All"%x])
+		for y in classes_dict:
+			tower_classes_dict["%s %s"%[x, y]] = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[x], [classes_dict[y]]), "completed")
+			addDummyRow(tower_classes_dict["%s %s"%[x, y]])
+
+	print("time taken: %ds" % (OS.get_unix_time()-temp))
 	$Loading.hide()
 	
 #	classStatsArray = yield(statsBackend.get_tower_stats_by_class(tower_name_id_dict[towerName], classID), "completed")
@@ -236,10 +233,7 @@ func _on_ViewLevel_item_selected(index):
 	level = index
 	levelName = $ViewLevel.get_item_text(index)
 	statsUpdate()
-	
-func levelStats():
-	print("Here")
-	
+		
 	
 func _on_ViewClass_item_selected(index):
 	### all function not fully tested, db doesnt have more than one class with attempts ###
@@ -315,6 +309,7 @@ func getAvgStats(data:Array):
 	$AvgLabel/AvgLevelLabel.text = "%.2f"%avgLvl
 	
 	$AvgLabel.show()
+
 	
 	
 	
