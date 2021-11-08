@@ -145,12 +145,13 @@ func levelOptionPopulate():
 		else:
 			for x in quiz_classname_id_dict[className]:
 				$ViewLevel.add_item(x)
-			levelName = $ViewLevel.text
 			$StatsTree.show()
+		
 	elif towerName and className: 
 		for x in level_name_id_dict[towerName]:
 			$ViewLevel.add_item(x)
-		
+			
+	levelName = $ViewLevel.text
 #		for x in range(1, 26):
 #			$ViewLevel.add_item("Level %d"%x)
 
@@ -161,7 +162,7 @@ func statsUpdate():
 		$AvgLabel.hide()
 	elif $AvgLabelStu.visible == true:
 		$AvgLabelStu.hide()
-	if viewByOption == 1 and towerName and className and levelName:	
+	if viewByOption == 1 and towerName and className:	
 		### dummy row is added because first row gets cut from display, and im too bad to figure out another workaround
 		if towerName == "Quiz Tower":
 			quizSelected()
@@ -177,7 +178,7 @@ func statsUpdate():
 		if len(currentSelection) > 1:
 			addStats(currentSelection)	
 	
-	elif viewByOption == 2 and towerName and className and levelName:
+	elif viewByOption == 2 and towerName!="Quiz Tower" and className and levelName:
 		var lvl = allLevelStats["%s %s"%[className, level_name_id_dict[towerName][levelName]]]
 		var dummyRow = {"qn_no":"dummy", "attempt_percent":"dummy", "correct_percent":"dummy", "avg_time":"dummy"}
 		if str(lvl[0]["qn_no"]) != "dummy":
@@ -236,7 +237,6 @@ func quizSelected():
 func _on_ViewLevel_item_selected(index):
 	level = index
 	levelName = $ViewLevel.get_item_text(index)
-	
 	statsUpdate()
 		
 func _on_ViewClass_item_selected(index):
