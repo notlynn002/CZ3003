@@ -152,8 +152,6 @@ func levelOptionPopulate():
 			$ViewLevel.add_item(x)
 			
 	levelName = $ViewLevel.text
-#		for x in range(1, 26):
-#			$ViewLevel.add_item("Level %d"%x)
 
 func statsUpdate():
 	var currentSelection
@@ -163,7 +161,6 @@ func statsUpdate():
 	elif $AvgLabelStu.visible == true:
 		$AvgLabelStu.hide()
 	if viewByOption == 1 and towerName and className:	
-		### dummy row is added because first row gets cut from display, and im too bad to figure out another workaround
 		if towerName == "Quiz Tower":
 			quizSelected()
 			return
@@ -173,7 +170,6 @@ func statsUpdate():
 			currentSelection = tower_classes_dict["%s %s"%[towerName, className]]
 			
 		statsTree.clear()
-		## 2 dummy rows used. FIX THIS if I figure out a better display output!!!
 		print(len(currentSelection))
 		if len(currentSelection) > 1:
 			addStats(currentSelection)	

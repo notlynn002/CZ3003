@@ -31,7 +31,15 @@ func _on_LogoutButton_pressed():
 
 func _on_SaveButton_pressed():
 	var className = $CreateClass/NameInput.text
-	classBackend.create_class(teacherid, className)
-	$CreateClass.hide()
-	#assume updating db of classes, which will update the optionButton in StudentRegistrationPage
+	var classes = yield(ClassBackend.get_class_names(teacherid), "completed")
+	print(classes)
 	
+	if className in classes:
+		$SameClassPopup.show()
+	else:
+		classBackend.create_class(teacherid, className)
+		$CreateClass.hide()
+
+
+func _on_SameClassPopup_mouse_entered():
+	$SameClassPopup.hide()
