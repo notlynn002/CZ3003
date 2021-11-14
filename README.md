@@ -1,4 +1,3 @@
 # CZ3003
 
-planning:
-https://docs.google.com/document/d/1Bjq2jqpdR6klFmWAn18ZUjTe_D-oJGDAhpGboC7OGdc/edit?usp=sharing
+Wiki: http://155.69.100.27/3003S12122_TDDP3xiaoLongBao/index.php/Main_Page
